@@ -1,6 +1,8 @@
-source ../vendor/smartcd/arrays
-source ../vendor/smartcd/smartcd
-source ../vendor/smartcd/varstash
+SCRIPT_DIR=`dirname $0`
+
+source "$SCRIPT_DIR/../vendor/smartcd/arrays"
+source "$SCRIPT_DIR/../vendor/smartcd/smartcd"
+source "$SCRIPT_DIR/../vendor/smartcd/varstash"
 
 function chpwd() {
   if [[ -n $OLDPWD && $PWD != $OLDPWD ]]; then
