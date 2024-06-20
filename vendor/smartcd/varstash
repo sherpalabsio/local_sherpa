@@ -358,16 +358,16 @@ function _manual_stash_help() {
         if [[ -n $VARSTASH_AUTOEDIT ]]; then
             varstash_edit $help_which
         fi
-    elif [[ -z $VARSTASH_QUIET ]]; then
-        echo "############################################################################"
-        echo "# You are manually $help_action.  To automatically perform this"
-        echo "# whenever you enter this directory, paste the following command(s):"
+    # elif [[ -z $VARSTASH_QUIET ]]; then
+    #     echo "############################################################################"
+    #     echo "# You are manually $help_action.  To automatically perform this"
+    #     echo "# whenever you enter this directory, paste the following command(s):"
 
-        if [[ ! -d $help_dir ]]; then
-            echo "mkdir -p \"$help_dir\""
-        fi
-        echo "$help_cmd"
-        echo "############################################################################"
+    #     if [[ ! -d $help_dir ]]; then
+    #         echo "mkdir -p \"$help_dir\""
+    #     fi
+    #     echo "$help_cmd"
+    #     echo "############################################################################"
     fi
 }
 
