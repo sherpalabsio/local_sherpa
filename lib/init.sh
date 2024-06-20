@@ -16,8 +16,7 @@ autoload -U add-zsh-hook
 add-zsh-hook chpwd chpwd
 
 unload_previous_local_config() {
-  unstash var_1
-  # autounstash
+  autounstash
   echo "Config unloaded."
 }
 
@@ -30,5 +29,5 @@ load_local_config() {
 }
 
 stash_local_config() {
-  stash var_1
+  autostash var_1
 }
