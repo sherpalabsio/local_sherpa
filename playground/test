@@ -5,27 +5,29 @@ source start
 
 check_equals() {
   if [ "$1" != "$2" ]; then
-    echo "Expected '$2', got '$1'"
+    echo "NOT OK | Expected '$2', got '$1'"
+  else
+    echo "OK"
   fi
 }
 
 
 echo "==== Original stuff ===="
-echo $var_1 # prints "ORIGINAL VAR"
+# echo $var_1 # prints "ORIGINAL VAR"
 check_equals "$var_1" "ORIGINAL VAR"
 # alias_1 # prints "ORIGINAL ALIAS"
 # function_1 # prints "ORIGINAL FUNCTION"
 
-echo "\n==== Patched stuff 1 ===="
+echo "\n==== Project 1 ===="
 cd project_1
-echo $var_1 # prints "VAR PROJECT 1"
+# echo $var_1 # prints "VAR PROJECT 1"
 check_equals "$var_1" "VAR PROJECT 1"
 # alias_1 # prints "ALIAS PROJECT 1"
 # check_equals "$(alias_1)" "ALIAS PROJECT 1"
 # function_1 # prints "FUNCTION PROJECT 1"
 # check_equals "$(function_1)" "FUNCTION PROJECT 1"
 
-# echo "\n==== Patched stuff 2 ===="
+# echo "\n==== Project 2 ===="
 # cd ../project_2
 # echo $var_1 # prints "VAR PROJECT 2"
 # alias_1 # prints "ALIAS PROJECT 2"
@@ -33,7 +35,7 @@ check_equals "$var_1" "VAR PROJECT 1"
 
 echo "\n==== Original stuff again ===="
 cd ..
-echo $var_1 # prints "ORIGINAL VAR"
+# echo $var_1 # prints "ORIGINAL VAR"
 check_equals "$var_1" "ORIGINAL VAR"
 # alias_1 # prints "ORIGINAL ALIAS"
 # function_1 # prints "ORIGINAL FUNCTION"

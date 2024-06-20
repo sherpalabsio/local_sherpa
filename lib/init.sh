@@ -1,7 +1,13 @@
+source ../vendor/smartcd/arrays
+source ../vendor/smartcd/smartcd
+source ../vendor/smartcd/varstash
+
 function chpwd() {
   if [[ -n $OLDPWD && $PWD != $OLDPWD ]]; then
-    echo "Left: $OLDPWD"
-    echo "Entered: $PWD"
+    varstash_dir=$OLDPWD
+    unload_previous_local_config $OLDPWD
+    varstash_dir=$PWD
+    load_local_config $PWD
   fi
   export OLDPWD=$PWD
 }
@@ -9,11 +15,20 @@ function chpwd() {
 autoload -U add-zsh-hook
 add-zsh-hook chpwd chpwd
 
-# Worked
-# # autoload -U add-zsh-hook
+unload_previous_local_config() {
+  unstash var_1
+  # autounstash
+  echo "Config unloaded."
+}
 
-# _smartcd_hook() {
-#   echo 'AAAAA'
-# }
+load_local_config() {
+  if [ -f .local-sherpa ]; then
+    stash_local_config
+    source .local-sherpa
+    echo "Config loaded."
+  fi
+}
 
-# chpwd_functions=(${chpwd_functions[@]} "_smartcd_hook")
+stash_local_config() {
+  stash var_1
+}
