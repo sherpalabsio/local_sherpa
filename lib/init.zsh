@@ -2,48 +2,23 @@
 
 SCRIPT_DIR=`dirname $0`
 
+# Load dependencies
 source "$SCRIPT_DIR/../vendor/smartcd/arrays"
 source "$SCRIPT_DIR/../vendor/smartcd/smartcd"
 source "$SCRIPT_DIR/../vendor/smartcd/varstash"
 
-function chpwd() {
+# Load sherpa
+source "$SCRIPT_DIR/../lib/sherpa.zsh"
+
+function sherpa_chpwd_handler() {
+  # Changed directory?
   if [[ -n $OLDPWD && $PWD != $OLDPWD ]]; then
-    varstash_dir=$OLDPWD
-    autounstash
-    varstash_dir=$PWD
-    load_local_config
+    alert_sherpa
   fi
-  export OLDPWD=$PWD
 }
 
 autoload -U add-zsh-hook
-add-zsh-hook chpwd chpwd
+add-zsh-hook chpwd sherpa_chpwd_handler
 
-load_local_config() {
-  if [ -f .local-sherpa ]; then
-    stash_existing_config
-    source .local-sherpa
-  fi
-}
-
-stash_existing_config() {
-  local file_to_parse=".local-sherpa"
-
-  # Stash variables
-  grep -o '^\s*export\s\+\([^=]\+\)' "$file_to_parse" | while read -r line; do
-    variable_name=$(echo "$line" | awk '{print $2}')
-    autostash "$variable_name"
-  done
-
-  # Stash aliases
-  grep -o '^\s*alias\s\+\([^=]\+\)' "$file_to_parse" | while read -r line; do
-    alias=$(echo "$line" | awk '{print $2}')
-    autostash $alias
-  done
-
-  # Stash functions
-  grep -o '^\s*\([^()]\+\)\s*()' "$file_to_parse" | while read -r line; do
-    function_name=$(echo "$line" | sed 's/^\s*//; s/\s*()//')
-    autostash "$function_name"
-  done
-}
+# When loading the shell, we need to make sure that the sherpa is active
+alert_sherpa
