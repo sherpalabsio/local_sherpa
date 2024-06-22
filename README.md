@@ -1,6 +1,6 @@
 # Local Sherpa to the Rescue
 
-## Ascii emo
+## Ascii demo
 
 ### Files
 
@@ -37,6 +37,7 @@ function_1() {
 
 ```shell
 $ cd ~/tmp
+$ source .bash_profile
 $ echo $var_1 # prints "ORIGINAL VAR"
 $ alias_1 # prints "ORIGINAL ALIAS"
 $ function_1 # prints "ORIGINAL FUNCTION"
