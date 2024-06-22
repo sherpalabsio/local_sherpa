@@ -1,14 +1,14 @@
 #!/usr/bin/env zsh
 
-SCRIPT_DIR=`dirname $0`
+SHERPA_PATH=$(dirname "$(dirname "$0")")
 
 # Load dependencies
-source "$SCRIPT_DIR/../vendor/smartcd/arrays"
-source "$SCRIPT_DIR/../vendor/smartcd/smartcd"
-source "$SCRIPT_DIR/../vendor/smartcd/varstash"
+source "$SHERPA_PATH/vendor/smartcd/arrays"
+source "$SHERPA_PATH/vendor/smartcd/smartcd"
+source "$SHERPA_PATH/vendor/smartcd/varstash"
 
 # Load sherpa
-source "$SCRIPT_DIR/../lib/sherpa.zsh"
+source "$SHERPA_PATH/lib/sherpa.zsh"
 
 function sherpa_chpwd_handler() {
   # Changed directory?

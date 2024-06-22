@@ -9,11 +9,12 @@ unload_previously_loaded_env() {
 }
 
 load_local_env() {
-  if [ -f .local-sherpa ]; then
-    varstash_dir=$PWD
-    stash_existing_env
-    source .local-sherpa
-  fi
+  # Does the .local-sherpa file exist?
+  [ -f .local-sherpa ] || return
+
+  varstash_dir=$PWD
+  stash_existing_env
+  source .local-sherpa
 }
 
 stash_existing_env() {
