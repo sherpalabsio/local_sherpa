@@ -1,18 +1,22 @@
 alert_sherpa() {
-  varstash_dir=$OLDPWD
-  autounstash
-  varstash_dir=$PWD
-  load_local_config
+  unload_previously_loaded_env
+  load_local_env
 }
 
-load_local_config() {
+unload_previously_loaded_env() {
+  varstash_dir=$OLDPWD
+  autounstash
+}
+
+load_local_env() {
   if [ -f .local-sherpa ]; then
-    stash_existing_config
+    varstash_dir=$PWD
+    stash_existing_env
     source .local-sherpa
   fi
 }
 
-stash_existing_config() {
+stash_existing_env() {
   local file_to_parse=".local-sherpa"
 
   # Stash variables
