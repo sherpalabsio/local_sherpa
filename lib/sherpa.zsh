@@ -1,3 +1,5 @@
+source $SHERPA_PATH/lib/trust_verification.zsh
+
 alert_sherpa() {
   unload_previously_loaded_env
   load_local_env
@@ -11,6 +13,9 @@ unload_previously_loaded_env() {
 load_local_env() {
   # Does the .local-sherpa file exist?
   [ -f .local-sherpa ] || return
+
+  # Is the .local-sherpa env file trusted?
+  verify_trust || return 1
 
   varstash_dir=$PWD
   stash_existing_env

@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
-SHERPA_PATH=$(dirname "$(dirname "$0")")
+SHERPA_PATH=$( cd -- "$(dirname "$(dirname "$0")")" >/dev/null 2>&1 ; pwd -P )
+SHERPA_CHECKSUM_DIR="$HOME/.local/share/local_sherpa"
 
 # Load dependencies
 source "$SHERPA_PATH/vendor/smartcd/arrays"
