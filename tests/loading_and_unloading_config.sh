@@ -5,7 +5,7 @@ source tests/lib/tap-functions
 
 SHERPA_CHECKSUM_DIR="$SHERPA_PATH/tests/playground/local_sherpa_checksums"
 
-plan_tests 12
+plan_no_plan
 
 # Start the test
 cd tests/playground
