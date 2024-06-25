@@ -23,7 +23,7 @@ cd project_1
 is "$var_1" "ORIGINAL VAR"
 is "$(alias_1)" "ORIGINAL ALIAS"
 is "$(function_1)" "ORIGINAL FUNCTION"
-trust_local_sherpa
+sherpa trust
 is "$var_1" "VAR PROJECT 1"
 is "$(alias_1)" "ALIAS PROJECT 1"
 is "$(function_1)" "FUNCTION PROJECT 1"

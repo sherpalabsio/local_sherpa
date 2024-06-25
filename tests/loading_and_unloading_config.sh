@@ -20,7 +20,7 @@ is "$(function_1)" "ORIGINAL FUNCTION"
 # Load the Project 1 env
 echo "\n==== Project 1 env ===="
 cd project_1
-trust_local_sherpa
+sherpa trust
 is $var_1 "VAR PROJECT 1"
 is "$(alias_1)" "ALIAS PROJECT 1"
 is "$(function_1)" "FUNCTION PROJECT 1"
@@ -29,7 +29,7 @@ is "$(function_1)" "FUNCTION PROJECT 1"
 # Load the Project 2 env
 echo "\n==== Project 2 env ===="
 cd ../project_2
-trust_local_sherpa
+sherpa trust
 is $var_1 "VAR PROJECT 2"
 is "$(alias_1)" "ALIAS PROJECT 2"
 is "$(function_1)" "FUNCTION PROJECT 2"

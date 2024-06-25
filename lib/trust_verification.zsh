@@ -1,13 +1,13 @@
 #!/bin/bash
 
-calculate_checksum() {
+_calculate_checksum() {
   sha256sum .local-sherpa | cut -d ' ' -f 1
 }
 
 verify_trust() {
   local checksum_file="$SHERPA_CHECKSUM_DIR/$(pwd | md5sum | cut -d ' ' -f 1)"
 
-  local current_checksum=$(calculate_checksum)
+  local current_checksum=$(_calculate_checksum)
 
   # No checksum file?
   if [[ ! -f "$checksum_file" ]]; then
@@ -27,7 +27,7 @@ verify_trust() {
   return 0
 }
 
-trust_local_sherpa() {
+trust_local_env() {
   if [[ ! -f .local-sherpa ]]; then
     echo "Sherpa: .local-sherpa file not found in the current directory."
     echo "Sherpa: the local env config file is not found in the current directory."
@@ -37,12 +37,10 @@ trust_local_sherpa() {
   mkdir -p "$SHERPA_CHECKSUM_DIR"
 
   local checksum_file="$SHERPA_CHECKSUM_DIR/$(pwd | md5sum | cut -d ' ' -f 1)"
-  local current_checksum=$(calculate_checksum)
+  local current_checksum=$(_calculate_checksum)
 
   echo "$current_checksum" > "$checksum_file"
   echo "Sherpa: the local env config file is now trusted."
-
-  alert_sherpa
 
   return 0
 }

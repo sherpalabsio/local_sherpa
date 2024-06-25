@@ -8,7 +8,7 @@ function sherpa() {
 
   case $command in
 -h|--help|help|'') echo $usage_text;;
-      trust|allow) trust_local_sherpa;;
+      trust|allow) trust_local_env; alert_sherpa;;
   esac
 }
 
