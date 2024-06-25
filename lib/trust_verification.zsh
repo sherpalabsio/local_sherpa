@@ -28,13 +28,13 @@ verify_trust() {
 }
 
 trust_local_sherpa() {
-  mkdir -p "$SHERPA_CHECKSUM_DIR"
-
   if [[ ! -f .local-sherpa ]]; then
     echo "Sherpa: .local-sherpa file not found in the current directory."
     echo "Sherpa: the local env config file is not found in the current directory."
     return 1
   fi
+
+  mkdir -p "$SHERPA_CHECKSUM_DIR"
 
   local checksum_file="$SHERPA_CHECKSUM_DIR/$(pwd | md5sum | cut -d ' ' -f 1)"
   local current_checksum=$(calculate_checksum)
