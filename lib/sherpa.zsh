@@ -1,5 +1,17 @@
 source $SHERPA_PATH/lib/trust_verification.zsh
 
+function sherpa() {
+  local command="$1"
+
+  local usage_text="Example usage:
+  sherpa trust|allow - Trust the sherpa environment file in the current directory"
+
+  case $command in
+-h|--help|help|'') echo $usage_text;;
+      trust|allow) trust_local_sherpa;;
+  esac
+}
+
 alert_sherpa() {
   unload_previously_loaded_env
   load_local_env
