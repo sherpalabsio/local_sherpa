@@ -4,12 +4,19 @@ function sherpa() {
   local command="$1"
 
   local usage_text="Example usage:
-  sherpa trust|allow - Trust the sherpa environment file in the current directory"
+  sherpa trust|allow - Trust the sherpa environment file in the current directory
+  sherpa edit        - Initialize and edit the sherpa environment file in the current directory"
 
   case $command in
 -h|--help|help|'') echo $usage_text;;
       trust|allow) trust_local_env; alert_sherpa;;
+        init|edit) edit; trust_local_env; unload_currently_loaded_env; load_local_env;;
   esac
+}
+
+edit() {
+  echo "hint: Waiting for your editor to close the file..."
+  eval "$EDITOR .local-sherpa"
 }
 
 alert_sherpa() {
@@ -19,6 +26,11 @@ alert_sherpa() {
 
 unload_previously_loaded_env() {
   varstash_dir=$OLDPWD
+  autounstash
+}
+
+unload_currently_loaded_env() {
+  varstash_dir=$PWD
   autounstash
 }
 
