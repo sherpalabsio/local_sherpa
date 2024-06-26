@@ -1,3 +1,4 @@
+source $SHERPA_PATH/lib/logger.sh
 source $SHERPA_PATH/lib/trust_verification.zsh
 
 function sherpa() {

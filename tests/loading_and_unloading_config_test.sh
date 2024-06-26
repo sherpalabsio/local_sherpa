@@ -1,9 +1,4 @@
-source lib/init.zsh
-
-# Load testing library
-source tests/lib/tap-functions
-
-SHERPA_CHECKSUM_DIR="$SHERPA_PATH/tests/playground/local_sherpa_checksums"
+source tests/lib/init.sh
 
 plan_no_plan
 
