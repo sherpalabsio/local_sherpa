@@ -1,63 +1,100 @@
 # Local Sherpa to the Rescue
 
-## Ascii demo
-
-### Files
+## Demo
 
 ```shell
-# ~/tmp/.bash_profile
-export var_1='ORIGINAL VAR'
+$ cd ~/projects
 
-alias alias_1='echo "ORIGINAL ALIAS"'
+$ echo $VAR_1
+GLOBAL VAR
+$ alias_1
+GLOBAL ALIAS
+$ function_1
+GLOBAL FUNCTION
+
+$ cd project_awesome
+
+$ echo $VAR_1
+LOCAL VAR PROJECT AWESOME
+$ alias_1
+LOCAL ALIAS PROJECT AWESOME
+$ function_1
+LOCAL FUNCTION PROJECT AWESOME
+
+$ cd ..
+
+$ echo $VAR_1
+GLOBAL VAR
+$ alias_1
+GLOBAL ALIAS
+$ function_1
+GLOBAL FUNCTION
+```
+
+The above is accomplished with the help of Local Sherpa and the files below.
+
+```shell
+# ~/.bash_profile or ~/.bashrc or ~/.zshrc etc...
+export VAR_1="GLOBAL VAR"
+
+alias alias_1='echo "GLOBAL ALIAS"'
 
 function_1() {
-  echo "ORIGINAL FUNCTION"
-}
-
-# ~/tmp/projects/project_1/.local-sherpa
-export var_1='VAR PROJECT 1'
-
-alias alias_1='echo "ALIAS PROJECT 1"'
-
-function_1() {
-  echo "FUNCTION PROJECT 1"
-}
-
-# ~/tmp/projects/project_2/.local-sherpa
-export var_1='VAR PROJECT 2'
-
-alias alias_1='echo "ALIAS PROJECT 2"'
-
-function_1() {
-  echo "FUNCTION PROJECT 2"
+  echo "GLOBAL FUNCTION"
 }
 ```
 
-### Show time
-
 ```shell
-$ cd ~/tmp
-$ source .bash_profile
-$ echo $var_1 # prints "ORIGINAL VAR"
-$ alias_1 # prints "ORIGINAL ALIAS"
-$ function_1 # prints "ORIGINAL FUNCTION"
+# ~/projects/project_awesome/.local-sherpa
+export VAR_1="LOCAL VAR PROJECT AWESOME"
 
-$ cd ~/tmp/projects/project_1
-$ echo $var_1 # prints "VAR PROJECT 1"
-$ alias_1 # prints "ALIAS PROJECT 1"
-$ function_1 # prints "FUNCTION PROJECT 1"
+alias alias_1='echo "LOCAL ALIAS PROJECT AWESOME"'
 
-$ cd ~/tmp/projects/project_2
-$ echo $var_1 # prints "VAR PROJECT 2"
-$ alias_1 # prints "ALIAS PROJECT 2"
-$ function_1 # prints "FUNCTION PROJECT 2"
-
-$ cd ~/tmp
-$ echo $var_1 # prints "ORIGINAL VAR"
-$ alias_1 # prints "ORIGINAL ALIAS"
-$ function_1 # prints "ORIGINAL FUNCTION"
+function_1() {
+  echo "LOCAL FUNCTION PROJECT AWESOME"
+}
 ```
 
+## Run RSpec depending on the project setup
+
+```shell
+# This project is dockerized
+# Run RSpec in the `project_with_docker-web` Docker container
+
+# ~/projects/project_with_docker/.local-sherpa
+alias de='docker exec -it `docker ps -aqf "name=$(basename $(pwd))-web"`'
+alias rs='de rspec'
+```
+
+```shell
+# Run RSpec as mortals do
+# ~/projects/project_with_mortal_setup/.local-sherpa
+alias rs='bin/rspec'
+```
+
+With this config `RSpec` will run depending on in which directory you `cd` into.
+
+## Usage
+### Config local env
+1. $ cd ~/projects/project_awesome
+2. $ sherpa edit
+3. [Disco](https://www.youtube.com/watch?v=UkSPUDpe0U8)
+
+### Security
+
+By default Sherpa won't load any local env file. You have to mark the directory as trusted first.
+
+``` bash
+$ echo "alias rs=rspec" > ~/projects/project_awesome/.local-sherpa
+$ cd ~/projects/project_awesome
+$ rs
+command not found: rs
+$ sherpa trust
+$ rs
+# rspec starts
+```
+
+When the local env file changes you have to trust the directory again. But if you use `sherpa edit` to edit the local env file, the directory will be trusted automatically when you save and close the file.
 
 ## Run the tests
 
