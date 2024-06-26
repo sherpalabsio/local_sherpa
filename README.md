@@ -96,6 +96,26 @@ $ rs
 
 When the local env file changes you have to trust the directory again. But if you use `sherpa edit` to edit the local env file, the directory will be trusted automatically when you save and close the file.
 
+## Supported shells
+- Zsh
+- More to come
+
+## Installation
+
+```shell
+# Clone the repo
+$ git clone git@github.com:tothpeter/local_sherpa.git ~/.dotfiles/lib/local_sherpa
+# Hook into your shell
+$ echo "source ~/.dotfiles/lib/local_sherpa/local_sherpa.sh" >> ~/.zshrc
+# Exclude the local env files (.local-sherpa) globally in Git
+$ echo ".local-sherpa" >> $(git config --global core.excludesfile)
+
+# Optional but recommended
+alias se='sherpa edit'
+alias st='sherpa trust'
+alias upgrade_sherpa='git -C ~/.dotfiles/lib/local_sherpa pull'
+```
+
 ## Run the tests
 
 `$ ./test.sh`
