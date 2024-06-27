@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+export SHERPA_ENABLED=true
+
 SHERPA_PATH=$( cd -- "$(dirname "$(dirname "$0")")" >/dev/null 2>&1 ; pwd -P )
 SHERPA_CHECKSUM_DIR="$HOME/.local/share/local_sherpa"
 SHERPA_LOG_LEVEL='info' # debug, info, nothing

@@ -6,13 +6,17 @@ function sherpa() {
   local command="$1"
 
   local usage_text="Example usage:
-  sherpa trust|allow - Trust the sherpa environment file in the current directory
-  sherpa edit        - Initialize and edit the sherpa environment file in the current directory"
+  sherpa trust|allow      - Trust the sherpa environment file in the current directory
+  sherpa edit|init        - Initialize and edit the local environment file in the current directory
+  sherpa rest|off|disable - Turn Sherpa off for the current session
+  sherpa work|on|enable   - Turn Sherpa on for the current session"
 
   case $command in
 -h|--help|help|'') echo $usage_text;;
       trust|allow) trust_local_env; alert_sherpa;;
         init|edit) edit; trust_local_env; unload_currently_loaded_env; load_local_env;;
+ rest|off|disable) disable;;
+   work|on|enable) enable;;
   esac
 }
 
@@ -21,7 +25,21 @@ edit() {
   eval "$EDITOR .local-sherpa"
 }
 
+disable() {
+  unload_currently_loaded_env
+  log_info "Sherpa: Local environment unloaded. Sherpa goes to sleep."
+  unset SHERPA_ENABLED
+}
+
+enable() {
+  export SHERPA_ENABLED=true
+  load_local_env
+  log_info "Sherpa: Local environment loaded. Sherpa is ready for action."
+}
+
 alert_sherpa() {
+  # Skip if sherpa is not enabled
+  [ -z "$SHERPA_ENABLED" ] && return
   unload_previously_loaded_env
   load_local_env
 }
