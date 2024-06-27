@@ -1,0 +1,41 @@
+# ================================== Variables =================================
+export var_1="local var 1"
+export VAR_2="local var 2"
+
+export var_multi_line="local var
+multi line"
+
+# Commented alias
+# export var_commented="local var 0"
+
+# ================================== Aliases ===================================
+alias alias_1='echo "local alias 1"'
+alias ALIAS_2='echo "local alias 2"'
+
+# Multi-line alias
+alias alias_multi_line='echo "local alias 1";
+echo "local alias 2";'
+
+# Commented alias
+# alias alias_commented='echo "local alias 0";'
+
+# ================================== Functions =================================
+function_1() {
+  echo "local function 1"
+}
+
+FUNCTION_2() {
+  echo "local function 2"
+}
+
+# Function with comment
+function_with_comment() {
+  # function_comment
+  echo "local function 1"
+}
+
+# Commented function
+# function_commented() {
+#   # comment
+#   echo "local function 0"
+# }
