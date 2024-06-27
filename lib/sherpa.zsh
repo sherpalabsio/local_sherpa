@@ -14,8 +14,8 @@ function sherpa() {
 Tell sherpa how much he should talk (works only for the current session):
   sherpa info               - Messages like the local env file is not trusted etc.
   sherpa debug              - Everything Sherpa knows
-  sherpa shh|shhh|shhhh     - Shotup Sherpa
-  sherpa loglevel|log_level - Set the log level to the specified value (debug, info, nothing)"
+  sherpa shh|shhh           - Shotup Sherpa
+  sherpa talk               - Set the log level to the specified value (debug, info, no talking)"
 
   case $command in
  -h|--help|help|'') echo $usage_text;;
@@ -23,10 +23,10 @@ Tell sherpa how much he should talk (works only for the current session):
          init|edit) edit; trust_local_env; unload_currently_loaded_env; load_local_env;;
   rest|off|disable) disable;;
     work|on|enable) enable;;
-loglevel|log_level) shift; set_log_level $1;;
+              talk) shift; set_log_level $1;;
              debug) set_log_level "debug";;
               info) set_log_level "info";;
-    shh|shhh|shhhh) set_log_level "nothing";;
+          shh|shhh) set_log_level "no talking";;
   esac
 }
 
@@ -51,9 +51,11 @@ set_log_level() {
   case $1 in
     debug) SHERPA_LOG_LEVEL='debug';;
     info) SHERPA_LOG_LEVEL='info';;
-    *) SHERPA_LOG_LEVEL='nothing';;
+    *) SHERPA_LOG_LEVEL='no talking';;
   esac
-  log_info "Sherpa: Log level set to $SHERPA_LOG_LEVEL"
+  log_message="Sherpa: Log level set to $SHERPA_LOG_LEVEL"
+  [ "$SHERPA_LOG_LEVEL" = "no talking" ] && log_message="$log_message 🤫"
+  log $log_message
 }
 
 alert_sherpa_we_changed_dir() {

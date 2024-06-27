@@ -4,7 +4,7 @@ export SHERPA_ENABLED=true
 
 SHERPA_PATH=$( cd -- "$(dirname "$(dirname "$0")")" >/dev/null 2>&1 ; pwd -P )
 SHERPA_CHECKSUM_DIR="$HOME/.local/share/local_sherpa"
-SHERPA_LOG_LEVEL='info' # debug, info, nothing
+SHERPA_LOG_LEVEL='debug' # debug, info, no talking
 
 # Load dependencies
 source "$SHERPA_PATH/vendor/smartcd/arrays"

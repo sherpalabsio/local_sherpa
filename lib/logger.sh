@@ -13,3 +13,7 @@ log_debug() {
 log_info() {
   [ "$(_log_level_in_number)" -le 1 ] && echo "$1"
 }
+
+log() {
+  echo "$1"
+}
