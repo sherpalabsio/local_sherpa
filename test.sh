@@ -15,7 +15,7 @@ run_single_test() {
 }
 
 run_all_tests() {
-  _test_files=(tests/*_test.sh)
+  _test_files=(tests/**/*_test.sh)
   _all_tests_passed=true
 
   for file in "${_test_files[@]}" ; do

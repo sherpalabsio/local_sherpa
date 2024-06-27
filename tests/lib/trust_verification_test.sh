@@ -1,4 +1,4 @@
-source tests/lib/init.sh
+source tests/support/init.sh
 
 plan_no_plan
 
