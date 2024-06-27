@@ -2,10 +2,10 @@ source tests/support/init.sh
 
 plan_no_plan
 
-# Start the test
+# Setup
 cd tests/playground
-# Load the global env
-source .bash_profile
+source .bash_profile # Imitate global env
+
 
 echo "==== Original env ===="
 is $var_1 "GLOBAL VAR"

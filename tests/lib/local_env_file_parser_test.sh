@@ -2,7 +2,9 @@ source tests/support/init.sh
 
 plan_no_plan
 
+# Setup
 cd tests/fixtures/parsing
+
 
 expected_list="var_1
 VAR_2
@@ -17,4 +19,4 @@ function_with_comment"
 
 actual_list=$(parse_local_env_file)
 
-is "$actual_list" "$expected_list" "list of variable, function and alias names"
+is "$actual_list" "$expected_list" "Correct list of variable, function and alias names"

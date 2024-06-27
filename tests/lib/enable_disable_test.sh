@@ -2,40 +2,43 @@ source tests/support/init.sh
 
 plan_no_plan
 
-# Start the test
+# Setup
 cd tests/playground
-# Load the global env
-source .bash_profile
+source .bash_profile # Imitate global env
 
-# Sherpa is awake so it loads the local env
+
+# When Sherpa is enabled and the user goes to a project with a local env file
 cd project_1
 sherpa trust
-is $var_1 "LOCAL VAR PROJECT 1" "Project 1 var is loaded"
-is "$(alias_1)" "LOCAL ALIAS PROJECT 1"
-is "$(function_1)" "LOCAL FUNCTION PROJECT 1"
+# Vigilant Sherpa loads the local env
+is $var_1 "LOCAL VAR PROJECT 1" "Local env is loaded (var)"
+is "$(alias_1)" "LOCAL ALIAS PROJECT 1" "Local env is loaded (alias)"
+is "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Local env is loaded (function)"
 
-# Disable Sherpa
+# When the user disables Sherpa
 sherpa rest
 
 # Sherpa unloaded the local env and goes to sleep
-is "$var_1" "GLOBAL VAR"
-is "$(alias_1)" "GLOBAL ALIAS"
-is "$(function_1)" "GLOBAL FUNCTION"
+is "$var_1" "GLOBAL VAR" "Local env is unloaded (var)"
+is "$(alias_1)" "GLOBAL ALIAS" "Local env is unloaded (alias)"
+is "$(function_1)" "GLOBAL FUNCTION" "Local env is unloaded (function)"
 
-# Sherpa is sleeping so it doesn't load the local env
+# When the user goes to another project with a local env file while Sherpa is sleeping
 cd ../project_2
 sherpa trust
-is "$var_1" "GLOBAL VAR"
-is "$(alias_1)" "GLOBAL ALIAS"
-is "$(function_1)" "GLOBAL FUNCTION"
+# Sleeping Sherpa doesn't load any env
+is "$var_1" "GLOBAL VAR" "Local env is NOT loaded (var)"
+is "$(alias_1)" "GLOBAL ALIAS" "Local env is NOT loaded (alias)"
+is "$(function_1)" "GLOBAL FUNCTION" "Local env is NOT loaded (function)"
 
-# Enable Sherpa
+# When the user wakes the Sherpa up
 sherpa work
 
 # Sherpa wakes up and loads the local env
-is $var_1 "LOCAL VAR PROJECT 2"
-is "$(alias_1)" "LOCAL ALIAS PROJECT 2"
-is "$(function_1)" "LOCAL FUNCTION PROJECT 2"
+is $var_1 "LOCAL VAR PROJECT 2" "Local env is loaded (var)"
+is "$(alias_1)" "LOCAL ALIAS PROJECT 2" "Local env is loaded (alias)"
+is "$(function_1)" "LOCAL FUNCTION PROJECT 2" "Local env is loaded (function)"
+
 
 # Tear down
 rm -rf $SHERPA_CHECKSUM_DIR
