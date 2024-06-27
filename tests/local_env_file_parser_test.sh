@@ -12,6 +12,7 @@ ALIAS_2
 alias_multi_line
 function_1
 FUNCTION_2
+function_3
 function_with_comment"
 
 actual_list=$(parse_local_env_file)

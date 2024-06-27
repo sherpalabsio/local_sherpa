@@ -22,8 +22,8 @@ _fetch_aliase_names() {
 
 _fetch_function_names() {
   local filter_pattern='^[[:space:]]*([[:alnum:]_]+[[:space:]]*\(\)|function[[:space:]]+[[:alnum:]_]+)'
-  local function_names=$(grep -E "$filter_pattern" .local-sherpa | \
-                         awk '{print $1}' | \
+  local function_names=$(grep -oE "$filter_pattern" .local-sherpa | \
+                         sed 's/function //' | \
                          sed 's/()//')
   echo "$function_names"
 }

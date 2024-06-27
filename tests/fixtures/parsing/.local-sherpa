@@ -28,6 +28,10 @@ FUNCTION_2() {
   echo "local function 2"
 }
 
+function function_3() {
+  echo "local function 3"
+}
+
 # Function with comment
 function_with_comment() {
   # function_comment
