@@ -1,0 +1,505 @@
+# ================================== Variables =================================
+export var_1="local var 1"
+export var_2="local var 2"
+export var_3="local var 3"
+export var_4="local var 4"
+export var_5="local var 5"
+export var_6="local var 6"
+export var_7="local var 7"
+export var_8="local var 8"
+export var_9="local var 9"
+export var_10="local var 10"
+export var_11="local var 11"
+export var_12="local var 12"
+export var_13="local var 13"
+export var_14="local var 14"
+export var_15="local var 15"
+export var_16="local var 16"
+export var_17="local var 17"
+export var_18="local var 18"
+export var_19="local var 19"
+export var_20="local var 20"
+export var_21="local var 21"
+export var_22="local var 22"
+export var_23="local var 23"
+export var_24="local var 24"
+export var_25="local var 25"
+export var_26="local var 26"
+export var_27="local var 27"
+export var_28="local var 28"
+export var_29="local var 29"
+export var_30="local var 30"
+export var_31="local var 31"
+export var_32="local var 32"
+export var_33="local var 33"
+export var_34="local var 34"
+export var_35="local var 35"
+export var_36="local var 36"
+export var_37="local var 37"
+export var_38="local var 38"
+export var_39="local var 39"
+export var_40="local var 40"
+export var_41="local var 41"
+export var_42="local var 42"
+export var_43="local var 43"
+export var_44="local var 44"
+export var_45="local var 45"
+export var_46="local var 46"
+export var_47="local var 47"
+export var_48="local var 48"
+export var_49="local var 49"
+export var_50="local var 50"
+export var_51="local var 51"
+export var_52="local var 52"
+export var_53="local var 53"
+export var_54="local var 54"
+export var_55="local var 55"
+export var_56="local var 56"
+export var_57="local var 57"
+export var_58="local var 58"
+export var_59="local var 59"
+export var_60="local var 60"
+export var_61="local var 61"
+export var_62="local var 62"
+export var_63="local var 63"
+export var_64="local var 64"
+export var_65="local var 65"
+export var_66="local var 66"
+export var_67="local var 67"
+export var_68="local var 68"
+export var_69="local var 69"
+export var_70="local var 70"
+export var_71="local var 71"
+export var_72="local var 72"
+export var_73="local var 73"
+export var_74="local var 74"
+export var_75="local var 75"
+export var_76="local var 76"
+export var_77="local var 77"
+export var_78="local var 78"
+export var_79="local var 79"
+export var_80="local var 80"
+export var_81="local var 81"
+export var_82="local var 82"
+export var_83="local var 83"
+export var_84="local var 84"
+export var_85="local var 85"
+export var_86="local var 86"
+export var_87="local var 87"
+export var_88="local var 88"
+export var_89="local var 89"
+export var_90="local var 90"
+export var_91="local var 91"
+export var_92="local var 92"
+export var_93="local var 93"
+export var_94="local var 94"
+export var_95="local var 95"
+export var_96="local var 96"
+export var_97="local var 97"
+export var_98="local var 98"
+export var_99="local var 99"
+export var_100="local var 100"
+
+# ================================== Aliases ===================================
+alias alias_1='echo "local alias 1"'
+alias alias_2='echo "local alias 2"'
+alias alias_3='echo "local alias 3"'
+alias alias_4='echo "local alias 4"'
+alias alias_5='echo "local alias 5"'
+alias alias_6='echo "local alias 6"'
+alias alias_7='echo "local alias 7"'
+alias alias_8='echo "local alias 8"'
+alias alias_9='echo "local alias 9"'
+alias alias_10='echo "local alias 10"'
+alias alias_11='echo "local alias 11"'
+alias alias_12='echo "local alias 12"'
+alias alias_13='echo "local alias 13"'
+alias alias_14='echo "local alias 14"'
+alias alias_15='echo "local alias 15"'
+alias alias_16='echo "local alias 16"'
+alias alias_17='echo "local alias 17"'
+alias alias_18='echo "local alias 18"'
+alias alias_19='echo "local alias 19"'
+alias alias_20='echo "local alias 20"'
+alias alias_21='echo "local alias 21"'
+alias alias_22='echo "local alias 22"'
+alias alias_23='echo "local alias 23"'
+alias alias_24='echo "local alias 24"'
+alias alias_25='echo "local alias 25"'
+alias alias_26='echo "local alias 26"'
+alias alias_27='echo "local alias 27"'
+alias alias_28='echo "local alias 28"'
+alias alias_29='echo "local alias 29"'
+alias alias_30='echo "local alias 30"'
+alias alias_31='echo "local alias 31"'
+alias alias_32='echo "local alias 32"'
+alias alias_33='echo "local alias 33"'
+alias alias_34='echo "local alias 34"'
+alias alias_35='echo "local alias 35"'
+alias alias_36='echo "local alias 36"'
+alias alias_37='echo "local alias 37"'
+alias alias_38='echo "local alias 38"'
+alias alias_39='echo "local alias 39"'
+alias alias_40='echo "local alias 40"'
+alias alias_41='echo "local alias 41"'
+alias alias_42='echo "local alias 42"'
+alias alias_43='echo "local alias 43"'
+alias alias_44='echo "local alias 44"'
+alias alias_45='echo "local alias 45"'
+alias alias_46='echo "local alias 46"'
+alias alias_47='echo "local alias 47"'
+alias alias_48='echo "local alias 48"'
+alias alias_49='echo "local alias 49"'
+alias alias_50='echo "local alias 50"'
+alias alias_51='echo "local alias 51"'
+alias alias_52='echo "local alias 52"'
+alias alias_53='echo "local alias 53"'
+alias alias_54='echo "local alias 54"'
+alias alias_55='echo "local alias 55"'
+alias alias_56='echo "local alias 56"'
+alias alias_57='echo "local alias 57"'
+alias alias_58='echo "local alias 58"'
+alias alias_59='echo "local alias 59"'
+alias alias_60='echo "local alias 60"'
+alias alias_61='echo "local alias 61"'
+alias alias_62='echo "local alias 62"'
+alias alias_63='echo "local alias 63"'
+alias alias_64='echo "local alias 64"'
+alias alias_65='echo "local alias 65"'
+alias alias_66='echo "local alias 66"'
+alias alias_67='echo "local alias 67"'
+alias alias_68='echo "local alias 68"'
+alias alias_69='echo "local alias 69"'
+alias alias_70='echo "local alias 70"'
+alias alias_71='echo "local alias 71"'
+alias alias_72='echo "local alias 72"'
+alias alias_73='echo "local alias 73"'
+alias alias_74='echo "local alias 74"'
+alias alias_75='echo "local alias 75"'
+alias alias_76='echo "local alias 76"'
+alias alias_77='echo "local alias 77"'
+alias alias_78='echo "local alias 78"'
+alias alias_79='echo "local alias 79"'
+alias alias_80='echo "local alias 80"'
+alias alias_81='echo "local alias 81"'
+alias alias_82='echo "local alias 82"'
+alias alias_83='echo "local alias 83"'
+alias alias_84='echo "local alias 84"'
+alias alias_85='echo "local alias 85"'
+alias alias_86='echo "local alias 86"'
+alias alias_87='echo "local alias 87"'
+alias alias_88='echo "local alias 88"'
+alias alias_89='echo "local alias 89"'
+alias alias_90='echo "local alias 90"'
+alias alias_91='echo "local alias 91"'
+alias alias_92='echo "local alias 92"'
+alias alias_93='echo "local alias 93"'
+alias alias_94='echo "local alias 94"'
+alias alias_95='echo "local alias 95"'
+alias alias_96='echo "local alias 96"'
+alias alias_97='echo "local alias 97"'
+alias alias_98='echo "local alias 98"'
+alias alias_99='echo "local alias 99"'
+alias alias_100='echo "local alias 100"'
+
+# ================================== Functions =================================
+function_1() {
+  echo "local function 1"
+}
+function_2() {
+  echo "local function 2"
+}
+function_3() {
+  echo "local function 3"
+}
+function_4() {
+  echo "local function 4"
+}
+function_5() {
+  echo "local function 5"
+}
+function_6() {
+  echo "local function 6"
+}
+function_7() {
+  echo "local function 7"
+}
+function_8() {
+  echo "local function 8"
+}
+function_9() {
+  echo "local function 9"
+}
+function_10() {
+  echo "local function 10"
+}
+function_11() {
+  echo "local function 11"
+}
+function_12() {
+  echo "local function 12"
+}
+function_13() {
+  echo "local function 13"
+}
+function_14() {
+  echo "local function 14"
+}
+function_15() {
+  echo "local function 15"
+}
+function_16() {
+  echo "local function 16"
+}
+function_17() {
+  echo "local function 17"
+}
+function_18() {
+  echo "local function 18"
+}
+function_19() {
+  echo "local function 19"
+}
+function_20() {
+  echo "local function 20"
+}
+function_21() {
+  echo "local function 21"
+}
+function_22() {
+  echo "local function 22"
+}
+function_23() {
+  echo "local function 23"
+}
+function_24() {
+  echo "local function 24"
+}
+function_25() {
+  echo "local function 25"
+}
+function_26() {
+  echo "local function 26"
+}
+function_27() {
+  echo "local function 27"
+}
+function_28() {
+  echo "local function 28"
+}
+function_29() {
+  echo "local function 29"
+}
+function_30() {
+  echo "local function 30"
+}
+function_31() {
+  echo "local function 31"
+}
+function_32() {
+  echo "local function 32"
+}
+function_33() {
+  echo "local function 33"
+}
+function_34() {
+  echo "local function 34"
+}
+function_35() {
+  echo "local function 35"
+}
+function_36() {
+  echo "local function 36"
+}
+function_37() {
+  echo "local function 37"
+}
+function_38() {
+  echo "local function 38"
+}
+function_39() {
+  echo "local function 39"
+}
+function_40() {
+  echo "local function 40"
+}
+function_41() {
+  echo "local function 41"
+}
+function_42() {
+  echo "local function 42"
+}
+function_43() {
+  echo "local function 43"
+}
+function_44() {
+  echo "local function 44"
+}
+function_45() {
+  echo "local function 45"
+}
+function_46() {
+  echo "local function 46"
+}
+function_47() {
+  echo "local function 47"
+}
+function_48() {
+  echo "local function 48"
+}
+function_49() {
+  echo "local function 49"
+}
+function_50() {
+  echo "local function 50"
+}
+function_51() {
+  echo "local function 51"
+}
+function_52() {
+  echo "local function 52"
+}
+function_53() {
+  echo "local function 53"
+}
+function_54() {
+  echo "local function 54"
+}
+function_55() {
+  echo "local function 55"
+}
+function_56() {
+  echo "local function 56"
+}
+function_57() {
+  echo "local function 57"
+}
+function_58() {
+  echo "local function 58"
+}
+function_59() {
+  echo "local function 59"
+}
+function_60() {
+  echo "local function 60"
+}
+function_61() {
+  echo "local function 61"
+}
+function_62() {
+  echo "local function 62"
+}
+function_63() {
+  echo "local function 63"
+}
+function_64() {
+  echo "local function 64"
+}
+function_65() {
+  echo "local function 65"
+}
+function_66() {
+  echo "local function 66"
+}
+function_67() {
+  echo "local function 67"
+}
+function_68() {
+  echo "local function 68"
+}
+function_69() {
+  echo "local function 69"
+}
+function_70() {
+  echo "local function 70"
+}
+function_71() {
+  echo "local function 71"
+}
+function_72() {
+  echo "local function 72"
+}
+function_73() {
+  echo "local function 73"
+}
+function_74() {
+  echo "local function 74"
+}
+function_75() {
+  echo "local function 75"
+}
+function_76() {
+  echo "local function 76"
+}
+function_77() {
+  echo "local function 77"
+}
+function_78() {
+  echo "local function 78"
+}
+function_79() {
+  echo "local function 79"
+}
+function_80() {
+  echo "local function 80"
+}
+function_81() {
+  echo "local function 81"
+}
+function_82() {
+  echo "local function 82"
+}
+function_83() {
+  echo "local function 83"
+}
+function_84() {
+  echo "local function 84"
+}
+function_85() {
+  echo "local function 85"
+}
+function_86() {
+  echo "local function 86"
+}
+function_87() {
+  echo "local function 87"
+}
+function_88() {
+  echo "local function 88"
+}
+function_89() {
+  echo "local function 89"
+}
+function_90() {
+  echo "local function 90"
+}
+function_91() {
+  echo "local function 91"
+}
+function_92() {
+  echo "local function 92"
+}
+function_93() {
+  echo "local function 93"
+}
+function_94() {
+  echo "local function 94"
+}
+function_95() {
+  echo "local function 95"
+}
+function_96() {
+  echo "local function 96"
+}
+function_97() {
+  echo "local function 97"
+}
+function_98() {
+  echo "local function 98"
+}
+function_99() {
+  echo "local function 99"
+}
+function_100() {
+  echo "local function 100"
+}
