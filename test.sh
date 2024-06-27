@@ -1,7 +1,7 @@
 #!/bin/bash
 
 run_single_test() {
-  _tests_passed=true
+  local _tests_passed=true
 
   echo "== Running $1"
   zsh $1 || _tests_passed=false
@@ -15,8 +15,8 @@ run_single_test() {
 }
 
 run_all_tests() {
-  _test_files=(tests/**/*_test.sh)
-  _all_tests_passed=true
+  local _test_files=(tests/**/*_test.sh)
+  local _all_tests_passed=true
 
   for file in "${_test_files[@]}" ; do
     echo "== Running $file"
