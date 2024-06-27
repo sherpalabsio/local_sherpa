@@ -80,9 +80,9 @@ unload_currently_loaded_env() {
 load_local_env() {
   # Skip if sherpa is not enabled
   [ -z "$SHERPA_ENABLED" ] && return
+  log_debug "Load local env?"
   # Does the .local-sherpa file exist?
-  [ -f .local-sherpa ] || return
-  log_debug "Loading local env"
+  [ -f .local-sherpa ] || { log_debug "No local env file"; return }
 
   # Is the .local-sherpa env file trusted?
   verify_trust || return 1
@@ -90,9 +90,11 @@ load_local_env() {
   varstash_dir=$PWD
   stash_existing_env
   source .local-sherpa
+  log_debug "Local env loaded"
 }
 
 stash_existing_env() {
+  log_debug "Stash existing env"
   parse_local_env_file | while read -r env_item_name; do
     autostash "$env_item_name"
   done
