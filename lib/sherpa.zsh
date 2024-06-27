@@ -37,14 +37,14 @@ edit() {
 
 disable() {
   unload_currently_loaded_env
-  log_info "Sherpa: Local env unloaded. Sherpa goes to sleep."
+  log_info "Local env unloaded. Sherpa goes to sleep."
   unset SHERPA_ENABLED
 }
 
 enable() {
   export SHERPA_ENABLED=true
   load_local_env
-  log_info "Sherpa: Local env loaded. Sherpa is ready for action."
+  log_info "Local env loaded. Sherpa is ready for action."
 }
 
 set_log_level() {
@@ -53,7 +53,7 @@ set_log_level() {
     info) SHERPA_LOG_LEVEL='info';;
     *) SHERPA_LOG_LEVEL='no talking';;
   esac
-  log_message="Sherpa: Log level set to $SHERPA_LOG_LEVEL"
+  log_message="Sherpa: Log level set to: $SHERPA_LOG_LEVEL"
   [ "$SHERPA_LOG_LEVEL" = "no talking" ] && log_message="$log_message 🤫"
   log $log_message
 }
@@ -61,12 +61,13 @@ set_log_level() {
 alert_sherpa_we_changed_dir() {
   # Skip if sherpa is not enabled
   [ -z "$SHERPA_ENABLED" ] && return
-  log_debug "Sherpa-debug: Directory changed. Unloading previous env and loading local env."
+  log_debug "Directory changed."
   unload_previously_loaded_env
   load_local_env
 }
 
 unload_previously_loaded_env() {
+  log_debug "Unloading env."
   varstash_dir=$OLDPWD
   autounstash
 }
@@ -81,7 +82,7 @@ load_local_env() {
   [ -z "$SHERPA_ENABLED" ] && return
   # Does the .local-sherpa file exist?
   [ -f .local-sherpa ] || return
-  log_debug "Sherpa-debug: Loading local env"
+  log_debug "Loading local env"
 
   # Is the .local-sherpa env file trusted?
   verify_trust || return 1

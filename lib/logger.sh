@@ -7,11 +7,11 @@ _log_level_in_number() {
 }
 
 log_debug() {
-  [ "$(_log_level_in_number)" -le 0 ] && echo "$1"
+  [ "$(_log_level_in_number)" -le 0 ] && echo "Sherpa debug: $1"
 }
 
 log_info() {
-  [ "$(_log_level_in_number)" -le 1 ] && echo "$1"
+  [ "$(_log_level_in_number)" -le 1 ] && echo "Sherpa: $1"
 }
 
 log() {
