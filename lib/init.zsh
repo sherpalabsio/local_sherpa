@@ -17,12 +17,12 @@ source "$SHERPA_PATH/lib/sherpa.zsh"
 function sherpa_chpwd_handler() {
   # Changed directory?
   if [[ -n $OLDPWD && $PWD != $OLDPWD ]]; then
-    alert_sherpa
+    alert_sherpa_we_changed_dir
   fi
 }
 
 autoload -U add-zsh-hook
 add-zsh-hook chpwd sherpa_chpwd_handler
 
-# When loading the shell, we need to make sure that the sherpa is active
-alert_sherpa
+# When loading the shell, we need to make sure that the sherpa is doing its job
+load_local_env
