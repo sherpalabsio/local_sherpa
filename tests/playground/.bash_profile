@@ -1,7 +1,7 @@
-export var_1='ORIGINAL VAR'
+export var_1='GLOBAL VAR'
 
-alias alias_1='echo "ORIGINAL ALIAS"'
+alias alias_1='echo "GLOBAL ALIAS"'
 
 function_1() {
-  echo "ORIGINAL FUNCTION"
+  echo "GLOBAL FUNCTION"
 }

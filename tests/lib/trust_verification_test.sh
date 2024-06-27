@@ -15,13 +15,13 @@ like $actual_warning_message $expected_warning_message 'It warns when the local 
 
 # It will not load untrusted local env file
 cd project_1
-is "$var_1" "ORIGINAL VAR"
-is "$(alias_1)" "ORIGINAL ALIAS"
-is "$(function_1)" "ORIGINAL FUNCTION"
+is "$var_1" "GLOBAL VAR"
+is "$(alias_1)" "GLOBAL ALIAS"
+is "$(function_1)" "GLOBAL FUNCTION"
 sherpa trust
-is "$var_1" "VAR PROJECT 1"
-is "$(alias_1)" "ALIAS PROJECT 1"
-is "$(function_1)" "FUNCTION PROJECT 1"
+is "$var_1" "LOCAL VAR PROJECT 1"
+is "$(alias_1)" "LOCAL ALIAS PROJECT 1"
+is "$(function_1)" "LOCAL FUNCTION PROJECT 1"
 
 # Tear down
 rm -rf $SHERPA_CHECKSUM_DIR

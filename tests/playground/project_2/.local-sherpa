@@ -1,7 +1,7 @@
-export var_1='VAR PROJECT 2'
+export var_1='LOCAL VAR PROJECT 2'
 
-alias alias_1='echo "ALIAS PROJECT 2"'
+alias alias_1='echo "LOCAL ALIAS PROJECT 2"'
 
 function_1() {
-  echo "FUNCTION PROJECT 2"
+  echo "LOCAL FUNCTION PROJECT 2"
 }
