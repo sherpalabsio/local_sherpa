@@ -3,7 +3,7 @@ source tests/support/init.sh
 plan_no_plan
 
 # Setup
-cd tests/fixtures/parsing
+cd fixtures/parsing
 
 
 expected_list="var_1

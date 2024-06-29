@@ -3,7 +3,7 @@ source tests/support/init.sh
 plan_no_plan
 
 # Setup
-cd tests/playground/project_1
+cd playground/project_1
 sherpa trust
 is "$var_1" "LOCAL VAR PROJECT 1" "The local env is loaded"
 

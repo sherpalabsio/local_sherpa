@@ -3,7 +3,7 @@ source tests/support/init.sh
 plan_no_plan
 
 # Setup
-cd tests/playground
+cd playground
 source .bash_profile # Imitate global env
 
 # When the user goes to a project with an untrusted local env file
