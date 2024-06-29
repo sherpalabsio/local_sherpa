@@ -118,4 +118,4 @@ alias upgrade_sherpa='git -C ~/.dotfiles/lib/local_sherpa pull'
 
 ## Run the tests
 
-`$ ./test.sh`
+`$ ./test`

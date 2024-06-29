@@ -68,12 +68,12 @@ alert_sherpa_we_changed_dir() {
 
 unload_previously_loaded_env() {
   log_debug "Unloading env."
-  varstash_dir=$OLDPWD
+  varstash_dir="$OLDPWD"
   autounstash
 }
 
 unload_currently_loaded_env() {
-  varstash_dir=$PWD
+  varstash_dir="$PWD"
   autounstash
 }
 
@@ -87,7 +87,7 @@ load_local_env() {
   # Is the .local-sherpa env file trusted?
   verify_trust || return 1
 
-  varstash_dir=$PWD
+  varstash_dir="$PWD"
   stash_existing_env
   source .local-sherpa
   log_debug "Local env loaded"
@@ -95,7 +95,9 @@ load_local_env() {
 
 stash_existing_env() {
   log_debug "Stash existing env"
-  parse_local_env_file | while read -r env_item_name; do
+
+  while IFS= read -r env_item_name || [[ -n $env_item_name ]]; do
+    log_debug "AutoStashing $env_item_name - $var_1"
     autostash "$env_item_name"
-  done
+  done < <(parse_local_env_file)
 }
