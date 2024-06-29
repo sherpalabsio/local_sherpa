@@ -11,7 +11,7 @@ source .bash_profile # Imitate global env
 cd project_1
 sherpa trust
 # Vigilant Sherpa loads the local env
-is $var_1 "LOCAL VAR PROJECT 1" "Local env is loaded (var)"
+is "$var_1" "LOCAL VAR PROJECT 1" "Local env is loaded (var)"
 is "$(alias_1)" "LOCAL ALIAS PROJECT 1" "Local env is loaded (alias)"
 is "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Local env is loaded (function)"
 
@@ -35,7 +35,7 @@ is "$(function_1)" "GLOBAL FUNCTION" "Local env is NOT loaded (function)"
 sherpa work
 
 # Sherpa wakes up and loads the local env
-is $var_1 "LOCAL VAR PROJECT 2" "Local env is loaded (var)"
+is "$var_1" "LOCAL VAR PROJECT 2" "Local env is loaded (var)"
 is "$(alias_1)" "LOCAL ALIAS PROJECT 2" "Local env is loaded (alias)"
 is "$(function_1)" "LOCAL FUNCTION PROJECT 2" "Local env is loaded (function)"
 

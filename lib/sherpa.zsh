@@ -82,7 +82,7 @@ load_local_env() {
   [ -z "$SHERPA_ENABLED" ] && return
   log_debug "Load local env?"
   # Does the .local-sherpa file exist?
-  [ -f .local-sherpa ] || { log_debug "No local env file"; return }
+  [ -f .local-sherpa ] || { log_debug "No local env file"; return; }
 
   # Is the .local-sherpa env file trusted?
   verify_trust || return 1

@@ -9,7 +9,7 @@ _fetch_variable_names() {
   local filter_pattern='^[[:space:]]*export[[:space:]]+[[:alnum:]_]+'
   # Cleanup:
   # export var_1 -> var_1
-  local variable_names=$(grep -oE $filter_pattern .local-sherpa | \
+  local variable_names=$(grep -oE "$filter_pattern" .local-sherpa | \
                          awk '{print $2}')
 
   echo "$variable_names"
