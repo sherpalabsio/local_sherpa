@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# We run these tests in interactive mode to be able to test aliases
+
+# Disable history to avoid polluting the user's history file
+HISTFILE=
+
 run_single_test() {
   local _tests_passed=true
 
