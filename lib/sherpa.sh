@@ -2,8 +2,8 @@ function sherpa() {
   local command="$1"
 
   local usage_text="Example usage:
-  sherpa trust|allow      - Trust the local env file
-  sherpa edit|init        - Edit the local env file (creates it if it does not exist)
+  sherpa trust|allow      - Trust the local env file (short-cut alias: \"t\")
+  sherpa edit|init        - Edit the local env file (short-cut alias: \"e\")
   sherpa rest|off|disable - Turn Sherpa off for the current session
   sherpa work|on|enable   - Turn Sherpa on for the current session
 
@@ -15,8 +15,8 @@ Tell sherpa how much he should talk (works only for the current session):
 
   case $command in
  -h|--help|help|'') echo "$usage_text";;
-       trust|allow) trust_local_env; load_local_env;;
-         init|edit) edit; trust_local_env; unload_currently_loaded_env; load_local_env;;
+     t|trust|allow) trust_local_env; load_local_env;;
+       e|edit|init) edit; trust_local_env; unload_currently_loaded_env; load_local_env;;
   rest|off|disable) disable;;
     work|on|enable) enable;;
               talk) shift; set_log_level $1;;
