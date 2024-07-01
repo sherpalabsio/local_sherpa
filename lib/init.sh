@@ -21,35 +21,12 @@ source "$SHERPA_PATH/vendor/smartcd/varstash"
 source $SHERPA_LIB_PATH/logger.sh
 source $SHERPA_LIB_PATH/trust_verification.sh
 source $SHERPA_LIB_PATH/local_env_file_parser.sh
+source $SHERPA_LIB_PATH/setup_cd_hook.sh
 
 source "$SHERPA_LIB_PATH/sherpa.sh"
 
 # Hook into cd
-if [ -n "$ZSH_VERSION" ]; then
-  # ZSH
-  function sherpa_chpwd_handler() {
-    # Changed directory?
-    if [[ -n $OLDPWD && $PWD != $OLDPWD ]]; then
-      alert_sherpa_we_changed_dir
-    fi
-  }
+setup_cd_hook
 
-  autoload -U add-zsh-hook
-  add-zsh-hook chpwd sherpa_chpwd_handler
-else
-  # BASH
-  _sherpa_chpwd_hook() {
-    # run commands in CHPWD_COMMAND variable on dir change
-    if [[ "$PREVPWD" != "$PWD" ]]; then
-      alert_sherpa_we_changed_dir
-    fi
-    # refresh last working dir record
-    export PREVPWD="$PWD"
-  }
-
-  # add `;` after _sherpa_chpwd_hook if PROMPT_COMMAND is not empty
-  PROMPT_COMMAND="_sherpa_chpwd_hook${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
-fi
-
-# When loading the shell, we need to make sure that the sherpa is doing its job
+# When loading the shell the very first time
 load_local_env
