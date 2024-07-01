@@ -14,7 +14,7 @@ Tell sherpa how much he should talk (works only for the current session):
   sherpa talk               - Set the log level to the specified value (debug, info, no talking)"
 
   case $command in
- -h|--help|help|'') echo $usage_text;;
+ -h|--help|help|'') echo "$usage_text";;
        trust|allow) trust_local_env; load_local_env;;
          init|edit) edit; trust_local_env; unload_currently_loaded_env; load_local_env;;
   rest|off|disable) disable;;
@@ -51,7 +51,7 @@ set_log_level() {
   esac
   log_message="Sherpa: Log level set to: $SHERPA_LOG_LEVEL"
   [ "$SHERPA_LOG_LEVEL" = "no talking" ] && log_message="$log_message 🤫"
-  log $log_message
+  log "$log_message"
 }
 
 alert_sherpa_we_changed_dir() {

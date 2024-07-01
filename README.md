@@ -5,7 +5,7 @@
 ```shell
 $ cd ~/projects
 
-$ echo $VAR_1
+$ echo "$VAR_1"
 GLOBAL VAR
 $ alias_1
 GLOBAL ALIAS
@@ -14,7 +14,7 @@ GLOBAL FUNCTION
 
 $ cd project_awesome
 
-$ echo $VAR_1
+$ echo "$VAR_1"
 LOCAL VAR PROJECT AWESOME
 $ alias_1
 LOCAL ALIAS PROJECT AWESOME
@@ -23,7 +23,7 @@ LOCAL FUNCTION PROJECT AWESOME
 
 $ cd ..
 
-$ echo $VAR_1
+$ echo "$VAR_1"
 GLOBAL VAR
 $ alias_1
 GLOBAL ALIAS

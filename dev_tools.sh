@@ -6,7 +6,7 @@ var_dump() {
 
 timer() {
   if [ "$#" -eq 2 ]; then
-    echo $1
+    echo "$1"
     shift
   fi
 
