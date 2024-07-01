@@ -1,7 +1,3 @@
-source $SHERPA_PATH/lib/logger.sh
-source $SHERPA_PATH/lib/trust_verification.zsh
-source $SHERPA_PATH/lib/local_env_file_parser.sh
-
 function sherpa() {
   local command="$1"
 

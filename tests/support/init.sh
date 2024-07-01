@@ -1,6 +1,6 @@
 cd tests
 
-source ../lib/init.zsh
+source ../lib/init.sh
 source support/tap-functions
 
 SHERPA_CHECKSUM_DIR="$SHERPA_PATH/tests/playground/local_sherpa_checksums"

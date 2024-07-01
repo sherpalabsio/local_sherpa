@@ -4,20 +4,25 @@ export SHERPA_ENABLED=true
 export SHERPA_LOG_LEVEL='info' # debug, info, no talking
 
 if [ -n "$ZSH_VERSION" ]; then
-  SHERPA_PATH=$( cd -- "$(dirname "$(dirname "$0")")" >/dev/null 2>&1 ; pwd -P )
+  SHERPA_LIB_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
 else
-  _DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-  SHERPA_PATH="$(dirname "$_DIR")"
+  SHERPA_LIB_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 fi
+
+SHERPA_PATH="$(dirname "$SHERPA_LIB_PATH")"
 
 SHERPA_CHECKSUM_DIR="$HOME/.local/share/local_sherpa"
 
-# Load dependencies
+# Load the dependencies
 source "$SHERPA_PATH/vendor/smartcd/arrays"
 source "$SHERPA_PATH/vendor/smartcd/varstash"
 
-# Load sherpa
-source "$SHERPA_PATH/lib/sherpa.zsh"
+# Load the app
+source $SHERPA_LIB_PATH/logger.sh
+source $SHERPA_LIB_PATH/trust_verification.sh
+source $SHERPA_LIB_PATH/local_env_file_parser.sh
+
+source "$SHERPA_LIB_PATH/sherpa.sh"
 
 # Hook into cd
 if [ -n "$ZSH_VERSION" ]; then
