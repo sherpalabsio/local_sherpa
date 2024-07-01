@@ -93,7 +93,7 @@ stash_existing_env() {
   log_debug "Stash existing env"
 
   while IFS= read -r env_item_name || [[ -n $env_item_name ]]; do
-    log_debug "AutoStashing $env_item_name - $var_1"
+    log_debug "AutoStashing $env_item_name"
     autostash "$env_item_name"
   done < <(parse_local_env_file)
 }
