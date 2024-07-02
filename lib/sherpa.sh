@@ -57,7 +57,7 @@ set_log_level() {
 }
 
 alert_sherpa_we_changed_dir() {
-  # Skip if sherpa is not enabled
+  # Skip if Sherpa is not enabled
   [ -z "$SHERPA_ENABLED" ] && return
   log_debug "Directory changed."
   unload_previously_loaded_env
@@ -76,23 +76,24 @@ unload_currently_loaded_env() {
 }
 
 load_local_env() {
-  # Skip if sherpa is not enabled
+  # Skip if Sherpa is disabled
   [ -z "$SHERPA_ENABLED" ] && return
   log_debug "Load local env?"
-  # Does the .local-sherpa file exist?
+
+  # Skip if there is no local env file
   [ -f .local-sherpa ] || { log_debug "No local env file"; return; }
 
-  # Is the .local-sherpa env file trusted?
-  verify_trust || return 1
+  # Skip if the local env file is not trusted
+  verify_trust || return;
 
-  varstash_dir="$PWD"
-  stash_existing_env
+  stash_local_env
+  log_debug "Loaded local env"
   source .local-sherpa
-  log_debug "Local env loaded"
 }
 
-stash_existing_env() {
-  log_debug "Stash existing env"
+stash_local_env() {
+  log_debug "Stash local env"
+  varstash_dir="$PWD"
 
   while IFS= read -r env_item_name || [[ -n $env_item_name ]]; do
     log_debug "AutoStashing $env_item_name"

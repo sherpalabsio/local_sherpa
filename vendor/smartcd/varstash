@@ -315,7 +315,7 @@ function _mangle_var() {
 
 # vim: filetype=sh autoindent expandtab shiftwidth=4 softtabstop=4
 
-function _autostashed_names() {
+function _autostashed_var_names() {
     local autostash_name=$(_mangle_var AUTOSTASH)
-    echo "_autostashed_names: $(eval "echo \"\${$autostash_name[@]}\"")"
+    echo "_autostashed_var_names: $(eval "echo \"\${$autostash_name[@]}\"")"
 }
