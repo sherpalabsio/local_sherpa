@@ -12,7 +12,9 @@ _fetch_variable_names() {
   local variable_names=$(grep -oE "$filter_pattern" .local-sherpa | \
                          awk '{print $2}')
 
-  echo "$variable_names"
+  if [ -n "$variable_names" ]; then
+    echo "$variable_names"
+  fi
 }
 
 _fetch_aliase_names() {
@@ -21,7 +23,10 @@ _fetch_aliase_names() {
   # alias alias_1=... -> alias_1
   local alias_names=$(grep -E "$filter_pattern" .local-sherpa | \
                       awk -F'[ =]' '{print $2}')
-  echo "$alias_names"
+
+  if [ -n "$alias_names" ]; then
+    echo "$alias_names"
+  fi
 }
 
 _fetch_function_names() {
@@ -32,5 +37,8 @@ _fetch_function_names() {
   local function_names=$(grep -oE "$filter_pattern" .local-sherpa | \
                          sed 's/function //' | \
                          sed 's/()//')
-  echo "$function_names"
+
+  if [ -n "$function_names" ]; then
+    echo "$function_names"
+  fi
 }
