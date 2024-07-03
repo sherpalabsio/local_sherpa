@@ -98,6 +98,7 @@ unload_all_envs() {
 unload_current_env() {
   varstash_dir="$PWD"
   autounstash
+  ashift PATHS_WHERE_LOCAL_ENV_WAS_LOADED
 }
 
 load_current_env() {
