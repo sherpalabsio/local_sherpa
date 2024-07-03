@@ -9,7 +9,7 @@ run_single_test() {
   local _tests_passed=true
 
   echo "== Running $1"
-  bash -i $1 || _tests_passed=false
+  bash --noprofile --norc -i $1 || _tests_passed=false
   echo ""
 
   if $_tests_passed; then
@@ -25,7 +25,7 @@ run_all_tests() {
 
   for file in "${_test_files[@]}" ; do
     echo "== Running $file"
-    bash -i $file || _all_tests_passed=false
+    bash --noprofile --norc -i $file || _all_tests_passed=false
     echo ""
   done
 
