@@ -16,9 +16,9 @@ Tell sherpa how much he should talk (works only for the current session):
 
   case $command in
  -h|--help|help|'') echo "$usage_text";;
-     t|trust|allow) trust_local_env; load_local_env;;
-         u|untrust) unload_currently_loaded_env; untrust_local_env;;
-       e|edit|init) edit; trust_local_env; unload_currently_loaded_env; load_local_env;;
+     t|trust|allow) trust_current_env; load_current_env;;
+         u|untrust) unload_current_env; untrust_current_env;;
+       e|edit|init) edit; trust_current_env; unload_current_env; load_current_env;;
   rest|off|disable) disable;;
     work|on|enable) enable;;
               talk) shift; set_log_level $1;;
@@ -41,7 +41,7 @@ disable() {
 
 enable() {
   export SHERPA_ENABLED=true
-  load_local_env
+  load_current_env
   log_info "Local env loaded. Sherpa is ready for action."
 }
 
@@ -57,11 +57,11 @@ set_log_level() {
 }
 
 alert_sherpa_we_changed_dir() {
-  # Skip if Sherpa is not enabled
+  # Skip if Sherpa is disabled
   [ -z "$SHERPA_ENABLED" ] && return
   log_debug "Directory changed."
   unload_inactive_envs
-  load_local_env
+  load_current_env
 }
 
 PATHS_WHERE_LOCAL_ENV_WAS_LOADED=()
@@ -95,12 +95,12 @@ unload_all_envs() {
   PATHS_WHERE_LOCAL_ENV_WAS_LOADED=()
 }
 
-unload_currently_loaded_env() {
+unload_current_env() {
   varstash_dir="$PWD"
   autounstash
 }
 
-load_local_env() {
+load_current_env() {
   # Skip if Sherpa is disabled
   [ -z "$SHERPA_ENABLED" ] && return
   log_debug "Load local env?"

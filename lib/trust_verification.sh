@@ -27,7 +27,7 @@ verify_trust() {
   return 0
 }
 
-trust_local_env() {
+trust_current_env() {
   if [[ ! -f .local-sherpa ]]; then
     log_info "Nothing to trust. The current directory has no local env file. Run \`sherpa edit\` to create one."
     return 1
@@ -44,7 +44,7 @@ trust_local_env() {
   return 0
 }
 
-untrust_local_env() {
+untrust_current_env() {
   local checksum_file="$SHERPA_CHECKSUM_DIR/$(pwd | md5sum | cut -d ' ' -f 1)"
 
   if [[ -f "$checksum_file" ]]; then

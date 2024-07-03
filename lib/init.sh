@@ -30,5 +30,5 @@ setup_cd_hook
 
 # Skip loading the local env 2 times for Bash when loading the shell the first time
 if [ -n "$ZSH_VERSION" ]; then
-  load_local_env
+  load_current_env
 fi
