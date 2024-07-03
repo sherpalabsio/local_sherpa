@@ -34,8 +34,8 @@ edit() {
 }
 
 disable() {
-  unload_currently_loaded_env
-  log_info "Local env unloaded. Sherpa goes to sleep."
+  unload_all_envs
+  log_info "All env unloaded. Sherpa goes to sleep."
   unset SHERPA_ENABLED
 }
 
@@ -85,7 +85,15 @@ unload_inactive_envs() {
   PATHS_WHERE_LOCAL_ENV_WAS_LOADED=("${loaded_paths[@]}")
 }
 
-# todo: unload_currently_loaded_env -> unload_all_envs
+unload_all_envs() {
+  for loaded_path in "${PATHS_WHERE_LOCAL_ENV_WAS_LOADED[@]}"; do
+    log_debug "Unload env: $loaded_path"
+    varstash_dir="$loaded_path"
+    autounstash
+  done
+
+  PATHS_WHERE_LOCAL_ENV_WAS_LOADED=()
+}
 
 unload_currently_loaded_env() {
   varstash_dir="$PWD"
