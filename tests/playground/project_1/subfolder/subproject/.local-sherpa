@@ -1,0 +1,15 @@
+export var_1='LOCAL VAR SUBPROJECT'
+
+alias alias_1='echo "LOCAL ALIAS SUBPROJECT"'
+
+function_1() {
+  echo "LOCAL FUNCTION SUBPROJECT"
+}
+
+export subvar_1='SUBLOCAL VAR SUBPROJECT'
+
+alias subalias_1='echo "SUBLOCAL ALIAS SUBPROJECT"'
+
+subfunction_1() {
+  echo "SUBLOCAL FUNCTION SUBPROJECT"
+}
