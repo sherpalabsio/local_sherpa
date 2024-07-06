@@ -43,11 +43,9 @@ is "$var_1" "LOCAL VAR PROJECT 1" "Project 1 env is restored (var_1)"
 is "$(alias_1)" "LOCAL ALIAS PROJECT 1" "Project 1 env is restored (alias_1)"
 is "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Project 1 env is restored (function_1)"
 
-is "_$subvar_1" "_" "Subfolder env is unloaded (subvar_1)"
-error_message=$(is_item_defined_error_message subalias_1)
-like "$error_message" "not found" "Subfolder env is unloaded (subalias_1)"
-error_message=$(is_item_defined_error_message subfunction_1)
-like "$error_message" "not found" "Subfolder env is unloaded (subalias_1)"
+is_undefined "subvar_1" "Subproject env is unloaded (subvar_1)"
+is_undefined "subalias_1" "Subproject env is unloaded (subalias_1)"
+is_undefined "subfunction_1" "Subproject env is unloaded (subfunction_1)"
 
 # When we cd back to project_1, it does not reload the Project 1 env
 actual_warning_message=$(SHERPA_LOG_LEVEL='debug' ; cd ..)

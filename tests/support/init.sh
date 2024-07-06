@@ -2,7 +2,6 @@ cd tests
 
 source ../lib/init.sh
 source support/assertions.sh
-source support/utils.sh
 
 SHERPA_CHECKSUM_DIR="$SHERPA_PATH/tests/playground/local_sherpa_checksums"
 export SHERPA_LOG_LEVEL='no talk' # debug, info, no talking
