@@ -1,7 +1,5 @@
 source tests/support/init.sh
 
-plan_no_plan
-
 # Setup
 cd fixtures/parsing
 

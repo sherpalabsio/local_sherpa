@@ -1,7 +1,5 @@
 source tests/support/init.sh
 
-plan_no_plan
-
 # Setup
 cd playground
 source .bash_profile # Imitate global env

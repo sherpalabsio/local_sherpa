@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+echo "=============================== Zsh Tests ==============================="
+
 run_single_test() {
   local _tests_passed=true
 

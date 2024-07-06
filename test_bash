@@ -5,6 +5,8 @@
 # Disable history to avoid polluting the user's history file
 HISTFILE=
 
+echo "=============================== Bash Tests =============================="
+
 run_single_test() {
   local _tests_passed=true
 
