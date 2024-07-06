@@ -1,6 +1,18 @@
 #!/usr/bin/env bash
 
-./test_bash $@
+_tests_passed=true
+
+./test_bash $@ || _tests_passed=false
 echo ""
 echo ""
-./test_zsh $@
+
+./test_zsh $@ || _tests_passed=false
+
+echo ""
+
+if $_tests_passed; then
+  echo -e "\033[32mTest suite passed successfully!\033[0m"
+else
+  echo -e "\033[31mTest suite failed.\033[0m"
+  exit 1
+fi

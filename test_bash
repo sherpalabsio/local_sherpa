@@ -18,6 +18,7 @@ run_single_test() {
     echo -e "\033[32mTest passed successfully!\033[0m"
   else
     echo -e "\033[31mTest failed.\033[0m"
+    exit 1
   fi
 }
 
@@ -35,6 +36,7 @@ run_all_tests() {
     echo -e "\033[32mAll tests passed successfully!\033[0m"
   else
     echo -e "\033[31mSome tests failed.\033[0m"
+    exit 1
   fi
 }
 
