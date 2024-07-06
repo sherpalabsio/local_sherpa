@@ -1,0 +1,29 @@
+name: 'ci'
+
+on: ['push', 'pull_request']
+
+permissions: 'read-all'
+
+defaults:
+  run:
+    shell: 'bash'
+    working-directory: './'
+
+jobs:
+  test-mac:
+    name: 'MacOS Test'
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['macos-latest']
+
+    runs-on: '${{ matrix.os }}'
+
+    steps:
+      - uses: 'actions/checkout@v3'
+
+      - name: 'Install Prerequisites'
+        run: brew install coreutils bash
+
+      - name: 'Run tests'
+        run: time ./test_all

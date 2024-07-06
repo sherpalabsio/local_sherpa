@@ -4,6 +4,9 @@
 
 Unstable, under heavy development.
 
+
+![example workflow](https://github.com/tothpeter/local_sherpa/actions/workflows/ci.yml/badge.svg)
+
 ## Demo
 
 ```shell
