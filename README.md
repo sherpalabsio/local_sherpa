@@ -1,5 +1,9 @@
 # Local Sherpa to the Rescue
 
+## Status
+
+Unstable, under heavy development.
+
 ## Demo
 
 ```shell
@@ -55,59 +59,46 @@ function_1() {
 }
 ```
 
-## Run RSpec depending on the project setup
-
-```shell
-# This project is dockerized
-# Run RSpec in the `project_with_docker-web` Docker container
-
-# ~/projects/project_with_docker/.local-sherpa
-alias de='docker exec -it `docker ps -aqf "name=$(basename $(pwd))-web"`'
-alias rs='de rspec'
-```
-
-```shell
-# Run RSpec as mortals do
-# ~/projects/project_with_mortal_setup/.local-sherpa
-alias rs='bin/rspec'
-```
-
-With this config `RSpec` will run depending on in which directory you `cd` into.
-
 ## Usage
-### Config local env
+### Setup / config local env
 1. $ cd ~/projects/project_awesome
 2. $ sherpa edit
 3. [Disco](https://www.youtube.com/watch?v=UkSPUDpe0U8)
 
 ### Security
 
-By default Sherpa won't load any local env file. You have to mark the directory as trusted first.
+Sherpa won't load any local env file unless you trust the directory first. This is to prevent running malicious code when you `cd` into a directory.
 
 ``` bash
 $ echo "alias rs=rspec" > ~/projects/project_awesome/.local-sherpa
 $ cd ~/projects/project_awesome
+Sherpa: The local env file is not trusted. Run `sherpa trust` to mark it as trusted.
 $ rs
 command not found: rs
 $ sherpa trust
+Sherpa: Trusted!
 $ rs
 # rspec starts
 ```
 
-When the local env file changes you have to trust the directory again. But if you use `sherpa edit` to edit the local env file, the directory will be trusted automatically when you save and close the file.
+When a local env file changes you have to trust the directory again.
+
+Use `sherpa edit`. It opens the local env file in your editor then trusts it automatically when you close the file.
+
+You can untrust a directory with `sherpa untrust`.
 
 ## Supported shells
 - Zsh
-- More to come
+- Bash
 
 ## Installation
 
 ```shell
 # Clone the repo
 $ git clone git@github.com:tothpeter/local_sherpa.git ~/.dotfiles/lib/local_sherpa
-# Hook into your shell
+# Hook it into your shell
 $ echo "source ~/.dotfiles/lib/local_sherpa/local_sherpa.sh" >> ~/.zshrc
-# Exclude the local env files (.local-sherpa) globally in Git
+# Exclude the local env Sherpa files (.local-sherpa) globally in Git
 $ echo ".local-sherpa" >> $(git config --global core.excludesfile)
 
 # Optional but recommended
@@ -116,6 +107,63 @@ alias st='sherpa trust'
 alias upgrade_sherpa='git -C ~/.dotfiles/lib/local_sherpa pull'
 ```
 
-## Run the tests
+## Cookbook
 
-`$ ./test`
+### Run RSpec in a container or as mortals
+
+```shell
+# Dockerized project
+# Run RSpec in the `project_with_docker-web` Docker container
+
+# ~/projects/project_with_docker/.local-sherpa
+alias de='docker exec -it `docker ps -aqf "name=$(basename $(pwd))-web"`'
+alias rs='de rspec'
+```
+
+```shell
+# Run RSpec as mortals
+# ~/projects/project_for_mortals/.local-sherpa
+alias rs='bin/rspec'
+```
+
+With this config `RSpec` will run depending on in which directory you `cd` into.
+
+### Rails console in production 🤫
+
+```shell
+# ~/projects/project_with_heroku/.local-sherpa
+alias rc_prod='heroku run rails c -a APP_NAME'
+
+# ~/projects/project_with_aws/.local-sherpa
+alias rc_prod='ssh -i /path/key-pair-name.pem user@hostname "/var/app/current/bin/rails console"'
+```
+
+### Start your dev environment
+
+```shell
+# ~/projects/project_with_docker/.local-sherpa
+alias dev='docker-compose -p PROJECT_NAME up -d'
+alias dev_stop='docker-compose -p PROJECT_NAME down'
+
+# ~/projects/project_basic/.local-sherpa
+alias dev='bin/rails s'
+```
+
+## Local development
+
+```shell
+# Run all the tests for all the supported shells
+$ ./test
+
+# Run the tests for Zsh
+$ ./test_zs
+
+# Run the tests for Bash
+$ ./test_bash
+
+# Run a single test for all the supported shells
+$ ./test tests/test_sherpa.sh
+
+# Run a single test for Zsh
+$ ./test_zs tests/test_sherpa.sh
+```
