@@ -5,7 +5,7 @@ cd playground
 source .bash_profile # Imitate global env
 
 # =========================== Trusting the local env ===========================
-# When the user goes to a project with an untrusted local env file
+# When we go to a project with an untrusted local env file
 actual_warning_message=$(SHERPA_LOG_LEVEL='info' ; cd project_1)
 expected_warning_message="The local env file is not trusted."
 

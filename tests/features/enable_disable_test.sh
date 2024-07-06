@@ -5,7 +5,7 @@ cd playground
 source .bash_profile # Imitate global env
 
 
-# When Sherpa is enabled and the user goes to a project with a local env file
+# When Sherpa is enabled and we go to a project with a local env file
 cd project_1
 sherpa trust
 # Vigilant Sherpa loads the local env
@@ -21,7 +21,7 @@ is "$var_1" "GLOBAL VAR" "Local env is unloaded (var)"
 is "$(alias_1)" "GLOBAL ALIAS" "Local env is unloaded (alias)"
 is "$(function_1)" "GLOBAL FUNCTION" "Local env is unloaded (function)"
 
-# When the user goes to another project with a local env file while Sherpa is sleeping
+# When we go to another project with a local env file while Sherpa is sleeping
 cd ../project_2
 sherpa trust
 # Sleeping Sherpa doesn't load any env
