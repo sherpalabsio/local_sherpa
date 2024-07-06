@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+SHELL_NAME="$1"
+
+case $SHELL_NAME in
+  bash)
+    SHELL_NAME="Bash"
+    # We run the tests in interactive mode to be able to test aliases
+    SHELL_COMMAND="bash --noprofile --norc -i"
+    ;;
+  zsh)
+    SHELL_NAME="Zsh"
+    SHELL_COMMAND="zsh"
+    ;;
+  *)
+    echo "Unknown shell: $SHELL_NAME"
+    exit 1
+    ;;
+esac
+
+echo "=============================== Shell: $SHELL_NAME =============================="
+
+run_single_test() {
+  local _test_file=$1
+  local _tests_passed=true
+
+  echo "== Running $_test_file"
+  $SHELL_COMMAND $_test_file || _tests_passed=false
+  echo ""
+
+  if $_tests_passed; then
+    echo -e "\033[32mTest passed successfully!\033[0m"
+  else
+    echo -e "\033[31mTest failed.\033[0m"
+    exit 1
+  fi
+}
+
+run_all_tests() {
+  local _test_files=(tests/**/*_test.sh)
+  local _all_tests_passed=true
+
+  for file in "${_test_files[@]}" ; do
+    echo "== Running $file"
+    $SHELL_COMMAND $file || _all_tests_passed=false
+    echo ""
+  done
+
+  if $_all_tests_passed; then
+    echo -e "\033[32mAll tests passed successfully!\033[0m"
+  else
+    echo -e "\033[31mSome tests failed.\033[0m"
+    exit 1
+  fi
+}
+
+
+
+if [ -n "$2" ]; then
+  _test_file=$2
+  run_single_test "$_test_file"
+else
+  run_all_tests
+fi

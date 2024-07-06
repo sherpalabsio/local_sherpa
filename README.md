@@ -153,17 +153,20 @@ alias dev='bin/rails s'
 
 ```shell
 # Run all the tests for all the supported shells
-$ ./test
-
-# Run the tests for Zsh
-$ ./test_zs
-
-# Run the tests for Bash
-$ ./test_bash
+$ ./test_all
 
 # Run a single test for all the supported shells
-$ ./test tests/test_sherpa.sh
+$ ./test_all tests/test_sherpa.sh
+
+# Run all the tests for Zsh
+$ ./test_zs
 
 # Run a single test for Zsh
 $ ./test_zs tests/test_sherpa.sh
+
+# Run all the tests for Bash
+$ ./test_bash
+
+# Run a single test for Bash
+$ ./test_bash tests/test_sherpa.sh
 ```
