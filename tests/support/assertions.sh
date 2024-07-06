@@ -28,7 +28,8 @@ is(){
     echo "  expected: $expected"
     echo "       got: $actual"
 
-    printf "\n$(_failed_assertion_path_with_line_number)\n"
+    echo ""
+    echo "$(_failed_assertion_path_with_line_number)" >&2
 
     exit 1
   else
@@ -52,7 +53,8 @@ like(){
     echo "   pattern: $expected_pattern"
     echo "       got: $actual"
 
-    printf "\n$(_failed_assertion_path_with_line_number)\n"
+    echo ""
+    echo "$(_failed_assertion_path_with_line_number)" >&2
 
     exit 1
   else
@@ -72,7 +74,8 @@ is_undefined(){
 
     printf "  failure: $item is defined when it should not be"
 
-    printf "\n$(_failed_assertion_path_with_line_number)\n"
+    echo ""
+    echo "$(_failed_assertion_path_with_line_number)" >&2
 
     exit 1
   else

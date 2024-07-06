@@ -19,38 +19,25 @@ case $shell_name in
 esac
 
 echo "=============================== Shell: $shell_name =============================="
+stderr_file=$(mktemp)
+all_tests_passed=true
 
 run_single_test() {
-  local _tests_passed=true
 
   echo "== Running $test_file"
-  $shell_command $test_file || _tests_passed=false
+  $shell_command $test_file 2>> "$stderr_file" || all_tests_passed=false
   echo ""
-
-  if $_tests_passed; then
-    echo -e "\033[32mTest passed successfully!\033[0m"
-  else
-    echo -e "\033[31mTest failed.\033[0m"
-    exit 1
-  fi
 }
 
 run_all_tests() {
   local _test_files=(tests/**/*_test.sh)
-  local _all_tests_passed=true
 
   for file in "${_test_files[@]}" ; do
     echo "== Running $file"
-    $shell_command $file || _all_tests_passed=false
+    $shell_command $file 2>> "$stderr_file" || all_tests_passed=false
+
     echo ""
   done
-
-  if $_all_tests_passed; then
-    echo -e "\033[32mAll tests passed successfully!\033[0m"
-  else
-    echo -e "\033[31mSome tests failed.\033[0m"
-    exit 1
-  fi
 }
 
 
@@ -59,4 +46,16 @@ if [ -n "$test_file" ]; then
   run_single_test
 else
   run_all_tests
+fi
+
+if $all_tests_passed; then
+  echo -e "\033[32mAll tests passed successfully!\033[0m"
+else
+  echo -e "\033[31mFailed examples:\033[0m"
+  while IFS= read -r line; do
+    echo "  $line" >&2
+  done < "$stderr_file"
+  rm "$stderr_file"
+
+  exit 1
 fi
