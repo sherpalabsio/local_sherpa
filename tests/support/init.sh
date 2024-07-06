@@ -18,7 +18,7 @@ trap teardown EXIT
 teardown() {
   # Clean up the tests/playground directory
   # Rollback changes to tracked files
-  git checkout -- "$SHERPA_PATH/tests/playground"
+  git checkout -- "$SHERPA_PATH/tests/playground" > /dev/null
   # Remove untracked files and directories
-  git clean -df "$SHERPA_PATH/tests/playground"
+  git clean -df "$SHERPA_PATH/tests/playground" > /dev/null
 }
