@@ -32,9 +32,7 @@ is(){
 
     exit 1
   else
-    printf "ok"
-    [ -n "$message" ] && printf " - $message"
-    printf "\n"
+    _print_ok "$message"
   fi
 }
 
@@ -58,9 +56,7 @@ like(){
 
     exit 1
   else
-    printf "ok"
-    [ -n "$message" ] && printf " - $message"
-    printf "\n"
+    _print_ok "$message"
   fi
 }
 
@@ -80,13 +76,11 @@ is_undefined(){
 
     exit 1
   else
-    printf "ok"
-    [ -n "$message" ] && printf " - $message"
-    printf "\n"
+    _print_ok "$message"
   fi
 }
 
-# == Utils ==
+# == General Utils ==
 _is_defined() {
   local name_of_thing="$1"
 
@@ -96,7 +90,7 @@ _is_defined() {
   fi
 
   # Is it a defined function or an alias?
-  type "$name_of_thing" > /dev/null
+  type "$name_of_thing" > /dev/null 2>&1
   return $?
 }
 
@@ -106,6 +100,15 @@ _failed_assertion_path_with_line_number(){
   else
     echo "${BASH_SOURCE[2]}:${BASH_LINENO[1]}"
   fi
+}
+
+# == Print Utils ==
+_print_ok(){
+  local -r message="$1"
+
+  printf "ok"
+  [ -n "$message" ] && printf " - $message"
+  printf "\n"
 }
 
 _print_in_red(){
