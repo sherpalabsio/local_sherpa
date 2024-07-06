@@ -42,6 +42,3 @@ cd project_1
 is "$var_1" "GLOBAL VAR" "Untrusted local env is not loaded (var)"
 is "$(alias_1)" "GLOBAL ALIAS" "Untrusted local env is not loaded (alias)"
 is "$(function_1)" "GLOBAL FUNCTION" "Untrusted local env is not loaded (function)"
-
-# Tear down
-rm -rf $SHERPA_CHECKSUM_DIR

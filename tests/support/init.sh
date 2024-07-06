@@ -13,3 +13,12 @@ if [ ! -n "$ZSH_VERSION" ]; then
     alert_sherpa_we_changed_dir
   }
 fi
+
+trap teardown EXIT
+teardown() {
+  # Clean up the tests/playground directory
+  # Rollback changes to tracked files
+  git checkout -- "$SHERPA_PATH/tests/playground"
+  # Remove untracked files and directories
+  git clean -df "$SHERPA_PATH/tests/playground"
+}

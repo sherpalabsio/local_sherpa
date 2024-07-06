@@ -33,6 +33,3 @@ cd ..
 is "$var_1" "GLOBAL VAR"
 is "$(alias_1)" "GLOBAL ALIAS"
 is "$(function_1)" "GLOBAL FUNCTION"
-
-# Tear down
-rm -rf $SHERPA_CHECKSUM_DIR

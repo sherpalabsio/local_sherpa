@@ -36,7 +36,3 @@ sherpa work
 is "$var_1" "LOCAL VAR PROJECT 2" "Local env is loaded (var)"
 is "$(alias_1)" "LOCAL ALIAS PROJECT 2" "Local env is loaded (alias)"
 is "$(function_1)" "LOCAL FUNCTION PROJECT 2" "Local env is loaded (function)"
-
-
-# Tear down
-rm -rf $SHERPA_CHECKSUM_DIR

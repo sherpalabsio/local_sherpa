@@ -13,8 +13,3 @@ EDITOR="sed -i '' '1s/LOCAL VAR PROJECT 1/LOCAL VAR PROJECT 8/'" sherpa edit > /
 # When the user saves and closes the local env file
 # Sherpa auto trusts the local env file and loads it
 is "$var_1" "LOCAL VAR PROJECT 8" "The updated local env is re-trusted and reloaded"
-
-
-# Tear down
-rm -rf $SHERPA_CHECKSUM_DIR
-git checkout -- .local-sherpa
