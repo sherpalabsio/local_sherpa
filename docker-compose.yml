@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+  testing-in-ubuntu:
+    build:
+      context: .
+      dockerfile: dockerfiles/ubuntu.dockerfile
+    container_name: local-sherpa-test-ubuntu-container
+    volumes:
+      - .:/app
+    stdin_open: true
+    tty: true

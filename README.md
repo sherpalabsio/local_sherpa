@@ -244,4 +244,7 @@ $ ./test_bash
 
 # Run a single test for Bash
 $ ./test_bash tests/test_sherpa.sh
+
+# Run all the tests for all the supported shells in Ubuntu
+$ ./test_all_in_ubuntu
 ```

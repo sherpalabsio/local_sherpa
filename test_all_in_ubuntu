@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# Start the container if it's not running
+if ! docker ps | grep -q local-sherpa-test-ubuntu-container; then
+  docker-compose up --build -d
+  _container_started_by_this_script=true
+fi
+
+_docker_exec="docker exec -it local-sherpa-test-ubuntu-container"
+_tests_passed=true
+
+echo "**************** Running in Ubuntu ****************"
+
+$_docker_exec ./test_bash $@ || _tests_passed=false
+echo ""
+echo ""
+
+$_docker_exec ./test_zsh $@ || _tests_passed=false
+
+echo ""
+
+if $_tests_passed; then
+  echo -e "\033[32mTest suite passed successfully!\033[0m"
+else
+  echo -e "\033[31mTest suite failed.\033[0m"
+  exit 1
+fi
+
+# Stop the container if we started it
+if [ "$_container_started_by_this_script" = true ]; then
+  docker-compose down
+fi
