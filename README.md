@@ -1,11 +1,12 @@
 # Local Sherpa to the Rescue
 
+Sherpa carries your local environment settings for you as you `cd` around your projects.
+
 ## Status
 
 Unstable, under heavy development.
 
-
-![example workflow](https://github.com/tothpeter/local_sherpa/actions/workflows/ci.yml/badge.svg)
+[![example workflow](https://github.com/tothpeter/local_sherpa/actions/workflows/ci.yml/badge.svg)](https://github.com/tothpeter/local_sherpa/actions/workflows/ci.yml)
 
 ## Demo
 
@@ -68,9 +69,12 @@ function_1() {
 2. $ sherpa edit
 3. [Disco](https://www.youtube.com/watch?v=UkSPUDpe0U8)
 
+For more details see the [Features](#features) section.
+
 ### Security
 
-Sherpa won't load any local env file unless you trust the directory first. This is to prevent running malicious code when you `cd` into a directory.
+Sherpa won't load any local env file unless you trust the directory first.
+This is to prevent running malicious code when you `cd` into a directory.
 
 ``` bash
 $ echo "alias rs=rspec" > ~/projects/project_awesome/.local-sherpa
@@ -86,13 +90,28 @@ $ rs
 
 When a local env file changes you have to trust the directory again.
 
-Use `sherpa edit`. It opens the local env file in your editor then trusts it automatically when you close the file.
+Use `sherpa edit`. It opens the local env file in your editor then trusts it
+automatically when you close the file.
 
 You can untrust a directory with `sherpa untrust`.
 
 ## Supported shells
+
 - Zsh
 - Bash
+
+## Supported operating systems
+
+- macOS 13 - Ventura
+- More to come
+
+## Supported data structures and things
+
+- Exported variables
+- Aliases
+- Functions
+
+Unexported variables and other data types are not supported yet.
 
 ## Installation
 
@@ -109,6 +128,58 @@ alias se='sherpa edit'
 alias st='sherpa trust'
 alias upgrade_sherpa='git -C ~/.dotfiles/lib/local_sherpa pull'
 ```
+
+## Features
+
+See the full list of commands by running `$ sherpa` in your shell.
+
+### Loading local env from parent directories automatically
+
+It is not supported currently. Feel free to open a feature request issue
+if you find it useful.
+
+### Flexible and nested loading and unloading of local envs
+
+```shell
+# Given the following directory structure with the corresponding local env files
+# ~/projects/.local-sherpa
+# ~/projects/project_awesome/.local-sherpa
+# ~/projects/project_awesome/subdir/
+
+$ cd ~/projects/
+# Sherpa loads the local env for projects
+$ cd project_awesome
+# Sherpa does not unload the previous local env
+# Sherpa loads the local env for project_awesome
+# Previously defined items are overridden by the same items defined in the current local env
+$ cd subdir
+# Sherpa does not unload the previous local envs
+$ cd ..
+# Sherpa does not reload the local env for project_awesome
+$ cd ..
+# Sherpa unloads the local env for project_awesome and restores the local env for projects
+# This rolls back the overrides made by the local env for project_awesome
+$ cd ..
+# Sherpa unloads the local env for projects and restores the global env
+# This rolls back the overrides made by the local env for projects
+```
+
+### Disable/enable Sherpa
+
+It works only for the current session currently. It will be extended to a global setting.
+
+```shell
+$ sherpa disable # aliases: off, disable
+Sherpa: All env unloaded. Sherpa goes to sleep.
+$ sherpa work # aliases: on, enable
+Sherpa: Local env loaded. Sherpa is ready for action.
+```
+
+## Configuration
+
+### Local env file
+
+🚧 Comming up
 
 ## Cookbook
 
