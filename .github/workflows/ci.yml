@@ -21,10 +21,33 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install Prerequisites
+      - name: Install prerequisites
         run: brew install coreutils bash
 
-      - name: Run tests on OS ${{ matrix.os }}
+      - name: Run tests on ${{ matrix.os }}
         run: |
+          zsh --version
+          bash --version
+          time ./test_all
+
+  test-linux:
+    name: Linux Test
+    strategy:
+      matrix:
+        os: ['ubuntu-20.04', 'ubuntu-22.04']
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install prerequisites
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y --no-install-recommends zsh
+
+      - name: Run tests on ${{ matrix.os }}
+        run: |
+          zsh --version
           bash --version
           time ./test_all

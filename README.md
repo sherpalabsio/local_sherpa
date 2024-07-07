@@ -100,10 +100,13 @@ You can untrust a directory with `sherpa untrust`.
 - Zsh
 - Bash
 
-## Supported operating systems
+## Tested on
 
+- macOS 12 - Monterey
 - macOS 13 - Ventura
-- More to come
+- macOS 14 - Sonoma
+- Ubuntu 20.04
+- Ubuntu 22.04
 
 ## Supported data structures and things
 
