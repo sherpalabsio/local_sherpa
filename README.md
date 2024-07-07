@@ -144,14 +144,15 @@ if you find it useful.
 # Given the following directory structure with the corresponding local env files
 # ~/projects/.local-sherpa
 # ~/projects/project_awesome/.local-sherpa
-# ~/projects/project_awesome/subdir/
+# ~/projects/project_awesome/subdir
 
 $ cd ~/projects/
 # Sherpa loads the local env for projects
+# Items defined in this folder override the items defined in the global env
 $ cd project_awesome
 # Sherpa does not unload the previous local env
 # Sherpa loads the local env for project_awesome
-# Previously defined items are overridden by the same items defined in the current local env
+# Items defined in this folder override the items defined in previous envs
 $ cd subdir
 # Sherpa does not unload the previous local envs
 $ cd ..
