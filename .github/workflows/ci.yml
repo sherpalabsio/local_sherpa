@@ -1,6 +1,22 @@
 name: CI
 
-on: ['push', 'pull_request']
+on:
+  push:
+    paths-ignore:
+      - 'dockerfiles/**'
+      - '.gitignore'
+      - 'dev_tools.sh'
+      - 'docker-compose.yml'
+      - 'Makefile'
+      - 'README.md'
+  pull_request:
+    paths-ignore:
+      - 'dockerfiles/**'
+      - '.gitignore'
+      - 'dev_tools.sh'
+      - 'docker-compose.yml'
+      - 'Makefile'
+      - 'README.md'
 
 permissions: 'read-all'
 
