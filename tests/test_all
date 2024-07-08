@@ -4,11 +4,11 @@ set -e
 
 TESTS_PASSED=true
 
-./test_bash "$@" || TESTS_PASSED=false
+./tests/test_bash "$@" || TESTS_PASSED=false
 echo ""
 echo ""
 
-./test_zsh "$@" || TESTS_PASSED=false
+./tests/test_zsh "$@" || TESTS_PASSED=false
 
 echo ""
 

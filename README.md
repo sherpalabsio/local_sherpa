@@ -235,25 +235,25 @@ alias up='bin/rails s'
 
 ```shell
 # Run all the tests for all the supported shells
-$ ./test_all
+$ make test
 
 # Run a single test for all the supported shells
-$ ./test_all tests/test_sherpa.sh
+$ make test tests/features/edit_test.sh
 
 # Run all the tests for Zsh
-$ ./test_zs
+$ make test_zs
 
 # Run a single test for Zsh
-$ ./test_zs tests/test_sherpa.sh
+$ make test_zs tests/features/edit_test.sh
 
 # Run all the tests for Bash
-$ ./test_bash
+$ make test_bash
 
 # Run a single test for Bash
-$ ./test_bash tests/test_sherpa.sh
+$ make test_bash tests/features/edit_test.sh
 
 # Run all the tests for all the supported shells in Ubuntu
-$ ./test_all_in_ubuntu
+$ make test_all_in_ubuntu
 ```
 
 ### Linting

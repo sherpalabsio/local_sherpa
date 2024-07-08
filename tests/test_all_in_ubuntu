@@ -15,11 +15,11 @@ TESTS_PASSED=true
 
 echo "**************** Running in Ubuntu ****************"
 
-$DOCKER_EXEC ./test_bash "$@" || TESTS_PASSED=false
+$DOCKER_EXEC ./tests/test_bash "$@" || TESTS_PASSED=false
 echo ""
 echo ""
 
-$DOCKER_EXEC ./test_zsh "$@" || TESTS_PASSED=false
+$DOCKER_EXEC ./tests/test_zsh "$@" || TESTS_PASSED=false
 
 echo ""
 
