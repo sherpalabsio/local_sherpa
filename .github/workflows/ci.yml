@@ -9,6 +9,7 @@ on:
       - 'docker-compose.yml'
       - 'Makefile'
       - 'README.md'
+      - 'test_all_in_ubuntu'
   pull_request:
     paths-ignore:
       - 'dockerfiles/**'
@@ -17,6 +18,7 @@ on:
       - 'docker-compose.yml'
       - 'Makefile'
       - 'README.md'
+      - 'test_all_in_ubuntu'
 
 permissions: 'read-all'
 
