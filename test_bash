@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # Disable history to avoid polluting the user's history file
 export HISTFILE=
 

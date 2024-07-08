@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 TESTS_PASSED=true
 
 ./test_bash "$@" || TESTS_PASSED=false

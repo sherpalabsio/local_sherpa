@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 TARGET_SHELL_NAME="$1"
 
 case $TARGET_SHELL_NAME in
