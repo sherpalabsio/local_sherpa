@@ -3,10 +3,11 @@ cd tests
 source ../lib/init.sh
 source support/assertions.sh
 
+# shellcheck disable=SC2034
 SHERPA_CHECKSUM_DIR="$SHERPA_PATH/tests/playground/local_sherpa_checksums"
 export SHERPA_LOG_LEVEL='no talk' # debug, info, no talking
 
-if [ ! -n "$ZSH_VERSION" ]; then
+if [ -z "$ZSH_VERSION" ]; then
   # Emulate the behavior of `cd` in interactive bash
   cd() {
     builtin cd "$@"

@@ -3,4 +3,4 @@
 # Disable history to avoid polluting the user's history file
 export HISTFILE=
 
-./_test "bash" $@
+./_test "bash" "$@"

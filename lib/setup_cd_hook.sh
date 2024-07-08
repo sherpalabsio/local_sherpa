@@ -1,9 +1,10 @@
 setup_cd_hook() {
   if [ -n "$ZSH_VERSION" ]; then
     # ZSH
-    function sherpa_chpwd_handler() {
+    # shellcheck disable=SC2317
+    sherpa_chpwd_handler() {
       # Changed directory?
-      if [[ -n $OLDPWD && $PWD != $OLDPWD ]]; then
+      if [[ -n $OLDPWD && $PWD != "$OLDPWD" ]]; then
         alert_sherpa_we_changed_dir
       fi
     }
@@ -12,6 +13,7 @@ setup_cd_hook() {
     add-zsh-hook chpwd sherpa_chpwd_handler
   else
     # BASH
+    # shellcheck disable=SC2317
     _sherpa_chpwd_hook() {
       # run commands in CHPWD_COMMAND variable on dir change
       if [[ "$PREVPWD" != "$PWD" ]]; then

@@ -229,6 +229,8 @@ alias dev='bin/rails s'
 
 ## Local development
 
+### Testing
+
 ```shell
 # Run all the tests for all the supported shells
 $ ./test_all
@@ -250,4 +252,10 @@ $ ./test_bash tests/test_sherpa.sh
 
 # Run all the tests for all the supported shells in Ubuntu
 $ ./test_all_in_ubuntu
+```
+
+### Linting
+
+```shell
+$ make lint
 ```

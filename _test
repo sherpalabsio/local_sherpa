@@ -25,7 +25,7 @@ all_tests_passed=true
 run_single_test() {
 
   echo "== Running $test_file"
-  $shell_command $test_file 2>> "$stderr_file" || all_tests_passed=false
+  $shell_command "$test_file" 2>> "$stderr_file" || all_tests_passed=false
   echo ""
 }
 
@@ -34,7 +34,7 @@ run_all_tests() {
 
   for file in "${_test_files[@]}" ; do
     echo "== Running $file"
-    $shell_command $file 2>> "$stderr_file" || all_tests_passed=false
+    $shell_command "$file" 2>> "$stderr_file" || all_tests_passed=false
 
     echo ""
   done

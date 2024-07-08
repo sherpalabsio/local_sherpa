@@ -10,5 +10,5 @@ timer() {
     shift
   fi
 
-  echo "$(time ( $@ ) 2>&1 1>/dev/null )"s
+  time ( "$@" ) > /dev/null
 }

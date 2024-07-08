@@ -20,7 +20,7 @@ is(){
 
   if [ "$1" != "$2" ]; then
     _print_in_red "not ok"
-    [ -n "$message" ] && printf " - $message"
+    [ -n "$message" ] && printf " - %s" "$message"
     printf "\n\n"
 
     printf "  failure: not an exact match\n\n"
@@ -29,7 +29,7 @@ is(){
     echo "       got: $actual"
 
     echo ""
-    echo "$(_failed_assertion_path_with_line_number)" >&2
+    _failed_assertion_path_with_line_number >&2
 
     exit 1
   else
@@ -45,7 +45,7 @@ like(){
 
   if [[ ! "$actual" =~ $expected_pattern ]]; then
     _print_in_red "not ok"
-    [ -n "$message" ] && printf " - $message"
+    [ -n "$message" ] && printf " - %s" "$message"
     printf "\n\n"
 
     printf "   failure: not a partial match\n\n"
@@ -54,7 +54,7 @@ like(){
     echo "       got: $actual"
 
     echo ""
-    echo "$(_failed_assertion_path_with_line_number)" >&2
+    _failed_assertion_path_with_line_number >&2
 
     exit 1
   else
@@ -69,13 +69,13 @@ is_undefined(){
 
   if _is_defined "$item"; then
     _print_in_red "not ok"
-    [ -n "$message" ] && printf " - $message"
+    [ -n "$message" ] && printf " - %s" "$message"
     printf "\n\n"
 
-    printf "  failure: $item is defined when it should not be"
+    printf "  failure: %s is defined when it should not be" "$item"
 
     echo ""
-    echo "$(_failed_assertion_path_with_line_number)" >&2
+    _failed_assertion_path_with_line_number >&2
 
     exit 1
   else
@@ -98,7 +98,7 @@ _is_defined() {
 }
 
 _failed_assertion_path_with_line_number(){
-  if [ -n "$ZSH_VERSION" ]; then
+  if [ -n "$ZSH_VERSION" ]; then # shellcheck disable=SC2154
     echo "${funcfiletrace[2]}"
   else
     echo "${BASH_SOURCE[2]}:${BASH_LINENO[1]}"
@@ -110,10 +110,10 @@ _print_ok(){
   local -r message="$1"
 
   printf "ok"
-  [ -n "$message" ] && printf " - $message"
+  [ -n "$message" ] && printf " - %s" "$message"
   printf "\n"
 }
 
 _print_in_red(){
-  printf "\033[31m$1\033[0m"
+  printf "\033[31m%s\033[0m" "$1"
 }

@@ -1,0 +1,6 @@
+source-path=lib
+source-path=tests
+source-path=tests/playground
+
+source-path=./tests/*
+disable=SC2164,SC2103 # cd dir || exit 1 / cd ..

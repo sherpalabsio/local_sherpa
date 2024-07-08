@@ -30,6 +30,7 @@ is "$var_1" "LOCAL VAR SUBPROJECT" "Project 1 env is overridden by Subproject en
 is "$(alias_1)" "LOCAL ALIAS SUBPROJECT" "Project 1 env is overridden by Subproject env (alias_1)"
 is "$(function_1)" "LOCAL FUNCTION SUBPROJECT" "Project 1 env is overridden by Subproject env (function_1)"
 
+# shellcheck disable=SC2154
 is "$subvar_1" "SUBLOCAL VAR SUBPROJECT" "Subproject env is loaded (subvar_1)"
 is "$(subalias_1)" "SUBLOCAL ALIAS SUBPROJECT" "Subproject env is loaded (subalias_1)"
 is "$(subfunction_1)" "SUBLOCAL FUNCTION SUBPROJECT" "Subproject env is loaded (subfunction_1)"

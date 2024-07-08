@@ -11,11 +11,11 @@ _tests_passed=true
 
 echo "**************** Running in Ubuntu ****************"
 
-$_docker_exec ./test_bash $@ || _tests_passed=false
+$_docker_exec ./test_bash "$@" || _tests_passed=false
 echo ""
 echo ""
 
-$_docker_exec ./test_zsh $@ || _tests_passed=false
+$_docker_exec ./test_zsh "$@" || _tests_passed=false
 
 echo ""
 

@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [[ $1 == --list ]]; then
+  list_only_the_targets=true
+  shift
+fi
+
+if [[ -n $1 ]]; then
+  targets=("$@")
+else
+  targets=()
+  while IFS= read -r -d $'\0'; do
+    targets+=("$REPLY")
+  done < <(
+    # Find files
+    # - That are not in vendor or .git directories
+    # - That are shell scripts or have no extension and are bash executables
+    find . -type f -not -path './vendor/*' -not -path './.git/*' \( -name '*.sh' -o \
+      \( -not -name '*.*' -exec sh -c 'head -n 1 "$1" | grep -q "^#!/usr/bin/env bash"' _ {} \; \) \) -print0
+  )
+fi
+
+# List all targets
+if [[ $list_only_the_targets ]]; then
+  printf "%s\n" "${targets[@]}"
+  exit 0
+fi
+
+shellcheck --external-sources --shell=bash "${targets[@]}"
+
+exit $?

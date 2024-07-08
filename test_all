@@ -2,11 +2,11 @@
 
 _tests_passed=true
 
-./test_bash $@ || _tests_passed=false
+./test_bash "$@" || _tests_passed=false
 echo ""
 echo ""
 
-./test_zsh $@ || _tests_passed=false
+./test_zsh "$@" || _tests_passed=false
 
 echo ""
 

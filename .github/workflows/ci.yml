@@ -1,4 +1,4 @@
-name: Tests
+name: CI
 
 on: ['push', 'pull_request']
 
@@ -10,6 +10,20 @@ defaults:
     working-directory: './'
 
 jobs:
+  shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install prerequisites
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y --no-install-recommends shellcheck
+      - name: Run ShellCheck
+        run: |
+          shellcheck --version
+          bin/shellcheck
+
   test-macos:
     name: MacOS Test
     strategy:

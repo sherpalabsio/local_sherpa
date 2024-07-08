@@ -1,4 +1,4 @@
-function sherpa() {
+sherpa() {
   local command="$1"
 
   local usage_text="Example usage:
@@ -21,7 +21,7 @@ Tell sherpa how much he should talk (works only for the current session):
        e|edit|init) edit; trust_current_env; unload_current_env; load_current_env;;
   rest|off|disable) disable;;
     work|on|enable) enable;;
-              talk) shift; set_log_level $1;;
+              talk) shift; set_log_level "$1";;
              debug) set_log_level "debug";;
               info) set_log_level "info";;
           shh|shhh) set_log_level "no talking";;
@@ -117,10 +117,12 @@ load_current_env() {
 
   stash_local_env
   log_debug "Load local env"
+  # shellcheck disable=SC1091
   source .local-sherpa
   # Append the current directory to the list. This is needed to unload the envs
   # in the right order when we change directories. The root directory should be
   # the last one to unload.
+  # shellcheck disable=SC2207
   PATHS_WHERE_LOCAL_ENV_WAS_LOADED=($(pwd) "${PATHS_WHERE_LOCAL_ENV_WAS_LOADED[@]}")
 }
 
@@ -136,6 +138,7 @@ was_env_loaded() {
 
 stash_local_env() {
   log_debug "Stash local env"
+  # shellcheck disable=SC2034
   varstash_dir="$PWD"
 
   while IFS= read -r env_item_name || [[ -n $env_item_name ]]; do
