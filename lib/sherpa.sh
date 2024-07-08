@@ -9,10 +9,10 @@ sherpa() {
   sherpa work|on|enable   - Turn Sherpa on for the current session
 
 Tell sherpa how much he should talk (works only for the current session):
-  sherpa info               - Messages like the local env file is not trusted etc.
-  sherpa debug              - Everything Sherpa knows
-  sherpa shh|shhh           - Shotup Sherpa
-  sherpa talk               - Set the log level to the specified value (debug, info, no talking)"
+  sherpa info     - Messages like the local env file is not trusted etc.
+  sherpa debug    - Everything Sherpa knows
+  sherpa shh|shhh - Shotup Sherpa
+  sherpa talk     - Set the log level to the specified value (debug, info, no talking)"
 
   case $command in
  -h|--help|help|'') echo "$usage_text";;
@@ -25,6 +25,7 @@ Tell sherpa how much he should talk (works only for the current session):
              debug) set_log_level "debug";;
               info) set_log_level "info";;
           shh|shhh) set_log_level "no talking";;
+                 *) echo "Sherpa doesn't know what you wish";;
   esac
 }
 
