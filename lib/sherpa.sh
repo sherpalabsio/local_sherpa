@@ -41,8 +41,14 @@ disable() {
 
 enable() {
   export SHERPA_ENABLED=true
-  load_current_env
-  log_info "Local env loaded. Sherpa is ready for action."
+
+  if load_current_env; then
+    copy="Local env loaded. "
+  else
+    copy=""
+  fi
+
+  log_info "${copy}Sherpa is ready for action."
 }
 
 set_log_level() {
