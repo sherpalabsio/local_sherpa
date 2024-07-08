@@ -1,5 +1,6 @@
 export SHERPA_ENABLED=true
 export SHERPA_LOG_LEVEL='info' # debug, info, no talking
+export SHERPA_LOCAL_ENV_FILE='.sherparc'
 
 if [ -n "$ZSH_VERSION" ]; then
   SHERPA_LIB_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )

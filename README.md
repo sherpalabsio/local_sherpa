@@ -53,7 +53,7 @@ function_1() {
 ```
 
 ```shell
-# ~/projects/project_awesome/.local-sherpa
+# ~/projects/project_awesome/.sherparc
 export VAR_1="LOCAL VAR PROJECT AWESOME"
 
 alias alias_1='echo "LOCAL ALIAS PROJECT AWESOME"'
@@ -77,7 +77,7 @@ Sherpa won't load any local env file unless you trust the directory first.
 This is to prevent running malicious code when you `cd` into a directory.
 
 ``` bash
-$ echo "alias rs=rspec" > ~/projects/project_awesome/.local-sherpa
+$ echo "alias rs=rspec" > ~/projects/project_awesome/.sherparc
 $ cd ~/projects/project_awesome
 Sherpa: The local env file is not trusted. Run `sherpa trust` to mark it as trusted.
 $ rs
@@ -123,8 +123,8 @@ Unexported variables and other data types are not supported yet.
 $ git clone git@github.com:tothpeter/local_sherpa.git ~/.dotfiles/lib/local_sherpa
 # Hook it into your shell
 $ echo "source ~/.dotfiles/lib/local_sherpa/local_sherpa.sh" >> ~/.zshrc
-# Exclude the local env Sherpa files (.local-sherpa) globally in Git
-$ echo ".local-sherpa" >> $(git config --global core.excludesfile)
+# Exclude the local env Sherpa files (.sherparc) globally in Git
+$ echo ".sherparc" >> $(git config --global core.excludesfile)
 
 # Optional but recommended
 alias se='sherpa edit'
@@ -145,8 +145,8 @@ if you find it useful.
 
 ```shell
 # Given the following directory structure with the corresponding local env files
-# ~/projects/.local-sherpa
-# ~/projects/project_awesome/.local-sherpa
+# ~/projects/.sherparc
+# ~/projects/project_awesome/.sherparc
 # ~/projects/project_awesome/subdir
 
 $ cd ~/projects/
@@ -183,7 +183,9 @@ Sherpa: Local env loaded. Sherpa is ready for action.
 
 ### Local env file
 
-🚧 Comming up
+```shell
+export SHERPA_LOCAL_ENV_FILE='.sherparc'
+```
 
 ## Cookbook
 
@@ -192,7 +194,7 @@ Sherpa: Local env loaded. Sherpa is ready for action.
 ```shell
 # Run RSpec in the `project-awesome-api` Docker container
 
-# ~/projects/project_awesome_api/.local-sherpa
+# ~/projects/project_awesome_api/.sherparc
 alias de='docker exec -it project-awesome-api'
 alias rs='de rspec'
 ```
@@ -200,7 +202,7 @@ alias rs='de rspec'
 ```shell
 # Run RSpec on the host machine
 
-# ~/projects/project_for_mortals/.local-sherpa
+# ~/projects/project_for_mortals/.sherparc
 alias rs='bin/rspec'
 ```
 
@@ -209,21 +211,21 @@ With this config `RSpec` will run depending on in which directory you `cd` into.
 ### Rails console in production 🤫
 
 ```shell
-# ~/projects/project_with_heroku/.local-sherpa
+# ~/projects/project_with_heroku/.sherparc
 alias rc_prod='heroku run rails c -a APP_NAME'
 
-# ~/projects/project_with_aws/.local-sherpa
+# ~/projects/project_with_aws/.sherparc
 alias rc_prod='ssh -i /path/key-pair-name.pem user@hostname "/var/app/current/bin/rails console"'
 ```
 
 ### Start your dev environment
 
 ```shell
-# ~/projects/project_with_docker/.local-sherpa
+# ~/projects/project_with_docker/.sherparc
 alias up='docker-compose up --build -d'
 alias down='docker-compose down'
 
-# ~/projects/project_basic/.local-sherpa
+# ~/projects/project_basic/.sherparc
 alias up='bin/rails s'
 ```
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 _calculate_checksum() {
-  sha256sum .local-sherpa | cut -d ' ' -f 1
+  sha256sum "$SHERPA_LOCAL_ENV_FILE" | cut -d ' ' -f 1
 }
 
 verify_trust() {
@@ -31,7 +31,7 @@ verify_trust() {
 }
 
 trust_current_env() {
-  if [[ ! -f .local-sherpa ]]; then
+  if [[ ! -f "$SHERPA_LOCAL_ENV_FILE" ]]; then
     log_info "Nothing to trust. The current directory has no local env file. Run \`sherpa edit\` to create one."
     return 1
   fi
