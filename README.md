@@ -141,7 +141,7 @@ See the full list of commands by running `$ sherpa` in your shell.
 It is not supported currently. Feel free to open a feature request issue
 if you find it useful.
 
-### Flexible and nested loading and unloading of local envs
+### Flexible nested local env loading and unloading
 
 ```shell
 # Given the following directory structure with the corresponding local env files
@@ -187,19 +187,19 @@ Sherpa: Local env loaded. Sherpa is ready for action.
 
 ## Cookbook
 
-### Run RSpec in a container or as mortals
+### Run RSpec in a container or else
 
 ```shell
-# Dockerized project
-# Run RSpec in the `project_with_docker-web` Docker container
+# Run RSpec in the `project-awesome-api` Docker container
 
-# ~/projects/project_with_docker/.local-sherpa
-alias de='docker exec -it `docker ps -aqf "name=$(basename $(pwd))-web"`'
+# ~/projects/project_awesome_api/.local-sherpa
+alias de='docker exec -it project-awesome-api'
 alias rs='de rspec'
 ```
 
 ```shell
-# Run RSpec as mortals
+# Run RSpec on the host machine
+
 # ~/projects/project_for_mortals/.local-sherpa
 alias rs='bin/rspec'
 ```
@@ -220,11 +220,11 @@ alias rc_prod='ssh -i /path/key-pair-name.pem user@hostname "/var/app/current/bi
 
 ```shell
 # ~/projects/project_with_docker/.local-sherpa
-alias dev='docker-compose -p PROJECT_NAME up -d'
-alias dev_stop='docker-compose -p PROJECT_NAME down'
+alias up='docker-compose up --build -d'
+alias down='docker-compose down'
 
 # ~/projects/project_basic/.local-sherpa
-alias dev='bin/rails s'
+alias up='bin/rails s'
 ```
 
 ## Local development
