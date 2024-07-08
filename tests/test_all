@@ -2,6 +2,14 @@
 
 set -e
 
+# Check if all shell executables are available
+for shell_executable in zsh bash; do
+  if ! which "$shell_executable" > /dev/null; then
+    echo "!! This test requires the ${shell_executable} executable !!"
+    exit 1
+  fi
+done
+
 TESTS_PASSED=true
 
 ./tests/test_bash "$@" || TESTS_PASSED=false
