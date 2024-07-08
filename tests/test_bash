@@ -2,7 +2,7 @@
 
 set -e
 
-# Disable history to avoid polluting the user's history file
+# Disable the history to avoid polluting the user's history file
 export HISTFILE=
 
 ./tests/test_runner "bash" "$@"

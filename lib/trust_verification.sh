@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -o pipefail
+
 _calculate_checksum() {
   sha256sum "$SHERPA_LOCAL_ENV_FILE" | cut -d ' ' -f 1
 }
@@ -31,6 +33,7 @@ verify_trust() {
 }
 
 trust_current_env() {
+  # return 1
   if [[ ! -f "$SHERPA_LOCAL_ENV_FILE" ]]; then
     log_info "Nothing to trust. The current directory has no local env file. Run \`sherpa edit\` to create one."
     return 1
@@ -42,6 +45,12 @@ trust_current_env() {
   checksum_file="$SHERPA_CHECKSUM_DIR/$(pwd | md5sum | cut -d ' ' -f 1)"
   local current_checksum
   current_checksum=$(_calculate_checksum)
+
+  # Skip if the checksum calculation chrashed
+  if [ $? -ne 0 ]; then
+    echo "Sherpa: Checksum calculation failed" >&2
+    return 1
+  fi
 
   echo "$current_checksum" > "$checksum_file"
   log_info "Trusted!"

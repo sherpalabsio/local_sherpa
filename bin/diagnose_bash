@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+# set -e
+
+# Disable the history to avoid polluting the user's history file
+export HISTFILE=
+
+print_success() {
+  local message=$1
+  printf "\e[32m%s\e[0m\n" "$message"
+}
+
+print_error() {
+  local message=$1
+  printf "\e[31m%s\e[0m\n" "$message"
+}
+
+# =========== Check if Sherpa is enabled ===========
+
+if [ "$SHERPA_ENABLED" = true ]; then
+  print_success "[OK] Enabled"
+else
+  print_error "[NOT OK] Enabled: Sherpa is disabled! Enable it with 'sherpa work'." >&2
+  exit 1
+fi
+
+# =========== Check if the CD hook is setup correctly ===========
+
+if [[ "$PROMPT_COMMAND" == *"_sherpa_chpwd_hook"* ]]; then
+  print_success "[OK] cd hook setup"
+else
+  print_error "[NOT OK] cd hook setup" >&2
+  echo "  Make sure that nothing override PROMPT_COMMAND in your shell configuration." >&2
+  exit 1
+fi
+
+# =========== Check if it works in a temp environment ===========
+
+# Setup test environment
+rm -rf /tmp/local_sherpa_diagnose
+mkdir -p /tmp/local_sherpa_diagnose
+export SHERPA_CHECKSUM_DIR="/tmp/local_sherpa_diagnose/local_sherpa_checksums"
+
+cd /tmp/local_sherpa_diagnose
+echo "alias test_alias_1='echo works'" > .sherparc
+
+STDERR_FILE=$(mktemp)
+
+# Test if Sherpa can trust the current directory
+sherpa trust > /dev/null 2> "$STDERR_FILE"
+
+if [ $? -eq 0 ]; then
+  print_success "[OK] Trust the current directory"
+else
+  print_error "[NOT OK] Trust the current directory" >&2
+  cat "$STDERR_FILE" >&2
+  rm "$STDERR_FILE"
+  exit 1
+fi
+
+# Test if Sherpa can load the local environment
+if [ "$(test_alias_1 2> /dev/null)" = "works" ]; then
+  print_success "[OK] Load the local environment"
+else
+  print_error "[NOT OK] Load the local environment" >&2
+  exit 1
+fi
+
+echo ""
+print_success "All systems are up and operational."
+
+rm -rf /tmp/local_sherpa_diagnose

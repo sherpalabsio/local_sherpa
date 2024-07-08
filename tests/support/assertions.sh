@@ -50,10 +50,9 @@ like(){
 
     printf "   failure: not a partial match\n\n"
 
-    echo "   pattern: $expected_pattern"
-    echo "       got: $actual"
+    printf "   pattern: %s\n" "$expected_pattern"
+    printf "       got: %s\n" "$actual"
 
-    echo ""
     _failed_assertion_path_with_line_number >&2
 
     exit 1

@@ -8,6 +8,7 @@ sherpa() {
   sherpa rest|off|disable - Turn Sherpa off for the current session
   sherpa work|on|enable   - Turn Sherpa on for the current session
   sherpa config           - Show the current configuration values
+  sherpa diagnose         - Troubleshoot Sherpa
 
 Tell sherpa how much he should talk (works only for the current session):
   sherpa info     - Messages like the local env file is not trusted etc.
@@ -17,7 +18,7 @@ Tell sherpa how much he should talk (works only for the current session):
 
   case $command in
  -h|--help|help|'') echo "$usage_text";;
-     t|trust|allow) trust_current_env; load_current_env;;
+     t|trust|allow) trust_current_env && load_current_env;;
          u|untrust) unload_current_env; untrust_current_env;;
        e|edit|init) edit; trust_current_env; unload_current_env; load_current_env;;
   rest|off|disable) disable;;
@@ -27,6 +28,7 @@ Tell sherpa how much he should talk (works only for the current session):
               info) set_log_level "info";;
           shh|shhh) set_log_level "no talking";;
             config) show_config;;
+          diagnose) diagnose;;
                  *) echo "Sherpa doesn't know what you wish";;
   esac
 }
@@ -70,6 +72,22 @@ show_config() {
   echo "Log level: $SHERPA_LOG_LEVEL"
   echo "Local env file: $SHERPA_LOCAL_ENV_FILE"
   echo "Loaded envs: ${PATHS_WHERE_LOCAL_ENV_WAS_LOADED[*]}"
+}
+
+diagnose() {
+  echo "Sherpa is performing a self-assessment. Please wait..."
+  echo ""
+
+  # To be able to stub the ~/.bashrc in the tests
+  [ -z "$BASHRC_FILE" ] && BASHRC_FILE="$HOME/.bashrc"
+
+  bash --rcfile "$BASHRC_FILE" -i "$SHERPA_PATH/bin/diagnose_bash"
+  # bash -i "$SHERPA_PATH/bin/diagnose_bash" "$SHERPA_ENABLED" "$PROMPT_COMMAND"
+  # if [ -n "$ZSH_VERSION" ]; then
+  #   zsh -i -c "$SHERPA_PATH/bin/diagnose_zsh"
+  # else
+  #   bash --noprofile --norc -i "$SHERPA_PATH/bin/diagnose_bash"
+  # fi
 }
 
 alert_sherpa_we_changed_dir() {
