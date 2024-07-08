@@ -1,31 +1,31 @@
 #!/usr/bin/env bash
 
-shell_name="$1"
+TARGET_SHELL_NAME="$1"
 
-case $shell_name in
+case $TARGET_SHELL_NAME in
   bash)
-    shell_name="Bash"
+    TARGET_SHELL_NAME="Bash"
     # We run the tests in interactive mode to be able to test aliases
-    shell_command="bash --noprofile --norc -i"
+    SHELL_COMMAND="bash --noprofile --norc -i"
     ;;
   zsh)
-    shell_name="Zsh"
-    shell_command="zsh"
+    TARGET_SHELL_NAME="Zsh"
+    SHELL_COMMAND="zsh"
     ;;
   *)
-    echo "Unknown shell: $shell_name"
+    echo "Unknown shell: $TARGET_SHELL_NAME"
     exit 1
     ;;
 esac
 
-echo "=============================== Shell: $shell_name =============================="
-stderr_file=$(mktemp)
-all_tests_passed=true
+echo "=============================== Shell: $TARGET_SHELL_NAME =============================="
+STDERR_FILE=$(mktemp)
+ALL_TESTS_PASSED=true
 
 run_single_test() {
 
   echo "== Running $test_file"
-  $shell_command "$test_file" 2>> "$stderr_file" || all_tests_passed=false
+  $SHELL_COMMAND "$test_file" 2>> "$STDERR_FILE" || ALL_TESTS_PASSED=false
   echo ""
 }
 
@@ -34,7 +34,7 @@ run_all_tests() {
 
   for file in "${_test_files[@]}" ; do
     echo "== Running $file"
-    $shell_command "$file" 2>> "$stderr_file" || all_tests_passed=false
+    $SHELL_COMMAND "$file" 2>> "$STDERR_FILE" || ALL_TESTS_PASSED=false
 
     echo ""
   done
@@ -48,14 +48,14 @@ else
   run_all_tests
 fi
 
-if $all_tests_passed; then
+if $ALL_TESTS_PASSED; then
   echo -e "\033[32mAll tests passed successfully!\033[0m"
 else
   echo -e "\033[31mFailed examples:\033[0m"
   while IFS= read -r line; do
     echo "  $line" >&2
-  done < "$stderr_file"
-  rm "$stderr_file"
+  done < "$STDERR_FILE"
+  rm "$STDERR_FILE"
 
   exit 1
 fi

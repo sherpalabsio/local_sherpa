@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-_tests_passed=true
+TESTS_PASSED=true
 
-./test_bash "$@" || _tests_passed=false
+./test_bash "$@" || TESTS_PASSED=false
 echo ""
 echo ""
 
-./test_zsh "$@" || _tests_passed=false
+./test_zsh "$@" || TESTS_PASSED=false
 
 echo ""
 
-if $_tests_passed; then
+if $TESTS_PASSED; then
   echo -e "\033[32mTest suite passed successfully!\033[0m"
 else
   echo -e "\033[31mTest suite failed.\033[0m"

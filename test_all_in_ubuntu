@@ -1,36 +1,36 @@
 #!/usr/bin/env bash
 
-exit_code=0
+EXIT_CODE=0
 
 # Start the container if it's not running
 if ! docker ps | grep -q local-sherpa-test-ubuntu-container; then
   docker-compose up --build -d
-  _container_started_by_this_script=true
+  CONTAINER_STARTED_BY_THIS_SCRIPT=true
 fi
 
-_docker_exec="docker exec -it local-sherpa-test-ubuntu-container"
-_tests_passed=true
+DOCKER_EXEC="docker exec -it local-sherpa-test-ubuntu-container"
+TESTS_PASSED=true
 
 echo "**************** Running in Ubuntu ****************"
 
-$_docker_exec ./test_bash "$@" || _tests_passed=false
+$DOCKER_EXEC ./test_bash "$@" || TESTS_PASSED=false
 echo ""
 echo ""
 
-$_docker_exec ./test_zsh "$@" || _tests_passed=false
+$DOCKER_EXEC ./test_zsh "$@" || TESTS_PASSED=false
 
 echo ""
 
-if $_tests_passed; then
+if $TESTS_PASSED; then
   echo -e "\033[32mTest suite passed successfully!\033[0m"
 else
   echo -e "\033[31mTest suite failed.\033[0m"
-  exit_code=1
+  EXIT_CODE=1
 fi
 
 # Stop the container if we started it
-if [ "$_container_started_by_this_script" = true ]; then
+if [ "$CONTAINER_STARTED_BY_THIS_SCRIPT" = true ]; then
   docker-compose down
 fi
 
-exit $exit_code
+exit $EXIT_CODE
