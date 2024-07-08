@@ -7,6 +7,7 @@ sherpa() {
   sherpa edit|init        - Edit the local env file (short-cut alias: \"e\")
   sherpa rest|off|disable - Turn Sherpa off for the current session
   sherpa work|on|enable   - Turn Sherpa on for the current session
+  sherpa config           - Show the current configuration values
 
 Tell sherpa how much he should talk (works only for the current session):
   sherpa info     - Messages like the local env file is not trusted etc.
@@ -25,6 +26,7 @@ Tell sherpa how much he should talk (works only for the current session):
              debug) set_log_level "debug";;
               info) set_log_level "info";;
           shh|shhh) set_log_level "no talking";;
+            config) show_config;;
                  *) echo "Sherpa doesn't know what you wish";;
   esac
 }
@@ -37,7 +39,7 @@ edit() {
 disable() {
   unload_all_envs
   log_info "All env unloaded. Sherpa goes to sleep."
-  unset SHERPA_ENABLED
+  export SHERPA_ENABLED=false
 }
 
 enable() {
@@ -63,9 +65,16 @@ set_log_level() {
   log "$log_message"
 }
 
+show_config() {
+  echo "Enabled: $SHERPA_ENABLED"
+  echo "Log level: $SHERPA_LOG_LEVEL"
+  echo "Local env file: $SHERPA_LOCAL_ENV_FILE"
+  echo "Loaded envs: ${PATHS_WHERE_LOCAL_ENV_WAS_LOADED[*]}"
+}
+
 alert_sherpa_we_changed_dir() {
   # Skip if Sherpa is disabled
-  [ -z "$SHERPA_ENABLED" ] && return
+  [ "$SHERPA_ENABLED" = false ] && return
   log_debug "Directory changed."
   unload_inactive_envs
   load_current_env
@@ -110,7 +119,7 @@ unload_current_env() {
 
 load_current_env() {
   # Skip if Sherpa is disabled
-  [ -z "$SHERPA_ENABLED" ] && return
+  [ "$SHERPA_ENABLED" = false ] && return
   log_debug "Load local env?"
 
   # Skip if there is no local env file

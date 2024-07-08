@@ -181,10 +181,13 @@ Sherpa: Local env loaded. Sherpa is ready for action.
 
 ## Configuration
 
-### Local env file
+Set the following environment variables anywhere to instruct Sherpa how to help you.
 
 ```shell
-export SHERPA_LOCAL_ENV_FILE='.sherparc'
+export SHERPA_ENABLED=false # Default: true
+export SHERPA_LOCAL_ENV_FILE='.env' # Default: .sherparc
+# Control how much Sherpa talks
+export SHERPA_LOG_LEVEL='no talking' # Default: info | Values: debug, info, no talking
 ```
 
 ## Cookbook
