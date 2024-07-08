@@ -98,7 +98,8 @@ _is_defined() {
 }
 
 _failed_assertion_path_with_line_number(){
-  if [ -n "$ZSH_VERSION" ]; then # shellcheck disable=SC2154
+  if [ -n "$ZSH_VERSION" ]; then
+    # shellcheck disable=SC2154
     echo "${funcfiletrace[2]}"
   else
     echo "${BASH_SOURCE[2]}:${BASH_LINENO[1]}"

@@ -9,6 +9,8 @@ export SHERPA_LOG_LEVEL='no talk' # debug, info, no talking
 
 if [ -z "$ZSH_VERSION" ]; then
   # Emulate the behavior of `cd` in interactive bash
+  # For some reason the PROMPT_COMMAND is ignored in the tests even we are
+  # running bash in interactive mode
   cd() {
     builtin cd "$@"
     alert_sherpa_we_changed_dir
