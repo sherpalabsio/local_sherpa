@@ -13,6 +13,10 @@ setup_cd_hook() {
     add-zsh-hook chpwd sherpa_chpwd_handler
   else
     # BASH
+
+    # Skip if the hook is already set up
+    [[ "$PROMPT_COMMAND" = *_sherpa_chpwd_hook* ]] && return
+
     # shellcheck disable=SC2317
     _sherpa_chpwd_hook() {
       # run commands in CHPWD_COMMAND variable on dir change
@@ -24,6 +28,6 @@ setup_cd_hook() {
     }
 
     # add `;` after _sherpa_chpwd_hook if PROMPT_COMMAND is not empty
-    PROMPT_COMMAND="_sherpa_chpwd_hook${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
+    export PROMPT_COMMAND="_sherpa_chpwd_hook${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
   fi
 }
