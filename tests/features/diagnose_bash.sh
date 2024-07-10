@@ -39,6 +39,31 @@ subject
 like "$(cat $STDOUT_FILE)" "\[OK\] Enabled" "It acknowledges when Sherpa is enabled"
 
 
+# ==== It warns when the sha256sum function is not available
+# Stub the type command to simulate a missing sha256sum command
+cat <<EOF >> $BASHRC
+type() {
+  if [[ "\$1" = "sha256sum" ]]; then
+    echo "sha256sum: command not found" >&2
+    return 1
+  else
+    builtin type "\$file_path"
+  fi
+}
+EOF
+
+subject
+
+like "$(cat $STDERR_FILE)" "\[NOT OK\] sha256sum function exists" "It warns when the sha256sum function is not available"
+
+echo "source $SHERPA_LIB_PATH/init.sh" > $BASHRC
+
+# ==== It acknowledges when the sha256sum function is available
+subject
+
+like "$(cat $STDOUT_FILE)" "\[OK\] sha256sum function exists" "It acknowledges when the sha256sum function is available"
+
+
 # When the PROMPT_COMMAND got tempered with
 # ==== It warns when the cd hook is not setup correctly
 echo "export PROMPT_COMMAND=\"\"" >> $BASHRC

@@ -25,6 +25,15 @@ check_enabled() {
   fi
 }
 
+check_checksum_function_exists() {
+  if type sha256sum > /dev/null 2>&1; then
+    print_success "[OK] sha256sum function exists"
+  else
+    print_error "[NOT OK] sha256sum function exists. Make sure you have the sha256sum is available in your system." >&2
+    exit 1
+  fi
+}
+
 setup_test_env() {
   rm -rf /tmp/local_sherpa_diagnose
   mkdir -p /tmp/local_sherpa_diagnose
