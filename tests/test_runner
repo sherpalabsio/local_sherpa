@@ -2,7 +2,7 @@
 
 set -e
 
-TARGET_SHELL_NAME="$1"
+export TARGET_SHELL_NAME="$1"
 
 case $TARGET_SHELL_NAME in
   bash)

@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-# set -e
-
-# Disable the history to avoid polluting the user's history file
-export HISTFILE=
-
 print_success() {
   local message=$1
   printf "\e[32m%s\e[0m\n" "$message"
@@ -20,13 +15,13 @@ print_error() {
 if [ "$SHERPA_ENABLED" = true ]; then
   print_success "[OK] Enabled"
 else
-  print_error "[NOT OK] Enabled. Sherpa is disabled! Enable it with 'sherpa work'." >&2
+  print_error "[NOT OK] Enabled: Sherpa is disabled! Enable it with 'sherpa work'." >&2
   exit 1
 fi
 
 # =========== Check if the CD hook is setup correctly ===========
 
-if [[ "$PROMPT_COMMAND" == *"_sherpa_chpwd_hook"* ]]; then
+if [[ "$chpwd_functions" == *"sherpa_chpwd_handler"* ]]; then
   print_success "[OK] cd hook setup"
 else
   print_error "[NOT OK] cd hook setup" >&2

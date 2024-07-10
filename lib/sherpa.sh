@@ -78,16 +78,13 @@ diagnose() {
   echo "Sherpa is performing a self-assessment. Please wait..."
   echo ""
 
-  # To be able to stub the ~/.bashrc in the tests
-  [ -z "$BASHRC_FILE" ] && BASHRC_FILE="$HOME/.bashrc"
-
-  bash --rcfile "$BASHRC_FILE" -i "$SHERPA_PATH/bin/diagnose_bash"
-  # bash -i "$SHERPA_PATH/bin/diagnose_bash" "$SHERPA_ENABLED" "$PROMPT_COMMAND"
-  # if [ -n "$ZSH_VERSION" ]; then
-  #   zsh -i -c "$SHERPA_PATH/bin/diagnose_zsh"
-  # else
-  #   bash --noprofile --norc -i "$SHERPA_PATH/bin/diagnose_bash"
-  # fi
+  if [ -n "$ZSH_VERSION" ]; then
+    zsh -i "$SHERPA_PATH/bin/diagnose_zsh"
+  else
+    # To be able to stub the ~/.bashrc in the tests
+    [ -z "$BASHRC_FILE" ] && BASHRC_FILE="$HOME/.bashrc"
+    bash --rcfile "$BASHRC_FILE" -i "$SHERPA_PATH/bin/diagnose_bash"
+  fi
 }
 
 alert_sherpa_we_changed_dir() {
