@@ -16,6 +16,10 @@ Tell sherpa how much he should talk (works only for the current session):
   sherpa shh|shhh - Shotup Sherpa
   sherpa talk     - Set the log level to the specified value (debug, info, no talking)"
 
+if [ "$USE_SHERPA_DEV_VERSION" = true ]; then
+  usage_text="Dev version\n\n$usage_text"
+fi
+
   case $command in
  -h|--help|help|'') echo "$usage_text";;
      t|trust|allow) trust_current_env && load_current_env;;
