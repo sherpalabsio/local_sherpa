@@ -232,6 +232,12 @@ alias down='docker-compose down'
 alias up='bin/rails s'
 ```
 
+## Troubleshooting
+
+```shell
+$ sherpa diagnose
+```
+
 ## Local development
 
 ### Testing

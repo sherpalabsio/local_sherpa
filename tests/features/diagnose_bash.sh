@@ -78,10 +78,16 @@ like "$(cat $STDOUT_FILE)" "\[OK\] Trust the current directory" "It acknowledges
 
 
 # ==== It warns when loading the local env fails
-# Stub the echo command to simulate a local env loading failure
+# Stub the source command to simulate a local env loading failure
 cat <<EOF >> $BASHRC
 source() {
-  return 1
+  local file_path="\$1"
+
+  if [[ "\$file_path" = ".sherparc" ]]; then
+    return 1
+  else
+    builtin source "\$file_path"
+  fi
 }
 EOF
 
@@ -96,7 +102,6 @@ subject
 like "$(cat $STDOUT_FILE)" "\[OK\] Load the local environment" "It acknowledges when loading the local env succeeds"
 
 
-# Todo unify the error messages and the success messages [OK] Load local env
 # Tear down
 # Todo move this to a hook
 rm "$STDOUT_FILE"
