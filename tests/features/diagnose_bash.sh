@@ -1,12 +1,26 @@
-print_std() {
-  echo '-------------------------------SUCCESS'
-  cat $STDOUT_FILE
-  echo '-------------------------------ERROR'
-  cat $STDERR_FILE
-  echo '-------------------------------END'
+stub() {
+  local stub_definition=$1=$2
+
+  echo "$stub_definition" >> $BASHRC
 }
 
-# Setup
+stub_function() {
+  local stubbed_function_name=$1
+  local replace_function_name=$2
+
+  cat <<EOF >> $BASHRC
+$stubbed_function_name() {
+  $(declare -f "$replace_function_name" | sed '1,2d;$d')
+}
+EOF
+}
+
+reset_stubs() {
+  echo "source $SHERPA_LIB_PATH/init.sh" > $BASHRC
+}
+
+# ==============================================================================
+# ++++ Setup
 source tests/support/init.sh
 
 # Sherpa runs the diagnostics with a shell script that would load the
@@ -22,8 +36,8 @@ subject() {
   sherpa diagnose 1> "$STDOUT_FILE" 2> "$STDERR_FILE"
 }
 
-
-# ==== It warns when Sherpa is disabled
+# ==============================================================================
+# ++++ It warns when Sherpa is disabled
 sherpa disable
 
 subject
@@ -31,7 +45,8 @@ subject
 like "$(cat $STDERR_FILE)" "Sherpa is disabled!" "It warns when Sherpa is disabled"
 
 
-# ==== It acknowledges when Sherpa is enabled
+# ==============================================================================
+# ++++ It acknowledges when Sherpa is enabled
 sherpa enable
 
 subject
@@ -39,95 +54,101 @@ subject
 like "$(cat $STDOUT_FILE)" "\[OK\] Enabled" "It acknowledges when Sherpa is enabled"
 
 
-# ==== It warns when the sha256sum function is not available
-# Stub the type command to simulate a missing sha256sum command
-cat <<EOF >> $BASHRC
-type() {
-  if [[ "\$1" = "sha256sum" ]]; then
+# ==============================================================================
+# ++++ It warns when the sha256sum function is not available
+# Stub the type function to simulate a missing sha256sum function
+fake_type() {
+  if [[ "$1" = "sha256sum" ]]; then
     echo "sha256sum: command not found" >&2
     return 1
   else
     builtin type "\$file_path"
   fi
 }
-EOF
+stub_function "type" "fake_type"
 
 subject
 
 like "$(cat $STDERR_FILE)" "\[NOT OK\] sha256sum function exists" "It warns when the sha256sum function is not available"
 
-echo "source $SHERPA_LIB_PATH/init.sh" > $BASHRC
+reset_stubs
 
-# ==== It acknowledges when the sha256sum function is available
+
+# ==============================================================================
+# ++++ It acknowledges when the sha256sum function is available
 subject
 
 like "$(cat $STDOUT_FILE)" "\[OK\] sha256sum function exists" "It acknowledges when the sha256sum function is available"
 
 
-# When the PROMPT_COMMAND got tempered with
-# ==== It warns when the cd hook is not setup correctly
-echo "export PROMPT_COMMAND=\"\"" >> $BASHRC
+# ==============================================================================
+# ++++ It warns when the cd hook is not setup correctly (the PROMPT_COMMAND got tempered with)
+stub "export PROMPT_COMMAND=\"\""
 
 subject
 
 like "$(cat $STDERR_FILE)" "\[NOT OK\] cd hook setup" "It warns when the cd hook is not setup correctly"
 
-echo "source $SHERPA_LIB_PATH/init.sh" > $BASHRC
+reset_stubs
 
 
-# ==== It acknowledges when the cd hook is setup correctly
+# ==============================================================================
+# ++++ It acknowledges when the cd hook is setup correctly
 subject
 
 like "$(cat $STDOUT_FILE)" "\[OK\] cd hook setup" "It acknowledges when the cd hook is setup correctly"
 
 
-# ==== It warns when trusting a directory fails
-# Imitate a missing sha256sum command
-cat <<EOF >> $BASHRC
-sha256sum() {
+# ==============================================================================
+# ++++ It warns when trusting a directory fails
+# Stub the sha256sum function to simulate a directory trust failure
+fake_sha256sum() {
   echo "sha256sum: command not found" >&2
   exit 1
 }
-EOF
+stub_function "sha256sum" "fake_sha256sum"
 
 subject
 
 like "$(cat $STDERR_FILE)" "\[NOT OK\] Trust the current directory" "It warns when trusting a directory fails"
-echo "source $SHERPA_LIB_PATH/init.sh" > $BASHRC
+reset_stubs
 
 
-# ==== It acknowledges when trusting a directory succeeds
+# ==============================================================================
+# ++++ It acknowledges when trusting a directory succeeds
 subject
 
 like "$(cat $STDOUT_FILE)" "\[OK\] Trust the current directory" "It acknowledges when trusting a directory succeeds"
 
 
-# ==== It warns when loading the local env fails
+# ==============================================================================
+# ++++ It warns when loading the local env fails
 # Stub the source command to simulate a local env loading failure
-cat <<EOF >> $BASHRC
-source() {
-  local file_path="\$1"
+fake_source() {
+  local file_path="$1"
 
-  if [[ "\$file_path" = ".sherparc" ]]; then
+  if [[ "$file_path" = ".sherparc" ]]; then
     return 1
   else
-    builtin source "\$file_path"
+    builtin source "$file_path"
   fi
 }
-EOF
+stub_function "source" "fake_source"
 
 subject
 
 like "$(cat $STDERR_FILE)" "\[NOT OK\] Load the local environment" "It warns when loading the local env fails"
-echo "source $SHERPA_LIB_PATH/init.sh" > $BASHRC
+reset_stubs
 
-# ==== It acknowledges when loading the local env succeeds
+# ==============================================================================
+# ++++ It acknowledges when loading the local env succeeds
 subject
 
 like "$(cat $STDOUT_FILE)" "\[OK\] Load the local environment" "It acknowledges when loading the local env succeeds"
 
 
-# Tear down
+# ==============================================================================
+# ++++ Tear down
 # Todo move this to a hook
 rm "$STDOUT_FILE"
 rm "$STDERR_FILE"

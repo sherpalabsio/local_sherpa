@@ -1,4 +1,5 @@
-# if TARGET_SHELL_NAME == bash then run bash
+# Test harness for the diagnose feature
+# We need to test Zsh and Bash separately because they setup the cd hook differently
 
 set -e
 
