@@ -14,6 +14,10 @@ log_info() {
   [ "$(_log_level_in_number)" -le 1 ] && echo "Sherpa: $1"
 }
 
+log_error() {
+  echo "Sherpa: $1" >&2
+}
+
 log() {
   echo "$1"
 }

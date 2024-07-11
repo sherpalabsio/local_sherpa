@@ -3,7 +3,15 @@
 set -o pipefail
 
 _calculate_checksum() {
-  sha256sum "$SHERPA_LOCAL_ENV_FILE" | cut -d ' ' -f 1
+  if ! sha256sum "$SHERPA_LOCAL_ENV_FILE" | cut -d ' ' -f 1; then
+    if [ -r "$FILE" ]; then
+      log_error "Checksum calculation failed"
+    else
+      log_error "The local env file is not readable. Permission issue?"
+    fi
+
+    return 1
+  fi
 }
 
 verify_trust() {
@@ -11,7 +19,11 @@ verify_trust() {
   checksum_file="$SHERPA_CHECKSUM_DIR/$(pwd | md5sum | cut -d ' ' -f 1)"
 
   local current_checksum
-  current_checksum=$(_calculate_checksum)
+
+  if ! current_checksum=$(_calculate_checksum); then
+    # Skip if the checksum calculation failed
+    return 1
+  fi
 
   # No checksum file?
   if [[ ! -f "$checksum_file" ]]; then
@@ -46,8 +58,7 @@ trust_current_env() {
   local current_checksum
 
   if ! current_checksum=$(_calculate_checksum); then
-    # Skip if the checksum calculation chrashed
-    echo "Sherpa: Checksum calculation failed" >&2
+    # Skip if the checksum calculation failed
     return 1
   fi
 
