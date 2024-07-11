@@ -44,9 +44,7 @@ setup_test_env() {
 }
 
 test_trusting_the_current_directory() {
-  sherpa trust > /dev/null 2> "$STDERR_FILE"
-
-  if [ $? -eq 0 ]; then
+  if sherpa trust > /dev/null 2> "$STDERR_FILE"; then
     print_success "[OK] Trust the current directory"
   else
     print_error "[NOT OK] Trust the current directory" >&2

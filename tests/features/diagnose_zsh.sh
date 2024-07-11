@@ -1,11 +1,11 @@
 stub() {
   local stub_definition=$1=$2
 
-  echo "$stub_definition" >> $ZSHRC
+  echo "$stub_definition" >> "$ZSHRC"
 }
 
 reset_stubs() {
-  echo "source $SHERPA_LIB_PATH/init.sh" > $ZSHRC
+  echo "source $SHERPA_LIB_PATH/init.sh" > "$ZSHRC"
 }
 
 # ==============================================================================
@@ -17,7 +17,7 @@ ZSHRC_DIR=$(mktemp -d)
 export ZDOTDIR="$ZSHRC_DIR"
 ZSHRC="$ZDOTDIR/.zshrc"
 
-echo "source $SHERPA_LIB_PATH/init.sh" > $ZSHRC
+echo "source $SHERPA_LIB_PATH/init.sh" > "$ZSHRC"
 
 # ++ Reading from stdout and stderr
 STDOUT_FILE=$(mktemp)
@@ -34,7 +34,7 @@ stub "chpwd_functions=\"\""
 
 subject
 
-like "$(cat $STDERR_FILE)" "\[NOT OK\] cd hook setup" "It warns when the cd hook is not setup correctly"
+like "$(cat "$STDERR_FILE")" "\[NOT OK\] cd hook setup" "It warns when the cd hook is not setup correctly"
 
 reset_stubs
 
@@ -43,4 +43,4 @@ reset_stubs
 # ++++ It acknowledges when the cd hook is setup correctly
 subject
 
-like "$(cat $STDOUT_FILE)" "\[OK\] cd hook setup" "It acknowledges when the cd hook is setup correctly"
+like "$(cat "$STDOUT_FILE")" "\[OK\] cd hook setup" "It acknowledges when the cd hook is setup correctly"

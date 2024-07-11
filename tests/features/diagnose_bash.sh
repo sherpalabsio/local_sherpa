@@ -1,14 +1,14 @@
 stub() {
   local stub_definition=$1=$2
 
-  echo "$stub_definition" >> $BASHRC
+  echo "$stub_definition" >> "$BASHRC"
 }
 
 stub_function() {
   local stubbed_function_name=$1
   local replace_function_name=$2
 
-  cat <<EOF >> $BASHRC
+  cat <<EOF >> "$BASHRC"
 $stubbed_function_name() {
   $(declare -f "$replace_function_name" | sed '1,2d;$d')
 }
@@ -16,7 +16,7 @@ EOF
 }
 
 reset_stubs() {
-  echo "source $SHERPA_LIB_PATH/init.sh" > $BASHRC
+  echo "source $SHERPA_LIB_PATH/init.sh" > "$BASHRC"
 }
 
 # ==============================================================================
@@ -26,7 +26,7 @@ source tests/support/init.sh
 # Sherpa runs the diagnostics with a shell script that would load the
 # ~/.bashrc file.
 BASHRC=$(mktemp)
-echo "source $SHERPA_LIB_PATH/init.sh" > $BASHRC
+echo "source $SHERPA_LIB_PATH/init.sh" > "$BASHRC"
 BASHRC_FILE="$BASHRC"
 
 STDOUT_FILE=$(mktemp)
@@ -42,7 +42,7 @@ sherpa disable
 
 subject
 
-like "$(cat $STDERR_FILE)" "Sherpa is disabled!" "It warns when Sherpa is disabled"
+like "$(cat "$STDERR_FILE")" "Sherpa is disabled!" "It warns when Sherpa is disabled"
 
 
 # ==============================================================================
@@ -51,7 +51,7 @@ sherpa enable
 
 subject
 
-like "$(cat $STDOUT_FILE)" "\[OK\] Enabled" "It acknowledges when Sherpa is enabled"
+like "$(cat "$STDOUT_FILE")" "\[OK\] Enabled" "It acknowledges when Sherpa is enabled"
 
 
 # ==============================================================================
@@ -69,7 +69,7 @@ stub_function "type" "fake_type"
 
 subject
 
-like "$(cat $STDERR_FILE)" "\[NOT OK\] sha256sum function exists" "It warns when the sha256sum function is not available"
+like "$(cat "$STDERR_FILE")" "\[NOT OK\] sha256sum function exists" "It warns when the sha256sum function is not available"
 
 reset_stubs
 
@@ -78,7 +78,7 @@ reset_stubs
 # ++++ It acknowledges when the sha256sum function is available
 subject
 
-like "$(cat $STDOUT_FILE)" "\[OK\] sha256sum function exists" "It acknowledges when the sha256sum function is available"
+like "$(cat "$STDOUT_FILE")" "\[OK\] sha256sum function exists" "It acknowledges when the sha256sum function is available"
 
 
 # ==============================================================================
@@ -87,7 +87,7 @@ stub "export PROMPT_COMMAND=\"\""
 
 subject
 
-like "$(cat $STDERR_FILE)" "\[NOT OK\] cd hook setup" "It warns when the cd hook is not setup correctly"
+like "$(cat "$STDERR_FILE")" "\[NOT OK\] cd hook setup" "It warns when the cd hook is not setup correctly"
 
 reset_stubs
 
@@ -96,7 +96,7 @@ reset_stubs
 # ++++ It acknowledges when the cd hook is setup correctly
 subject
 
-like "$(cat $STDOUT_FILE)" "\[OK\] cd hook setup" "It acknowledges when the cd hook is setup correctly"
+like "$(cat "$STDOUT_FILE")" "\[OK\] cd hook setup" "It acknowledges when the cd hook is setup correctly"
 
 
 # ==============================================================================
@@ -110,7 +110,7 @@ stub_function "sha256sum" "fake_sha256sum"
 
 subject
 
-like "$(cat $STDERR_FILE)" "\[NOT OK\] Trust the current directory" "It warns when trusting a directory fails"
+like "$(cat "$STDERR_FILE")" "\[NOT OK\] Trust the current directory" "It warns when trusting a directory fails"
 reset_stubs
 
 
@@ -118,7 +118,7 @@ reset_stubs
 # ++++ It acknowledges when trusting a directory succeeds
 subject
 
-like "$(cat $STDOUT_FILE)" "\[OK\] Trust the current directory" "It acknowledges when trusting a directory succeeds"
+like "$(cat "$STDOUT_FILE")" "\[OK\] Trust the current directory" "It acknowledges when trusting a directory succeeds"
 
 
 # ==============================================================================
@@ -137,14 +137,14 @@ stub_function "source" "fake_source"
 
 subject
 
-like "$(cat $STDERR_FILE)" "\[NOT OK\] Load the local environment" "It warns when loading the local env fails"
+like "$(cat "$STDERR_FILE")" "\[NOT OK\] Load the local environment" "It warns when loading the local env fails"
 reset_stubs
 
 # ==============================================================================
 # ++++ It acknowledges when loading the local env succeeds
 subject
 
-like "$(cat $STDOUT_FILE)" "\[OK\] Load the local environment" "It acknowledges when loading the local env succeeds"
+like "$(cat "$STDOUT_FILE")" "\[OK\] Load the local environment" "It acknowledges when loading the local env succeeds"
 
 
 # ==============================================================================

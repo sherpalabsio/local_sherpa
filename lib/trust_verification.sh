@@ -44,10 +44,9 @@ trust_current_env() {
   local checksum_file
   checksum_file="$SHERPA_CHECKSUM_DIR/$(pwd | md5sum | cut -d ' ' -f 1)"
   local current_checksum
-  current_checksum=$(_calculate_checksum)
 
-  # Skip if the checksum calculation chrashed
-  if [ $? -ne 0 ]; then
+  if ! current_checksum=$(_calculate_checksum); then
+    # Skip if the checksum calculation chrashed
     echo "Sherpa: Checksum calculation failed" >&2
     return 1
   fi
