@@ -68,6 +68,10 @@ set_log_level() {
      info) SHERPA_LOG_LEVEL='info';;
         *) SHERPA_LOG_LEVEL='no talking';;
   esac
+
+  mkdir -p "$SHERPA_CONFIG_DIR"
+  echo "$SHERPA_LOG_LEVEL" > "$SHERPA_CONFIG__LOG_LEVEL_FILE"
+
   log_message="Sherpa: Log level set to: $SHERPA_LOG_LEVEL"
   [ "$SHERPA_LOG_LEVEL" = "no talking" ] && log_message="$log_message 🤫"
   log "$log_message"
