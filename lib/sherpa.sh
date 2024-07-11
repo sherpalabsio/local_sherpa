@@ -9,7 +9,7 @@ sherpa() {
   sherpa work    - Turn Sherpa on for the current session  | aliases: on/enable
 
 Troubleshooting:
-  sherpa status   - Show debug status info
+  sherpa status   - Show debug status info | aliases: s/stat
   sherpa diagnose - Troubleshoot Sherpa
 
 Tell Sherpa how much to talk (works only for the current session):
@@ -31,7 +31,7 @@ fi
                talk) shift; set_log_level "$1";;
               debug) set_log_level "debug";;
                 shh) set_log_level "no talking";;
-             status) show_status;;
+      s|stat|status) show_status;;
            diagnose) diagnose;;
                   *) echo "Sherpa doesn't know what you wish";;
   esac
@@ -62,6 +62,7 @@ enable() {
 
 set_log_level() {
   case $1 in
+       '') SHERPA_LOG_LEVEL='debug';;
      more) SHERPA_LOG_LEVEL='debug';;
     debug) SHERPA_LOG_LEVEL='debug';;
      info) SHERPA_LOG_LEVEL='info';;
