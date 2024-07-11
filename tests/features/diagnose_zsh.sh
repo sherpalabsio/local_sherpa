@@ -1,20 +1,25 @@
-print_std() {
-  echo '-------------------------------SUCCESS'
-  cat $STDOUT_FILE
-  echo '-------------------------------ERROR'
-  cat $STDERR_FILE
-  echo '-------------------------------END'
+stub() {
+  local stub_definition=$1=$2
+
+  echo "$stub_definition" >> $ZSHRC
 }
 
-# Setup
+reset_stubs() {
+  echo "source $SHERPA_LIB_PATH/init.sh" > $ZSHRC
+}
+
+# ==============================================================================
+# ++++ Setup
 source tests/support/init.sh
 
-# Sherpa runs the diagnostics with a shell script that would load the
-# ~/.bashrc file.
-BASHRC=$(mktemp)
-echo "source $SHERPA_LIB_PATH/init.sh" > $BASHRC
-BASHRC_FILE="$BASHRC"
+# ++ Stubbing
+ZSHRC_DIR=$(mktemp -d)
+export ZDOTDIR="$ZSHRC_DIR"
+ZSHRC="$ZDOTDIR/.zshrc"
 
+echo "source $SHERPA_LIB_PATH/init.sh" > $ZSHRC
+
+# ++ Reading from stdout and stderr
 STDOUT_FILE=$(mktemp)
 STDERR_FILE=$(mktemp)
 
@@ -23,17 +28,19 @@ subject() {
 }
 
 
-# ==== It warns when Sherpa is disabled
-sherpa disable
+# ==============================================================================
+# ++++ It warns when the cd hook is not setup correctly
+stub "chpwd_functions=\"\""
 
 subject
 
-like "$(cat $STDERR_FILE)" "Sherpa is disabled!" "It warns when Sherpa is disabled"
+like "$(cat $STDERR_FILE)" "\[NOT OK\] cd hook setup" "It warns when the cd hook is not setup correctly"
+
+reset_stubs
 
 
-# ==== It acknowledges when Sherpa is enabled
-sherpa enable
-
+# ==============================================================================
+# ++++ It acknowledges when the cd hook is setup correctly
 subject
 
-like "$(cat $STDOUT_FILE)" "\[OK\] Enabled" "It acknowledges when Sherpa is enabled"
+like "$(cat $STDOUT_FILE)" "\[OK\] cd hook setup" "It acknowledges when the cd hook is setup correctly"
