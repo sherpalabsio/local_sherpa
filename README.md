@@ -173,7 +173,7 @@ $ cd ..
 It works only for the current session currently. It will be extended to a global setting.
 
 ```shell
-$ sherpa disable # aliases: off, disable
+$ sherpa sleep # aliases: off, disable
 Sherpa: All env unloaded. Sherpa goes to sleep.
 $ sherpa work # aliases: on, enable
 Sherpa: Local env loaded. Sherpa is ready for action.

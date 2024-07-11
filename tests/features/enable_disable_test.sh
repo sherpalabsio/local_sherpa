@@ -14,7 +14,7 @@ is "$(alias_1)" "LOCAL ALIAS PROJECT 1" "Local env is loaded (alias)"
 is "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Local env is loaded (function)"
 
 # When the user disables Sherpa
-sherpa rest
+sherpa off
 
 # Sherpa unloaded the local env and goes to sleep
 is "$var_1" "GLOBAL VAR" "Local env is unloaded (var)"

@@ -2,38 +2,38 @@ sherpa() {
   local command="$1"
 
   local usage_text="Example usage:
-  sherpa trust|allow      - Trust the local env file (short-cut alias: \"t\")
-  sherpa untrust          - Untrust the local env file (short-cut alias: \"u\")
-  sherpa edit|init        - Edit the local env file (short-cut alias: \"e\")
-  sherpa rest|off|disable - Turn Sherpa off for the current session
-  sherpa work|on|enable   - Turn Sherpa on for the current session
-  sherpa config           - Show the current configuration values
-  sherpa diagnose         - Troubleshoot Sherpa
+  sherpa trust   - Trust the current directory             | aliases: t/allow/grant/permit
+  sherpa untrust - Untrust the current directory           | aliases: u/disallow/revoke/block/deny
+  sherpa edit    - Edit the local env file                 | aliases: e/init
+  sherpa sleep   - Turn Sherpa off for the current session | aliases: off/disable
+  sherpa work    - Turn Sherpa on for the current session  | aliases: on/enable
 
-Tell sherpa how much he should talk (works only for the current session):
-  sherpa info     - Messages like the local env file is not trusted etc.
-  sherpa debug    - Everything Sherpa knows
-  sherpa shh|shhh - Shotup Sherpa
-  sherpa talk     - Set the log level to the specified value (debug, info, no talking)"
+Troubleshooting:
+  sherpa status   - Show debug status info
+  sherpa diagnose - Troubleshoot Sherpa
+
+Tell Sherpa how much to talk (works only for the current session):
+  sherpa talk [LEVEL] - Set the log level | Levels: debug|more, info, no talking
+  sherpa shh          - Silent Sherpa
+  sherpa debug        - Everything Sherpa knows"
 
 if [ "$USE_SHERPA_DEV_VERSION" = true ]; then
   usage_text="Dev version\n\n$usage_text"
 fi
 
   case $command in
- -h|--help|help|'') echo "$usage_text";;
-     t|trust|allow) trust_current_env && load_current_env;;
-         u|untrust) unload_current_env; untrust_current_env;;
-       e|edit|init) edit; trust_current_env; unload_current_env; load_current_env;;
-  rest|off|disable) disable;;
-    work|on|enable) enable;;
-              talk) shift; set_log_level "$1";;
-             debug) set_log_level "debug";;
-              info) set_log_level "info";;
-          shh|shhh) set_log_level "no talking";;
-            config) show_config;;
-          diagnose) diagnose;;
-                 *) echo "Sherpa doesn't know what you wish";;
+  -h|--help|help|'') echo "$usage_text";;
+  t|trust|allow|grant|permit) trust_current_env && load_current_env;;
+  u|untrust|disallow/revoke/block/deny) unload_current_env; untrust_current_env;;
+        e|edit|init) edit; trust_current_env; unload_current_env; load_current_env;;
+  sleep|off|disable) disable;;
+     work|on|enable) enable;;
+               talk) shift; set_log_level "$1";;
+              debug) set_log_level "debug";;
+                shh) set_log_level "no talking";;
+             status) show_status;;
+           diagnose) diagnose;;
+                  *) echo "Sherpa doesn't know what you wish";;
   esac
 }
 
@@ -62,16 +62,17 @@ enable() {
 
 set_log_level() {
   case $1 in
+     more) SHERPA_LOG_LEVEL='debug';;
     debug) SHERPA_LOG_LEVEL='debug';;
-    info) SHERPA_LOG_LEVEL='info';;
-    *) SHERPA_LOG_LEVEL='no talking';;
+     info) SHERPA_LOG_LEVEL='info';;
+        *) SHERPA_LOG_LEVEL='no talking';;
   esac
   log_message="Sherpa: Log level set to: $SHERPA_LOG_LEVEL"
   [ "$SHERPA_LOG_LEVEL" = "no talking" ] && log_message="$log_message 🤫"
   log "$log_message"
 }
 
-show_config() {
+show_status() {
   echo "Enabled: $SHERPA_ENABLED"
   echo "Log level: $SHERPA_LOG_LEVEL"
   echo "Local env file: $SHERPA_LOCAL_ENV_FILE"
