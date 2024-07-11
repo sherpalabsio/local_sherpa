@@ -12,7 +12,7 @@ case $TARGET_SHELL_NAME in
     ;;
   zsh)
     TARGET_SHELL_NAME="Zsh"
-    SHELL_COMMAND="zsh"
+    SHELL_COMMAND="zsh --no-globalrcs --no-rcs -i"
     ;;
   *)
     echo "Unknown shell: $TARGET_SHELL_NAME"
