@@ -61,19 +61,20 @@ enable() {
 }
 
 set_log_level() {
+  local log_level
+
   case $1 in
-       '') SHERPA_LOG_LEVEL='debug';;
-     more) SHERPA_LOG_LEVEL='debug';;
-    debug) SHERPA_LOG_LEVEL='debug';;
-     info) SHERPA_LOG_LEVEL='info';;
-        *) SHERPA_LOG_LEVEL='no talking';;
+       '') log_level='debug';;
+     more) log_level='debug';;
+    debug) log_level='debug';;
+     info) log_level='info';;
+        *) log_level='no talking';;
   esac
 
-  mkdir -p "$SHERPA_CONFIG_DIR"
-  echo "$SHERPA_LOG_LEVEL" > "$SHERPA_CONFIG__LOG_LEVEL_FILE"
+  save_global_config "SHERPA_LOG_LEVEL" "$log_level"
 
-  log_message="Sherpa: Log level set to: $SHERPA_LOG_LEVEL"
-  [ "$SHERPA_LOG_LEVEL" = "no talking" ] && log_message="$log_message 🤫"
+  log_message="Sherpa: Log level set to: $log_level"
+  [ "$log_level" = "no talking" ] && log_message="$log_message 🤫"
   log "$log_message"
 }
 

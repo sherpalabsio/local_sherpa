@@ -6,24 +6,13 @@ fi
 
 SHERPA_PATH="$(dirname "$SHERPA_LIB_PATH")"
 
+source "$SHERPA_LIB_PATH/global_config.sh"
+
 # shellcheck disable=SC2034
 SHERPA_CHECKSUM_DIR="$HOME/.local/share/local_sherpa"
 SHERPA_CONFIG_DIR="${SHERPA_CONFIG_DIR:-"$HOME/.config/local_sherpa"}"
-SHERPA_CONFIG__LOG_LEVEL_FILE="$SHERPA_CONFIG_DIR/log_level"
-
 export SHERPA_ENABLED="${SHERPA_ENABLED:-true}"
-
-# Check if the env var is set
-if [ -z "$SHERPA_LOG_LEVEL" ]; then
-  # Check if the config file exists
-  if [ -f "$SHERPA_CONFIG__LOG_LEVEL_FILE" ]; then
-    SHERPA_LOG_LEVEL=$(cat "$SHERPA_CONFIG__LOG_LEVEL_FILE")
-  else
-    SHERPA_LOG_LEVEL="info"
-  fi
-fi
-
-export SHERPA_LOG_LEVEL="${SHERPA_LOG_LEVEL:-info}" # debug, info, no talking
+load_global_config "SHERPA_LOG_LEVEL" "info" # debug, info, no talking
 export SHERPA_LOCAL_ENV_FILE="${SHERPA_LOCAL_ENV_FILE:-.sherparc}"
 
 # Load the dependencies
