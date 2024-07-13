@@ -32,7 +32,7 @@ fi
                talk) shift; set_log_level "$1";;
               debug) set_log_level "debug";;
                 shh) set_log_level "no talking";;
-      s|stat|status) show_status;;
+      s|stat|status) _show_status;;
            diagnose) diagnose;;
                   *) echo "Sherpa doesn't know what you wish";;
   esac
@@ -77,13 +77,6 @@ set_log_level() {
   log_message="Sherpa: Log level set to: $log_level"
   [ "$log_level" = "no talking" ] && log_message="$log_message 🤫"
   log "$log_message"
-}
-
-show_status() {
-  echo "Enabled: $SHERPA_ENABLED"
-  echo "Log level: $SHERPA_LOG_LEVEL"
-  echo "Local env file: $SHERPA_LOCAL_ENV_FILE"
-  echo "Loaded envs: ${PATHS_WHERE_LOCAL_ENV_WAS_LOADED[*]}"
 }
 
 diagnose() {
