@@ -37,6 +37,24 @@ is(){
   fi
 }
 
+# Add extra space to the left of each line after the first one
+add_left_padding_to_multi_line_string(){
+  local multi_line_var="$1"
+  local left_padding="            "
+  local first_line=true
+
+  while IFS= read -r line; do
+    if $first_line; then
+      # Print the first line as it is
+      echo "$line"
+      first_line=false
+    else
+      # Add left padding to the rest
+      echo "${left_padding}${line}"
+    fi
+  done <<< "$multi_line_var"
+}
+
 # Partial match
 like(){
   local -r actual="$1"
@@ -51,7 +69,8 @@ like(){
     printf "   failure: not a partial match\n\n"
 
     printf "   pattern: %s\n" "$expected_pattern"
-    printf "       got: %s\n" "$actual"
+    printf "       got: %s\n" "$(add_left_padding_to_multi_line_string "$actual")"
+
 
     _failed_assertion_path_with_line_number >&2
 
