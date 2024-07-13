@@ -9,11 +9,11 @@ case $TARGET_SHELL_NAME in
   bash)
     TARGET_SHELL_NAME="Bash"
     # We run the tests in interactive mode to be able to test aliases
-    SHELL_COMMAND="bash --noprofile --norc -i"
+    SHELL_COMMAND="env -i PATH=$PATH TARGET_SHELL_NAME=$TARGET_SHELL_NAME bash --noprofile --norc -i"
     ;;
   zsh)
     TARGET_SHELL_NAME="Zsh"
-    SHELL_COMMAND="zsh --no-globalrcs --no-rcs -i"
+    SHELL_COMMAND="env -i PATH=$PATH TARGET_SHELL_NAME=$TARGET_SHELL_NAME zsh --no-globalrcs --no-rcs -i"
     ;;
   *)
     echo "Unknown shell: $TARGET_SHELL_NAME"

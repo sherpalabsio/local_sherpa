@@ -11,5 +11,5 @@ case $TARGET_SHELL_NAME in
   Zsh)
     zsh ./tests/features/diagnose/zsh.sh;;
     *)
-    echo "Unknown shell: $TARGET_SHELL_NAME"; exit 1;;
+    echo "Unknown shell: $TARGET_SHELL_NAME" >&2 ; exit 1;;
 esac
