@@ -5,7 +5,7 @@ print_success() {
 
 print_error() {
   local message=$1
-  printf "\e[31m%s\e[0m\n" "$message"
+  printf "\e[31m%s\e[0m\n" "$message" >&2
 }
 
 STDERR_FILE=$(mktemp)
@@ -20,7 +20,7 @@ check_enabled() {
   if [ "$SHERPA_ENABLED" = true ]; then
     print_success "[OK] Enabled"
   else
-    print_error "[NOT OK] Enabled. Sherpa is disabled! Enable it with 'sherpa work'." >&2
+    print_error "[NOT OK] Enabled. Sherpa is disabled! Enable it with 'sherpa work'."
     exit 1
   fi
 }
@@ -29,7 +29,7 @@ check_checksum_function_exists() {
   if type sha256sum > /dev/null 2>&1; then
     print_success "[OK] sha256sum function exists"
   else
-    print_error "[NOT OK] sha256sum function exists. Make sure you have the sha256sum is available in your system." >&2
+    print_error "[NOT OK] sha256sum function exists. Make sure you have the sha256sum is available in your system."
     exit 1
   fi
 }
@@ -47,7 +47,7 @@ test_trusting_the_current_directory() {
   if sherpa trust > /dev/null 2> "$STDERR_FILE"; then
     print_success "[OK] Trust the current directory"
   else
-    print_error "[NOT OK] Trust the current directory" >&2
+    print_error "[NOT OK] Trust the current directory"
     cat "$STDERR_FILE" >&2
     rm "$STDERR_FILE"
     exit 1
@@ -58,7 +58,7 @@ test_loading_the_local_env() {
   if [ "$(test_alias_1 2> /dev/null)" = "works" ]; then
     print_success "[OK] Load the local environment"
   else
-    print_error "[NOT OK] Load the local environment" >&2
+    print_error "[NOT OK] Load the local environment"
     exit 1
   fi
 }

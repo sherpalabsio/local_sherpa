@@ -13,7 +13,7 @@ check_checksum_function_exists
 if [[ "$PROMPT_COMMAND" == *"_sherpa_chpwd_hook"* ]]; then
   print_success "[OK] cd hook setup"
 else
-  print_error "[NOT OK] cd hook setup" >&2
+  print_error "[NOT OK] cd hook setup"
   echo "Make sure that nothing tampers the PROMPT_COMMAND after Sherpa is loaded." >&2
   echo "That environment variable should contain the _sherpa_chpwd_hook function." >&2
   exit 1

@@ -10,7 +10,7 @@ check_checksum_function_exists
 if [[ "$chpwd_functions" == *"sherpa_chpwd_handler"* ]]; then
   print_success "[OK] cd hook setup"
 else
-  print_error "[NOT OK] cd hook setup" >&2
+  print_error "[NOT OK] cd hook setup"
   echo "Make sure that nothing tampers the chpwd_functions array after Sherpa is loaded." >&2
   echo "The sherpa_chpwd_handler function should be in the chpwd_functions array." >&2
   exit 1
