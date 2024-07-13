@@ -53,7 +53,7 @@ enable() {
   save_global_config "SHERPA_ENABLED" true
 
   if load_current_env; then
-    copy="Local env loaded. "
+    copy="Local env is loaded. "
   else
     copy=""
   fi

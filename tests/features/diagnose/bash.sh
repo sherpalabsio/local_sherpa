@@ -69,7 +69,7 @@ stub_function "type" "fake_type"
 
 subject
 
-like "$(cat "$STDERR_FILE")" "\[NOT OK\] sha256sum function exists" "It warns when the sha256sum function is not available"
+like "$(cat "$STDERR_FILE")" "\[NOT OK\] sha256sum utility" "It warns when the sha256sum function is not available"
 
 reset_stubs
 
@@ -78,7 +78,7 @@ reset_stubs
 # ++++ It acknowledges when the sha256sum function is available
 subject
 
-like "$(cat "$STDOUT_FILE")" "\[OK\] sha256sum function exists" "It acknowledges when the sha256sum function is available"
+like "$(cat "$STDOUT_FILE")" "\[OK\] sha256sum utility" "It acknowledges when the sha256sum function is available"
 
 
 # ==============================================================================
@@ -110,7 +110,7 @@ stub_function "sha256sum" "fake_sha256sum"
 
 subject
 
-like "$(cat "$STDERR_FILE")" "\[NOT OK\] Trust the current directory" "It warns when trusting a directory fails"
+like "$(cat "$STDERR_FILE")" "\[NOT OK\] Trusting the current directory" "It warns when trusting a directory fails"
 reset_stubs
 
 
@@ -118,7 +118,7 @@ reset_stubs
 # ++++ It acknowledges when trusting a directory succeeds
 subject
 
-like "$(cat "$STDOUT_FILE")" "\[OK\] Trust the current directory" "It acknowledges when trusting a directory succeeds"
+like "$(cat "$STDOUT_FILE")" "\[OK\] Trusting the current directory" "It acknowledges when trusting a directory succeeds"
 
 
 # ==============================================================================
@@ -137,14 +137,14 @@ stub_function "source" "fake_source"
 
 subject
 
-like "$(cat "$STDERR_FILE")" "\[NOT OK\] Load the local environment" "It warns when loading the local env fails"
+like "$(cat "$STDERR_FILE")" "\[NOT OK\] Loading the local environment" "It warns when loading the local env fails"
 reset_stubs
 
 # ==============================================================================
 # ++++ It acknowledges when loading the local env succeeds
 subject
 
-like "$(cat "$STDOUT_FILE")" "\[OK\] Load the local environment" "It acknowledges when loading the local env succeeds"
+like "$(cat "$STDOUT_FILE")" "\[OK\] Loading the local environment" "It acknowledges when loading the local env succeeds"
 
 
 # ==============================================================================

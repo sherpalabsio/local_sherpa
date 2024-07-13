@@ -42,7 +42,7 @@ GLOBAL FUNCTION
 The above is accomplished with the help of Local Sherpa and the files below.
 
 ```shell
-# ~/.bash_profile or ~/.bashrc or ~/.zshrc etc...
+# ~/.bashrc or ~/.zshrc etc...
 export VAR_1="GLOBAL VAR"
 
 alias alias_1='echo "GLOBAL ALIAS"'
@@ -176,7 +176,7 @@ It effects only the current and new sessions.
 $ sherpa sleep # aliases: off, disable
 Sherpa: All env unloaded. Sherpa goes to sleep.
 $ sherpa work # aliases: on, enable
-Sherpa: Local env loaded. Sherpa is ready for action.
+Sherpa: Local is env loaded. Sherpa is ready for action.
 ```
 
 ## Configuration
