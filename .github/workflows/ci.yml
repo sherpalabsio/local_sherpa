@@ -60,7 +60,7 @@ jobs:
         run: |
           zsh --version
           bash --version
-          time make test
+          script time make test
 
   test-linux:
     name: Linux Test
@@ -82,4 +82,4 @@ jobs:
         run: |
           zsh --version
           bash --version
-          time make test
+          script time make test
