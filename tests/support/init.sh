@@ -17,5 +17,3 @@ if [ -z "$ZSH_VERSION" ]; then
     alert_sherpa_we_changed_dir
   }
 fi
-
-source ../support/init_tools.sh
