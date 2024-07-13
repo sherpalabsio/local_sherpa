@@ -1,0 +1,11 @@
+# Project 1 overwrites
+alias alias_1='echo "LOCAL ALIAS SUBPROJECT"'
+
+# Custom for subproject
+export subvar_1='CUSTOM LOCAL VAR SUBPROJECT'
+
+alias subalias_1='echo "CUSTOM LOCAL ALIAS SUBPROJECT"'
+
+subfunction_1() {
+  echo "CUSTOM LOCAL FUNCTION SUBPROJECT"
+}

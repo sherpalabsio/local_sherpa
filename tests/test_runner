@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
+shopt -s globstar
 
 export TARGET_SHELL_NAME="$1"
 

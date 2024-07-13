@@ -1,7 +1,17 @@
+# Global overwrites
 export var_1='LOCAL VAR PROJECT 1'
 
 alias alias_1='echo "LOCAL ALIAS PROJECT 1"'
 
 function_1() {
   echo "LOCAL FUNCTION PROJECT 1"
+}
+
+# Custom for project 1
+export custom_var_1='CUSTOM LOCAL VAR PROJECT 1'
+
+alias custom_alias_1='echo "CUSTOM LOCAL ALIAS PROJECT 1"'
+
+custom_function_1() {
+  echo "CUSTOM LOCAL FUNCTION PROJECT 1"
 }
