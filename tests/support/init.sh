@@ -1,5 +1,6 @@
 # Init the app
 
+source tests/support/init_tools.sh
 source ../lib/init.sh
 
 # shellcheck disable=SC2034
