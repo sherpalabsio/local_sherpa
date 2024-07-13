@@ -1,7 +1,7 @@
 _show_status() {
   echo "Enabled: $SHERPA_ENABLED"
   echo "Log level: $SHERPA_LOG_LEVEL"
-  echo "Local env file: $SHERPA_LOCAL_ENV_FILE"
+  echo "Local env file: $SHERPA_ENV_FILENAME"
 
   if [ ${#PATHS_WHERE_LOCAL_ENV_WAS_LOADED[@]} -eq 0 ]; then
     echo "Loaded envs: [none]"

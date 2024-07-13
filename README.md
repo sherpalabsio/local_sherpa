@@ -185,7 +185,7 @@ Set the following environment variables anywhere to instruct Sherpa how to help 
 
 ```shell
 export SHERPA_ENABLED=false # Default: true
-export SHERPA_LOCAL_ENV_FILE='.env' # Default: .sherparc
+export SHERPA_ENV_FILENAME='.env' # Default: .sherparc
 # Control how much Sherpa talks
 export SHERPA_LOG_LEVEL='no talking' # Default: info | Values: debug, info, no talking
 ```

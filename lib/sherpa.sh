@@ -40,7 +40,7 @@ fi
 
 edit() {
   echo "hint: Waiting for your editor to close the file..."
-  eval "$EDITOR $SHERPA_LOCAL_ENV_FILE"
+  eval "$EDITOR $SHERPA_ENV_FILENAME"
 }
 
 disable() {
@@ -143,7 +143,7 @@ load_current_env() {
   log_debug "Load local env?"
 
   # Skip if there is no local env file
-  [ -f "$SHERPA_LOCAL_ENV_FILE" ] || { log_debug "No local env file"; return; }
+  [ -f "$SHERPA_ENV_FILENAME" ] || { log_debug "No local env file"; return; }
 
   # Skip if the env was already loaded
   was_env_loaded && { log_debug "Local env already loaded"; return; }
@@ -154,7 +154,7 @@ load_current_env() {
   stash_local_env
   log_debug "Load local env"
   # shellcheck disable=SC1090
-  source "$SHERPA_LOCAL_ENV_FILE"
+  source "$SHERPA_ENV_FILENAME"
   # Append the current directory to the list. This is needed to unload the envs
   # in the right order when we change directories. The root directory should be
   # the last one to unload.

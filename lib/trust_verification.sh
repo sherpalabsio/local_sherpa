@@ -3,7 +3,7 @@
 set -o pipefail
 
 _calculate_checksum() {
-  if ! sha256sum "$SHERPA_LOCAL_ENV_FILE" | cut -d ' ' -f 1; then
+  if ! sha256sum "$SHERPA_ENV_FILENAME" | cut -d ' ' -f 1; then
     if [ -r "$FILE" ]; then
       log_error "Checksum calculation failed"
     else
@@ -46,7 +46,7 @@ verify_trust() {
 
 trust_current_env() {
   # return 1
-  if [[ ! -f "$SHERPA_LOCAL_ENV_FILE" ]]; then
+  if [[ ! -f "$SHERPA_ENV_FILENAME" ]]; then
     log_info "Nothing to trust. The current directory has no local env file. Run \`sherpa edit\` to create one."
     return 1
   fi

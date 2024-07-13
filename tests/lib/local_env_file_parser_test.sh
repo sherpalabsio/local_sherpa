@@ -1,7 +1,7 @@
 source tests/support/init.sh
 
 # Setup
-export SHERPA_LOCAL_ENV_FILE="fixtures/parsing/$SHERPA_LOCAL_ENV_FILE"
+export SHERPA_ENV_FILENAME="fixtures/parsing/$SHERPA_ENV_FILENAME"
 
 
 expected_list="var_1
