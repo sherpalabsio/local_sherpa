@@ -29,5 +29,5 @@ save_global_config() {
   echo "$value" > "$SHERPA_CONFIG_DIR/$variable_name"
 
   # Set the env var
-  eval "export $variable_name=$value"
+  eval "export $variable_name=\"$value\""
 }
