@@ -4,6 +4,7 @@ cd tests
 
 source support/assertions.sh
 
+# shellcheck disable=SC2155
 export TMP_TEST_DIR=$(mktemp -d)
 
 trap _init_teardown EXIT

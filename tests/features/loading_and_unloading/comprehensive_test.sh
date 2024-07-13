@@ -26,6 +26,7 @@ is "$var_1" "LOCAL VAR PROJECT 1" "Local env is loaded (var)"
 is "$(alias_1)" "LOCAL ALIAS PROJECT 1" "Local env is loaded (alias)"
 is "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Local env is loaded (function)"
 
+# shellcheck disable=SC2154
 is "$custom_var_1" "CUSTOM LOCAL VAR PROJECT 1" "Project 1 env is loaded (custom_var_1)"
 is "$(custom_alias_1)" "CUSTOM LOCAL ALIAS PROJECT 1" "Project 1 env is loaded (custom_alias_1)"
 is "$(custom_function_1)" "CUSTOM LOCAL FUNCTION PROJECT 1" "Project 1 env is loaded (custom_function_1)"

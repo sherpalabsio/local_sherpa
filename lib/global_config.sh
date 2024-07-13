@@ -3,6 +3,7 @@ load_global_config() {
   local default_value="$2"
   local config_file="$SHERPA_CONFIG_DIR/$variable_name"
 
+  # shellcheck disable=SC2155
   local current_global_value=$(eval "echo \"\$$variable_name\"")
 
   # Check if the env var is set
