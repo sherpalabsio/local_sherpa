@@ -170,7 +170,7 @@ $ cd ..
 
 ### Disable/enable Sherpa
 
-It works only for the current session currently. It will be extended to a global setting.
+It effects only the current and new sessions.
 
 ```shell
 $ sherpa sleep # aliases: off, disable

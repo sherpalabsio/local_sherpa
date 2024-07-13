@@ -2,20 +2,21 @@ sherpa() {
   local command="$1"
 
   local usage_text="Example usage:
-  sherpa trust   - Trust the current directory             | aliases: t/allow/grant/permit
-  sherpa untrust - Untrust the current directory           | aliases: u/disallow/revoke/block/deny
-  sherpa edit    - Edit the local env file                 | aliases: e/init
-  sherpa sleep   - Turn Sherpa off for the current session | aliases: off/disable
-  sherpa work    - Turn Sherpa on for the current session  | aliases: on/enable
+  sherpa trust   - Trust the current directory   | aliases: t/allow/grant/permit
+  sherpa untrust - Untrust the current directory | aliases: u/disallow/revoke/block/deny
+  sherpa edit    - Edit the local env file       | aliases: e/init
+  sherpa sleep   - Turn Sherpa off               | aliases: off/disable
+  sherpa work    - Turn Sherpa on                | aliases: on/enable
 
 Troubleshooting:
   sherpa status   - Show debug status info | aliases: s/stat
   sherpa diagnose - Troubleshoot Sherpa
 
-Tell Sherpa how much to talk (works only for the current session):
-  sherpa talk [LEVEL] - Set the log level | Levels: debug|more, info, no talking
-  sherpa shh          - Silent Sherpa
-  sherpa debug        - Everything Sherpa knows"
+Tell Sherpa how much to talk:
+  sherpa talk [LEVEL] - Set a specific log level | Levels: debug/more, info, no talking/shh/anything else
+  sherpa talk         - Everything Sherpa knows
+  sherpa debug        - Everything Sherpa knows
+  sherpa shh          - Silent Sherpa"
 
 if [ "$USE_SHERPA_DEV_VERSION" = true ]; then
   usage_text="Dev version\n\n$usage_text"
@@ -45,11 +46,11 @@ edit() {
 disable() {
   unload_all_envs
   log_info "All env unloaded. Sherpa goes to sleep."
-  export SHERPA_ENABLED=false
+  save_global_config "SHERPA_ENABLED" false
 }
 
 enable() {
-  export SHERPA_ENABLED=true
+  save_global_config "SHERPA_ENABLED" true
 
   if load_current_env; then
     copy="Local env loaded. "

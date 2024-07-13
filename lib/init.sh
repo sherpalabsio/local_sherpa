@@ -11,7 +11,7 @@ source "$SHERPA_LIB_PATH/global_config.sh"
 # shellcheck disable=SC2034
 SHERPA_CHECKSUM_DIR="$HOME/.local/share/local_sherpa"
 SHERPA_CONFIG_DIR="${SHERPA_CONFIG_DIR:-"$HOME/.config/local_sherpa"}"
-export SHERPA_ENABLED="${SHERPA_ENABLED:-true}"
+load_global_config "SHERPA_ENABLED" true
 load_global_config "SHERPA_LOG_LEVEL" "info" # debug, info, no talking
 export SHERPA_LOCAL_ENV_FILE="${SHERPA_LOCAL_ENV_FILE:-.sherparc}"
 
