@@ -42,3 +42,23 @@ cd project_1
 is "$var_1" "GLOBAL VAR" "Untrusted local env is not loaded (var)"
 is "$(alias_1)" "GLOBAL ALIAS" "Untrusted local env is not loaded (alias)"
 is "$(function_1)" "GLOBAL FUNCTION" "Untrusted local env is not loaded (function)"
+
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+#                                  Trust check
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+
+# ==============================================================================
+# It warns when the local env file is not readable
+
+STDERR_FILE=$(mktemp)
+mkdir -p ../tmp
+
+touch ../tmp/.sherparc
+chmod a-r ../tmp/.sherparc
+
+cd ../tmp 2> "$STDERR_FILE"
+
+expected_warning_message="The local env file is not readable."
+like "$(cat "$STDERR_FILE")" "$expected_warning_message" "It warns when the local env file is not readable"
+
+rm -rf "$STDERR_FILE"
