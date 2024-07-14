@@ -17,7 +17,7 @@
 #   variable is derived from your current working directory's path.
 #
 #   Usage:
-#       stash PATH
+#       varstash::stash PATH
 #       export PATH=/something/else
 #       [...]
 #       unstash PATH
@@ -25,16 +25,16 @@
 #   Note that this was written for use with, and works very well with,
 #   smartcd.  See the documentation there for examples.
 #
-#   An alternate usage is `autostash' which will trigger autounstash when
-#   leaving the directory, if combined with smartcd.  This reduces the amount
-#   of explicit configuration you need to provide:
+#   An alternate usage is `varstash::autostash' which will trigger
+#   varstash::autounstash when leaving the directory, if combined with smartcd.
+#   This reduces the amount of explicit configuration you need to provide:
 #
-#       autostash PATH
+#       varstash::autostash PATH
 #       export PATH=/something/else
 #
 #   You may also do both operations in one line, resulting in the very succinct
 #
-#       autostash PATH=/something/else
+#       varstash::autostash PATH=/something/else
 #
 #   If you run stash, unstash, or varstash interactively, they will instruct
 #   you on how to create smartcd scripts for performing those actions
@@ -52,10 +52,10 @@
 #   and the second stash will not occur.  To make it happen anyway, pass -f
 #   as the first argument to stash.
 #
-#       $ stash FOO
-#       $ stash FOO
+#       $ varstash::stash FOO
+#       $ varstash::stash FOO
 #       You have already stashed FOO, please specify "-f" if you want to overwrite another stashed value
-#       $ stash -f FOO
+#       $ varstash::stash -f FOO
 #       $
 #
 #   This rule is a bit different if you are assigning a value and the variable
@@ -65,7 +65,7 @@
 #
 ################################################################################
 
-function stash() {
+function varstash::stash() {
     if [[ $1 == "-f" ]]; then
         local force=1; shift
     fi
@@ -79,7 +79,7 @@ function stash() {
 
         local stash_expression=$1
         local stash_which=${stash_expression%%'='*}
-        local stash_name=$(_mangle_var $stash_which)
+        local stash_name=$(varstash::_mangle_var $stash_which)
 
         # Extract the value and make it double-quote safe
         local stash_value=${stash_expression#*'='}
@@ -200,7 +200,7 @@ function stash() {
     done
 }
 
-function autostash() {
+function varstash::autostash() {
     local run_from_autostash=1
     while [[ -n $1 ]]; do
         if [[ $1 == "alias" && $2 == *=* ]]; then
@@ -209,9 +209,9 @@ function autostash() {
         fi
 
         local already_stashed=
-        stash "$1"
+        varstash::stash "$1"
         if [[ -z $already_stashed ]]; then
-            local autostash_name=$(_mangle_var AUTOSTASH)
+            local autostash_name=$(varstash::_mangle_var AUTOSTASH)
             local varname=${1%%'='*}
             apush $autostash_name "$varname"
         fi
@@ -220,14 +220,14 @@ function autostash() {
     done
 }
 
-function unstash() {
+function varstash::unstash() {
     while [[ -n $1 ]]; do
         local unstash_which=$1
         if [[ -z $unstash_which ]]; then
             continue
         fi
 
-        local unstash_name=$(_mangle_var $unstash_which)
+        local unstash_name=$(varstash::_mangle_var $unstash_which)
 
         # This bit is a little tricky.  Here are the rules:
         #   1) unstash any alias, function, or variable which matches
@@ -292,30 +292,30 @@ function unstash() {
     done
 }
 
-function autounstash() {
+function varstash::autounstash() {
     # If there is anything in (mangled) variable AUTOSTASH, then unstash it
-    local autounstash_name=$(_mangle_var AUTOSTASH)
+    local autounstash_name=$(varstash::_mangle_var AUTOSTASH)
     if (( $(alen $autounstash_name) > 0 )); then
         local run_from_autounstash=1
         while (( $(alen $autounstash_name) > 0 )); do
             local autounstash_var=$(afirst $autounstash_name)
             ashift $autounstash_name >/dev/null
-            unstash $autounstash_var
+            varstash::unstash $autounstash_var
         done
         unset $autounstash_name
     fi
 }
 
-function _mangle_var() {
+function varstash::_mangle_var() {
     local mangle_var_where="${varstash_dir:-$PWD}"
     mangle_var_where=${mangle_var_where//[^A-Za-z0-9]/_}
     local mangled_name=${1//[^A-Za-z0-9]/_}
     echo "_tmp_${mangle_var_where}_${mangled_name}"
 }
 
-# vim: filetype=sh autoindent expandtab shiftwidth=4 softtabstop=4
-
-function _autostashed_var_names() {
-    local autostash_name=$(_mangle_var AUTOSTASH)
-    echo "_autostashed_var_names: $(eval "echo \"\${$autostash_name[@]}\"")"
+function varstash::_autostashed_var_names() {
+    local autostash_name=$(varstash::_mangle_var AUTOSTASH)
+    echo "autostashed var names: $(eval "echo \"\${$autostash_name[@]}\"")"
 }
+
+# vim: filetype=sh autoindent expandtab shiftwidth=4 softtabstop=4

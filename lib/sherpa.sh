@@ -112,7 +112,7 @@ unload_inactive_envs() {
     if [[ $(pwd) != "$loaded_path"* ]]; then
       log_debug "Unload env: $loaded_path"
       varstash_dir="$loaded_path"
-      autounstash
+      varstash::autounstash
     else
       loaded_paths+=("$loaded_path")
     fi
@@ -125,7 +125,7 @@ unload_all_envs() {
   for loaded_path in "${PATHS_WHERE_LOCAL_ENV_WAS_LOADED[@]}"; do
     log_debug "Unload env: $loaded_path"
     varstash_dir="$loaded_path"
-    autounstash
+    varstash::autounstash
   done
 
   PATHS_WHERE_LOCAL_ENV_WAS_LOADED=()
@@ -133,7 +133,7 @@ unload_all_envs() {
 
 unload_current_env() {
   varstash_dir="$PWD"
-  autounstash
+  varstash::autounstash
   ashift PATHS_WHERE_LOCAL_ENV_WAS_LOADED > /dev/null
 }
 
@@ -179,6 +179,6 @@ stash_local_env() {
 
   while IFS= read -r env_item_name || [[ -n $env_item_name ]]; do
     log_debug "AutoStashing $env_item_name"
-    autostash "$env_item_name"
+    varstash::autostash "$env_item_name"
   done < <(parse_local_env_file)
 }
