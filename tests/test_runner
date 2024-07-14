@@ -43,7 +43,7 @@ case $TARGET_SHELL_NAME in
     SHELL_COMMAND="${_run_with_empty_env}zsh --no-globalrcs --no-rcs -i"
     ;;
   *)
-    echo "Unknown shell: $TARGET_SHELL_NAME"
+    echo "Unknown shell: $TARGET_SHELL_NAME" >&2
     exit 1
     ;;
 esac
