@@ -6,14 +6,14 @@ fi
 
 SHERPA_PATH="$(dirname "$SHERPA_LIB_PATH")"
 
-source "$SHERPA_LIB_PATH/global_config.sh"
-
 # shellcheck disable=SC2034
 SHERPA_CHECKSUM_DIR="$HOME/.local/share/local_sherpa"
 SHERPA_CONFIG_DIR="${SHERPA_CONFIG_DIR:-"$HOME/.config/local_sherpa"}"
+export SHERPA_ENV_FILENAME="${SHERPA_ENV_FILENAME:-.sherparc}"
+
+source "$SHERPA_LIB_PATH/global_config.sh"
 load_global_config "SHERPA_ENABLED" true
 load_global_config "SHERPA_LOG_LEVEL" "info" # debug, info, no talking
-export SHERPA_ENV_FILENAME="${SHERPA_ENV_FILENAME:-.sherparc}"
 
 # Load the dependencies
 source "$SHERPA_PATH/vendor/smartcd/arrays.sh"
