@@ -25,8 +25,9 @@ source "$SHERPA_LIB_PATH/trust_verification.sh"
 source "$SHERPA_LIB_PATH/local_env_file_parser.sh"
 source "$SHERPA_LIB_PATH/setup_cd_hook.sh"
 source "$SHERPA_LIB_PATH/status.sh"
+source "$SHERPA_LIB_PATH/load_unload.sh"
 
-source "$SHERPA_LIB_PATH/sherpa.sh"
+source "$SHERPA_LIB_PATH/cli.sh"
 
 # Hook into cd
 setup_cd_hook
