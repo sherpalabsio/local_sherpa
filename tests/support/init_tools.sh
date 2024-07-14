@@ -9,6 +9,7 @@ export TMP_TEST_DIR=$(mktemp -d)
 
 trap _init_teardown EXIT
 _init_teardown() {
+  cd "$SHERPA_PATH"
   # Clean up the tests/playground directory
   # Rollback changes to tracked files
   git checkout -- "$SHERPA_PATH/tests/playground" > /dev/null
