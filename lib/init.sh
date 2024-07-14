@@ -16,8 +16,8 @@ load_global_config "SHERPA_LOG_LEVEL" "info" # debug, info, no talking
 export SHERPA_ENV_FILENAME="${SHERPA_ENV_FILENAME:-.sherparc}"
 
 # Load the dependencies
-source "$SHERPA_PATH/vendor/smartcd/arrays"
-source "$SHERPA_PATH/vendor/smartcd/varstash"
+source "$SHERPA_PATH/vendor/smartcd/arrays.sh"
+source "$SHERPA_PATH/vendor/smartcd/varstash.sh"
 
 # Load the app
 source "$SHERPA_LIB_PATH/logger.sh"
