@@ -25,15 +25,22 @@ shopt -s globstar
 
 export TARGET_SHELL_NAME="$1"
 
+# Don't empty the environment when running in a container
+if [ -z "$RUNNING_IN_CONTAINER" ]; then
+  _run_with_empty_env="env -i PATH=$PATH TARGET_SHELL_NAME=$TARGET_SHELL_NAME "
+fi
+
 case $TARGET_SHELL_NAME in
   bash)
-    TARGET_SHELL_NAME="Bash"
+    TARGET_SHELL_LABEL="Bash"
+
     # We run the tests in interactive mode to be able to test aliases
-    SHELL_COMMAND="env -i PATH=$PATH TARGET_SHELL_NAME=$TARGET_SHELL_NAME bash --noprofile --norc -i"
+    SHELL_COMMAND="${_run_with_empty_env}bash --noprofile --norc -i "
     ;;
   zsh)
-    TARGET_SHELL_NAME="Zsh"
-    SHELL_COMMAND="env -i PATH=$PATH TARGET_SHELL_NAME=$TARGET_SHELL_NAME zsh --no-globalrcs --no-rcs -i"
+    TARGET_SHELL_LABEL="Zsh"
+
+    SHELL_COMMAND="${_run_with_empty_env}zsh --no-globalrcs --no-rcs -i"
     ;;
   *)
     echo "Unknown shell: $TARGET_SHELL_NAME"
@@ -41,7 +48,7 @@ case $TARGET_SHELL_NAME in
     ;;
 esac
 
-echo "=============================== Shell: $TARGET_SHELL_NAME =============================="
+echo "=============================== Shell: $TARGET_SHELL_LABEL =============================="
 STDERR_FILE=$(mktemp)
 ALL_TESTS_PASSED=true
 
