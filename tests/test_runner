@@ -1,5 +1,25 @@
 #!/usr/bin/env bash
 
+# This script runs all the *_test.sh files recursively from the tests directory
+# for the specified shell. It supports running a specific test file or all the
+# test files.
+#
+# Usage:
+#   ./tests/test_runner [bash|zsh] [test_file]
+#
+# Arguments:
+#   bash|zsh  : The target shell to run the tests for.
+#   test_file : (Optional) Specific test file to run. If not provided, all the
+#               test files will be executed for the specified shell.
+#
+# Example Usage:
+#   ./tests/test_runner bash
+#   ./tests/test_runner zsh tests/example_test.sh
+#
+# Exit Codes:
+#   0 : All tests passed successfully.
+#   1 : Some tests failed or other error occurred.
+
 set -e
 shopt -s globstar
 

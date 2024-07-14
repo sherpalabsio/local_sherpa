@@ -248,6 +248,8 @@ $ sherpa diagnose
 
 ### Testing
 
+All *_test.sh files are run recursively from the tests directory.
+
 ```shell
 # Run all the tests for all the supported shells
 $ make test

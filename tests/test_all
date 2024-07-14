@@ -1,5 +1,25 @@
 #!/usr/bin/env bash
 
+# Test Suite Runner
+#
+# This script runs all the tests on the host for all the supported shells.
+# It supports running a specific test file or all the test files.
+#
+# Usage:
+#   ./tests/test_all [test_file]
+#
+# Arguments:
+#   test_file : (Optional) Specific test file to run. If not provided, all the
+#               test files will be executed for all the supported shells.
+#
+# Example Usage:
+#   ./tests/test_all
+#   ./tests/test_all tests/example_test.sh
+#
+# Exit Codes:
+#   0 : The test suite passed passed successfully.
+#   1 : It failed.
+
 set -e
 
 # Check if all shell executables are available
