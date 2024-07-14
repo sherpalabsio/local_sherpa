@@ -24,32 +24,42 @@ fi
 
   case $command in
   -h|--help|help|'') echo "$usage_text";;
-  t|trust|allow|grant|permit) trust_current_env && load_current_env;;
-  u|untrust|disallow/revoke/block/deny) unload_current_env; untrust_current_env;;
-        e|edit|init) edit; trust_current_env; unload_current_env; load_current_env;;
-  sleep|off|disable) disable;;
-     work|on|enable) enable;;
-               talk) shift; set_log_level "$1";;
-              debug) set_log_level "debug";;
-                shh) set_log_level "no talking";;
-      s|stat|status) _show_status;;
-           diagnose) diagnose;;
+  t|trust|allow|grant|permit) sherpa_cli::trust;;
+  u|untrust|disallow/revoke/block/deny) sherpa_cli::untrust;;
+        e|edit|init) sherpa_cli::edit;;
+  sleep|off|disable) sherpa_cli::disable;;
+     work|on|enable) sherpa_cli::enable;;
+               talk) shift; sherpa_cli::set_log_level "$1";;
+              debug) sherpa_cli::set_log_level "debug";;
+                shh) sherpa_cli::set_log_level "no talking";;
+      s|stat|status) sherpa_lib::show_status;;
+           diagnose) sherpa_cli::diagnose;;
                   *) echo "Sherpa doesn't know what you wish";;
   esac
 }
 
-edit() {
-  echo "hint: Waiting for your editor to close the file..."
-  eval "$EDITOR $SHERPA_ENV_FILENAME"
+sherpa_cli::trust() {
+  trust_current_env && load_current_env
 }
 
-disable() {
+sherpa_cli::untrust() {
+  unload_current_env
+  untrust_current_env
+}
+
+sherpa_cli::edit() {
+  echo "hint: Waiting for your editor to close the file..."
+  eval "$EDITOR $SHERPA_ENV_FILENAME"
+  trust_current_env && unload_current_env && load_current_env
+}
+
+sherpa_cli::disable() {
   unload_all_envs
   log_info "All env unloaded. Sherpa goes to sleep."
   save_global_config "SHERPA_ENABLED" false
 }
 
-enable() {
+sherpa_cli::enable() {
   save_global_config "SHERPA_ENABLED" true
 
   if load_current_env; then
@@ -61,7 +71,7 @@ enable() {
   log_info "${copy}Sherpa is ready for action."
 }
 
-set_log_level() {
+sherpa_cli::set_log_level() {
   local log_level
 
   case $1 in
@@ -79,7 +89,7 @@ set_log_level() {
   log "$log_message"
 }
 
-diagnose() {
+sherpa_cli::diagnose() {
   echo "Sherpa is performing a self-assessment. Please wait..."
   echo ""
 

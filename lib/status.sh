@@ -1,4 +1,4 @@
-_show_status() {
+sherpa_lib::show_status() {
   echo "Enabled: $SHERPA_ENABLED"
   echo "Log level: $SHERPA_LOG_LEVEL"
   echo "Local env file: $SHERPA_ENV_FILENAME"
