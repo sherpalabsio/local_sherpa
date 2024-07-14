@@ -213,7 +213,7 @@ function varstash::autostash() {
         if [[ -z $already_stashed ]]; then
             local autostash_name=$(varstash::_mangle_var AUTOSTASH)
             local varname=${1%%'='*}
-            apush $autostash_name "$varname"
+            smartcd::apush $autostash_name "$varname"
         fi
         shift
         unset -v _stashing_alias_assign
@@ -295,11 +295,11 @@ function varstash::unstash() {
 function varstash::autounstash() {
     # If there is anything in (mangled) variable AUTOSTASH, then unstash it
     local autounstash_name=$(varstash::_mangle_var AUTOSTASH)
-    if (( $(alen $autounstash_name) > 0 )); then
+    if (( $(smartcd::alen $autounstash_name) > 0 )); then
         local run_from_autounstash=1
-        while (( $(alen $autounstash_name) > 0 )); do
-            local autounstash_var=$(afirst $autounstash_name)
-            ashift $autounstash_name >/dev/null
+        while (( $(smartcd::alen $autounstash_name) > 0 )); do
+            local autounstash_var=$(smartcd::afirst $autounstash_name)
+            smartcd::ashift $autounstash_name >/dev/null
             varstash::unstash $autounstash_var
         done
         unset $autounstash_name

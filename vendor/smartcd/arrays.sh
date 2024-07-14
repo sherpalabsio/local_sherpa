@@ -15,47 +15,47 @@
 #
 #   The provided functions are as follows:
 #
-#       apush
+#       smartcd::apush
 #         Description: Add an element to the end of your array
-#         Usage:       $ apush var_name elem1 [elem2...]
+#         Usage:       $ smartcd::apush var_name elem1 [elem2...]
 #
-#       apop
+#       smartcd::apop
 #         Description: Remove the last element from the array and print it.
-#                      The value is also set to the variable _apop_return.
-#         Usage:       $ apop var_name
+#                      The value is also set to the variable _smartcd::apop_return.
+#         Usage:       $ smartcd::apop var_name
 #
-#       ashift
+#       smartcd::ashift
 #         Description: Remove the first element from the array and print it
 #                      The value is also set to the variable _ashift_return.
-#         Usage:       $ ashift var_name
+#         Usage:       $ smartcd::ashift var_name
 #
-#       aunshift
+#       smartcd::aunshift
 #         Description: Add an element to the beginning of the array
-#         Usage:       $ aunshift var_name elem1 [elem2...]
+#         Usage:       $ smartcd::aunshift var_name elem1 [elem2...]
 #
-#       areverse
+#       smartcd::areverse
 #         Description: Reverse the order of elements in the array
-#         Usage:       $ areverse var_name
+#         Usage:       $ smartcd::areverse var_name
 #
-#       afirst
-#         Description: Like ashift, but doesn't remove anything.
-#         Usage:       $ afirst var_name
+#       smartcd::afirst
+#         Description: Like smartcd::ashift, but doesn't remove anything.
+#         Usage:       $ smartcd::afirst var_name
 #
-#       alast
-#         Description: Like apop, but doesn't remove anything.
-#         Usage:       $ alast var_name
+#       smartcd::alast
+#         Description: Like smartcd::apop, but doesn't remove anything.
+#         Usage:       $ smartcd::alast var_name
 #
-#       anth
+#       smartcd::anth
 #         Description: Retreive the n-th element of an array.
-#         Usage:       $ anth var_name n
+#         Usage:       $ smartcd::anth var_name n
 #
-#       alen
+#       smartcd::alen
 #         Description: Print the current number of elements in the array
-#         Usage:       $ alen var_name
+#         Usage:       $ smartcd::alen var_name
 #
-#       acopy
+#       smartcd::acopy
 #         Description: Copy the contents of an array into a new variable.
-#         Usage:       $ alen var_name new_variable
+#         Usage:       $ smartcd::alen var_name new_variable
 #
 #   If the incorrect number of arguments are supplied, all functions exit
 #   silently.  This is subject to change in the future.
@@ -64,7 +64,7 @@
 #   in Perl, and then finding it severely lacking in bash.
 ################################################################################
 
-function is_array() {
+function smartcd::is_array() {
     local var=$1
 
     if [[ -n $ZSH_VERSION ]]; then
@@ -81,16 +81,16 @@ function is_array() {
 
 # It's not really possible to "echo" an array copy and catch it correctly
 # so instead we'll ask for the destination
-function acopy() {
+function smartcd::acopy() {
     local var=$1; shift
     local dest=$1; shift
 
-    if [[ -n $(is_array $var) && -n $dest ]]; then
+    if [[ -n $(smartcd::is_array $var) && -n $dest ]]; then
         eval "$dest=(\"\${$var""[@]}\")"
     fi
 }
 
-function apush() {
+function smartcd::apush() {
     local var=$1; shift
 
     if [[ -n $var ]]; then
@@ -102,7 +102,7 @@ function apush() {
     fi
 }
 
-function apop() {
+function smartcd::apop() {
     [[ -n $ZSH_VERSION ]] && setopt localoptions && setopt ksharrays
     local var=$1
 
@@ -120,7 +120,7 @@ function apop() {
     fi
 }
 
-function ashift() {
+function smartcd::ashift() {
     [[ -n $ZSH_VERSION ]] && setopt localoptions && setopt ksharrays
     local var=$1
 
@@ -140,7 +140,7 @@ function ashift() {
 }
 
 # Bash requires the array to be quoted, zsh does not.
-function aunshift() {
+function smartcd::aunshift() {
     local var=$1; shift
 
     if [[ -n $var ]]; then
@@ -152,7 +152,7 @@ function aunshift() {
     fi
 }
 
-function areverse() {
+function smartcd::areverse() {
     [[ -n $ZSH_VERSION ]] && setopt localoptions && setopt ksharrays
     local var=$1
 
@@ -174,7 +174,7 @@ function areverse() {
     fi
 }
 
-function afirst() {
+function smartcd::afirst() {
     [[ -n $ZSH_VERSION ]] && setopt localoptions && setopt ksharrays
     local var=$1
 
@@ -183,7 +183,7 @@ function afirst() {
     fi
 }
 
-function alast() {
+function smartcd::alast() {
     [[ -n $ZSH_VERSION ]] && setopt localoptions && setopt ksharrays
     local var=$1
 
@@ -192,7 +192,7 @@ function alast() {
     fi
 }
 
-function anth() {
+function smartcd::anth() {
     [[ -n $ZSH_VERSION ]] && setopt localoptions && setopt ksharrays
     local var=$1
     local n=$2
@@ -202,7 +202,7 @@ function anth() {
     fi
 }
 
-function alen() {
+function smartcd::alen() {
     local var=$1
 
     if [[ -n $var ]]; then
