@@ -18,9 +18,9 @@ Tell Sherpa how much to talk:
   sherpa debug        - Everything Sherpa knows
   sherpa shh          - Silent Sherpa"
 
-if [ "$USE_SHERPA_DEV_VERSION" = true ]; then
-  usage_text="Dev version\n\n$usage_text"
-fi
+  if [ "$USE_SHERPA_DEV_VERSION" = true ]; then
+    usage_text="Dev version\n\n$usage_text"
+  fi
 
   case $command in
   -h|--help|help|'') echo "$usage_text";;
@@ -62,13 +62,15 @@ sherpa_cli::disable() {
 sherpa_cli::enable() {
   save_global_config "SHERPA_ENABLED" true
 
+  local current_env_copy
+
   if load_current_env; then
-    copy="Local env is loaded. "
+    current_env_copy="Local env is loaded. "
   else
-    copy=""
+    current_env_copy=""
   fi
 
-  log_info "${copy}Sherpa is ready for action."
+  log_info "${current_env_copy}Sherpa is ready for action."
 }
 
 sherpa_cli::set_log_level() {
@@ -90,7 +92,7 @@ sherpa_cli::set_log_level() {
 }
 
 sherpa_cli::diagnose() {
-  echo "Sherpa is performing a self-assessment. Please wait..."
+  echo "Sherpa is performing a self-assessment..."
   echo ""
 
   if [ -n "$ZSH_VERSION" ]; then
