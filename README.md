@@ -116,6 +116,12 @@ You can untrust a directory with `sherpa untrust`.
 
 Unexported variables and other data types are not supported yet.
 
+## Side effect
+
+When sherpa loads the local env, it loads not only variables, aliases, and functions
+but it sources the local env file. This means that the whole content
+of the local env file is executed in the current shell.
+
 ## Installation
 
 ```shell
@@ -181,7 +187,7 @@ Sherpa: Local is env loaded. Sherpa is ready for action.
 
 ## Configuration
 
-Set the following environment variables anywhere to instruct Sherpa how to help you.
+Set the following environment variables anywhere to instruct Sherpa how operate.
 
 ```shell
 export SHERPA_ENABLED=false # Default: true
