@@ -127,7 +127,7 @@ like "$(cat "$STDOUT_FILE")" "\[OK\] Trusting the current directory" "It acknowl
 fake_source() {
   local file_path="$1"
 
-  if [[ "$file_path" = ".sherparc" ]]; then
+  if [[ "$file_path" = "$SHERPA_ENV_FILENAME" ]]; then
     return 1
   else
     builtin source "$file_path"

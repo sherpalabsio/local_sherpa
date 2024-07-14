@@ -53,8 +53,8 @@ is "$(function_1)" "GLOBAL FUNCTION" "Untrusted local env is not loaded (functio
 STDERR_FILE=$(mktemp)
 mkdir -p ../tmp
 
-touch ../tmp/.sherparc
-chmod a-r ../tmp/.sherparc
+touch "../tmp/$SHERPA_ENV_FILENAME"
+chmod a-r "../tmp/$SHERPA_ENV_FILENAME"
 
 cd ../tmp 2> "$STDERR_FILE"
 
