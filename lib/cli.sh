@@ -62,12 +62,8 @@ sherpa_cli::disable() {
 sherpa_cli::enable() {
   save_global_config "SHERPA_ENABLED" true
 
-  local current_env_copy
-
   if load_current_env; then
-    current_env_copy="Local env is loaded. "
-  else
-    current_env_copy=""
+    local -r current_env_copy="Local env is loaded. "
   fi
 
   log_info "${current_env_copy}Sherpa is ready for action."
