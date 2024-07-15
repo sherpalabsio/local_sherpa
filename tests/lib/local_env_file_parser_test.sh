@@ -15,6 +15,6 @@ FUNCTION_2
 function_3
 function_with_comment"
 
-actual_list=$(parse_local_env_file)
+actual_list=$(_local_sherpa_parse_local_env_file)
 
 is "$actual_list" "$expected_list" "Correct list of variable, function and alias names"

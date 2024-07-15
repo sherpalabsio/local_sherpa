@@ -1,29 +1,29 @@
-setup_cd_hook() {
+_local_sherpa_setup_cd_hook() {
   if [ -n "$ZSH_VERSION" ]; then
-    # ZSH
+    # ======== ZSH ========
     # shellcheck disable=SC2317
-    sherpa_chpwd_handler() {
+    _local_sherpa_chpwd_handler() {
       # Changed directory?
       if [[ -n $OLDPWD && $PWD != "$OLDPWD" ]]; then
-        alert_sherpa_we_changed_dir
+        _local_sherpa_alert_sherpa_we_changed_dir
       fi
     }
 
     autoload -U add-zsh-hook
-    add-zsh-hook chpwd sherpa_chpwd_handler
+    add-zsh-hook chpwd _local_sherpa_chpwd_handler
   else
-    # BASH
+    # ======== BASH ========
     # shellcheck disable=SC2317
-    _sherpa_chpwd_hook() {
-      # run commands in CHPWD_COMMAND variable on dir change
+    _local_sherpa_chpwd_handler() {
+      # Filter for directory change
       if [[ "$PREVPWD" != "$PWD" ]]; then
-        alert_sherpa_we_changed_dir
+        _local_sherpa_alert_sherpa_we_changed_dir
       fi
-      # refresh last working dir record
+
       export PREVPWD="$PWD"
     }
 
-    # add `;` after _sherpa_chpwd_hook if PROMPT_COMMAND is not empty
-    PROMPT_COMMAND="_sherpa_chpwd_hook${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
+    # add `;` after _local_sherpa_chpwd_handler if PROMPT_COMMAND is not empty
+    PROMPT_COMMAND="_local_sherpa_chpwd_handler${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
   fi
 }

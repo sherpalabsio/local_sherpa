@@ -24,52 +24,53 @@ Tell Sherpa how much to talk:
 
   case $command in
   -h|--help|help|'') echo "$usage_text";;
-  t|trust|allow|grant|permit) sherpa_cli::trust;;
-  u|untrust|disallow/revoke/block/deny) sherpa_cli::untrust;;
-        e|edit|init) sherpa_cli::edit;;
-  sleep|off|disable) sherpa_cli::disable;;
-     work|on|enable) sherpa_cli::enable;;
-               talk) shift; sherpa_cli::set_log_level "$1";;
-              debug) sherpa_cli::set_log_level "debug";;
-                shh) sherpa_cli::set_log_level "no talking";;
-      s|stat|status) sherpa_lib::show_status;;
-           diagnose) sherpa_cli::diagnose;;
+  t|trust|allow|grant|permit) _local_sherpa_trust;;
+  u|untrust|disallow/revoke/block/deny) _local_sherpa_untrust;;
+        e|edit|init) _local_sherpa_edit;;
+  sleep|off|disable) _local_sherpa_disable;;
+     work|on|enable) _local_sherpa_enable;;
+               talk) shift; _local_sherpa_set_log_level "$1";;
+              debug) _local_sherpa_set_log_level "debug";;
+                shh) _local_sherpa_set_log_level "no talking";;
+      s|stat|status) _local_sherpa_print_status;;
+           diagnose) _local_sherpa_diagnose;;
                   *) echo "Sherpa doesn't know what you wish";;
   esac
 }
 
-sherpa_cli::trust() {
-  trust_current_env && load_current_env
+_local_sherpa_trust() {
+  _local_sherpa_trust_current_dir && _local_sherpa_load_env_from_current_dir
 }
 
-sherpa_cli::untrust() {
-  unload_current_env
-  untrust_current_env
+_local_sherpa_untrust() {
+  _local_sherpa_unload_env_of_current_dir
+  _local_sherpa_untrust_current_dir
 }
 
-sherpa_cli::edit() {
+_local_sherpa_edit() {
   echo "hint: Waiting for your editor to close the file..."
   eval "$EDITOR $SHERPA_ENV_FILENAME"
-  trust_current_env && unload_current_env && load_current_env
+  _local_sherpa_trust_current_dir && _local_sherpa_unload_env_of_current_dir &&
+    _local_sherpa_load_env_from_current_dir
 }
 
-sherpa_cli::disable() {
-  unload_all_envs
-  log_info "All env unloaded. Sherpa goes to sleep."
-  save_global_config "SHERPA_ENABLED" false
+_local_sherpa_disable() {
+  _local_sherpa_unload_all_envs
+  _local_sherpa_log_info "All env unloaded. Sherpa goes to sleep."
+  _local_sherpa_save_global_config "SHERPA_ENABLED" false
 }
 
-sherpa_cli::enable() {
-  save_global_config "SHERPA_ENABLED" true
+_local_sherpa_enable() {
+  _local_sherpa_save_global_config "SHERPA_ENABLED" true
 
-  if load_current_env; then
+  if _local_sherpa_load_env_from_current_dir; then
     local -r current_env_copy="Local env is loaded. "
   fi
 
-  log_info "${current_env_copy}Sherpa is ready for action."
+  _local_sherpa_log_info "${current_env_copy}Sherpa is ready for action."
 }
 
-sherpa_cli::set_log_level() {
+_local_sherpa_set_log_level() {
   local log_level
 
   case $1 in
@@ -80,14 +81,14 @@ sherpa_cli::set_log_level() {
         *) log_level='no talking';;
   esac
 
-  save_global_config "SHERPA_LOG_LEVEL" "$log_level"
+  _local_sherpa_save_global_config "SHERPA_LOG_LEVEL" "$log_level"
 
   log_message="Sherpa: Log level set to: $log_level"
   [ "$log_level" = "no talking" ] && log_message="$log_message 🤫"
-  log "$log_message"
+  _local_sherpa_log "$log_message"
 }
 
-sherpa_cli::diagnose() {
+_local_sherpa_diagnose() {
   echo "Sherpa is performing a self-assessment..."
   echo ""
 

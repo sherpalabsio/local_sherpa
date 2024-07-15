@@ -1,9 +1,9 @@
-sherpa_lib::show_status() {
+_local_sherpa_print_status() {
   echo "Enabled: $SHERPA_ENABLED"
   echo "Log level: $SHERPA_LOG_LEVEL"
   echo "Local env file: $SHERPA_ENV_FILENAME"
 
-  if [ ${#PATHS_WHERE_LOCAL_ENV_WAS_LOADED[@]} -eq 0 ]; then
+  if [ ${#SHERPA_LOADED_ENV_DIRS[@]} -eq 0 ]; then
     echo "Loaded envs: [none]"
   else
     echo "Loaded envs:"
@@ -13,15 +13,15 @@ sherpa_lib::show_status() {
 
     # Zsh array indexing starts at 1 :facepalm:
     if [ -n "$ZSH_VERSION" ]; then
-      last_index=$(( ${#PATHS_WHERE_LOCAL_ENV_WAS_LOADED[@]} ))
+      last_index=$(( ${#SHERPA_LOADED_ENV_DIRS[@]} ))
       first_index=1
     else
-      last_index=$(( ${#PATHS_WHERE_LOCAL_ENV_WAS_LOADED[@]} - 1 ))
+      last_index=$(( ${#SHERPA_LOADED_ENV_DIRS[@]} - 1 ))
       first_index=0
     fi
 
     for ((i=last_index; i>=first_index; i--)); do
-      echo "- ${PATHS_WHERE_LOCAL_ENV_WAS_LOADED[i]}"
+      echo "- ${SHERPA_LOADED_ENV_DIRS[i]}"
     done
   fi
 }

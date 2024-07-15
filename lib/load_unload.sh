@@ -1,22 +1,19 @@
-PATHS_WHERE_LOCAL_ENV_WAS_LOADED=()
-
-alert_sherpa_we_changed_dir() {
+_local_sherpa_alert_sherpa_we_changed_dir() {
   # Skip if Sherpa is disabled
   [ "$SHERPA_ENABLED" = false ] && return
-  log_debug "Directory changed."
-  unload_inactive_envs
-  load_current_env
+  _local_sherpa_log_debug "Directory changed."
+  _local_sherpa_unload_envs_of_exited_dirs
+  _local_sherpa_load_env_from_current_dir
 }
 
-# It unloads the local envs that were loaded in the previous directories that
-# we exited from.
-unload_inactive_envs() {
+# It unloads the loaded envs of previous directories that we exited.
+_local_sherpa_unload_envs_of_exited_dirs() {
   local loaded_paths=()
 
-  for loaded_path in "${PATHS_WHERE_LOCAL_ENV_WAS_LOADED[@]}"; do
+  for loaded_path in "${SHERPA_LOADED_ENV_DIRS[@]}"; do
     # Select paths not beginning with the current directory
     if [[ $(pwd) != "$loaded_path"* ]]; then
-      log_debug "Unload env: $loaded_path"
+      _local_sherpa_log_debug "Unload env: $loaded_path"
       varstash_dir="$loaded_path"
       varstash::autounstash
     else
@@ -24,52 +21,52 @@ unload_inactive_envs() {
     fi
   done
 
-  PATHS_WHERE_LOCAL_ENV_WAS_LOADED=("${loaded_paths[@]}")
+  SHERPA_LOADED_ENV_DIRS=("${loaded_paths[@]}")
 }
 
-unload_all_envs() {
-  for loaded_path in "${PATHS_WHERE_LOCAL_ENV_WAS_LOADED[@]}"; do
-    log_debug "Unload env: $loaded_path"
+_local_sherpa_unload_all_envs() {
+  for loaded_path in "${SHERPA_LOADED_ENV_DIRS[@]}"; do
+    _local_sherpa_log_debug "Unload env: $loaded_path"
     varstash_dir="$loaded_path"
     varstash::autounstash
   done
 
-  PATHS_WHERE_LOCAL_ENV_WAS_LOADED=()
+  SHERPA_LOADED_ENV_DIRS=()
 }
 
-unload_current_env() {
+_local_sherpa_unload_env_of_current_dir() {
   varstash_dir="$PWD"
   varstash::autounstash
-  smartcd::ashift PATHS_WHERE_LOCAL_ENV_WAS_LOADED > /dev/null
+  smartcd::ashift SHERPA_LOADED_ENV_DIRS > /dev/null
 }
 
-load_current_env() {
+_local_sherpa_load_env_from_current_dir() {
   # Skip if Sherpa is disabled
   [ "$SHERPA_ENABLED" = false ] && return
-  log_debug "Load local env?"
+  _local_sherpa_log_debug "Load local env?"
 
   # Skip if there is no local env file
-  [ -f "$SHERPA_ENV_FILENAME" ] || { log_debug "No local env file"; return; }
+  [ -f "$SHERPA_ENV_FILENAME" ] || { _local_sherpa_log_debug "No local env file"; return; }
 
   # Skip if the env was already loaded
-  was_env_loaded && { log_debug "Local env already loaded"; return; }
+  _local_sherpa_was_env_loaded && { _local_sherpa_log_debug "Local env already loaded"; return; }
 
   # Skip if the local env file is not trusted
-  verify_trust || return;
+  _local_sherpa_verify_trust || return;
 
-  stash_local_env
-  log_debug "Load local env"
+  _local_sherpa_stash_local_env
+  _local_sherpa_log_debug "Load local env"
   # shellcheck disable=SC1090
   source "$SHERPA_ENV_FILENAME"
   # Append the current directory to the list. This is needed to unload the envs
   # in the right order when we change directories. The root directory should be
   # the last one to unload.
   # shellcheck disable=SC2207
-  PATHS_WHERE_LOCAL_ENV_WAS_LOADED=($(pwd) "${PATHS_WHERE_LOCAL_ENV_WAS_LOADED[@]}")
+  SHERPA_LOADED_ENV_DIRS=($(pwd) "${SHERPA_LOADED_ENV_DIRS[@]}")
 }
 
-was_env_loaded() {
-  for loaded_path in "${PATHS_WHERE_LOCAL_ENV_WAS_LOADED[@]}"; do
+_local_sherpa_was_env_loaded() {
+  for loaded_path in "${SHERPA_LOADED_ENV_DIRS[@]}"; do
     if [[ "$loaded_path" == $(pwd) ]]; then
       return 0
     fi
@@ -78,13 +75,13 @@ was_env_loaded() {
   return 1
 }
 
-stash_local_env() {
-  log_debug "Stash local env"
+_local_sherpa_stash_local_env() {
+  _local_sherpa_log_debug "Stash local env"
   # shellcheck disable=SC2034
   varstash_dir="$PWD"
 
   while IFS= read -r env_item_name || [[ -n $env_item_name ]]; do
-    log_debug "AutoStashing $env_item_name"
+    _local_sherpa_log_debug "AutoStashing $env_item_name"
     varstash::autostash "$env_item_name"
-  done < <(parse_local_env_file)
+  done < <(_local_sherpa_parse_local_env_file)
 }

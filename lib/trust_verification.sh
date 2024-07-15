@@ -5,16 +5,16 @@ set -o pipefail
 _calculate_checksum() {
   if ! sha256sum "$SHERPA_ENV_FILENAME" | cut -d ' ' -f 1; then
     if [ -r "$FILE" ]; then
-      log_error "Checksum calculation failed"
+      _local_sherpa_log_error "Checksum calculation failed"
     else
-      log_error "The local env file is not readable. Permission issue?"
+      _local_sherpa_log_error "The local env file is not readable. Permission issue?"
     fi
 
     return 1
   fi
 }
 
-verify_trust() {
+_local_sherpa_verify_trust() {
   local checksum_file
   checksum_file="$SHERPA_CHECKSUM_DIR/$(pwd | md5sum | cut -d ' ' -f 1)"
 
@@ -27,7 +27,7 @@ verify_trust() {
 
   # No checksum file?
   if [[ ! -f "$checksum_file" ]]; then
-    log_info "The local env file is not trusted. Run \`sherpa trust\` to mark it as trusted."
+    _local_sherpa_log_info "The local env file is not trusted. Run \`sherpa trust\` to mark it as trusted."
     return 1
   fi
 
@@ -36,7 +36,7 @@ verify_trust() {
 
   # Did the local env file change?
   if [[ "$current_checksum" != "$stored_checksum" ]]; then
-    log_info "The local env file has changed. Run \`sherpa trust\` to mark it trusted."
+    _local_sherpa_log_info "The local env file has changed. Run \`sherpa trust\` to mark it trusted."
     return 1
   fi
 
@@ -44,10 +44,9 @@ verify_trust() {
   return 0
 }
 
-trust_current_env() {
-  # return 1
+_local_sherpa_trust_current_dir() {
   if [[ ! -f "$SHERPA_ENV_FILENAME" ]]; then
-    log_info "Nothing to trust. The current directory has no local env file. Run \`sherpa edit\` to create one."
+    _local_sherpa_log_info "Nothing to trust. The current directory has no local env file. Run \`sherpa edit\` to create one."
     return 1
   fi
 
@@ -63,19 +62,19 @@ trust_current_env() {
   fi
 
   echo "$current_checksum" > "$checksum_file"
-  log_info "Trusted!"
+  _local_sherpa_log_info "Trusted!"
 
   return 0
 }
 
-untrust_current_env() {
+_local_sherpa_untrust_current_dir() {
   local checksum_file
   checksum_file="$SHERPA_CHECKSUM_DIR/$(pwd | md5sum | cut -d ' ' -f 1)"
 
   if [[ -f "$checksum_file" ]]; then
     rm "$checksum_file"
-    log_info "Trust revoked!"
+    _local_sherpa_log_info "Trust revoked!"
   else
-    log_info "The local env file was not trusted before."
+    _local_sherpa_log_info "The local env file was not trusted before."
   fi
 }

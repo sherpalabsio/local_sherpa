@@ -1,11 +1,11 @@
 # It returns a list of: variable, function and alias names
-parse_local_env_file() {
-  _fetch_variable_names
-  _fetch_aliase_names
-  _fetch_function_names
+_local_sherpa_parse_local_env_file() {
+  _local_sherpa_fetch_variable_names
+  _local_sherpa_fetch_aliase_names
+  _local_sherpa_fetch_function_names
 }
 
-_fetch_variable_names() {
+_local_sherpa_fetch_variable_names() {
   local filter_pattern='^[[:space:]]*export[[:space:]]+[[:alnum:]_]+'
   # Cleanup:
   # export var_1 -> var_1
@@ -17,7 +17,7 @@ _fetch_variable_names() {
   fi
 }
 
-_fetch_aliase_names() {
+_local_sherpa_fetch_aliase_names() {
   local filter_pattern
   filter_pattern='^[[:space:]]*alias[[:space:]]'
   # Cleanup:
@@ -30,7 +30,7 @@ _fetch_aliase_names() {
   fi
 }
 
-_fetch_function_names() {
+_local_sherpa_fetch_function_names() {
   local filter_pattern
   filter_pattern='^[[:space:]]*([[:alnum:]_]+[[:space:]]*\(\)|function[[:space:]]+[[:alnum:]_]+)'
   # Cleanup:
