@@ -1,14 +1,14 @@
-# Local Sherpa to the Rescue
+# Sherpa - Project based development environment
 
-Sherpa carries your local environment settings for you as you `cd` around your projects.
+Sherpa carries your local environment settings for you as you `cd` through projects, space and time.
 
 ## Status
 
-Unstable, under heavy development.
+🚧 Unstable, under active development.
 
 [![example workflow](https://github.com/tothpeter/local_sherpa/actions/workflows/ci.yml/badge.svg)](https://github.com/tothpeter/local_sherpa/actions/workflows/ci.yml)
 
-## Demo
+## Demo - Core functionality
 
 ```shell
 $ cd ~/projects
@@ -39,7 +39,7 @@ $ function_1
 GLOBAL FUNCTION
 ```
 
-The above is accomplished with the help of Local Sherpa and the files below.
+The above is accomplished with the help of Sherpa and the files below.
 
 ```shell
 # ~/.bashrc or ~/.zshrc etc...
@@ -64,12 +64,58 @@ function_1() {
 ```
 
 ## Usage
-### Setup / config local env
+### Config local env
 1. $ cd ~/projects/project_awesome
 2. $ sherpa edit
 3. [Disco](https://www.youtube.com/watch?v=UkSPUDpe0U8)
 
 For more details see the [Features](#features) section.
+
+## Supported shells
+
+- Zsh
+- Bash
+
+## Tested on
+
+- macOS 12 - Monterey
+- macOS 13 - Ventura
+- macOS 14 - Sonoma
+- Ubuntu 20.04
+- Ubuntu 22.04
+
+## Supported data structures and things
+
+- Exported variables
+- Aliases
+- Functions
+
+Unexported variables and other data types are not supported yet.
+
+## Side effect
+
+When sherpa loads the local env, it sources the local env file meaning its
+whole content is executed in the current shell.
+
+## Installation
+
+```shell
+# Clone the repo
+$ git clone git@github.com:tothpeter/local_sherpa.git ~/.dotfiles/lib/local_sherpa
+# Hook it into your shell
+$ echo "source ~/.dotfiles/lib/local_sherpa/local_sherpa.sh" >> ~/.zshrc
+# Exclude the local env files (.sherparc) globally in Git
+$ echo ".sherparc" >> $(git config --global core.excludesfile)
+
+# Optional but recommended
+alias se='sherpa edit'
+alias st='sherpa trust'
+alias upgrade_sherpa='git -C ~/.dotfiles/lib/local_sherpa pull'
+```
+
+## Features
+
+See the full list of commands by running `$ sherpa` in your shell.
 
 ### Security
 
@@ -95,59 +141,16 @@ automatically when you close the file.
 
 You can untrust a directory with `sherpa untrust`.
 
-## Supported shells
+### Loading envs from parent directories automatically
 
-- Zsh
-- Bash
+It is not supported currently. Feel free to open a feature request.
 
-## Tested on
+### Env loading and unloading
 
-- macOS 12 - Monterey
-- macOS 13 - Ventura
-- macOS 14 - Sonoma
-- Ubuntu 20.04
-- Ubuntu 22.04
+- Sherpa does not unload the loaded envs when you `cd` into a subdirectory.
+- Sherpa can load nested envs and unload them in the correct order so your previously loaded envs are restored even if the nested envs override them.
 
-## Supported data structures and things
-
-- Exported variables
-- Aliases
-- Functions
-
-Unexported variables and other data types are not supported yet.
-
-## Side effect
-
-When sherpa loads the local env, it loads not only variables, aliases, and functions
-but it sources the local env file. This means that the whole content
-of the local env file is executed in the current shell.
-
-## Installation
-
-```shell
-# Clone the repo
-$ git clone git@github.com:tothpeter/local_sherpa.git ~/.dotfiles/lib/local_sherpa
-# Hook it into your shell
-$ echo "source ~/.dotfiles/lib/local_sherpa/local_sherpa.sh" >> ~/.zshrc
-# Exclude the local env Sherpa files (.sherparc) globally in Git
-$ echo ".sherparc" >> $(git config --global core.excludesfile)
-
-# Optional but recommended
-alias se='sherpa edit'
-alias st='sherpa trust'
-alias upgrade_sherpa='git -C ~/.dotfiles/lib/local_sherpa pull'
-```
-
-## Features
-
-See the full list of commands by running `$ sherpa` in your shell.
-
-### Loading local env from parent directories automatically
-
-It is not supported currently. Feel free to open a feature request issue
-if you find it useful.
-
-### Flexible nested local env loading and unloading
+#### Demo
 
 ```shell
 # Given the following directory structure with the corresponding local env files
@@ -176,22 +179,28 @@ $ cd ..
 
 ### Disable/enable Sherpa
 
-It effects only the current and new sessions.
+It affects only the current and new terminal sessions.
 
 ```shell
 $ sherpa sleep # aliases: off, disable
 Sherpa: All env unloaded. Sherpa goes to sleep.
 $ sherpa work # aliases: on, enable
-Sherpa: Local is env loaded. Sherpa is ready for action.
+Sherpa: Local env is loaded. Sherpa is ready for action.
 ```
+
+### Running a script when leaving a directory
+
+It is not supported currently. Feel free to open a feature request.\
+Alternatively, you can use: https://github.com/hyperupcall/autoenv
 
 ## Configuration
 
-Set the following environment variables anywhere to instruct Sherpa how operate.
+Set the following environment variables anywhere to instruct Sherpa on how
+to operate.
 
 ```shell
 export SHERPA_ENABLED=false # Default: true
-export SHERPA_ENV_FILENAME='.env' # Default: .sherparc
+export SHERPA_ENV_FILENAME='.envrc' # Default: .sherparc
 # Control how much Sherpa talks
 export SHERPA_LOG_LEVEL='no talking' # Default: info | Values: debug, info, no talking
 ```
@@ -217,6 +226,21 @@ alias rs='bin/rspec'
 
 With this config `RSpec` will run depending on in which directory you `cd` into.
 
+### Run the tests the same way in different projects
+
+```shell
+# ~/projects/project_ruby_with_docker/.sherparc
+alias t='docker exec -it project-awesome-api rspec'
+
+# ~/projects/project_elixir/.sherparc
+alias t='mix test'
+
+# ~/projects/project_js_with_jest/.sherparc
+alias t='yarn test'
+```
+
+With this config `RSpec` will run depending on in which directory you `cd` into.
+
 ### Rails console in production 🤫
 
 ```shell
@@ -231,7 +255,8 @@ alias rc_prod='ssh -i /path/key-pair-name.pem user@hostname "/var/app/current/bi
 
 ```shell
 # ~/projects/project_with_docker/.sherparc
-alias up='docker-compose up --build -d'
+alias up='docker-compose up -d'
+alias upb='docker-compose up --build -d'
 alias down='docker-compose down'
 
 # ~/projects/project_basic/.sherparc
@@ -271,6 +296,9 @@ $ make test_bash tests/features/edit_test.sh
 
 # Run all the tests for all the supported shells in Ubuntu
 $ make test_all_in_ubuntu
+
+# Run a single for all the supported shells in Ubuntu
+$ make test_all_in_ubuntu tests/features/edit_test.sh
 ```
 
 ### Linting
@@ -278,3 +306,14 @@ $ make test_all_in_ubuntu
 ```shell
 $ make lint
 ```
+
+## Credits
+
+This project uses the [varstash](https://github.com/cxreg/smartcd?tab=readme-ov-file#varstash)
+library from [smartcd](https://github.com/cxreg/smartcd),
+which is licensed under the Artistic License.
+
+Special thanks to the original author:
+- Dave Olszewski <cxreg@pobox.com>
+
+The varstash library is modified to fit the needs of this project.

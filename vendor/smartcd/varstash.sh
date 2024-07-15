@@ -1,4 +1,6 @@
 ################################################################################
+# This library is modified to fit the needs of the Local Sherpa project.
+
 # Stash/unstash support for per-directory variables
 #
 #   Copyright (c) 2009,2012 Dave Olszewski <cxreg@pobox.com>
