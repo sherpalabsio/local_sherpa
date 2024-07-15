@@ -6,12 +6,16 @@ _local_sherpa_alert_sherpa_we_changed_dir() {
   _local_sherpa_load_env_from_current_dir
 }
 
-# It unloads the loaded envs of previous directories that we exited.
+# It unloads the loaded envs of previous directories that we exited
 _local_sherpa_unload_envs_of_exited_dirs() {
   local loaded_paths=()
 
   for loaded_path in "${SHERPA_LOADED_ENV_DIRS[@]}"; do
-    # Select paths not beginning with the current directory
+    # Select directories that are not in the current path (the ones we exited)
+    # PWD: /projects/dir1/subdir1
+    #      /projects/dir1 -> Skip
+    #      /projects/dir1/subdir1 -> Skip
+    #      /projects/dir1/subdir1/subdir2 -> Unload
     if [[ $(pwd) != "$loaded_path"* ]]; then
       _local_sherpa_log_debug "Unload env: $loaded_path"
       varstash_dir="$loaded_path"
