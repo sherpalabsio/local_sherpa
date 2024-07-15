@@ -25,7 +25,7 @@ Tell Sherpa how much to talk:
   case $command in
   -h|--help|help|'') echo "$usage_text";;
   t|trust|allow|grant|permit) _local_sherpa_trust;;
-  u|untrust|disallow/revoke/block/deny) _local_sherpa_untrust;;
+  u|untrust|disallow|revoke|block|deny) _local_sherpa_untrust;;
         e|edit|init) _local_sherpa_edit;;
   sleep|off|disable) _local_sherpa_disable;;
      work|on|enable) _local_sherpa_enable;;
@@ -34,7 +34,7 @@ Tell Sherpa how much to talk:
                 shh) _local_sherpa_set_log_level "no talking";;
       s|stat|status) _local_sherpa_print_status;;
            diagnose) _local_sherpa_diagnose;;
-                  *) echo "Sherpa doesn't know what you wish";;
+                  *) echo "Sherpa doesn't understand what you mean";;
   esac
 }
 
