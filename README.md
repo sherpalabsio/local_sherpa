@@ -147,8 +147,9 @@ It is not supported currently. Feel free to open a feature request.
 
 ### Env loading and unloading
 
+- Sherpa supports nested envs
+  - It unload the envs in the correct order to restore the overridden items.
 - Sherpa does not unload the loaded envs when you `cd` into a subdirectory.
-- Sherpa can load nested envs and unload them in the correct order so your previously loaded envs are restored even if the nested envs override them.
 
 #### Demo
 
