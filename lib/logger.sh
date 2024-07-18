@@ -1,4 +1,4 @@
-_local_sherpa__log_level_in_number() {
+_sherpa__log_level_in_number() {
   case "$SHERPA_LOG_LEVEL" in
     debug) echo 0 ;;
     info) echo 1 ;;
@@ -6,20 +6,20 @@ _local_sherpa__log_level_in_number() {
   esac
 }
 
-_local_sherpa_log_debug() {
-  [ "$(_local_sherpa__log_level_in_number)" -le 0 ] && echo "Sherpa debug: $1"
+_sherpa_log_debug() {
+  [ "$(_sherpa__log_level_in_number)" -le 0 ] && echo "Sherpa debug: $1"
 }
 
-_local_sherpa_log_info() {
-  [ "$(_local_sherpa__log_level_in_number)" -le 1 ] && echo "Sherpa: $1"
+_sherpa_log_info() {
+  [ "$(_sherpa__log_level_in_number)" -le 1 ] && echo "Sherpa: $1"
 }
 
-_local_sherpa_log_error() {
+_sherpa_log_error() {
   echo "Sherpa: $1" >&2
   [ -z "$2" ] && return
   echo "        $2" >&2
 }
 
-_local_sherpa_log() {
+_sherpa_log() {
   echo "$1"
 }

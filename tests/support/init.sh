@@ -14,6 +14,6 @@ if [ -z "$ZSH_VERSION" ]; then
   # running Bash in interactive mode
   cd() {
     builtin cd "$@"
-    _local_sherpa_alert_sherpa_we_changed_dir
+    _sherpa_alert_sherpa_we_changed_dir
   }
 fi

@@ -25,54 +25,54 @@ Tell Sherpa how much to talk:
 
   case $command in
   -h|--help|help|'') echo "$usage_text";;
-  t|trust|allow|grant|permit) _local_sherpa_trust;;
-  u|untrust|disallow|revoke|block|deny) _local_sherpa_untrust;;
-        e|edit|init) _local_sherpa_edit;;
-  sleep|off|disable) _local_sherpa_disable;;
-     work|on|enable) _local_sherpa_enable;;
-               talk) shift; _local_sherpa_set_log_level "$1";;
-              debug) _local_sherpa_set_log_level "debug";;
-                shh) _local_sherpa_set_log_level "no talking";;
-      s|stat|status) _local_sherpa_print_status;;
-           diagnose) _local_sherpa_diagnose;;
- symlink|link|slink) _local_sherpa_symlink "$2";;
+  t|trust|allow|grant|permit) _sherpa_trust;;
+  u|untrust|disallow|revoke|block|deny) _sherpa_untrust;;
+        e|edit|init) _sherpa_edit;;
+  sleep|off|disable) _sherpa_disable;;
+     work|on|enable) _sherpa_enable;;
+               talk) shift; _sherpa_set_log_level "$1";;
+              debug) _sherpa_set_log_level "debug";;
+                shh) _sherpa_set_log_level "no talking";;
+      s|stat|status) _sherpa_print_status;;
+           diagnose) _sherpa_diagnose;;
+ symlink|link|slink) _sherpa_symlink "$2";;
                   *) echo "Sherpa doesn't understand what you mean";;
   esac
 }
 
-_local_sherpa_trust() {
-  _local_sherpa_trust_current_dir && _local_sherpa_load_env_from_current_dir
+_sherpa_trust() {
+  _sherpa_trust_current_dir && _sherpa_load_env_from_current_dir
 }
 
-_local_sherpa_untrust() {
-  _local_sherpa_unload_env_of_current_dir
-  _local_sherpa_untrust_current_dir
+_sherpa_untrust() {
+  _sherpa_unload_env_of_current_dir
+  _sherpa_untrust_current_dir
 }
 
-_local_sherpa_edit() {
+_sherpa_edit() {
   echo "hint: Waiting for your editor to close the file..."
   eval "$EDITOR $SHERPA_ENV_FILENAME"
-  _local_sherpa_trust_current_dir && _local_sherpa_unload_env_of_current_dir &&
-    _local_sherpa_load_env_from_current_dir
+  _sherpa_trust_current_dir && _sherpa_unload_env_of_current_dir &&
+    _sherpa_load_env_from_current_dir
 }
 
-_local_sherpa_disable() {
-  _local_sherpa_unload_all_envs
-  _local_sherpa_log_info "All env unloaded. Sherpa goes to sleep."
-  _local_sherpa_save_global_config "SHERPA_ENABLED" false
+_sherpa_disable() {
+  _sherpa_unload_all_envs
+  _sherpa_log_info "All env unloaded. Sherpa goes to sleep."
+  _sherpa_save_global_config "SHERPA_ENABLED" false
 }
 
-_local_sherpa_enable() {
-  _local_sherpa_save_global_config "SHERPA_ENABLED" true
+_sherpa_enable() {
+  _sherpa_save_global_config "SHERPA_ENABLED" true
 
-  if _local_sherpa_load_env_from_current_dir; then
+  if _sherpa_load_env_from_current_dir; then
     local -r current_env_copy="Local env is loaded. "
   fi
 
-  _local_sherpa_log_info "${current_env_copy}Sherpa is ready for action."
+  _sherpa_log_info "${current_env_copy}Sherpa is ready for action."
 }
 
-_local_sherpa_set_log_level() {
+_sherpa_set_log_level() {
   local log_level
 
   case $1 in
@@ -83,14 +83,14 @@ _local_sherpa_set_log_level() {
         *) log_level='no talking';;
   esac
 
-  _local_sherpa_save_global_config "SHERPA_LOG_LEVEL" "$log_level"
+  _sherpa_save_global_config "SHERPA_LOG_LEVEL" "$log_level"
 
   log_message="Sherpa: Log level set to: $log_level"
   [ "$log_level" = "no talking" ] && log_message="$log_message 🤫"
-  _local_sherpa_log "$log_message"
+  _sherpa_log "$log_message"
 }
 
-_local_sherpa_diagnose() {
+_sherpa_diagnose() {
   echo "Sherpa is performing a self-assessment..."
   echo ""
 
@@ -103,17 +103,17 @@ _local_sherpa_diagnose() {
   fi
 }
 
-_local_sherpa_symlink() {
+_sherpa_symlink() {
   local -r symlink_target="$1"
 
   if [ -f "$SHERPA_ENV_FILENAME" ]; then
-    _local_sherpa_log_error "There is already a local env file in this directory." \
+    _sherpa_log_error "There is already a local env file in this directory." \
                             "Remove it before symlinking a new one."
     return 1
   fi
 
   if [ ! -e "$symlink_target" ]; then
-    _local_sherpa_log_error "The target doesn't exist: $symlink_target"
+    _sherpa_log_error "The target doesn't exist: $symlink_target"
     return 1
   fi
 
@@ -123,6 +123,6 @@ _local_sherpa_symlink() {
     ln -s "$symlink_target" "$SHERPA_ENV_FILENAME"
   fi
 
-  _local_sherpa_trust > /dev/null &&
-    _local_sherpa_log_info "Symlink is created. Local env is loaded."
+  _sherpa_trust > /dev/null &&
+    _sherpa_log_info "Symlink is created. Local env is loaded."
 }

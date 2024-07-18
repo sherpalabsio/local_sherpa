@@ -10,12 +10,12 @@ check_checksum_function_exists
 
 # =========== Check if the CD hook is setup correctly ===========
 
-if [[ "$PROMPT_COMMAND" == *"_local_sherpa_chpwd_handler"* ]]; then
+if [[ "$PROMPT_COMMAND" == *"_sherpa_chpwd_handler"* ]]; then
   print_success "[OK] cd hook setup"
 else
   print_error "[NOT OK] cd hook setup"
   echo "Make sure that nothing tampers the PROMPT_COMMAND after Sherpa is loaded." >&2
-  echo "That environment variable should contain the _local_sherpa_chpwd_handler function." >&2
+  echo "That environment variable should contain the _sherpa_chpwd_handler function." >&2
   exit 1
 fi
 

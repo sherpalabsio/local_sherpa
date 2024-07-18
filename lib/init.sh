@@ -14,8 +14,8 @@ export SHERPA_ENV_FILENAME="${SHERPA_ENV_FILENAME:-.sherparc}"
 SHERPA_LOADED_ENV_DIRS=()
 
 source "$SHERPA_LIB_PATH/global_config.sh"
-_local_sherpa_load_global_config "SHERPA_ENABLED" true
-_local_sherpa_load_global_config "SHERPA_LOG_LEVEL" "info" # debug, info, no talking
+_sherpa_load_global_config "SHERPA_ENABLED" true
+_sherpa_load_global_config "SHERPA_LOG_LEVEL" "info" # debug, info, no talking
 
 # Load the dependencies
 source "$SHERPA_PATH/vendor/smartcd/arrays.sh"
@@ -32,9 +32,9 @@ source "$SHERPA_LIB_PATH/load_unload.sh"
 source "$SHERPA_LIB_PATH/cli.sh"
 
 # Hook into cd
-_local_sherpa_setup_cd_hook
+_sherpa_setup_cd_hook
 
 # Skip loading the local env 2 times for Bash when loading the shell the first time
 if [ -n "$ZSH_VERSION" ]; then
-  _local_sherpa_load_env_from_current_dir
+  _sherpa_load_env_from_current_dir
 fi

@@ -1,4 +1,4 @@
-_local_sherpa_load_global_config() {
+_sherpa_load_global_config() {
   local variable_name="$1"
   local default_value="$2"
   local config_file="$SHERPA_CONFIG_DIR/$variable_name"
@@ -17,7 +17,7 @@ _local_sherpa_load_global_config() {
   fi
 }
 
-_local_sherpa_save_global_config() {
+_sherpa_save_global_config() {
   local variable_name="$1"
   local value="$2"
 

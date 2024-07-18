@@ -1,5 +1,5 @@
 # It returns a list that contains variable, function and alias names
-_local_sherpa_parse_local_env_file() {
+_sherpa_parse_local_env_file() {
   fetch_variable_names() {
     local -r filter_pattern='^[[:space:]]*export[[:space:]]+[[:alnum:]_]+'
     local variable_names

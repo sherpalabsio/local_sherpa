@@ -1,4 +1,4 @@
-_local_sherpa_print_status() {
+_sherpa_print_status() {
   echo "Enabled: $SHERPA_ENABLED"
   echo "Log level: $SHERPA_LOG_LEVEL"
   echo "Local env file: $SHERPA_ENV_FILENAME"
