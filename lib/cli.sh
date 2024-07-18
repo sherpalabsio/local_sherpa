@@ -1,5 +1,5 @@
 sherpa() {
-  local command="$1"
+  local -r command="$1"
 
   local usage_text="Example usage:
   sherpa trust          - Trust the current directory   | aliases: t/allow/grant/permit
@@ -25,44 +25,44 @@ Tell Sherpa how much to talk:
 
   case $command in
   -h|--help|help|'') echo "$usage_text";;
-  t|trust|allow|grant|permit) _sherpa_trust;;
-  u|untrust|disallow|revoke|block|deny) _sherpa_untrust;;
-        e|edit|init) _sherpa_edit;;
-  sleep|off|disable) _sherpa_disable;;
-     work|on|enable) _sherpa_enable;;
-               talk) shift; _sherpa_set_log_level "$1";;
-              debug) _sherpa_set_log_level "debug";;
-                shh) _sherpa_set_log_level "no talking";;
+  t|trust|allow|grant|permit) _sherpa_cli_trust;;
+  u|untrust|disallow|revoke|block|deny) _sherpa_cli_untrust;;
+        e|edit|init) _sherpa_cli_edit;;
+  sleep|off|disable) _sherpa_cli_disable;;
+     work|on|enable) _sherpa_cli_enable;;
+               talk) shift; _sherpa_cli_set_log_level "$1";;
+              debug) _sherpa_cli_set_log_level "debug";;
+                shh) _sherpa_cli_set_log_level "no talking";;
       s|stat|status) _sherpa_print_status;;
-           diagnose) _sherpa_diagnose;;
- symlink|link|slink) _sherpa_symlink "$2";;
+           diagnose) _sherpa_cli_diagnose;;
+ symlink|link|slink) _sherpa_cli_symlink "$2";;
                   *) echo "Sherpa doesn't understand what you mean";;
   esac
 }
 
-_sherpa_trust() {
+_sherpa_cli_trust() {
   _sherpa_trust_current_dir && _sherpa_load_env_from_current_dir
 }
 
-_sherpa_untrust() {
+_sherpa_cli_untrust() {
   _sherpa_unload_env_of_current_dir
   _sherpa_untrust_current_dir
 }
 
-_sherpa_edit() {
+_sherpa_cli_edit() {
   echo "hint: Waiting for your editor to close the file..."
   eval "$EDITOR $SHERPA_ENV_FILENAME"
   _sherpa_trust_current_dir && _sherpa_unload_env_of_current_dir &&
     _sherpa_load_env_from_current_dir
 }
 
-_sherpa_disable() {
+_sherpa_cli_disable() {
   _sherpa_unload_all_envs
   _sherpa_log_info "All env unloaded. Sherpa goes to sleep."
   _sherpa_save_global_config "SHERPA_ENABLED" false
 }
 
-_sherpa_enable() {
+_sherpa_cli_enable() {
   _sherpa_save_global_config "SHERPA_ENABLED" true
 
   if _sherpa_load_env_from_current_dir; then
@@ -72,7 +72,7 @@ _sherpa_enable() {
   _sherpa_log_info "${current_env_copy}Sherpa is ready for action."
 }
 
-_sherpa_set_log_level() {
+_sherpa_cli_set_log_level() {
   local log_level
 
   case $1 in
@@ -90,7 +90,7 @@ _sherpa_set_log_level() {
   _sherpa_log "$log_message"
 }
 
-_sherpa_diagnose() {
+_sherpa_cli_diagnose() {
   echo "Sherpa is performing a self-assessment..."
   echo ""
 
@@ -103,7 +103,7 @@ _sherpa_diagnose() {
   fi
 }
 
-_sherpa_symlink() {
+_sherpa_cli_symlink() {
   local -r symlink_target="$1"
 
   if [ -f "$SHERPA_ENV_FILENAME" ]; then
@@ -123,6 +123,6 @@ _sherpa_symlink() {
     ln -s "$symlink_target" "$SHERPA_ENV_FILENAME"
   fi
 
-  _sherpa_trust > /dev/null &&
+  _sherpa_cli_trust > /dev/null &&
     _sherpa_log_info "Symlink is created. Local env is loaded."
 }
