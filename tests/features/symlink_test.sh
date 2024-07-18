@@ -1,11 +1,5 @@
 source tests/support/init.sh
 
-# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-#                                      Setup
-# ______________________________________________________________________________
-# shellcheck disable=SC2034
-SHERPA_CONFIG_DIR="$TMP_TEST_DIR/tests/playground/local_sherpa_config"
-
 # ==============================================================================
 # ++++ Senety checks: Project 1 env is not loaded
 is_undefined "var_1"
