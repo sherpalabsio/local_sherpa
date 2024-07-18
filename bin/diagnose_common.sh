@@ -21,7 +21,7 @@ check_enabled() {
     print_success "[OK] Enabled"
   else
     print_error "[NOT OK] Enabled"
-    echo "Sherpa is disabled! Enable it with 'sherpa work'." >&2
+    echo "Sherpa is disabled! Enable it with 'sherpa on'." >&2
     exit 1
   fi
 }

@@ -63,11 +63,14 @@ function_1() {
 }
 ```
 
-## Usage
-### Config local env
+## Basic usage
+
 1. $ cd ~/projects/project_awesome
 2. $ sherpa edit
-3. [Disco](https://www.youtube.com/watch?v=UkSPUDpe0U8)
+    1. It opens the local env file in your editor
+    2. It trusts and loads it automatically when you close it
+3. You can nest envs by repeating this in subdirectories
+4. [Disco](https://www.youtube.com/watch?v=UkSPUDpe0U8)
 
 For more details see the [Features](#features) section.
 
@@ -102,8 +105,13 @@ whole content is executed in the current shell.
 ```shell
 # Clone the repo
 $ git clone git@github.com:tothpeter/local_sherpa.git ~/.dotfiles/lib/local_sherpa
+
 # Hook it into your shell
+## Zsh
 $ echo "source ~/.dotfiles/lib/local_sherpa/local_sherpa.sh" >> ~/.zshrc
+## Bash
+$ echo "source ~/.dotfiles/lib/local_sherpa/local_sherpa.sh" >> ~/.bashrc
+
 # Exclude the local env files (.sherparc) globally in Git
 $ echo ".sherparc" >> $(git config --global core.excludesfile)
 
@@ -178,17 +186,6 @@ $ cd ..
 # This rolls back the overrides made by the local env for projects
 ```
 
-### Disable/enable Sherpa
-
-It affects only the current and new terminal sessions.
-
-```shell
-$ sherpa sleep # aliases: off, disable
-Sherpa: All env unloaded. Sherpa goes to sleep.
-$ sherpa work # aliases: on, enable
-Sherpa: Local env is loaded. Sherpa is ready for action.
-```
-
 ### Running a script when leaving a directory
 
 It is not supported currently. Feel free to open a feature request.\
@@ -196,15 +193,36 @@ Alternatively, you can use: https://github.com/hyperupcall/autoenv
 
 ## Configuration
 
-Set the following environment variables anywhere to instruct Sherpa on how
+Set the following environment variable anywhere to instruct Sherpa on how
 to operate.
 
 ```shell
-export SHERPA_ENABLED=false # Default: true
 export SHERPA_ENV_FILENAME='.envrc' # Default: .sherparc
-# Control how much Sherpa talks
-REPLACEME
-export SHERPA_LOG_LEVEL='no talking' # Default: info | Values: debug, info, no talking
+```
+
+## Settings
+
+### Log level
+
+It affects only the current and new terminal sessions.
+
+```shell
+sherpa talk more    - Decrease the log level
+sherpa talk less    - Increase the log level
+sherpa talk         - Debug level | Aliases: debug
+sherpa shh          - Silence
+sherpa log [LEVEL]  - Set a specific log level | Levels: debug, info, warn, error, silent | Aliases: talk
+```
+
+### Disable/enable Sherpa
+
+It affects only the current and new terminal sessions.
+
+```shell
+$ sherpa off # aliases: sleep, disable
+Sherpa: All envs are unloaded. Sherpa goes to sleep.
+$ sherpa on # aliases: work, enable
+Sherpa: Local env is loaded. Sherpa is ready for action.
 ```
 
 ## Cookbook
@@ -240,8 +258,6 @@ alias t='mix test'
 # ~/projects/project_js_with_jest/.sherparc
 alias t='yarn test'
 ```
-
-With this config `RSpec` will run depending on in which directory you `cd` into.
 
 ### Rails console in production 🤫
 

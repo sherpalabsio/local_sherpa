@@ -5,8 +5,8 @@ sherpa() {
   sherpa trust          - Trust the current directory   | aliases: t/allow/grant/permit
   sherpa untrust        - Untrust the current directory | aliases: u/disallow/revoke/block/deny
   sherpa edit           - Edit the local env file       | aliases: e/init
-  sherpa sleep          - Turn Sherpa off               | aliases: off/disable
-  sherpa work           - Turn Sherpa on                | aliases: on/enable
+  sherpa off            - Turn Sherpa off               | aliases: sleep/disable
+  sherpa on             - Turn Sherpa on                | aliases: work/enable
   sherpa symlink [PATH] - Symlink a local env file      | aliases: link/slink
 
 Troubleshooting:
@@ -29,8 +29,8 @@ Log levels:
   t|trust|allow|grant|permit) _sherpa_cli_trust;;
   u|untrust|disallow|revoke|block|deny) _sherpa_cli_untrust;;
         e|edit|init) _sherpa_cli_edit;;
-  sleep|off|disable) _sherpa_cli_disable;;
-     work|on|enable) _sherpa_cli_enable;;
+  off|sleep|disable) _sherpa_cli_disable;;
+     on|work|enable) _sherpa_cli_enable;;
            log|talk) shift; _sherpa_cli_set_log_level "$1";;
               debug) _sherpa_cli_set_log_level "$SHERPA_LOG_LEVEL_DEBUG";;
                 shh) _sherpa_cli_set_log_level "$SHERPA_LOG_LEVEL_SILENT";;
@@ -59,7 +59,7 @@ _sherpa_cli_edit() {
 
 _sherpa_cli_disable() {
   _sherpa_unload_all_envs
-  _sherpa_log_info "All env unloaded. Sherpa goes to sleep."
+  _sherpa_log_info "All envs are unloaded. Sherpa goes to sleep."
   _sherpa_save_global_config "SHERPA_ENABLED" false
 }
 
