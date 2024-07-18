@@ -12,12 +12,12 @@ trap _init_teardown EXIT
 _init_teardown() {
   SHERPA_LOG_LEVEL="${SHERPA_LOG_LEVEL_SILENT}"
 
-  cd "$SHERPA_PATH"
+  cd "$SHERPA_DIR"
   # Clean up the tests/playground directory
   # Rollback changes to tracked files
-  git checkout -- "$SHERPA_PATH/tests/playground" > /dev/null
+  git checkout -- "$SHERPA_DIR/tests/playground" > /dev/null
   # Remove untracked files and directories
-  git clean -df "$SHERPA_PATH/tests/playground" > /dev/null
+  git clean -df "$SHERPA_DIR/tests/playground" > /dev/null
 
   rm -rf "$TMP_TEST_DIR"
 }

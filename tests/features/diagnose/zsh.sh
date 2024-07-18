@@ -5,7 +5,7 @@ stub() {
 }
 
 reset_stubs() {
-  echo "source $SHERPA_LIB_PATH/init.sh" > "$ZSHRC"
+  echo "source $SHERPA_LIB_DIR/init.sh" > "$ZSHRC"
 }
 
 # ==============================================================================
@@ -17,7 +17,7 @@ ZSHRC_DIR=$(mktemp -d)
 export ZDOTDIR="$ZSHRC_DIR"
 ZSHRC="$ZDOTDIR/.zshrc"
 
-echo "source $SHERPA_LIB_PATH/init.sh" > "$ZSHRC"
+echo "source $SHERPA_LIB_DIR/init.sh" > "$ZSHRC"
 
 # ++ Reading from stdout and stderr
 STDOUT_FILE=$(mktemp)

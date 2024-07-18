@@ -16,7 +16,7 @@ EOF
 }
 
 reset_stubs() {
-  echo "source $SHERPA_LIB_PATH/init.sh" > "$BASHRC"
+  echo "source $SHERPA_LIB_DIR/init.sh" > "$BASHRC"
 }
 
 # ==============================================================================
@@ -26,7 +26,7 @@ source tests/support/init.sh
 # Sherpa runs the diagnostics with a shell script that would load the
 # ~/.bashrc file.
 BASHRC=$(mktemp)
-echo "source $SHERPA_LIB_PATH/init.sh" > "$BASHRC"
+echo "source $SHERPA_LIB_DIR/init.sh" > "$BASHRC"
 BASHRC_FILE="$BASHRC"
 
 STDOUT_FILE=$(mktemp)

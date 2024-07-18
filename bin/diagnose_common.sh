@@ -42,7 +42,7 @@ setup_test_env() {
   export SHERPA_CHECKSUM_DIR="/tmp/local_sherpa_diagnose/local_sherpa_checksums"
 
   cd /tmp/local_sherpa_diagnose
-  echo "alias test_alias_1='echo works'" > "$SHERPA_ENV_FILENAME"
+  echo "alias test_alias_1=\"echo works\"" > "$SHERPA_ENV_FILENAME"
 }
 
 test_trusting_the_current_directory() {

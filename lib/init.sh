@@ -1,10 +1,10 @@
 if [ -n "$ZSH_VERSION" ]; then
-  SHERPA_LIB_PATH=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
+  SHERPA_LIB_DIR=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
 else
-  SHERPA_LIB_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  SHERPA_LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 fi
 
-SHERPA_PATH="$(dirname "$SHERPA_LIB_PATH")"
+SHERPA_DIR="$(dirname "$SHERPA_LIB_DIR")"
 
 # shellcheck disable=SC2034
 SHERPA_CHECKSUM_DIR="$HOME/.local/share/local_sherpa"
@@ -13,24 +13,24 @@ export SHERPA_ENV_FILENAME="${SHERPA_ENV_FILENAME:-.sherparc}"
 
 SHERPA_LOADED_ENV_DIRS=()
 
-source "$SHERPA_LIB_PATH/global_config.sh"
+source "$SHERPA_LIB_DIR/global_config.sh"
 _sherpa_load_global_config "SHERPA_ENABLED" true
 
-source "$SHERPA_LIB_PATH/logger.sh"
+source "$SHERPA_LIB_DIR/logger.sh"
 _sherpa_load_global_config "SHERPA_LOG_LEVEL" "$SHERPA_LOG_LEVEL_INFO"
 
 # Load the dependencies
-source "$SHERPA_PATH/vendor/smartcd/arrays.sh"
-source "$SHERPA_PATH/vendor/smartcd/varstash.sh"
+source "$SHERPA_DIR/vendor/smartcd/arrays.sh"
+source "$SHERPA_DIR/vendor/smartcd/varstash.sh"
 
 # Load the app
-source "$SHERPA_LIB_PATH/trust_verification.sh"
-source "$SHERPA_LIB_PATH/local_env_file_parser.sh"
-source "$SHERPA_LIB_PATH/setup_cd_hook.sh"
-source "$SHERPA_LIB_PATH/status.sh"
-source "$SHERPA_LIB_PATH/load_unload.sh"
+source "$SHERPA_LIB_DIR/trust_verification.sh"
+source "$SHERPA_LIB_DIR/local_env_file_parser.sh"
+source "$SHERPA_LIB_DIR/setup_cd_hook.sh"
+source "$SHERPA_LIB_DIR/status.sh"
+source "$SHERPA_LIB_DIR/load_unload.sh"
 
-source "$SHERPA_LIB_PATH/cli.sh"
+source "$SHERPA_LIB_DIR/cli.sh"
 
 # Hook into cd
 _sherpa_setup_cd_hook

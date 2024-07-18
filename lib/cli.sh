@@ -89,11 +89,11 @@ _sherpa_cli_diagnose() {
   echo ""
 
   if [ -n "$ZSH_VERSION" ]; then
-    zsh -i "$SHERPA_PATH/bin/diagnose_zsh"
+    zsh -i "$SHERPA_DIR/bin/diagnose_zsh"
   else
     # To be able to stub the ~/.bashrc in the tests
     [ -z "$BASHRC_FILE" ] && BASHRC_FILE="$HOME/.bashrc"
-    bash --rcfile "$BASHRC_FILE" -i "$SHERPA_PATH/bin/diagnose_bash"
+    bash --rcfile "$BASHRC_FILE" -i "$SHERPA_DIR/bin/diagnose_bash"
   fi
 }
 
