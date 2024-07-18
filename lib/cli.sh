@@ -2,11 +2,12 @@ sherpa() {
   local command="$1"
 
   local usage_text="Example usage:
-  sherpa trust   - Trust the current directory   | aliases: t/allow/grant/permit
-  sherpa untrust - Untrust the current directory | aliases: u/disallow/revoke/block/deny
-  sherpa edit    - Edit the local env file       | aliases: e/init
-  sherpa sleep   - Turn Sherpa off               | aliases: off/disable
-  sherpa work    - Turn Sherpa on                | aliases: on/enable
+  sherpa trust          - Trust the current directory   | aliases: t/allow/grant/permit
+  sherpa untrust        - Untrust the current directory | aliases: u/disallow/revoke/block/deny
+  sherpa edit           - Edit the local env file       | aliases: e/init
+  sherpa sleep          - Turn Sherpa off               | aliases: off/disable
+  sherpa work           - Turn Sherpa on                | aliases: on/enable
+  sherpa symlink [PATH] - Symlink a local env file      | aliases: link/slink
 
 Troubleshooting:
   sherpa status   - Show debug status info | aliases: s/stat
@@ -34,6 +35,7 @@ Tell Sherpa how much to talk:
                 shh) _local_sherpa_set_log_level "no talking";;
       s|stat|status) _local_sherpa_print_status;;
            diagnose) _local_sherpa_diagnose;;
+ symlink|link|slink) _local_sherpa_symlink "$2";;
                   *) echo "Sherpa doesn't understand what you mean";;
   esac
 }
@@ -99,4 +101,28 @@ _local_sherpa_diagnose() {
     [ -z "$BASHRC_FILE" ] && BASHRC_FILE="$HOME/.bashrc"
     bash --rcfile "$BASHRC_FILE" -i "$SHERPA_PATH/bin/diagnose_bash"
   fi
+}
+
+_local_sherpa_symlink() {
+  local -r symlink_target="$1"
+
+  if [ -f "$SHERPA_ENV_FILENAME" ]; then
+    _local_sherpa_log_error "There is already a local env file in this directory." \
+                            "Remove it before symlinking a new one."
+    return 1
+  fi
+
+  if [ ! -e "$symlink_target" ]; then
+    _local_sherpa_log_error "The target doesn't exist: $symlink_target"
+    return 1
+  fi
+
+  if [ -d "$symlink_target" ]; then
+    ln -s "$symlink_target/$SHERPA_ENV_FILENAME" "$SHERPA_ENV_FILENAME"
+  else
+    ln -s "$symlink_target" "$SHERPA_ENV_FILENAME"
+  fi
+
+  _local_sherpa_trust > /dev/null &&
+    _local_sherpa_log_info "Symlink is created. Local env is loaded."
 }

@@ -16,6 +16,8 @@ _local_sherpa_log_info() {
 
 _local_sherpa_log_error() {
   echo "Sherpa: $1" >&2
+  [ -z "$2" ] && return
+  echo "        $2" >&2
 }
 
 _local_sherpa_log() {
