@@ -1,6 +1,6 @@
 _sherpa_print_status() {
   echo "Enabled: $SHERPA_ENABLED"
-  echo "Log level: $SHERPA_LOG_LEVEL"
+  echo "Log level: $SHERPA_LOG_LEVEL ($(_sherpa_get_log_level_in_text))"
   echo "Local env file: $SHERPA_ENV_FILENAME"
 
   if [ ${#SHERPA_LOADED_ENV_DIRS[@]} -eq 0 ]; then

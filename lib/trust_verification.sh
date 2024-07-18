@@ -27,7 +27,7 @@ _sherpa_verify_trust() {
 
   # No checksum file?
   if [[ ! -f "$checksum_file" ]]; then
-    _sherpa_log_info "The local env file is not trusted. Run \`sherpa trust\` to mark it as trusted."
+    _sherpa_log_warn "The local env file is not trusted. Run \`sherpa trust\` to mark it as trusted."
     return 1
   fi
 
@@ -36,7 +36,7 @@ _sherpa_verify_trust() {
 
   # Did the local env file change?
   if [[ "$current_checksum" != "$stored_checksum" ]]; then
-    _sherpa_log_info "The local env file has changed. Run \`sherpa trust\` to mark it trusted."
+    _sherpa_log_warn "The local env file has changed. Run \`sherpa trust\` to mark it trusted."
     return 1
   fi
 

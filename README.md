@@ -203,6 +203,7 @@ to operate.
 export SHERPA_ENABLED=false # Default: true
 export SHERPA_ENV_FILENAME='.envrc' # Default: .sherparc
 # Control how much Sherpa talks
+REPLACEME
 export SHERPA_LOG_LEVEL='no talking' # Default: info | Values: debug, info, no talking
 ```
 

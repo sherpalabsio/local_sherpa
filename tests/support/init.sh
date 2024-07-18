@@ -6,7 +6,7 @@ source ../../lib/init.sh
 # shellcheck disable=SC2034
 SHERPA_CHECKSUM_DIR="$SHERPA_PATH/tests/playground/local_sherpa_checksums"
 SHERPA_CONFIG_DIR="$SHERPA_PATH/tests/playground/local_sherpa_config"
-export SHERPA_LOG_LEVEL='no talk' # debug, info, no talking
+SHERPA_LOG_LEVEL="$SHERPA_LOG_LEVEL_SILENT"
 
 if [ -z "$ZSH_VERSION" ]; then
   # Emulate the behavior of `cd` in interactive Bash

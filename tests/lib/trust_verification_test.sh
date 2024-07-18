@@ -5,7 +5,7 @@ source .bash_profile # Imitate global env
 
 # =========================== Trusting the local env ===========================
 # When we go to a project with an untrusted local env file
-actual_warning_message=$(SHERPA_LOG_LEVEL='info' ; cd project_1)
+actual_warning_message=$(SHERPA_LOG_LEVEL="$SHERPA_LOG_LEVEL_INFO" ; cd project_1)
 expected_warning_message="The local env file is not trusted."
 
 # Sherpa warns the user
@@ -61,6 +61,7 @@ mkdir -p ../tmp
 touch "../tmp/$SHERPA_ENV_FILENAME"
 chmod a-r "../tmp/$SHERPA_ENV_FILENAME"
 
+SHERPA_LOG_LEVEL="$SHERPA_LOG_LEVEL_ERROR"
 cd ../tmp 2> "$STDERR_FILE"
 
 expected_warning_message="The local env file is not readable."

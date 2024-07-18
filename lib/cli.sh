@@ -13,11 +13,12 @@ Troubleshooting:
   sherpa status   - Show debug status info | aliases: s/stat
   sherpa diagnose - Troubleshoot Sherpa
 
-Tell Sherpa how much to talk:
-  sherpa talk [LEVEL] - Set a specific log level | Levels: debug/more, info, no talking/shh/anything else
-  sherpa talk         - Everything Sherpa knows
-  sherpa debug        - Everything Sherpa knows
-  sherpa shh          - Silent Sherpa"
+Log levels:
+  sherpa talk more    - Decrease the log level
+  sherpa talk less    - Increase the log level
+  sherpa talk         - Debug level | Aliases: debug
+  sherpa shh          - Silence
+  sherpa log [LEVEL]  - Set a specific log level | Levels: debug, info, warn, error, silent | Aliases: talk"
 
   if [ "$USE_SHERPA_DEV_VERSION" = true ]; then
     usage_text="Dev version\n\n$usage_text"
@@ -30,9 +31,9 @@ Tell Sherpa how much to talk:
         e|edit|init) _sherpa_cli_edit;;
   sleep|off|disable) _sherpa_cli_disable;;
      work|on|enable) _sherpa_cli_enable;;
-               talk) shift; _sherpa_cli_set_log_level "$1";;
-              debug) _sherpa_cli_set_log_level "debug";;
-                shh) _sherpa_cli_set_log_level "no talking";;
+           log|talk) shift; _sherpa_cli_set_log_level "$1";;
+              debug) _sherpa_cli_set_log_level "$SHERPA_LOG_LEVEL_DEBUG";;
+                shh) _sherpa_cli_set_log_level "$SHERPA_LOG_LEVEL_SILENT";;
       s|stat|status) _sherpa_print_status;;
            diagnose) _sherpa_cli_diagnose;;
  symlink|link|slink) _sherpa_cli_symlink "$2";;
@@ -73,21 +74,14 @@ _sherpa_cli_enable() {
 }
 
 _sherpa_cli_set_log_level() {
-  local log_level
-
   case $1 in
-       '') log_level='debug';;
-     more) log_level='debug';;
-    debug) log_level='debug';;
-     info) log_level='info';;
-        *) log_level='no talking';;
+     less) _sherpa_increase_log_level;;
+     more) _sherpa_decrease_log_level;;
+       '') _sherpa_set_log_level "$SHERPA_LOG_LEVEL_DEBUG";;
+        *) _sherpa_set_log_level "$1";;
   esac
 
-  _sherpa_save_global_config "SHERPA_LOG_LEVEL" "$log_level"
-
-  log_message="Sherpa: Log level set to: $log_level"
-  [ "$log_level" = "no talking" ] && log_message="$log_message 🤫"
-  _sherpa_log "$log_message"
+  _sherpa_log "Sherpa: Log level set to: $(_sherpa_get_log_level_in_text)"
 }
 
 _sherpa_cli_diagnose() {

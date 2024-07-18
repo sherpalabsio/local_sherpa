@@ -15,14 +15,15 @@ SHERPA_LOADED_ENV_DIRS=()
 
 source "$SHERPA_LIB_PATH/global_config.sh"
 _sherpa_load_global_config "SHERPA_ENABLED" true
-_sherpa_load_global_config "SHERPA_LOG_LEVEL" "info" # debug, info, no talking
+
+source "$SHERPA_LIB_PATH/logger.sh"
+_sherpa_load_global_config "SHERPA_LOG_LEVEL" "$SHERPA_LOG_LEVEL_INFO"
 
 # Load the dependencies
 source "$SHERPA_PATH/vendor/smartcd/arrays.sh"
 source "$SHERPA_PATH/vendor/smartcd/varstash.sh"
 
 # Load the app
-source "$SHERPA_LIB_PATH/logger.sh"
 source "$SHERPA_LIB_PATH/trust_verification.sh"
 source "$SHERPA_LIB_PATH/local_env_file_parser.sh"
 source "$SHERPA_LIB_PATH/setup_cd_hook.sh"
