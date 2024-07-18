@@ -1,7 +1,6 @@
 source tests/support/init.sh
 
 # Setup
-cd playground
 source .bash_profile # Imitate global env
 
 # =========================== Trusting the local env ===========================

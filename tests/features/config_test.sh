@@ -9,7 +9,7 @@ SHERPA_CONFIG_DIR="$TMP_TEST_DIR/tests/playground/local_sherpa_config"
 # When the log level is not set anywhere
 # It sets the log level to the default value
 unset SHERPA_LOG_LEVEL
-source ../lib/init.sh
+source ../../lib/init.sh
 
 is "$SHERPA_LOG_LEVEL" "info" "The log level is set to the default value"
 
@@ -18,7 +18,7 @@ is "$SHERPA_LOG_LEVEL" "info" "The log level is set to the default value"
 # It does not change the log level
 SHERPA_LOG_LEVEL="no talking"
 
-source ../lib/init.sh
+source ../../lib/init.sh
 
 is "$SHERPA_LOG_LEVEL" "no talking" "The log level is set based on the env var"
 
@@ -28,7 +28,7 @@ is "$SHERPA_LOG_LEVEL" "no talking" "The log level is set based on the env var"
 sherpa talk no more > /dev/null
 unset SHERPA_LOG_LEVEL
 
-source ../lib/init.sh
+source ../../lib/init.sh
 
 is "$SHERPA_LOG_LEVEL" "no talking" "The log level is set based on the config file"
 
@@ -38,6 +38,6 @@ is "$SHERPA_LOG_LEVEL" "no talking" "The log level is set based on the config fi
 sherpa talk no more > /dev/null
 SHERPA_LOG_LEVEL="debug"
 
-source ../lib/init.sh
+source ../../lib/init.sh
 
 is "$SHERPA_LOG_LEVEL" "debug" "The log level is set based on the env var"

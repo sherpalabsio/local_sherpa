@@ -3,7 +3,6 @@ source tests/support/init.sh
 # ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 #                                      Setup
 # ______________________________________________________________________________
-cd playground
 source .bash_profile # Imitate global env
 
 # ++++ Senety checks: the Global env is loaded

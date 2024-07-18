@@ -1,7 +1,7 @@
 # Init the app
 
 source tests/support/init_tools.sh
-source ../lib/init.sh
+source ../../lib/init.sh
 
 # shellcheck disable=SC2034
 SHERPA_CHECKSUM_DIR="$SHERPA_PATH/tests/playground/local_sherpa_checksums"

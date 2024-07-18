@@ -5,7 +5,6 @@ source tests/support/init.sh
 # ______________________________________________________________________________
 # shellcheck disable=SC2034
 SHERPA_CONFIG_DIR="$TMP_TEST_DIR/tests/playground/local_sherpa_config"
-cd playground
 
 # ==============================================================================
 # ++++ Senety checks: Project 1 env is not loaded

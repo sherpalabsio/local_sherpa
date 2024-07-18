@@ -1,8 +1,8 @@
 # Init the test related tools
 
-cd tests
+source tests/support/assertions.sh
 
-source support/assertions.sh
+cd tests/playground
 
 # shellcheck disable=SC2155
 export TMP_TEST_DIR=$(mktemp -d)

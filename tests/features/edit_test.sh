@@ -1,7 +1,7 @@
 source tests/support/init.sh
 
 # Setup
-cd playground/project_1
+cd project_1
 sherpa trust
 # shellcheck disable=SC2154
 is "$var_1" "LOCAL VAR PROJECT 1" "The local env is loaded"
