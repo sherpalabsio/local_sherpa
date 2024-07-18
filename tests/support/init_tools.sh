@@ -6,18 +6,21 @@ source tests/support/assertions.sh
 cd tests/playground
 
 # shellcheck disable=SC2155
+readonly TESTS_DIR=$(cd .. && pwd)
+
+# shellcheck disable=SC2155
 export TMP_TEST_DIR=$(mktemp -d)
 
 trap _init_teardown EXIT
 _init_teardown() {
   SHERPA_LOG_LEVEL="${SHERPA_LOG_LEVEL_SILENT}"
 
-  cd "$SHERPA_DIR"
+  cd "$TESTS_DIR"
   # Clean up the tests/playground directory
   # Rollback changes to tracked files
-  git checkout -- "$SHERPA_DIR/tests/playground" > /dev/null
+  git checkout -- "$TESTS_DIR/playground" > /dev/null
   # Remove untracked files and directories
-  git clean -df "$SHERPA_DIR/tests/playground" > /dev/null
+  git clean -df "$TESTS_DIR/playground" > /dev/null
 
   rm -rf "$TMP_TEST_DIR"
 }
