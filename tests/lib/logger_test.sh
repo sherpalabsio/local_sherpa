@@ -1,4 +1,4 @@
-source tests/support/init.sh
+source tests/support/app_helper.sh
 
 export SHERPA_ENV_FILENAME="../fixtures/parsing/$SHERPA_ENV_FILENAME"
 

@@ -1,4 +1,4 @@
-source tests/support/init_tools.sh
+source tests/support/test_helper.sh
 
 # shellcheck disable=SC2034
 SHERPA_CONFIG_DIR="$TMP_TEST_DIR/tests/playground/local_sherpa_config"

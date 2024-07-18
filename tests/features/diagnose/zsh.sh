@@ -10,7 +10,7 @@ reset_stubs() {
 
 # ==============================================================================
 # ++++ Setup
-source tests/support/init.sh
+source tests/support/app_helper.sh
 
 # ++ Stubbing
 ZSHRC_DIR=$(mktemp -d)

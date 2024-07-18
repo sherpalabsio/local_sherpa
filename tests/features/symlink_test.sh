@@ -1,4 +1,4 @@
-source tests/support/init.sh
+source tests/support/app_helper.sh
 
 # ==============================================================================
 # ++++ Senety checks: Project 1 env is not loaded
