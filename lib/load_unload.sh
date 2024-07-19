@@ -53,7 +53,7 @@ _sherpa_load_env_from_current_dir() {
   [ -f "$SHERPA_ENV_FILENAME" ] || { _sherpa_log_debug "No local env file"; return; }
 
   # Skip if the env was already loaded
-  _sherpa_was_env_loaded && { _sherpa_log_debug "Local env already loaded"; return; }
+  _sherpa_was_env_loaded && { _sherpa_log_debug "Local env is already loaded"; return; }
 
   # Skip if the local env file is not trusted
   _sherpa_verify_trust || return;

@@ -21,6 +21,6 @@ cd subfolder_with_no_local_env
 
 # ++++ It does not reload the already loaded Project 1 env
 actual_warning_message=$(SHERPA_LOG_LEVEL='debug' ; cd ..)
-expected_warning_message="Local env already loaded"
+expected_warning_message="Local env is already loaded"
 
 like "$actual_warning_message" "$expected_warning_message" "It does not reload the Project 1 env"
