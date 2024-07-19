@@ -14,11 +14,11 @@ Troubleshooting:
   sherpa diagnose - Troubleshoot Sherpa
 
 Log levels:
-  sherpa talk more    - Decrease the log level
-  sherpa talk less    - Increase the log level
-  sherpa talk         - Debug level | Aliases: debug
-  sherpa shh          - Silence
-  sherpa log [LEVEL]  - Set a specific log level | Levels: debug, info, warn, error, silent | Aliases: talk"
+  sherpa talk more   - Decrease the log level
+  sherpa talk less   - Increase the log level
+  sherpa talk        - Debug level | Aliases: debug
+  sherpa shh         - Silence
+  sherpa log [LEVEL] - Set a specific log level | Levels: debug, info, warn, error, silent | Aliases: talk"
 
   if [ "$USE_SHERPA_DEV_VERSION" = true ]; then
     usage_text="Dev version\n\n$usage_text"

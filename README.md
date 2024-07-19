@@ -207,11 +207,11 @@ export SHERPA_ENV_FILENAME='.envrc' # Default: .sherparc
 It affects only the current and new terminal sessions.
 
 ```shell
-sherpa talk more    - Decrease the log level
-sherpa talk less    - Increase the log level
-sherpa talk         - Debug level | Aliases: debug
-sherpa shh          - Silence
-sherpa log [LEVEL]  - Set a specific log level | Levels: debug, info, warn, error, silent | Aliases: talk
+sherpa talk more   - Decrease the log level
+sherpa talk less   - Increase the log level
+sherpa talk        - Debug level | Aliases: debug
+sherpa shh         - Silence
+sherpa log [LEVEL] - Set a specific log level | Levels: debug, info, warn, error, silent | Aliases: talk
 ```
 
 ### Disable/enable Sherpa
@@ -315,7 +315,7 @@ $ make test_bash tests/features/edit_test.sh
 # Run all the tests for all the supported shells in Ubuntu
 $ make test_all_in_ubuntu
 
-# Run a single for all the supported shells in Ubuntu
+# Run a single test for all the supported shells in Ubuntu
 $ make test_all_in_ubuntu tests/features/edit_test.sh
 ```
 
