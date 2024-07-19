@@ -3,7 +3,7 @@ _sherpa_setup_cd_hook() {
     # ======== ZSH ========
     # shellcheck disable=SC2317
     _sherpa_chpwd_handler() {
-      # Changed directory?
+      # Did we change directory?
       if [[ -n $OLDPWD && $PWD != "$OLDPWD" ]]; then
         _sherpa_alert_sherpa_we_changed_dir
       fi
@@ -15,12 +15,12 @@ _sherpa_setup_cd_hook() {
     # ======== BASH ========
     # shellcheck disable=SC2317
     _sherpa_chpwd_handler() {
-      # Filter for directory change
-      if [[ "$PREVPWD" != "$PWD" ]]; then
+      # Did we change directory?
+      if [[ "$_SHERPA_PREV_PWD" != "$PWD" ]]; then
         _sherpa_alert_sherpa_we_changed_dir
       fi
 
-      export PREVPWD="$PWD"
+      export _SHERPA_PREV_PWD="$PWD"
     }
 
     # add `;` after _sherpa_chpwd_handler if PROMPT_COMMAND is not empty
