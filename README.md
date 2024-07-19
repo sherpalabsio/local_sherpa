@@ -108,9 +108,9 @@ $ git clone git@github.com:tothpeter/local_sherpa.git ~/.dotfiles/lib/local_sher
 
 # Hook it into your shell
 ## Zsh
-$ echo "source ~/.dotfiles/lib/local_sherpa/local_sherpa.sh" >> ~/.zshrc
+$ echo "source ~/.dotfiles/lib/local_sherpa/init.sh" >> ~/.zshrc
 ## Bash
-$ echo "source ~/.dotfiles/lib/local_sherpa/local_sherpa.sh" >> ~/.bashrc
+$ echo "source ~/.dotfiles/lib/local_sherpa/init.sh" >> ~/.bashrc
 
 # Exclude the local env files (.sherparc) globally in Git
 $ echo ".sherparc" >> $(git config --global core.excludesfile)
