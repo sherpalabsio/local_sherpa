@@ -46,7 +46,7 @@ is "$(function_1)" "GLOBAL FUNCTION" "Untrusted local env is not loaded (functio
 #                                  Trust check
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 
-# In ubuntu I couldn't make the .sherparc file unreadable
+# In ubuntu I couldn't make the .envrc file unreadable
 if [ "$RUNNING_IN_CONTAINER" = "true" ]; then
   echo 'Running in container. Skipping the trust check test!'
   exit 0

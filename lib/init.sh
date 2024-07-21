@@ -9,7 +9,7 @@ SHERPA_DIR="$(dirname "$SHERPA_LIB_DIR")"
 # shellcheck disable=SC2034
 SHERPA_CHECKSUM_DIR="$HOME/.local/share/local_sherpa"
 SHERPA_CONFIG_DIR="${SHERPA_CONFIG_DIR:-"$HOME/.config/local_sherpa"}"
-export SHERPA_ENV_FILENAME="${SHERPA_ENV_FILENAME:-.sherparc}"
+export SHERPA_ENV_FILENAME="${SHERPA_ENV_FILENAME:-.envrc}"
 
 SHERPA_LOADED_ENV_DIRS=()
 
