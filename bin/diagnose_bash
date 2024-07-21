@@ -20,7 +20,7 @@ else
 fi
 
 # =========== Check if it works in a test environment ===========
-setup_test_env
+setup_test_dir
 
 test_trusting_the_current_directory
 test_loading_the_local_env

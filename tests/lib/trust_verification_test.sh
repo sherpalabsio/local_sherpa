@@ -68,3 +68,13 @@ expected_warning_message="The local env file is not readable."
 like "$(cat "$STDERR_FILE")" "$expected_warning_message" "It warns when the local env file is not readable"
 
 rm -rf "$STDERR_FILE"
+
+
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+#                               _sherpa_trust_dir
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+
+_sherpa_trust_dir "../project_2"
+
+cd ../project_2
+is "$var_1" "LOCAL VAR PROJECT 2"

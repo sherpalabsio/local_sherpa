@@ -3,7 +3,13 @@
 set -o pipefail
 
 _calculate_checksum() {
-  if ! sha256sum "$SHERPA_ENV_FILENAME" | cut -d ' ' -f 1; then
+  if [ -n "$1" ]; then
+    local -r env_file="$1"
+  else
+    local -r env_file="$SHERPA_ENV_FILENAME"
+  fi
+
+  if ! sha256sum "$env_file" | cut -d ' ' -f 1; then
     if [ -r "$FILE" ]; then
       _sherpa_log_error "Checksum calculation failed"
     else
@@ -16,7 +22,7 @@ _calculate_checksum() {
 
 _sherpa_verify_trust() {
   local checksum_file
-  checksum_file="$SHERPA_CHECKSUM_DIR/$(pwd | md5sum | cut -d ' ' -f 1)"
+  checksum_file="$SHERPA_CHECKSUM_DIR/$(realpath "$(pwd)" | md5sum | cut -d ' ' -f 1)"
 
   local current_checksum
 
@@ -44,8 +50,11 @@ _sherpa_verify_trust() {
   return 0
 }
 
-_sherpa_trust_current_dir() {
-  if [[ ! -f "$SHERPA_ENV_FILENAME" ]]; then
+_sherpa_trust_dir() {
+  local -r env_dir=$(realpath "$1")
+  local -r env_file="$env_dir/$SHERPA_ENV_FILENAME"
+
+  if [[ ! -f "$env_file" ]]; then
     _sherpa_log_info "Nothing to trust. The current directory has no local env file. Run \`sherpa edit\` to create one."
     return 1
   fi
@@ -53,10 +62,10 @@ _sherpa_trust_current_dir() {
   mkdir -p "$SHERPA_CHECKSUM_DIR"
 
   local checksum_file
-  checksum_file="$SHERPA_CHECKSUM_DIR/$(pwd | md5sum | cut -d ' ' -f 1)"
+  checksum_file="$SHERPA_CHECKSUM_DIR/$(echo "$env_dir" | md5sum | cut -d ' ' -f 1)"
   local current_checksum
 
-  if ! current_checksum=$(_calculate_checksum); then
+  if ! current_checksum=$(_calculate_checksum "$env_file"); then
     # Skip if the checksum calculation failed
     return 1
   fi
@@ -67,9 +76,13 @@ _sherpa_trust_current_dir() {
   return 0
 }
 
+_sherpa_trust_current_dir() {
+  _sherpa_trust_dir "$(realpath "$(pwd)")"
+}
+
 _sherpa_untrust_current_dir() {
   local checksum_file
-  checksum_file="$SHERPA_CHECKSUM_DIR/$(pwd | md5sum | cut -d ' ' -f 1)"
+  checksum_file="$SHERPA_CHECKSUM_DIR/$(realpath "$(pwd)" | md5sum | cut -d ' ' -f 1)"
 
   if [[ -f "$checksum_file" ]]; then
     rm "$checksum_file"

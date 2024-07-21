@@ -4,6 +4,9 @@ source tests/support/app_helper.sh
 #                                      Setup
 # ______________________________________________________________________________
 source .bash_profile # Imitate global env
+_sherpa_trust_dir "project_1"
+_sherpa_trust_dir "project_1/subfolder_with_no_local_env/subproject"
+_sherpa_trust_dir "project_2"
 
 # ++++ Senety checks: the Global env is loaded
 is "$var_1" "GLOBAL VAR" "Global env is ready (var)"
@@ -18,7 +21,6 @@ is "$(function_1)" "GLOBAL FUNCTION" "Global env is ready (function)"
 # PWD: /project_1
 
 cd project_1
-sherpa trust
 
 # ++++ It loads the Project 1 env
 is "$var_1" "LOCAL VAR PROJECT 1" "Local env is loaded (var)"
@@ -44,7 +46,6 @@ is "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Project 1 env is not unloaded (fu
 # PWD: /project_1/subfolder_with_no_local_env/subproject
 
 cd subproject
-sherpa trust
 
 # ++++ It does not unload the Project 1 env
 is "$var_1" "LOCAL VAR PROJECT 1" "Project 1 env is not unloaded (var_1)"
@@ -119,7 +120,6 @@ is "$(custom_function_1)" "CUSTOM LOCAL FUNCTION PROJECT 1" "Project 1 env is lo
 # PWD: /project_2
 
 cd ../project_2
-sherpa trust
 
 # ++++ It unloads the Project 1 env
 is_undefined "custom_var_1" "Subproject env is unloaded (custom_var_1)"

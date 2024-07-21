@@ -1,3 +1,8 @@
+trap _teardown EXIT
+_teardown() {
+  [ -f "$TMP_TEST_DIR" ] && rm -rf "$TMP_TEST_DIR"
+}
+
 print_success() {
   local message=$1
   printf "\e[32m%s\e[0m\n" "$message"
@@ -36,12 +41,13 @@ check_checksum_function_exists() {
   fi
 }
 
-setup_test_env() {
-  rm -rf /tmp/local_sherpa_diagnose
-  mkdir -p /tmp/local_sherpa_diagnose
-  export SHERPA_CHECKSUM_DIR="/tmp/local_sherpa_diagnose/local_sherpa_checksums"
+setup_test_dir() {
+  # shellcheck disable=SC2155
+  readonly TMP_TEST_DIR=$(mktemp -d)
 
-  cd /tmp/local_sherpa_diagnose
+  export SHERPA_CHECKSUM_DIR="$TMP_TEST_DIR/local_sherpa_checksums"
+
+  cd "$TMP_TEST_DIR"
   echo "alias test_alias_1=\"echo works\"" > "$SHERPA_ENV_FILENAME"
 }
 

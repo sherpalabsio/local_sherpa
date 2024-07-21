@@ -4,6 +4,7 @@ source tests/support/app_helper.sh
 #                                      Setup
 # ______________________________________________________________________________
 source .bash_profile # Imitate global env
+_sherpa_trust_dir "project_1"
 
 # ++++ Senety checks: the Global env is loaded
 is "$var_1" "GLOBAL VAR" "Global env is ready (var)"
@@ -16,7 +17,6 @@ is "$(function_1)" "GLOBAL FUNCTION" "Global env is ready (function)"
 # PWD: /project_1
 
 cd project_1
-sherpa trust
 cd subfolder_with_no_local_env
 
 # ++++ It does not reload the already loaded Project 1 env

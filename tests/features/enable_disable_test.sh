@@ -2,11 +2,12 @@ source tests/support/app_helper.sh
 
 # Setup
 source .bash_profile # Imitate global env
+_sherpa_trust_dir "project_1"
+_sherpa_trust_dir "project_2"
 
 
 # When Sherpa is enabled and we go to a project with a local env file
 cd project_1
-sherpa trust
 # Vigilant Sherpa loads the local env
 is "$var_1" "LOCAL VAR PROJECT 1" "Local env is loaded (var)"
 is "$(alias_1)" "LOCAL ALIAS PROJECT 1" "Local env is loaded (alias)"
@@ -22,7 +23,6 @@ is "$(function_1)" "GLOBAL FUNCTION" "Local env is unloaded (function)"
 
 # When we go to another project with a local env file while Sherpa is sleeping
 cd ../project_2
-sherpa trust
 # Sleeping Sherpa doesn't load any env
 is "$var_1" "GLOBAL VAR" "Local env is NOT loaded (var)"
 is "$(alias_1)" "GLOBAL ALIAS" "Local env is NOT loaded (alias)"
