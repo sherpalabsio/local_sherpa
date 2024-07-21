@@ -317,6 +317,10 @@ $ make test_all_in_ubuntu
 
 # Run a single test for all the supported shells in Ubuntu
 $ make test_all_in_ubuntu tests/features/edit_test.sh
+
+# Test the performance for all the supported shells
+# It is not a real test, it is more like a benchmark
+$ make test_performance
 ```
 
 ### Linting

@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# This tests the performance of cd'ing into a trusted directory with a larger
+# .envrc file.
+# The result categorisation is based on what I measured on my machine. It's
+# slower in a Docker container.
+
+set -e
+
+if [ -z "$RUNNING_IN_CONTAINER" ]; then
+  _run_with_empty_env="env -i PATH=$PATH TARGET_SHELL_NAME=$TARGET_SHELL_NAME "
+fi
+
+
+echo "=============================== Bash ==============================="
+
+# shellcheck disable=SC2086
+ellapsed_time="$(${_run_with_empty_env}bash --noprofile --norc -i tests/performance.sh)"
+if [ "$ellapsed_time" -lt 1400 ]; then
+  echo "${ellapsed_time}ms - Unexpectedly fast"
+elif [ "$ellapsed_time" -lt 1700 ]; then
+  echo "${ellapsed_time}ms - ok"
+else
+  echo "${ellapsed_time}ms - BAD"
+fi
+
+echo "=============================== Zsh ================================"
+
+# shellcheck disable=SC2086
+ellapsed_time="$(${_run_with_empty_env}zsh --no-globalrcs --no-rcs -i tests/performance.sh)"
+if [ "$ellapsed_time" -lt 1000 ]; then
+  echo "${ellapsed_time}ms - Unexpectedly fast"
+elif [ "$ellapsed_time" -lt 1300 ]; then
+  echo "${ellapsed_time}ms - ok"
+else
+  echo "${ellapsed_time}ms - BAD"
+fi
