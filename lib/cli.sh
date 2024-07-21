@@ -8,6 +8,7 @@ sherpa() {
   sherpa off            - Turn Sherpa off               | aliases: sleep/disable
   sherpa on             - Turn Sherpa on                | aliases: work/enable
   sherpa symlink [PATH] - Symlink a local env file      | aliases: link/slink
+  sherpa reload         - Reload the local env          | aliases: r
 
 Troubleshooting:
   sherpa status   - Show debug status info | aliases: s/stat
@@ -37,6 +38,7 @@ Log levels:
       s|stat|status) _sherpa_print_status;;
            diagnose) _sherpa_cli_diagnose;;
  symlink|link|slink) _sherpa_cli_symlink "$2";;
+           r|reload) _sherpa_cli_reload;;
                   *) echo "Sherpa doesn't understand what you mean";;
   esac
 }
@@ -124,4 +126,8 @@ _sherpa_cli_symlink() {
 
   _sherpa_cli_trust > /dev/null &&
     _sherpa_log_info "Symlink is created. Local env is loaded."
+}
+
+_sherpa_cli_reload() {
+  _sherpa_unload_env_of_current_dir && _sherpa_load_env_from_current_dir
 }
