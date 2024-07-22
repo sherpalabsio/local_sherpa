@@ -50,6 +50,8 @@ esac
 
 echo "=============================== Shell: $TARGET_SHELL_LABEL =============================="
 STDERR_FILE=$(mktemp)
+trap 'rm $STDERR_FILE' EXIT
+
 ALL_TESTS_PASSED=true
 
 run_single_test() {
@@ -90,8 +92,6 @@ print_stderr() {
 if [[ "$ALL_TESTS_PASSED" == true && -s "$STDERR_FILE" ]]; then
   echo -e "\033[31mAll tests passed, but some errors occurred!\033[0m"
   print_stderr
-  rm "$STDERR_FILE"
-
   exit 1
 fi
 
@@ -99,8 +99,6 @@ fi
 if [[ "$ALL_TESTS_PASSED" != true ]]; then
   echo -e "\033[31mFailed examples:\033[0m"
   print_stderr
-  rm "$STDERR_FILE"
-
   exit 1
 fi
 

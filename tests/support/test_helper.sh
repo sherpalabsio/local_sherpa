@@ -5,6 +5,7 @@ export SHERPA_DIR=$(pwd)
 # shellcheck disable=SC2155
 readonly TEST_DIR=$(mktemp -d)
 export TEST_DIR
+export TMP_FILES_OR_DIRS_TO_REMOVE=()
 
 source tests/support/assertions.sh
 
@@ -17,6 +18,8 @@ _init_teardown() {
   type sherpa &> /dev/null && sherpa off > /dev/null
 
   cd /
+
+  rm -rf "${TMP_FILES_OR_DIRS_TO_REMOVE[@]}"
 
   rm -r "$TEST_DIR"
   rm -f "$TMP_TEST_FILE"
@@ -36,4 +39,10 @@ override_env_file() {
   else
     cat > "$SHERPA_ENV_FILENAME"
   fi
+}
+
+cleanup_file_or_dir_at_teardown() {
+  local -r item_to_remove="$1"
+
+  TMP_FILES_OR_DIRS_TO_REMOVE=("${TMP_FILES_OR_DIRS_TO_REMOVE[@]}" "$item_to_remove")
 }

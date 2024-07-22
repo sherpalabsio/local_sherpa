@@ -56,6 +56,8 @@ fi
 # It warns when the local env file is not readable
 
 STDERR_FILE=$(mktemp)
+cleanup_file_or_dir_at_teardown "$STDERR_FILE"
+
 mkdir -p ../tmp
 
 touch "../tmp/$SHERPA_ENV_FILENAME"
@@ -66,8 +68,6 @@ cd ../tmp 2> "$STDERR_FILE"
 
 expected_warning_message="The local env file is not readable."
 like "$(cat "$STDERR_FILE")" "$expected_warning_message" "It warns when the local env file is not readable"
-
-rm -rf "$STDERR_FILE"
 
 
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰

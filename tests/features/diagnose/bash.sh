@@ -26,11 +26,14 @@ source tests/support/app_helper.sh
 # Sherpa runs the diagnostics with a shell script that would load the
 # ~/.bashrc file.
 BASHRC=$(mktemp)
+cleanup_file_or_dir_at_teardown "$BASHRC"
 echo "source $SHERPA_LIB_DIR/init.sh" > "$BASHRC"
 BASHRC_FILE="$BASHRC"
 
 STDOUT_FILE=$(mktemp)
+cleanup_file_or_dir_at_teardown "$STDOUT_FILE"
 STDERR_FILE=$(mktemp)
+cleanup_file_or_dir_at_teardown "$STDERR_FILE"
 
 subject() {
   sherpa diagnose 1> "$STDOUT_FILE" 2> "$STDERR_FILE"
@@ -145,11 +148,3 @@ reset_stubs
 subject
 
 like "$(cat "$STDOUT_FILE")" "\[OK\] Loading the local environment" "It acknowledges when loading the local env succeeds"
-
-
-# ==============================================================================
-# ++++ Tear down
-# Todo move this to a hook
-rm "$STDOUT_FILE"
-rm "$STDERR_FILE"
-rm "$BASHRC"

@@ -14,6 +14,7 @@ source tests/support/app_helper.sh
 
 # ++ Stubbing
 ZSHRC_DIR=$(mktemp -d)
+cleanup_file_or_dir_at_teardown "$ZSHRC_DIR"
 export ZDOTDIR="$ZSHRC_DIR"
 ZSHRC="$ZDOTDIR/.zshrc"
 
@@ -21,7 +22,9 @@ echo "source $SHERPA_LIB_DIR/init.sh" > "$ZSHRC"
 
 # ++ Reading from stdout and stderr
 STDOUT_FILE=$(mktemp)
+cleanup_file_or_dir_at_teardown "$STDOUT_FILE"
 STDERR_FILE=$(mktemp)
+cleanup_file_or_dir_at_teardown "$STDERR_FILE"
 
 subject() {
   sherpa diagnose 1> "$STDOUT_FILE" 2> "$STDERR_FILE"
