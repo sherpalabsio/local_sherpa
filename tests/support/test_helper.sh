@@ -10,8 +10,6 @@ readonly TESTS_DIR=$(cd .. && pwd)
 
 # shellcheck disable=SC2155
 export TMP_TEST_DIR=$(mktemp -d)
-# shellcheck disable=SC2155
-export TMP_TEST_FILE=$(mktemp)
 
 trap _init_teardown EXIT
 _init_teardown() {
@@ -24,11 +22,22 @@ _init_teardown() {
   # Remove untracked files and directories
   git clean -df "$TESTS_DIR/playground" > /dev/null
 
-  rm -rf "$TMP_TEST_DIR"
+  rm -r "$TMP_TEST_DIR"
   rm -f "$TMP_TEST_FILE"
 }
 
-stub_local_env_file() {
+
+stub_env_file() {
+  # shellcheck disable=SC2155
+  readonly TMP_TEST_FILE=$(mktemp)
+  export TMP_TEST_FILE
   export SHERPA_ENV_FILENAME="$TMP_TEST_FILE"
-  echo "$1" > "$SHERPA_ENV_FILENAME"
+}
+
+override_env_file() {
+  if [ -n "$1" ]; then
+    echo "$1" > "$SHERPA_ENV_FILENAME"
+  else
+    cat > "$SHERPA_ENV_FILENAME"
+  fi
 }
