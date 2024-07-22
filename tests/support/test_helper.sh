@@ -1,37 +1,33 @@
 # Init the test related tools
 
+# shellcheck disable=SC2155
+export SHERPA_DIR=$(pwd)
+# shellcheck disable=SC2155
+readonly TEST_DIR=$(mktemp -d)
+export TEST_DIR
+
 source tests/support/assertions.sh
-[[ -z $SHERPA_LOG_LEVEL_SILENT ]] && source lib/logger.sh
 
-cd tests/playground
+cp -r "tests/playground" "$TEST_DIR"
+cd "$TEST_DIR/playground"
 
-# shellcheck disable=SC2155
-readonly TESTS_DIR=$(cd .. && pwd)
-
-# shellcheck disable=SC2155
-export TMP_TEST_DIR=$(mktemp -d)
-
+# == Clean up the test directory ==
 trap _init_teardown EXIT
 _init_teardown() {
-  SHERPA_LOG_LEVEL="${SHERPA_LOG_LEVEL_SILENT}"
+  type sherpa &> /dev/null && sherpa off > /dev/null
 
-  cd "$TESTS_DIR"
-  # Clean up the tests/playground directory
-  # Rollback changes to tracked files
-  git checkout -- "$TESTS_DIR/playground" > /dev/null
-  # Remove untracked files and directories
-  git clean -df "$TESTS_DIR/playground" > /dev/null
+  cd /
 
-  rm -r "$TMP_TEST_DIR"
+  rm -r "$TEST_DIR"
   rm -f "$TMP_TEST_FILE"
 }
 
-
+# == Utilities ==
 stub_env_file() {
   # shellcheck disable=SC2155
-  readonly TMP_TEST_FILE=$(mktemp)
-  export TMP_TEST_FILE
+  export TMP_TEST_FILE=$(mktemp)
   export SHERPA_ENV_FILENAME="$TMP_TEST_FILE"
+  readonly TMP_TEST_FILE
 }
 
 override_env_file() {
