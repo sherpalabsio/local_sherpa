@@ -11,21 +11,29 @@ _sherpa_unload_envs_of_exited_dirs() {
   local loaded_paths=()
 
   for loaded_path in "${SHERPA_LOADED_ENV_DIRS[@]}"; do
-    # Select directories that are not in the current path (the ones we exited)
-    # PWD: /projects/dir1/subdir1
-    #      /projects/dir1 -> Skip
-    #      /projects/dir1/subdir1 -> Skip
-    #      /projects/dir1/subdir1/subdir2 -> Unload
-    if [[ $(pwd) != "$loaded_path"* ]]; then
+    # Keep current and parent directories
+    if _sherpa__is_current_or_parent_dir "$loaded_path"; then
+      loaded_paths+=("$loaded_path")
+    else
       _sherpa_log_debug "Unload env: $loaded_path"
       varstash_dir="$loaded_path"
       varstash::autounstash
-    else
-      loaded_paths+=("$loaded_path")
     fi
   done
 
   SHERPA_LOADED_ENV_DIRS=("${loaded_paths[@]}")
+}
+
+_sherpa__is_current_or_parent_dir() {
+  local -r current_dir=$(pwd)
+  local -r parent_dir="$1"
+
+  # Does the current path start with the parent path?
+  if [[ "$current_dir" == "$parent_dir"* ]]; then
+    return 0
+  else
+    return 1
+  fi
 }
 
 _sherpa_unload_all_envs() {

@@ -44,5 +44,5 @@ override_env_file() {
 cleanup_file_or_dir_at_teardown() {
   local -r item_to_remove="$1"
 
-  TMP_FILES_OR_DIRS_TO_REMOVE=("${TMP_FILES_OR_DIRS_TO_REMOVE[@]}" "$item_to_remove")
+  TMP_FILES_OR_DIRS_TO_REMOVE+=("$item_to_remove")
 }
