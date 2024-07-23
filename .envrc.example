@@ -1,0 +1,13 @@
+alias t="make test_zsh" # Test Zsh
+
+alias tz="make test_zsh" # Test Zsh
+alias tb="make test_bash" # Test Bash
+
+alias ta="make test" # Test all
+alias taa="make test && make test_all_in_ubuntu" # Test absolutely all
+
+alias tu="make test_all_in_ubuntu" # Test all in Ubuntu
+alias tp="make test_performance" # Test performance
+
+alias de="docker exec -it local-sherpa-test-ubuntu-container" # Docker exec
+alias up='docker-compose -p local_sherpa up -d' # Start the test container
