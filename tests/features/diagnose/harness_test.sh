@@ -5,7 +5,6 @@ set -e
 
 case $TARGET_SHELL_NAME in
   bash)
-    TARGET_SHELL_NAME="Bash"
     # We run the tests in interactive mode to be able to test aliases
     bash --noprofile --norc -i ./tests/features/diagnose/bash.sh;;
   zsh)

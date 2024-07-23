@@ -1,3 +1,5 @@
+source tests/support/app_helper.sh
+
 stub() {
   local stub_definition=$1=$2
 
@@ -21,7 +23,6 @@ reset_stubs() {
 
 # ==============================================================================
 # ++++ Setup
-source tests/support/app_helper.sh
 
 # Sherpa runs the diagnostics with a shell script that would load the
 # ~/.bashrc file.
