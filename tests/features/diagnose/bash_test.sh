@@ -1,3 +1,6 @@
+# Skip if not Bash
+[ -z "$BASH_VERSION" ] && echo "Skip: Not Bash"; exit 0
+
 source tests/support/app_helper.sh
 
 stub() {
