@@ -50,32 +50,43 @@ esac
 
 echo "=============================== Shell: $TARGET_SHELL_LABEL =============================="
 STDERR_FILE=$(mktemp)
-trap 'rm $STDERR_FILE' EXIT
+TMP_STDERR_FILE=$(mktemp)
+trap 'rm $STDERR_FILE ; rm $TMP_STDERR_FILE' EXIT
 
 ALL_TESTS_PASSED=true
 
 run_single_test() {
+  local -r test_file="$1"
+  local current_test_passed=true
 
   echo "== Running $test_file"
-  $SHELL_COMMAND "$test_file" 2>> "$STDERR_FILE" || ALL_TESTS_PASSED=false
+  echo "" > $TMP_STDERR_FILE
+
+  $SHELL_COMMAND "$test_file" 2> "$TMP_STDERR_FILE" || current_test_passed=false
+  $current_test_passed || ALL_TESTS_PASSED=false
+
+  if $current_test_passed && [ -s "$TMP_STDERR_FILE" ]; then
+    echo "== Error while running: $test_file" >> "$STDERR_FILE"
+  fi
+
+  cat "$TMP_STDERR_FILE" >> "$STDERR_FILE"
+
   echo ""
 }
 
 run_all_tests() {
-  local _test_files=(tests/**/*_test.sh)
+  local -r test_files=(tests/**/*_test.sh)
+  local file
 
-  for file in "${_test_files[@]}" ; do
-    echo "== Running $file"
-    $SHELL_COMMAND "$file" 2>> "$STDERR_FILE" || ALL_TESTS_PASSED=false
-
-    echo ""
+  for file in "${test_files[@]}" ; do
+    run_single_test "$file"
   done
 }
 
 
 test_file=$2
 if [ -n "$test_file" ]; then
-  run_single_test
+  run_single_test "$test_file"
 else
   run_all_tests
 fi
