@@ -5,8 +5,8 @@ TIMEFORMAT='%R'
 source tests/support/app_helper.sh
 _sherpa_trust_dir "performance"
 
-format_time_time_result() {
-  local -l time_result=$1
+format_time_result() {
+  local -r time_result="$1"
 
   if [ -n "$ZSH_VERSION" ]; then
     # Zsh
@@ -18,4 +18,4 @@ format_time_time_result() {
 }
 
 time_result=$( { time (cd performance); } 2>&1 )
-format_time_time_result "$time_result"
+format_time_result "$time_result"
