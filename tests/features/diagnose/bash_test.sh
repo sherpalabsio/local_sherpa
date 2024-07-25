@@ -1,3 +1,5 @@
+# shellcheck disable=SC2317
+
 # Skip if not Bash
 [ -z "$BASH_VERSION" ] && echo "Skip: Not Bash"; exit 0
 

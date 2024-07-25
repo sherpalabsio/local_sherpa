@@ -92,7 +92,8 @@ _sherpa_stash_local_env() {
   # shellcheck disable=SC2034
   varstash_dir="$PWD"
 
+  # shellcheck disable=SC2207
   local -r env_item_names=($(_sherpa_parse_local_env_file))
-  _sherpa_log_debug "AutoStashing: ${env_item_names[@]}"
+  _sherpa_log_debug "AutoStashing: ${env_item_names[*]}"
   varstash::autostash "${env_item_names[@]}"
 }

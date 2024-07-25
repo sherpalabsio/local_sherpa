@@ -60,7 +60,7 @@ run_single_test() {
   local current_test_passed=true
 
   echo "== Running $target_file"
-  echo "" > $TMP_STDERR_FILE
+  echo "" > "$TMP_STDERR_FILE"
 
   $SHELL_COMMAND "$target_file" 2> "$TMP_STDERR_FILE" || current_test_passed=false
   $current_test_passed || ALL_TESTS_PASSED=false
@@ -76,7 +76,7 @@ run_single_test() {
 
 run_all_tests() {
   local -r target_dir="${1:-tests}"
-  local -r test_files=(${target_dir}/**/*_test.sh)
+  local -r test_files=("$target_dir"/**/*_test.sh)
   local file
 
   for file in "${test_files[@]}" ; do
