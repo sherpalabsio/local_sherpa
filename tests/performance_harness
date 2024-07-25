@@ -14,25 +14,25 @@ if [ -z "$RUNNING_IN_CONTAINER" ]; then
 fi
 
 
-echo "=============================== Bash (950-1100) ==============================="
+echo "=============================== Bash (470-570) ==============================="
 
 # shellcheck disable=SC2086
 ellapsed_time="$(${_run_with_empty_env}bash --noprofile --norc -i tests/performance.sh)"
-if [ "$ellapsed_time" -lt 950 ]; then
+if [ "$ellapsed_time" -lt 470 ]; then
   _echo_in_magenta "${ellapsed_time}ms - Unexpectedly fast"
-elif [ "$ellapsed_time" -lt 1100 ]; then
+elif [ "$ellapsed_time" -lt 570 ]; then
   _echo_in_green "${ellapsed_time}ms - ok"
 else
   _echo_in_yellow "${ellapsed_time}ms - BAD"
 fi
 
-echo "=============================== Zsh (750-850) ================================"
+echo "=============================== Zsh (370-470) ================================"
 
 # shellcheck disable=SC2086
 ellapsed_time="$(${_run_with_empty_env}zsh --no-globalrcs --no-rcs -i tests/performance.sh)"
-if [ "$ellapsed_time" -lt 750 ]; then
+if [ "$ellapsed_time" -lt 370 ]; then
   _echo_in_magenta "${ellapsed_time}ms - Unexpectedly fast"
-elif [ "$ellapsed_time" -lt 850 ]; then
+elif [ "$ellapsed_time" -lt 470 ]; then
   _echo_in_green "${ellapsed_time}ms - ok"
 else
   _echo_in_yellow "${ellapsed_time}ms - BAD"

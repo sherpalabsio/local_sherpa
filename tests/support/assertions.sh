@@ -37,6 +37,18 @@ is(){
   fi
 }
 
+# Exact match buth without tabs, spaces and new lines
+is_compact(){
+  local -r actual="$1"
+  local -r expected="$2"
+  local -r message="$3"
+
+  local -r actual_trimmed=$(echo "$actual" | tr -d '[:space:]')
+  local -r expected_trimmed=$(echo "$expected" | tr -d '[:space:]')
+
+  is "$actual_trimmed" "$expected_trimmed" "$message"
+}
+
 # Add extra space to the left of each line after the first one
 add_left_padding_to_multi_line_string(){
   local multi_line_var="$1"
@@ -118,9 +130,9 @@ _is_defined() {
 _failed_assertion_path_with_line_number(){
   if [ -n "$ZSH_VERSION" ]; then
     # shellcheck disable=SC2154
-    echo "${funcfiletrace[2]}"
+    echo "${funcfiletrace[-1]}"
   else
-    echo "${BASH_SOURCE[2]}:${BASH_LINENO[1]}"
+    echo "${BASH_SOURCE[-1]}:${BASH_LINENO[-2]}"
   fi
 }
 

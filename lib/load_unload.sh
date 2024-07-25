@@ -19,6 +19,7 @@ _sherpa_unload_envs_of_exited_dirs() {
       varstash_dir="$loaded_path"
       varstash::autounstash
       sherpa::env_stash.unstash_aliases "$varstash_dir"
+      sherpa::env_stash.unstash_functions "$varstash_dir"
     fi
   done
 
@@ -43,6 +44,7 @@ _sherpa_unload_all_envs() {
     varstash_dir="$loaded_path"
     varstash::autounstash
     sherpa::env_stash.unstash_aliases "$varstash_dir"
+    sherpa::env_stash.unstash_functions "$varstash_dir"
   done
 
   SHERPA_LOADED_ENV_DIRS=()
@@ -52,6 +54,7 @@ _sherpa_unload_env_of_current_dir() {
   varstash_dir="$PWD"
   varstash::autounstash
   sherpa::env_stash.unstash_aliases "$varstash_dir"
+  sherpa::env_stash.unstash_functions "$varstash_dir"
   smartcd::ashift SHERPA_LOADED_ENV_DIRS > /dev/null
 }
 
@@ -108,5 +111,5 @@ _sherpa_stash_local_env() {
   # shellcheck disable=SC2207
   local function_names=($(_sherpa_fetch_function_names_from_env_file))
   _sherpa_log_debug "AutoStashing functions: ${function_names[*]}"
-  varstash::autostash "${function_names[@]}"
+  sherpa::env_stash.stash_functions "$varstash_dir" "${function_names[@]}"
 }
