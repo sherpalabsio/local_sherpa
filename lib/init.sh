@@ -25,6 +25,8 @@ source "$SHERPA_DIR/vendor/smartcd/varstash.sh"
 
 # Load the app
 source "$SHERPA_LIB_DIR/trust_verification.sh"
+source "$SHERPA_LIB_DIR/env_stash/utils.sh"
+source "$SHERPA_LIB_DIR/env_stash/aliases.sh"
 source "$SHERPA_LIB_DIR/local_env_file_parser.sh"
 source "$SHERPA_LIB_DIR/setup_cd_hook.sh"
 source "$SHERPA_LIB_DIR/status.sh"
