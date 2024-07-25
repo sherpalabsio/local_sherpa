@@ -300,17 +300,26 @@ $ make test
 # Run a single test for all the supported shells
 $ make test tests/features/edit_test.sh
 
+# Run all the tests from a folder for all the supported shells
+$ make test tests/features
+
 # Run all the tests for Zsh
 $ make test_zs
 
 # Run a single test for Zsh
 $ make test_zs tests/features/edit_test.sh
 
+# Run all the tests from a folder for Zsh
+$ make test_zs tests/features
+
 # Run all the tests for Bash
 $ make test_bash
 
 # Run a single test for Bash
 $ make test_bash tests/features/edit_test.sh
+
+# Run all the tests from a folder for Bash
+$ make test_bash tests/features
 
 # Run all the tests for all the supported shells in Ubuntu
 $ make test_all_in_ubuntu

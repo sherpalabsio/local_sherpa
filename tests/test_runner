@@ -56,17 +56,17 @@ trap 'rm $STDERR_FILE ; rm $TMP_STDERR_FILE' EXIT
 ALL_TESTS_PASSED=true
 
 run_single_test() {
-  local -r test_file="$1"
+  local -r target_file="$1"
   local current_test_passed=true
 
-  echo "== Running $test_file"
+  echo "== Running $target_file"
   echo "" > $TMP_STDERR_FILE
 
-  $SHELL_COMMAND "$test_file" 2> "$TMP_STDERR_FILE" || current_test_passed=false
+  $SHELL_COMMAND "$target_file" 2> "$TMP_STDERR_FILE" || current_test_passed=false
   $current_test_passed || ALL_TESTS_PASSED=false
 
   if $current_test_passed && [ -s "$TMP_STDERR_FILE" ]; then
-    echo "== Error while running: $test_file" >> "$STDERR_FILE"
+    echo "== Error while running: $target_file" >> "$STDERR_FILE"
   fi
 
   cat "$TMP_STDERR_FILE" >> "$STDERR_FILE"
@@ -75,7 +75,8 @@ run_single_test() {
 }
 
 run_all_tests() {
-  local -r test_files=(tests/**/*_test.sh)
+  local -r target_dir="${1:-tests}"
+  local -r test_files=(${target_dir}/**/*_test.sh)
   local file
 
   for file in "${test_files[@]}" ; do
@@ -84,9 +85,13 @@ run_all_tests() {
 }
 
 
-test_file=$2
-if [ -n "$test_file" ]; then
-  run_single_test "$test_file"
+target_file_or_dir=$2
+if [ -n "$target_file_or_dir" ]; then
+  if [ -f "$target_file_or_dir" ]; then
+    run_single_test "$target_file_or_dir"
+  else
+    run_all_tests "${target_file_or_dir%/}"
+  fi
 else
   run_all_tests
 fi
