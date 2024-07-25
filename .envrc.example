@@ -11,3 +11,5 @@ alias tp="make test_performance" # Test performance
 
 alias de="docker exec -it local-sherpa-test-ubuntu-container" # Docker exec
 alias up='docker-compose -p local_sherpa up -d' # Start the test container
+
+alias lint="make lint" # Shellcheck
