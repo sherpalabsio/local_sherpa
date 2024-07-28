@@ -7,39 +7,49 @@ sherpa::env_stash.stash_aliases() {
   shift
   local -r alias_names=("$@")
 
-  local variable_name_for_aliases_to_remove variable_name_for_aliases_to_restore
-  variable_name_for_aliases_to_remove=$(sherpa::env_stash._item_to_variable_name "aliases_to_remove" "$dir_path")
+  local variable_name_for_aliases_to_restore variable_name_for_aliases_to_remove
   variable_name_for_aliases_to_restore=$(sherpa::env_stash._item_to_variable_name "aliases_to_restore" "$dir_path")
+  variable_name_for_aliases_to_remove=$(sherpa::env_stash._item_to_variable_name "aliases_to_remove" "$dir_path")
 
-  local alias_name alias_definition alias_definition_long
+  local alias_name
 
   for alias_name in "${alias_names[@]}"; do
-    # Stash non existing alias
-    if ! alias "$alias_name" &> /dev/null; then
-      eval "$variable_name_for_aliases_to_remove+=(\"$alias_name\")"
-      continue
-    fi
-
-    # Stash existing alias
-    if [ -n "$ZSH_VERSION" ]; then
-      alias_definition=$(alias "$alias_name")
+    if alias "$alias_name" &> /dev/null; then
+      sherpa::env_stash._stash_existing_alias "$alias_name" "$variable_name_for_aliases_to_restore"
     else
-      alias_definition_long=$(alias "$alias_name")
-      alias_definition="${alias_definition_long#alias }" # Remove "alias " prefix
+      sherpa::env_stash._stash_non_existing_alias "$alias_name" "$variable_name_for_aliases_to_remove"
     fi
-
-    # Escape special characters to avoid interpretation at stash time
-    alias_definition="${alias_definition//\\/\\\\}"
-    alias_definition="${alias_definition//\"/\\\"}"
-    alias_definition="${alias_definition//\`/\\\`}"
-    alias_definition="${alias_definition//\$/\\\$}"
-
-    eval "$variable_name_for_aliases_to_restore+=(\"$alias_definition\")"
   done
 }
 
+sherpa::env_stash._stash_existing_alias() {
+  local -r alias_name="$1"
+  local -r variable_name_for_aliases_to_restore="$2"
+  local alias_definition
+  alias_definition=$(alias "$alias_name")
+
+  if [ -n "$BASH_VERSION" ]; then
+    alias_definition="${alias_definition#alias }" # Remove "alias " prefix
+  fi
+
+  # Escape special characters to avoid interpretation at stash time
+  alias_definition="${alias_definition//\\/\\\\}"
+  alias_definition="${alias_definition//\"/\\\"}"
+  alias_definition="${alias_definition//\`/\\\`}"
+  alias_definition="${alias_definition//\$/\\\$}"
+
+  eval "$variable_name_for_aliases_to_restore+=(\"$alias_definition\")"
+}
+
+sherpa::env_stash._stash_non_existing_alias() {
+  local -r alias_name="$1"
+  local -r variable_name_for_aliases_to_remove="$2"
+
+  eval "$variable_name_for_aliases_to_remove+=(\"$alias_name\")"
+}
+
 sherpa::env_stash.unstash_aliases() {
-  local -r dir_path=${1:-$PWD}
+  local -r dir_path="$1"
 
   sherpa::env_stash._restore_aliases "$dir_path"
   sherpa::env_stash._remove_aliases "$dir_path"
