@@ -48,10 +48,15 @@ sherpa::env_stash.unstash_aliases() {
 sherpa::env_stash._restore_aliases() {
   local -r dir_path="$1"
   local -r variable_name_for_aliases_to_restore=$(sherpa::env_stash._item_to_variable_name "aliases_to_restore" "$dir_path")
-  local alias_definition alias_definitions
-  eval "alias_definitions=\${${variable_name_for_aliases_to_restore}[@]}"
+  local alias_definition
 
-  [ ${#alias_definitions[@]} -eq 0 ] && return
+  if [ -n "$ZSH_VERSION" ]; then
+    # shellcheck disable=SC2206,SC2296
+    local -r alias_definitions=(${(P)variable_name_for_aliases_to_restore})
+  else
+    # shellcheck disable=SC2178
+    local -rn alias_definitions="$variable_name_for_aliases_to_restore"
+  fi
 
   for alias_definition in "${alias_definitions[@]}"; do
     eval "alias $alias_definition"
@@ -64,10 +69,20 @@ sherpa::env_stash._restore_aliases() {
 sherpa::env_stash._remove_aliases() {
   local -r dir_path="$1"
   local -r variable_name_for_aliases_to_remove=$(sherpa::env_stash._item_to_variable_name "aliases_to_remove" "$dir_path")
-  local alias_name alias_names
-  eval "alias_names=(\${${variable_name_for_aliases_to_remove}[@]})"
+  local alias_name
+
+  if [ -n "$ZSH_VERSION" ]; then
+    # shellcheck disable=SC2206,SC2296
+    local -r alias_names=(${(P)variable_name_for_aliases_to_remove})
+  else
+    # shellcheck disable=SC2178
+    local -rn alias_names="$variable_name_for_aliases_to_remove"
+  fi
 
   for alias_name in "${alias_names[@]}"; do
+    # '2> /dev/null' is used to avoid error messages when an alias does not exist.
+    # It happens when an alias is double stashed. There is no protection
+    # implemented for this case.
     unalias "$alias_name" 2> /dev/null
   done
 
