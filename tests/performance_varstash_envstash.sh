@@ -7,6 +7,7 @@ source tests/support/app_helper.sh
 varstash_dir="$SHERPA_DIR/tests/playground/performance"
 cd "$SHERPA_DIR/tests/playground/performance"
 
+# shellcheck disable=SC1091
 source .envrc
 
 # shellcheck disable=SC2207
