@@ -65,7 +65,7 @@ sherpa::env_stash._remove_aliases() {
   local -r dir_path="$1"
   local -r variable_name_for_aliases_to_remove=$(sherpa::env_stash._item_to_variable_name "aliases_to_remove" "$dir_path")
   local alias_name alias_names
-  eval "alias_names=\${${variable_name_for_aliases_to_remove}[@]}"
+  eval "alias_names=(\${${variable_name_for_aliases_to_remove}[@]})"
 
   for alias_name in "${alias_names[@]}"; do
     unalias "$alias_name" 2> /dev/null
