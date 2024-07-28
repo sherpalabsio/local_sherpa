@@ -11,11 +11,11 @@ dir_path="/parent/child"
 # ==============================================================================
 # ++++ It stores the definition of existing aliases in the right list
 
-alias existing_alias1="alias_content 1"
-alias existing_alias2="alias_content 2"
+alias existing_alias1="alias1 content"
+alias existing_alias2="alias2 content"
 
-expected_existing_alias_definition1="existing_alias1='alias_content 1'"
-expected_existing_alias_definition2="existing_alias2='alias_content 2'"
+expected_existing_alias_definition1="existing_alias1='alias1 content'"
+expected_existing_alias_definition2="existing_alias2='alias2 content'"
 
 sherpa::env_stash.stash_aliases "$dir_path" "existing_alias1" "existing_alias2"
 
@@ -62,7 +62,7 @@ is "$actual_alias_definition2" "$expected_alias_definition2"
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 
 # ==============================================================================
-# ++++ It removes the tmp stash data variables
+# ++++ It removes the variables that we use to store the tmp stash data
 
 alias existing_alias="_"
 
