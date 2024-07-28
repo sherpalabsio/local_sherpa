@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "tests/support/utils.sh"
+
 # This tests the performance of cd'ing into a trusted directory with a larger
 # .envrc file.
 # The result categorisation is based on what I measured on my machine. It's
@@ -12,26 +14,26 @@ if [ -z "$RUNNING_IN_CONTAINER" ]; then
 fi
 
 
-echo "=============================== Bash ==============================="
+echo "=============================== Bash (950-1100) ==============================="
 
 # shellcheck disable=SC2086
 ellapsed_time="$(${_run_with_empty_env}bash --noprofile --norc -i tests/performance.sh)"
-if [ "$ellapsed_time" -lt 1400 ]; then
-  echo "${ellapsed_time}ms - Unexpectedly fast"
-elif [ "$ellapsed_time" -lt 1700 ]; then
-  echo "${ellapsed_time}ms - ok"
+if [ "$ellapsed_time" -lt 950 ]; then
+  _echo_in_magenta "${ellapsed_time}ms - Unexpectedly fast"
+elif [ "$ellapsed_time" -lt 1100 ]; then
+  _echo_in_green "${ellapsed_time}ms - ok"
 else
-  echo "${ellapsed_time}ms - BAD"
+  _echo_in_yellow "${ellapsed_time}ms - BAD"
 fi
 
-echo "=============================== Zsh ================================"
+echo "=============================== Zsh (750-850) ================================"
 
 # shellcheck disable=SC2086
 ellapsed_time="$(${_run_with_empty_env}zsh --no-globalrcs --no-rcs -i tests/performance.sh)"
-if [ "$ellapsed_time" -lt 1000 ]; then
-  echo "${ellapsed_time}ms - Unexpectedly fast"
-elif [ "$ellapsed_time" -lt 1300 ]; then
-  echo "${ellapsed_time}ms - ok"
+if [ "$ellapsed_time" -lt 750 ]; then
+  _echo_in_magenta "${ellapsed_time}ms - Unexpectedly fast"
+elif [ "$ellapsed_time" -lt 850 ]; then
+  _echo_in_green "${ellapsed_time}ms - ok"
 else
-  echo "${ellapsed_time}ms - BAD"
+  _echo_in_yellow "${ellapsed_time}ms - BAD"
 fi

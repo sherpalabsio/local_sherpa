@@ -132,7 +132,3 @@ _print_ok(){
   [ -n "$message" ] && printf " - %s" "$message"
   printf "\n"
 }
-
-_print_in_red(){
-  printf "\033[31m%s\033[0m" "$1"
-}

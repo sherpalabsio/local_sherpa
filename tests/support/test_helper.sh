@@ -7,6 +7,7 @@ readonly TEST_DIR=$(mktemp -d)
 export TEST_DIR
 export TMP_FILES_OR_DIRS_TO_REMOVE=()
 
+source "tests/support/utils.sh"
 source tests/support/assertions.sh
 
 cp -r "tests/playground" "$TEST_DIR"

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "tests/support/utils.sh"
+
 # This script runs all the *_test.sh files recursively from the tests directory
 # for the specified shell. It supports running a specific test file or all the
 # test files.
@@ -106,16 +108,16 @@ print_stderr() {
 # Can't set `set -e` everywhere because it would fail the test for soft errors
 # like `grep` not finding a pattern
 if [[ "$ALL_TESTS_PASSED" == true && -s "$STDERR_FILE" ]]; then
-  echo -e "\033[31mAll tests passed, but some errors occurred!\033[0m"
+  _echo_in_red "All tests passed, but some errors occurred!"
   print_stderr
   exit 1
 fi
 
 # Fail the test if there are failed tests
 if [[ "$ALL_TESTS_PASSED" != true ]]; then
-  echo -e "\033[31mFailed examples:\033[0m"
+  _echo_in_red "Failed examples:"
   print_stderr
   exit 1
 fi
 
-echo -e "\033[32mAll tests passed successfully!\033[0m"
+_echo_in_green "All tests passed successfully!"
