@@ -122,6 +122,29 @@ is_undefined "new_indexed_array2" "The new indexed array2 is removed"
 
 
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+#                     Stashing and unstashing indexed arrays
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+
+declare -a existing_indexed_array1=("existing_indexed_array1 original content")
+
+sherpa::env_stash.stash_variables "$PWD" "existing_indexed_array1"
+
+# shellcheck disable=SC2178
+existing_indexed_array1="Not an indexed array"
+
+# ==============================================================================
+# ++++ Senety check
+# shellcheck disable=SC2128
+is "$existing_indexed_array1" "Not an indexed array" "The existed indexed array1 changed"
+
+sherpa::env_stash.unstash_variables "$PWD"
+
+# ==============================================================================
+# ++++ It restores the type of the overwritten variables
+is "${existing_indexed_array1[@]}" "existing_indexed_array1 original content" "The existed indexed array1 is restored"
+
+
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 #                   Stashing and unstashing associative arrays
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 
