@@ -1,16 +1,34 @@
-# Usage: source tests/support/assertions.sh
+# This file contains the assertion functions for the test suite.
 #
-# - Exact match:
-#   is "$string_1" "$string_2" "explain the assertion"
-#   $string_1 and $string_2 are exactly the same
-#
-# - Partial match:
-#   like "$string_1" "$string_2" "explain the assertion"
-#   $string_1 includes $string_2
-#
-# - Undefined check:
-#   is_undefined "thing" "explain the assertion"
-#   thing can be a variable, a function or an alias
+# == Usage:
+
+# is():
+#   - Compares two values
+#   - Parameters:
+#       - actual: The actual value to compare.
+#       - expected: The expected value to compare against.
+#       - message: An optional message to display along with the result.
+#   - Example usage: is "$actual" "$expected" "Values should be equal"
+
+# is_compact():
+#   - The same as is() but it removes all tabs, spaces and new lines before
+#     comparing the values
+
+# like():
+#   - Checks if the actual value contains the expected pattern
+#   - Parameters:
+#       - actual: The actual value to check.
+#       - expected_pattern: The pattern to match against.
+#       - message: An optional message to display along with the result.
+#   - Example usage: like "$actual" "$expected_pattern" "Value should match the pattern"
+
+# is_undefined():
+#   - Checks if a variable, a function or an alias is undefined
+#   - Parameters:
+#       - item: The name of the variable, function or alias to check.
+#       - message: An optional message to display along with the result.
+#   - Example usage: is_undefined "some_variable" "Variable should be undefined"
+
 
 # Exact match
 is(){
@@ -18,23 +36,16 @@ is(){
   local -r expected="$2"
   local -r message="$3"
 
-  if [ "$1" != "$2" ]; then
-    _print_in_red "not ok"
-    [ -n "$message" ] && printf " - %s" "$message"
-    printf "\n\n"
-
-    printf "  failure: not an exact match\n\n"
-
-    echo "  expected: $expected"
-    echo "       got: $actual"
-
-    echo ""
-    _failed_assertion_path_with_line_number >&2
-
-    exit 1
-  else
-    _print_ok "$message"
+  if [ "$1" = "$2" ]; then
+    __print_ok "$message"
+    return
   fi
+
+  __print_not_ok "$message"
+  __print_comparsion "$actual" "$expected"
+  __report_failure
+
+  exit 1
 }
 
 # Exact match buth without tabs, spaces and new lines
@@ -49,47 +60,22 @@ is_compact(){
   is "$actual_trimmed" "$expected_trimmed" "$message"
 }
 
-# Add extra space to the left of each line after the first one
-add_left_padding_to_multi_line_string(){
-  local multi_line_var="$1"
-  local left_padding="            "
-  local first_line=true
-
-  while IFS= read -r line; do
-    if $first_line; then
-      # Print the first line as it is
-      echo "$line"
-      first_line=false
-    else
-      # Add left padding to the rest
-      echo "${left_padding}${line}"
-    fi
-  done <<< "$multi_line_var"
-}
-
 # Partial match
 like(){
   local -r actual="$1"
   local -r expected_pattern="$2"
   local -r message="$3"
 
-  if [[ ! "$actual" =~ $expected_pattern ]]; then
-    _print_in_red "not ok"
-    [ -n "$message" ] && printf " - %s" "$message"
-    printf "\n\n"
-
-    printf "   failure: not a partial match\n\n"
-
-    printf "   pattern: %s\n" "$expected_pattern"
-    printf "       got: %s\n" "$(add_left_padding_to_multi_line_string "$actual")"
-
-
-    _failed_assertion_path_with_line_number >&2
-
-    exit 1
-  else
-    _print_ok "$message"
+  if [[ "$actual" =~ $expected_pattern ]]; then
+    __print_ok "$message"
+    return
   fi
+
+  __print_not_ok "$message"
+  __print_comparsion "$actual" "$expected_pattern" "Not a partial match!" "~"
+  __report_failure
+
+  exit 1
 }
 
 # Check if a variable, a function or an alias is undefined
@@ -97,25 +83,21 @@ is_undefined(){
   local -r item="$1"
   local -r message="$2"
 
-  if _is_defined "$item"; then
-    _print_in_red "not ok"
-    [ -n "$message" ] && printf " - %s" "$message"
-    printf "\n\n"
-
-    printf "  failure: %s is defined when it should not be" "$item"
-
-    echo ""
-    _failed_assertion_path_with_line_number >&2
-
-    exit 1
-  else
-    _print_ok "$message"
+  if ! __is_defined "$item"; then
+    __print_ok "$message"
+    return
   fi
+
+  __print_not_ok "$message"
+  echo "  Failure: $item is defined when it should not be"
+  __report_failure
+
+  exit 1
 }
 
 # == General Utils ==
-_is_defined() {
-  local name_of_thing="$1"
+__is_defined() {
+  local -r name_of_thing="$1"
 
   # Is it a defined variable?
   if declare -p "$name_of_thing" > /dev/null 2>&1; then
@@ -127,20 +109,64 @@ _is_defined() {
   return $?
 }
 
-_failed_assertion_path_with_line_number(){
+__report_failure(){
   if [ -n "$ZSH_VERSION" ]; then
     # shellcheck disable=SC2154
-    echo "${funcfiletrace[-1]}"
+    echo "${funcfiletrace[-1]}" >&2
   else
-    echo "${BASH_SOURCE[-1]}:${BASH_LINENO[-2]}"
+    echo "${BASH_SOURCE[-1]}:${BASH_LINENO[-2]}" >&2
   fi
 }
 
 # == Print Utils ==
-_print_ok(){
+__print_ok(){
   local -r message="$1"
 
   printf "ok"
   [ -n "$message" ] && printf " - %s" "$message"
   printf "\n"
+}
+
+__print_not_ok(){
+  local -r message="$1"
+
+  _print_in_red "not ok"
+  [ -n "$message" ] && printf " - %s" "$message"
+  printf "\n\n"
+}
+
+__print_comparsion() {
+  local -r actual="$1"
+  local -r expected="$2"
+  local -r message="$3"
+  local -r expected_prefix="$4"
+
+  if [ -n "$expected_prefix" ]; then
+    local -r expected_copy=" ${expected_prefix}expected"
+  else
+    local -r expected_copy="  expected"
+  fi
+
+  [ -n "$message" ] && echo -e "$message\n"
+  printf "$expected_copy: %s\n" "$(__add_ledt_padding_after_first_line "$expected")"
+  printf "       got: %s\n" "$(__add_ledt_padding_after_first_line "$actual")"
+  echo
+}
+
+# Add extra space to the left of each line after the first one
+__add_ledt_padding_after_first_line(){
+  local -r content="$1"
+  local -r left_padding="            "
+  local first_line=true
+
+  while IFS= read -r line; do
+    if $first_line; then
+      # Print the first line as it is
+      echo "$line"
+      first_line=false
+    else
+      # Add left padding to the rest
+      echo "${left_padding}${line}"
+    fi
+  done <<< "$content"
 }
