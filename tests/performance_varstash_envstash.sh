@@ -9,6 +9,28 @@ cd "$SHERPA_DIR/tests/playground/performance"
 # shellcheck disable=SC1091
 source .envrc
 
+echo "=============================== Variables ==============================="
+
+# shellcheck disable=SC2207
+variable_names=($(_sherpa_fetch_variable_names_from_env_file))
+
+run_varstash() {
+  varstash::autostash "${variable_names[@]}"
+  varstash::autounstash
+}
+
+run_env_stash() {
+  sherpa::env_stash.stash_variables "$varstash_dir" "${variable_names[@]}"
+  sherpa::env_stash.unstash_variables "$varstash_dir"
+}
+
+printf "Varstash: "
+time (run_varstash)
+
+printf "Envstash: "
+time (run_env_stash)
+
+
 echo "=============================== Aliases ==============================="
 
 # shellcheck disable=SC2207

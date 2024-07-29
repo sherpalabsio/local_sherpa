@@ -2,45 +2,207 @@ source tests/support/test_helper.sh
 source "$SHERPA_DIR/lib/env_stash/utils.sh"
 source "$SHERPA_DIR/lib/env_stash/aliases.sh"
 source "$SHERPA_DIR/lib/env_stash/functions.sh"
+source "$SHERPA_DIR/lib/env_stash/variables.sh"
+
 
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
-#                      Stashing and unstashing environment
+#               Stashing and unstashing exported common variables
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+
+export exported_existing_variable1="exported_existing_variable1 original content"
+export exported_existing_variable2="exported_existing_variable2 original content"
+
+sherpa::env_stash.stash_variables "$PWD" "exported_existing_variable1" \
+                                         "exported_existing_variable2" \
+                                         "new_exported_variable1" \
+                                         "new_exported_variable2"
+
+exported_existing_variable1="CHANGED 1"
+exported_existing_variable2="CHANGED 2"
+export new_exported_variable1="new_exported_variable1 content"
+export new_exported_variable2="new_exported_variable2 content"
 
 # ==============================================================================
-# ++++ We can stash and unstash aliases
+# ++++ Senety check
+is "$exported_existing_variable1" "CHANGED 1" "The existed variable1 changed"
+is "$exported_existing_variable2" "CHANGED 2" "The existed variable2 changed"
+is "$new_exported_variable1" "new_exported_variable1 content" "The new variable1 is set"
+is "$new_exported_variable2" "new_exported_variable2 content" "The new variable2 is set"
+
+sherpa::env_stash.unstash_variables "$PWD"
+
+# ==============================================================================
+# ++++ It restores the overwritten variables
+is "$exported_existing_variable1" "exported_existing_variable1 original content" "The existed variable1 is restored"
+is "$exported_existing_variable2" "exported_existing_variable2 original content" "The existed variable2 is restored"
+
+# ==============================================================================
+# ++++ It removes the variables which did not exist at the time of stashing
+is_undefined "new_exported_variable1" "The new variable1 is removed"
+is_undefined "new_exported_variable2" "The new variable2 is removed"
+
+
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+#             Stashing and unstashing NON exported common variables
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+
+existing_variable1="existing_variable1 original content"
+existing_variable2="existing_variable2 original content"
+
+sherpa::env_stash.stash_variables "$PWD" "existing_variable1" \
+                                         "existing_variable2" \
+                                         "new_variable1" \
+                                         "new_variable2"
+
+existing_variable1="CHANGED 1"
+existing_variable2="CHANGED 2"
+new_variable1="new_variable1 content"
+new_variable2="new_variable2 content"
+
+# ==============================================================================
+# ++++ Senety check
+is "$existing_variable1" "CHANGED 1" "The existed variable1 changed"
+is "$existing_variable2" "CHANGED 2" "The existed variable2 changed"
+is "$new_variable1" "new_variable1 content" "The new variable1 is set"
+is "$new_variable2" "new_variable2 content" "The new variable2 is set"
+
+sherpa::env_stash.unstash_variables "$PWD"
+
+# ==============================================================================
+# ++++ It restores the overwritten variables
+is "$existing_variable1" "existing_variable1 original content" "The existed variable1 is restored"
+is "$existing_variable2" "existing_variable2 original content" "The existed variable2 is restored"
+
+# ==============================================================================
+# ++++ It removes the variables which did not exist at the time of stashing
+is_undefined "new_variable1" "The new variable1 is removed"
+is_undefined "new_variable2" "The new variable2 is removed"
+
+
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+#                     Stashing and unstashing indexed arrays
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+
+declare -a existing_indexed_array1=("existing_indexed_array1 original content")
+declare -a existing_indexed_array2=("existing_indexed_array2 original content")
+
+export existing_indexed_array1 existing_indexed_array2
+
+sherpa::env_stash.stash_variables "$PWD" "existing_indexed_array1" \
+                                         "existing_indexed_array2" \
+                                         "new_indexed_array1" \
+                                         "new_indexed_array2"
+
+existing_indexed_array1=("CHANGED 1")
+existing_indexed_array2=("CHANGED 2")
+
+declare -a new_indexed_array1=("new_indexed_array1 content")
+declare -a new_indexed_array2=("new_indexed_array2 content")
+
+export new_indexed_array1 new_indexed_array2
+
+# ==============================================================================
+# ++++ Senety check
+is "${existing_indexed_array1[@]}" "CHANGED 1" "The existed indexed array1 changed"
+is "${existing_indexed_array2[@]}" "CHANGED 2" "The existed indexed array2 changed"
+is "${new_indexed_array1[@]}" "new_indexed_array1 content" "The new indexed array1 is set"
+is "${new_indexed_array2[@]}" "new_indexed_array2 content" "The new indexed array2 is set"
+
+sherpa::env_stash.unstash_variables "$PWD"
+
+# ==============================================================================
+# ++++ It restores the overwritten variables
+is "${existing_indexed_array1[@]}" "existing_indexed_array1 original content" "The existed indexed array1 is restored"
+is "${existing_indexed_array2[@]}" "existing_indexed_array2 original content" "The existed indexed array2 is restored"
+
+# ==============================================================================
+# ++++ It removes the variables which did not exist at the time of stashing
+is_undefined "new_indexed_array1" "The new indexed array1 is removed"
+is_undefined "new_indexed_array2" "The new indexed array2 is removed"
+
+
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+#                   Stashing and unstashing associative arrays
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+
+declare -A existing_associative_array1=([key1]="existing_associative_array1 original content")
+declare -A existing_associative_array2=([key2]="existing_associative_array2 original content")
+
+export existing_associative_array1 existing_associative_array2
+
+sherpa::env_stash.stash_variables "$PWD" "existing_associative_array1" \
+                                         "existing_associative_array2" \
+                                         "new_associative_array1" \
+                                         "new_associative_array2"
+
+existing_associative_array1=([key1]="CHANGED 1")
+existing_associative_array2=([key2]="CHANGED 2")
+
+declare -A new_associative_array1=([key1]="new_associative_array1 content")
+declare -A new_associative_array2=([key2]="new_associative_array2 content")
+
+export new_associative_array1 new_associative_array2
+
+# ==============================================================================
+# ++++ Senety check
+is "${existing_associative_array1[key1]}" "CHANGED 1" "The existed associative array1 changed"
+is "${existing_associative_array2[key2]}" "CHANGED 2" "The existed associative array2 changed"
+is "${new_associative_array1[key1]}" "new_associative_array1 content" "The new associative array1 is set"
+is "${new_associative_array2[key2]}" "new_associative_array2 content" "The new associative array2 is set"
+
+sherpa::env_stash.unstash_variables "$PWD"
+
+# ==============================================================================
+# ++++ It restores the overwritten variables
+is "${existing_associative_array1[key1]}" "existing_associative_array1 original content" "The existed associative array1 is restored"
+is "${existing_associative_array2[key2]}" "existing_associative_array2 original content" "The existed associative array2 is restored"
+
+# ==============================================================================
+# ++++ It removes the variables which did not exist at the time of stashing
+is_undefined "new_associative_array1" "The new associative array1 is removed"
+is_undefined "new_associative_array2" "The new associative array2 is removed"
+
+
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+#                        Stashing and unstashing aliases
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 
 alias existing_alias1="echo existing_alias1 original content"
 alias existing_alias2="echo existing_alias2 original content"
 
 sherpa::env_stash.stash_aliases "$PWD" "existing_alias1" \
                                        "existing_alias2" \
-                                       "not_yet_existing_alias1" \
-                                       "not_yet_existing_alias2"
+                                       "new_alias1" \
+                                       "new_alias2"
 
 alias existing_alias1="echo CHANGED 1"
 alias existing_alias2="echo CHANGED 2"
-alias not_yet_existing_alias1="echo not_yet_existing_alias1 content"
-alias not_yet_existing_alias2="echo not_yet_existing_alias2 content"
+alias new_alias1="echo new_alias1 content"
+alias new_alias2="echo new_alias2 content"
 
-# Senety check
+# ==============================================================================
+# ++++ Senety check
 is "$(existing_alias1)" "CHANGED 1" "The existed alias1 changed"
 is "$(existing_alias2)" "CHANGED 2" "The existed alias2 changed"
-is "$(not_yet_existing_alias1)" "not_yet_existing_alias1 content" "The new alias1 is set"
-is "$(not_yet_existing_alias2)" "not_yet_existing_alias2 content" "The new alias2 is set"
+is "$(new_alias1)" "new_alias1 content" "The new alias1 is set"
+is "$(new_alias2)" "new_alias2 content" "The new alias2 is set"
 
 sherpa::env_stash.unstash_aliases "$PWD"
 
+# ==============================================================================
 # ++++ It restores the overwritten aliases
 is "$(existing_alias1)" "existing_alias1 original content" "The existed alias1 is restored"
 is "$(existing_alias2)" "existing_alias2 original content" "The existed alias2 is restored"
-# ++++ It removes the aliases which did not exist at the time of stashing
-is_undefined "not_yet_existing_alias1" "The new alias1 is removed"
-is_undefined "not_yet_existing_alias2" "The new alias2 is removed"
-
 
 # ==============================================================================
-# ++++ We can stash and unstash functions
+# ++++ It removes the aliases which did not exist at the time of stashing
+is_undefined "new_alias1" "The new alias1 is removed"
+is_undefined "new_alias2" "The new alias2 is removed"
+
+
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+#                       Stashing and unstashing functions
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 
 # shellcheck disable=SC2317
 existing_function1() { echo "existing_function1 original content"; }
@@ -49,27 +211,31 @@ existing_function2() { echo "existing_function2 original content"; }
 
 sherpa::env_stash.stash_functions "$PWD" "existing_function1" \
                                          "existing_function2" \
-                                         "not_yet_existing_function1" \
-                                         "not_yet_existing_function2"
+                                         "new_function1" \
+                                         "new_function2"
 
 
 existing_function1() { echo "CHANGED 1"; }
 existing_function2() { echo "CHANGED 2"; }
 
-not_yet_existing_function1() { echo "not_yet_existing_function1 content"; }
-not_yet_existing_function2() { echo "not_yet_existing_function2 content"; }
+new_function1() { echo "new_function1 content"; }
+new_function2() { echo "new_function2 content"; }
 
-# Senety check
+# ==============================================================================
+# ++++ Senety check
 is "$(existing_function1)" "CHANGED 1" "The existing_function1 changed"
 is "$(existing_function2)" "CHANGED 2" "The existing_function2 changed"
-is "$(not_yet_existing_function1)" "not_yet_existing_function1 content" "The new function 1 is set"
-is "$(not_yet_existing_function2)" "not_yet_existing_function2 content" "The new function 2 is set"
+is "$(new_function1)" "new_function1 content" "The new function 1 is set"
+is "$(new_function2)" "new_function2 content" "The new function 2 is set"
 
 sherpa::env_stash.unstash_functions "$PWD"
 
+# ==============================================================================
 # ++++ It restores the overwritten functiones
 is "$(existing_function1)" "existing_function1 original content" "The existed function1 is restored"
 is "$(existing_function2)" "existing_function2 original content" "The existed function2 is restored"
+
+# ==============================================================================
 # ++++ It removes the functiones which did not exist at the time of stashing
-is_undefined "not_yet_existing_function1" "The new function 1 is removed"
-is_undefined "not_yet_existing_function2" "The new function 2 is removed"
+is_undefined "new_function1" "The new function 1 is removed"
+is_undefined "new_function2" "The new function 2 is removed"

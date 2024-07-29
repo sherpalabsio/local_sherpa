@@ -87,13 +87,14 @@ For more details see the [Features](#features) section.
 - Ubuntu 20.04
 - Ubuntu 22.04
 
-## Supported data structures and things
+## Supported Shell entities for unloading
 
 - Exported variables
 - Aliases
 - Functions
 
-Unexported variables and other data types are not supported yet.
+Unexported variables are not supported yet.\
+Dynamically created entities are not supported yet.
 
 ## Side effect
 

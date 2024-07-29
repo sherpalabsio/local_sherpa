@@ -17,7 +17,7 @@ _sherpa_unload_envs_of_exited_dirs() {
     else
       _sherpa_log_debug "Unload env: $loaded_path"
       varstash_dir="$loaded_path"
-      varstash::autounstash
+      sherpa::env_stash.unstash_variables "$varstash_dir"
       sherpa::env_stash.unstash_aliases "$varstash_dir"
       sherpa::env_stash.unstash_functions "$varstash_dir"
     fi
@@ -42,7 +42,7 @@ _sherpa_unload_all_envs() {
   for loaded_path in "${SHERPA_LOADED_ENV_DIRS[@]}"; do
     _sherpa_log_debug "Unload env: $loaded_path"
     varstash_dir="$loaded_path"
-    varstash::autounstash
+    sherpa::env_stash.unstash_variables "$varstash_dir"
     sherpa::env_stash.unstash_aliases "$varstash_dir"
     sherpa::env_stash.unstash_functions "$varstash_dir"
   done
@@ -52,7 +52,7 @@ _sherpa_unload_all_envs() {
 
 _sherpa_unload_env_of_current_dir() {
   varstash_dir="$PWD"
-  varstash::autounstash
+  sherpa::env_stash.unstash_variables "$varstash_dir"
   sherpa::env_stash.unstash_aliases "$varstash_dir"
   sherpa::env_stash.unstash_functions "$varstash_dir"
   smartcd::ashift SHERPA_LOADED_ENV_DIRS > /dev/null
@@ -101,7 +101,7 @@ _sherpa_stash_local_env() {
   # shellcheck disable=SC2207
   local variable_names=($(_sherpa_fetch_variable_names_from_env_file))
   _sherpa_log_debug "AutoStashing vars: ${variable_names[*]}"
-  varstash::autostash "${variable_names[@]}"
+  sherpa::env_stash.stash_variables "$varstash_dir" "${variable_names[@]}"
 
   # shellcheck disable=SC2207
   local alias_names=($(_sherpa_fetch_aliase_names_from_env_file))
