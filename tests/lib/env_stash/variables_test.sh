@@ -23,10 +23,10 @@ sherpa::env_stash.stash_variables "$dir_path" "existing_variable1" "existing_var
 
 # shellcheck disable=SC2154
 actual_existing_variable_definition1=${__sherpa__env_stash__variables_to_restore__parent_child[*]:0:1}
-like "$actual_existing_variable_definition1" "$expected_existing_variable_definition1"
+assert_contain "$actual_existing_variable_definition1" "$expected_existing_variable_definition1"
 
 actual_existing_variable_definition2=${__sherpa__env_stash__variables_to_restore__parent_child[*]:1:1}
-like "$actual_existing_variable_definition2" "$expected_existing_variable_definition2"
+assert_contain "$actual_existing_variable_definition2" "$expected_existing_variable_definition2"
 
 # ==============================================================================
 # ++++ It stores the names of new variables in the right list
@@ -37,7 +37,7 @@ expected_new_variable_names="non_existing_variable1 non_existing_variable2"
 # shellcheck disable=SC2154
 actual_new_variable_names=${__sherpa__env_stash__variables_to_remove__parent_child[*]}
 
-like "$actual_new_variable_names" "$expected_new_variable_names"
+assert_contain "$actual_new_variable_names" "$expected_new_variable_names"
 
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 #                               unstash_variables
@@ -52,5 +52,5 @@ existing_variable="_"
 sherpa::env_stash.stash_variables "$dir_path" "existing_variable" "non_existing_variable"
 sherpa::env_stash.unstash_variables "$dir_path"
 
-is_undefined "__sherpa__env_stash__variables_to_restore__parent_child"
-is_undefined "__sherpa__env_stash__variables_to_remove__parent_child"
+assert_undefined "__sherpa__env_stash__variables_to_restore__parent_child"
+assert_undefined "__sherpa__env_stash__variables_to_remove__parent_child"

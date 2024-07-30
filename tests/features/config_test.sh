@@ -10,7 +10,7 @@ SHERPA_CONFIG_DIR="$TEST_DIR/playground/local_sherpa_config"
 unset SHERPA_LOG_LEVEL
 source "$SHERPA_DIR/lib/init.sh" > /dev/null
 
-is "$SHERPA_LOG_LEVEL" "$SHERPA_LOG_LEVEL_INFO" "The log level is set to the default value"
+assert_equal "$SHERPA_LOG_LEVEL" "$SHERPA_LOG_LEVEL_INFO" "The log level is set to the default value"
 
 
 # When the log level is set via the env var
@@ -19,7 +19,7 @@ SHERPA_LOG_LEVEL="$SHERPA_LOG_LEVEL_SILENT"
 
 source "$SHERPA_DIR/lib/init.sh"
 
-is "$SHERPA_LOG_LEVEL" "$SHERPA_LOG_LEVEL_SILENT" "The log level is set based on the env var"
+assert_equal "$SHERPA_LOG_LEVEL" "$SHERPA_LOG_LEVEL_SILENT" "The log level is set based on the env var"
 
 
 # When the log level is set via the config file
@@ -29,7 +29,7 @@ unset SHERPA_LOG_LEVEL
 
 source "$SHERPA_DIR/lib/init.sh"
 
-is "$SHERPA_LOG_LEVEL" "$SHERPA_LOG_LEVEL_SILENT" "The log level is set based on the config file"
+assert_equal "$SHERPA_LOG_LEVEL" "$SHERPA_LOG_LEVEL_SILENT" "The log level is set based on the config file"
 
 
 # When the log level is set via the config file but the env var is set as well
@@ -39,4 +39,4 @@ SHERPA_LOG_LEVEL="$SHERPA_LOG_LEVEL_DEBUG"
 
 source "$SHERPA_DIR/lib/init.sh" > /dev/null
 
-is "$SHERPA_LOG_LEVEL" "$SHERPA_LOG_LEVEL_DEBUG" "The log level is set based on the env var"
+assert_equal "$SHERPA_LOG_LEVEL" "$SHERPA_LOG_LEVEL_DEBUG" "The log level is set based on the env var"

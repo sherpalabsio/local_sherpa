@@ -14,7 +14,7 @@ expected="parent_child__space________dash_"
 
 actual=$(sherpa::env_stash._path_to_variable_prefix "$dir_path")
 
-is "$actual" "$expected" "It replaces all non alphanumeric characters with underscores"
+assert_equal "$actual" "$expected" "It replaces all non alphanumeric characters with underscores"
 
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 #                             _item_to_variable_name
@@ -29,4 +29,4 @@ expected="__sherpa__env_stash__alias_name__parent_child"
 
 actual=$(sherpa::env_stash._item_to_variable_name "$item_name" "$dir_path")
 
-is "$actual" "$expected"
+assert_equal "$actual" "$expected"

@@ -51,7 +51,7 @@ sherpa disable
 
 subject
 
-like "$(cat "$STDERR_FILE")" "Sherpa is disabled!" "It warns when Sherpa is disabled"
+assert_contain "$(cat "$STDERR_FILE")" "Sherpa is disabled!" "It warns when Sherpa is disabled"
 
 
 # ==============================================================================
@@ -60,7 +60,7 @@ sherpa enable
 
 subject
 
-like "$(cat "$STDOUT_FILE")" "\[OK\] Enabled" "It acknowledges when Sherpa is enabled"
+assert_contain "$(cat "$STDOUT_FILE")" "\[OK\] Enabled" "It acknowledges when Sherpa is enabled"
 
 
 # ==============================================================================
@@ -78,7 +78,7 @@ stub_function "type" "fake_type"
 
 subject
 
-like "$(cat "$STDERR_FILE")" "\[NOT OK\] sha256sum utility" "It warns when the sha256sum function is not available"
+assert_contain "$(cat "$STDERR_FILE")" "\[NOT OK\] sha256sum utility" "It warns when the sha256sum function is not available"
 
 reset_stubs
 
@@ -87,7 +87,7 @@ reset_stubs
 # ++++ It acknowledges when the sha256sum function is available
 subject
 
-like "$(cat "$STDOUT_FILE")" "\[OK\] sha256sum utility" "It acknowledges when the sha256sum function is available"
+assert_contain "$(cat "$STDOUT_FILE")" "\[OK\] sha256sum utility" "It acknowledges when the sha256sum function is available"
 
 
 # ==============================================================================
@@ -96,7 +96,7 @@ stub "export PROMPT_COMMAND=\"\""
 
 subject
 
-like "$(cat "$STDERR_FILE")" "\[NOT OK\] cd hook setup" "It warns when the cd hook is not setup correctly"
+assert_contain "$(cat "$STDERR_FILE")" "\[NOT OK\] cd hook setup" "It warns when the cd hook is not setup correctly"
 
 reset_stubs
 
@@ -105,7 +105,7 @@ reset_stubs
 # ++++ It acknowledges when the cd hook is setup correctly
 subject
 
-like "$(cat "$STDOUT_FILE")" "\[OK\] cd hook setup" "It acknowledges when the cd hook is setup correctly"
+assert_contain "$(cat "$STDOUT_FILE")" "\[OK\] cd hook setup" "It acknowledges when the cd hook is setup correctly"
 
 
 # ==============================================================================
@@ -119,7 +119,7 @@ stub_function "sha256sum" "fake_sha256sum"
 
 subject
 
-like "$(cat "$STDERR_FILE")" "\[NOT OK\] Trusting the current directory" "It warns when trusting a directory fails"
+assert_contain "$(cat "$STDERR_FILE")" "\[NOT OK\] Trusting the current directory" "It warns when trusting a directory fails"
 reset_stubs
 
 
@@ -127,7 +127,7 @@ reset_stubs
 # ++++ It acknowledges when trusting a directory succeeds
 subject
 
-like "$(cat "$STDOUT_FILE")" "\[OK\] Trusting the current directory" "It acknowledges when trusting a directory succeeds"
+assert_contain "$(cat "$STDOUT_FILE")" "\[OK\] Trusting the current directory" "It acknowledges when trusting a directory succeeds"
 
 
 # ==============================================================================
@@ -146,11 +146,11 @@ stub_function "source" "fake_source"
 
 subject
 
-like "$(cat "$STDERR_FILE")" "\[NOT OK\] Loading the local environment" "It warns when loading the local env fails"
+assert_contain "$(cat "$STDERR_FILE")" "\[NOT OK\] Loading the local environment" "It warns when loading the local env fails"
 reset_stubs
 
 # ==============================================================================
 # ++++ It acknowledges when loading the local env succeeds
 subject
 
-like "$(cat "$STDOUT_FILE")" "\[OK\] Loading the local environment" "It acknowledges when loading the local env succeeds"
+assert_contain "$(cat "$STDOUT_FILE")" "\[OK\] Loading the local environment" "It acknowledges when loading the local env succeeds"

@@ -9,9 +9,9 @@ _sherpa_trust_dir "project_1/subfolder_with_no_local_env/subproject"
 _sherpa_trust_dir "project_2"
 
 # ++++ Senety checks: the Global env is loaded
-is "$var_1" "GLOBAL VAR" "Global env is ready (var)"
-is "$(alias_1)" "GLOBAL ALIAS" "Global env is ready (alias)"
-is "$(function_1)" "GLOBAL FUNCTION" "Global env is ready (function)"
+assert_equal "$var_1" "GLOBAL VAR" "Global env is ready (var)"
+assert_equal "$(alias_1)" "GLOBAL ALIAS" "Global env is ready (alias)"
+assert_equal "$(function_1)" "GLOBAL FUNCTION" "Global env is ready (function)"
 
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 #                       Comprehensive loading and unloading
@@ -23,14 +23,14 @@ is "$(function_1)" "GLOBAL FUNCTION" "Global env is ready (function)"
 cd project_1
 
 # ++++ It loads the Project 1 env
-is "$var_1" "LOCAL VAR PROJECT 1" "Local env is loaded (var)"
-is "$(alias_1)" "LOCAL ALIAS PROJECT 1" "Local env is loaded (alias)"
-is "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Local env is loaded (function)"
+assert_equal "$var_1" "LOCAL VAR PROJECT 1" "Local env is loaded (var)"
+assert_equal "$(alias_1)" "LOCAL ALIAS PROJECT 1" "Local env is loaded (alias)"
+assert_equal "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Local env is loaded (function)"
 
 # shellcheck disable=SC2154
-is "$custom_var_1" "CUSTOM LOCAL VAR PROJECT 1" "Project 1 env is loaded (custom_var_1)"
-is "$(custom_alias_1)" "CUSTOM LOCAL ALIAS PROJECT 1" "Project 1 env is loaded (custom_alias_1)"
-is "$(custom_function_1)" "CUSTOM LOCAL FUNCTION PROJECT 1" "Project 1 env is loaded (custom_function_1)"
+assert_equal "$custom_var_1" "CUSTOM LOCAL VAR PROJECT 1" "Project 1 env is loaded (custom_var_1)"
+assert_equal "$(custom_alias_1)" "CUSTOM LOCAL ALIAS PROJECT 1" "Project 1 env is loaded (custom_alias_1)"
+assert_equal "$(custom_function_1)" "CUSTOM LOCAL FUNCTION PROJECT 1" "Project 1 env is loaded (custom_function_1)"
 
 # ==============================================================================
 # PWD: /project_1/subfolder_with_no_local_env
@@ -38,9 +38,9 @@ is "$(custom_function_1)" "CUSTOM LOCAL FUNCTION PROJECT 1" "Project 1 env is lo
 cd subfolder_with_no_local_env
 
 # ++++ It does not unload the Project 1 env
-is "$var_1" "LOCAL VAR PROJECT 1" "Project 1 env is not unloaded (var_1)"
-is "$(alias_1)" "LOCAL ALIAS PROJECT 1" "Project 1 env is not unloaded (alias_1)"
-is "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Project 1 env is not unloaded (function_1)"
+assert_equal "$var_1" "LOCAL VAR PROJECT 1" "Project 1 env is not unloaded (var_1)"
+assert_equal "$(alias_1)" "LOCAL ALIAS PROJECT 1" "Project 1 env is not unloaded (alias_1)"
+assert_equal "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Project 1 env is not unloaded (function_1)"
 
 # ==============================================================================
 # PWD: /project_1/subfolder_with_no_local_env/subproject
@@ -48,17 +48,17 @@ is "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Project 1 env is not unloaded (fu
 cd subproject
 
 # ++++ It does not unload the Project 1 env
-is "$var_1" "LOCAL VAR PROJECT 1" "Project 1 env is not unloaded (var_1)"
-is "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Project 1 env is not unloaded (function_1)"
+assert_equal "$var_1" "LOCAL VAR PROJECT 1" "Project 1 env is not unloaded (var_1)"
+assert_equal "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Project 1 env is not unloaded (function_1)"
 
 # ++++ It overrides the Project 1 env with the Subproject env
-is "$(alias_1)" "LOCAL ALIAS SUBPROJECT" "Project 1 env is overridden by Subproject env (alias_1)"
+assert_equal "$(alias_1)" "LOCAL ALIAS SUBPROJECT" "Project 1 env is overridden by Subproject env (alias_1)"
 
 # ++++ It loads the Subproject env
 # shellcheck disable=SC2154
-is "$subvar_1" "CUSTOM LOCAL VAR SUBPROJECT" "Subproject env is loaded (subvar_1)"
-is "$(subalias_1)" "CUSTOM LOCAL ALIAS SUBPROJECT" "Subproject env is loaded (subalias_1)"
-is "$(subfunction_1)" "CUSTOM LOCAL FUNCTION SUBPROJECT" "Subproject env is loaded (subfunction_1)"
+assert_equal "$subvar_1" "CUSTOM LOCAL VAR SUBPROJECT" "Subproject env is loaded (subvar_1)"
+assert_equal "$(subalias_1)" "CUSTOM LOCAL ALIAS SUBPROJECT" "Subproject env is loaded (subalias_1)"
+assert_equal "$(subfunction_1)" "CUSTOM LOCAL FUNCTION SUBPROJECT" "Subproject env is loaded (subfunction_1)"
 
 # ==============================================================================
 # PWD: /project_1/subfolder_with_no_local_env
@@ -66,16 +66,16 @@ is "$(subfunction_1)" "CUSTOM LOCAL FUNCTION SUBPROJECT" "Subproject env is load
 cd ..
 
 # ++++ It does not unload the Project 1 env
-is "$var_1" "LOCAL VAR PROJECT 1" "Project 1 env is not unloaded (var_1)"
-is "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Project 1 env is not unloaded (function_1)"
+assert_equal "$var_1" "LOCAL VAR PROJECT 1" "Project 1 env is not unloaded (var_1)"
+assert_equal "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Project 1 env is not unloaded (function_1)"
 
 # ++++ It restores the Project 1 env (rolls back the subproject overrides)
-is "$(alias_1)" "LOCAL ALIAS PROJECT 1" "Project 1 env is restored (alias_1)"
+assert_equal "$(alias_1)" "LOCAL ALIAS PROJECT 1" "Project 1 env is restored (alias_1)"
 
 # ++++ It unloads the Subproject env
-is_undefined "subvar_1" "Subproject env is unloaded (subvar_1)"
-is_undefined "subalias_1" "Subproject env is unloaded (subalias_1)"
-is_undefined "subfunction_1" "Subproject env is unloaded (subfunction_1)"
+assert_undefined "subvar_1" "Subproject env is unloaded (subvar_1)"
+assert_undefined "subalias_1" "Subproject env is unloaded (subalias_1)"
+assert_undefined "subfunction_1" "Subproject env is unloaded (subfunction_1)"
 
 # ==============================================================================
 # PWD: /project_1
@@ -83,9 +83,9 @@ is_undefined "subfunction_1" "Subproject env is unloaded (subfunction_1)"
 cd ..
 
 # ++++ It does not unload the Project 1 env
-is "$var_1" "LOCAL VAR PROJECT 1" "Project 1 env is not unloaded (var_1)"
-is "$(alias_1)" "LOCAL ALIAS PROJECT 1" "Project 1 env is not unloaded (alias_1)"
-is "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Project 1 env is not unloaded (function_1)"
+assert_equal "$var_1" "LOCAL VAR PROJECT 1" "Project 1 env is not unloaded (var_1)"
+assert_equal "$(alias_1)" "LOCAL ALIAS PROJECT 1" "Project 1 env is not unloaded (alias_1)"
+assert_equal "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Project 1 env is not unloaded (function_1)"
 
 # ==============================================================================
 # PWD: /
@@ -93,14 +93,14 @@ is "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Project 1 env is not unloaded (fu
 cd ..
 
 # ++++ It restores the Global env (rolls back the project_1 overrides)
-is "$var_1" "GLOBAL VAR" "Global env is restored (var_1)"
-is "$(alias_1)" "GLOBAL ALIAS" "Global env is restored (alias_1)"
-is "$(function_1)" "GLOBAL FUNCTION" "Global env is restored (function_1)"
+assert_equal "$var_1" "GLOBAL VAR" "Global env is restored (var_1)"
+assert_equal "$(alias_1)" "GLOBAL ALIAS" "Global env is restored (alias_1)"
+assert_equal "$(function_1)" "GLOBAL FUNCTION" "Global env is restored (function_1)"
 
 # ++++ It unloads the Project 1 env
-is_undefined "custom_var_1" "Subproject env is unloaded (custom_var_1)"
-is_undefined "custom_alias_1" "Subproject env is unloaded (custom_alias_1)"
-is_undefined "custom_function_1" "Subproject env is unloaded (custom_function_1)"
+assert_undefined "custom_var_1" "Subproject env is unloaded (custom_var_1)"
+assert_undefined "custom_alias_1" "Subproject env is unloaded (custom_alias_1)"
+assert_undefined "custom_function_1" "Subproject env is unloaded (custom_function_1)"
 
 # ==============================================================================
 # PWD: /project_1
@@ -108,13 +108,13 @@ is_undefined "custom_function_1" "Subproject env is unloaded (custom_function_1)
 cd project_1
 
 # ++++ It loads the Project 1 env again
-is "$var_1" "LOCAL VAR PROJECT 1" "Project 1 env is loaded again (var_1)"
-is "$(alias_1)" "LOCAL ALIAS PROJECT 1" "Project 1 env is loaded again (alias_1)"
-is "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Project 1 env is loaded again (function_1)"
+assert_equal "$var_1" "LOCAL VAR PROJECT 1" "Project 1 env is loaded again (var_1)"
+assert_equal "$(alias_1)" "LOCAL ALIAS PROJECT 1" "Project 1 env is loaded again (alias_1)"
+assert_equal "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Project 1 env is loaded again (function_1)"
 
-is "$custom_var_1" "CUSTOM LOCAL VAR PROJECT 1" "Project 1 env is loaded again (custom_var_1)"
-is "$(custom_alias_1)" "CUSTOM LOCAL ALIAS PROJECT 1" "Project 1 env is loaded again (custom_alias_1)"
-is "$(custom_function_1)" "CUSTOM LOCAL FUNCTION PROJECT 1" "Project 1 env is loaded again (custom_function_1)"
+assert_equal "$custom_var_1" "CUSTOM LOCAL VAR PROJECT 1" "Project 1 env is loaded again (custom_var_1)"
+assert_equal "$(custom_alias_1)" "CUSTOM LOCAL ALIAS PROJECT 1" "Project 1 env is loaded again (custom_alias_1)"
+assert_equal "$(custom_function_1)" "CUSTOM LOCAL FUNCTION PROJECT 1" "Project 1 env is loaded again (custom_function_1)"
 
 # ==============================================================================
 # PWD: /project_2
@@ -122,11 +122,11 @@ is "$(custom_function_1)" "CUSTOM LOCAL FUNCTION PROJECT 1" "Project 1 env is lo
 cd ../project_2
 
 # ++++ It unloads the Project 1 env
-is_undefined "custom_var_1" "Subproject env is unloaded (custom_var_1)"
-is_undefined "custom_alias_1" "Subproject env is unloaded (custom_alias_1)"
-is_undefined "custom_function_1" "Subproject env is unloaded (custom_function_1)"
+assert_undefined "custom_var_1" "Subproject env is unloaded (custom_var_1)"
+assert_undefined "custom_alias_1" "Subproject env is unloaded (custom_alias_1)"
+assert_undefined "custom_function_1" "Subproject env is unloaded (custom_function_1)"
 
 # ++++ It loads the Project 2 env
-is "$var_1" "LOCAL VAR PROJECT 2" "Previous env is unloaded, local env is loaded (var)"
-is "$(alias_1)" "LOCAL ALIAS PROJECT 2" "Previous env is unloaded, local env is loaded (alias)"
-is "$(function_1)" "LOCAL FUNCTION PROJECT 2" "Previous env is unloaded, local env is loaded (function)"
+assert_equal "$var_1" "LOCAL VAR PROJECT 2" "Previous env is unloaded, local env is loaded (var)"
+assert_equal "$(alias_1)" "LOCAL ALIAS PROJECT 2" "Previous env is unloaded, local env is loaded (alias)"
+assert_equal "$(function_1)" "LOCAL FUNCTION PROJECT 2" "Previous env is unloaded, local env is loaded (function)"

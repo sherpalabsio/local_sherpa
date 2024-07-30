@@ -10,7 +10,7 @@ cd /
 sherpa trust
 
 # ++++ Senety checks: the local environment file is loaded
-is "$(alias_1)" "alias_1"
+assert_equal "$(alias_1)" "alias_1"
 
 # When the local env file gets changed and trusted somewhere else
 override_env_file 'alias alias_2="echo changed"'
@@ -19,5 +19,5 @@ _sherpa_trust_current_dir
 # ++++ It reloads the environment for the current directory
 sherpa reload
 
-is_undefined "alias_1"
-is "$(alias_2)" "changed"
+assert_undefined "alias_1"
+assert_equal "$(alias_2)" "changed"

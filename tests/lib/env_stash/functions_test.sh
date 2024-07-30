@@ -20,10 +20,10 @@ expected_existing_function_definition2="existing_function2() { function2 content
 sherpa::env_stash.stash_functions "$dir_path" "existing_function1" "existing_function2"
 
 actual_existing_function_definition1=${__sherpa__env_stash__functions_to_restore__parent_child[*]:0:1}
-is_compact "$actual_existing_function_definition1" "$expected_existing_function_definition1"
+assert_equal_compact "$actual_existing_function_definition1" "$expected_existing_function_definition1"
 
 actual_existing_function_definition2=${__sherpa__env_stash__functions_to_restore__parent_child[*]:1:1}
-is_compact "$actual_existing_function_definition2" "$expected_existing_function_definition2"
+assert_equal_compact "$actual_existing_function_definition2" "$expected_existing_function_definition2"
 
 # ==============================================================================
 # ++++ It stores the names of new functions in the right list
@@ -34,7 +34,7 @@ expected_new_function_names="non_existing_function1 non_existing_function2"
 # shellcheck disable=SC2154
 actual_new_function_names=${__sherpa__env_stash__functions_to_remove__parent_child[*]}
 
-is "$actual_new_function_names" "$expected_new_function_names"
+assert_equal "$actual_new_function_names" "$expected_new_function_names"
 
 # ==============================================================================
 # ++++ It sanitizes the definition of existing functions
@@ -52,10 +52,10 @@ expected_function_definition2="function_with_special_chars2() { 'echo \"\$custom
 sherpa::env_stash.stash_functions "$dir_path" "function_with_special_chars1" "function_with_special_chars2"
 
 actual_function_definition1=${__sherpa__env_stash__functions_to_restore__parent_child[*]:0:1}
-is_compact "$actual_function_definition1" "$expected_function_definition1"
+assert_equal_compact "$actual_function_definition1" "$expected_function_definition1"
 
 actual_function_definition2=${__sherpa__env_stash__functions_to_restore__parent_child[*]:1:1}
-is_compact "$actual_function_definition2" "$expected_function_definition2"
+assert_equal_compact "$actual_function_definition2" "$expected_function_definition2"
 
 
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
@@ -70,5 +70,5 @@ existing_function() { :; }
 sherpa::env_stash.stash_functions "$dir_path" "existing_function" "non_existing_function"
 sherpa::env_stash.unstash_functions "$dir_path"
 
-is_undefined "__sherpa__env_stash__functions_to_restore__parent_child"
-is_undefined "__sherpa__env_stash__functions_to_remove__parent_child"
+assert_undefined "__sherpa__env_stash__functions_to_restore__parent_child"
+assert_undefined "__sherpa__env_stash__functions_to_remove__parent_child"

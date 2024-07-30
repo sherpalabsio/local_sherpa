@@ -13,7 +13,7 @@ override_env_file "export var_1="local var 1""
 
 actual_list=$(_sherpa_parse_local_env_file)
 
-is "$actual_list" "var_1"
+assert_equal "$actual_list" "var_1"
 
 # ==============================================================================
 # ++++ It is not case sensitive
@@ -22,7 +22,7 @@ override_env_file "export VAR_2="local var 1""
 
 actual_list=$(_sherpa_parse_local_env_file)
 
-is "$actual_list" "VAR_2"
+assert_equal "$actual_list" "VAR_2"
 
 # ==============================================================================
 # ++++ It works for multiline variables
@@ -34,7 +34,7 @@ EOF
 
 actual_list=$(_sherpa_parse_local_env_file)
 
-is "$actual_list" "var_multi_line"
+assert_equal "$actual_list" "var_multi_line"
 
 # ==============================================================================
 # ++++ It ignores commented lines
@@ -43,7 +43,7 @@ override_env_file "# export var_commented="local var 0""
 
 actual_list=$(_sherpa_parse_local_env_file)
 
-is "$actual_list" ""
+assert_equal "$actual_list" ""
 
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 #                     Fetching alias names from the env file
@@ -56,7 +56,7 @@ override_env_file "alias alias_1='echo "local alias 1"'"
 
 actual_list=$(_sherpa_parse_local_env_file)
 
-is "$actual_list" "alias_1"
+assert_equal "$actual_list" "alias_1"
 
 # ==============================================================================
 # ++++ It is not case sensitive
@@ -65,7 +65,7 @@ override_env_file "alias ALIAS_2='echo "local alias 2"'"
 
 actual_list=$(_sherpa_parse_local_env_file)
 
-is "$actual_list" "ALIAS_2"
+assert_equal "$actual_list" "ALIAS_2"
 
 # ==============================================================================
 # ++++ It works for multiline aliases
@@ -77,7 +77,7 @@ EOF
 
 actual_list=$(_sherpa_parse_local_env_file)
 
-is "$actual_list" "alias_multi_line"
+assert_equal "$actual_list" "alias_multi_line"
 
 # ==============================================================================
 # ++++ It ignores commented lines
@@ -86,7 +86,7 @@ override_env_file "# alias alias_commented='echo "local alias 0";'"
 
 actual_list=$(_sherpa_parse_local_env_file)
 
-is "$actual_list" ""
+assert_equal "$actual_list" ""
 
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 #                   Fetching function names from the env file
@@ -103,7 +103,7 @@ EOF
 
 actual_list=$(_sherpa_parse_local_env_file)
 
-is "$actual_list" "function_1"
+assert_equal "$actual_list" "function_1"
 
 # ==============================================================================
 # ++++ It is not case sensitive
@@ -116,7 +116,7 @@ EOF
 
 actual_list=$(_sherpa_parse_local_env_file)
 
-is "$actual_list" "FUNCTION_2"
+assert_equal "$actual_list" "FUNCTION_2"
 
 # ==============================================================================
 # ++++ It works for functions defined with the function keyword
@@ -129,7 +129,7 @@ EOF
 
 actual_list=$(_sherpa_parse_local_env_file)
 
-is "$actual_list" "function_3"
+assert_equal "$actual_list" "function_3"
 
 # ==============================================================================
 # ++++ It ignores commented lines
@@ -144,4 +144,4 @@ EOF
 
 actual_list=$(_sherpa_parse_local_env_file)
 
-is "$actual_list" ""
+assert_equal "$actual_list" ""

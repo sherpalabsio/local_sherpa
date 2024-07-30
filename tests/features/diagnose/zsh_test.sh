@@ -43,7 +43,7 @@ stub "chpwd_functions=\"\""
 
 subject
 
-like "$(cat "$STDERR_FILE")" "\[NOT OK\] cd hook setup" "It warns when the cd hook is not setup correctly"
+assert_contain "$(cat "$STDERR_FILE")" "\[NOT OK\] cd hook setup" "It warns when the cd hook is not setup correctly"
 
 reset_stubs
 
@@ -52,4 +52,4 @@ reset_stubs
 # ++++ It acknowledges when the cd hook is setup correctly
 subject
 
-like "$(cat "$STDOUT_FILE")" "\[OK\] cd hook setup" "It acknowledges when the cd hook is setup correctly"
+assert_contain "$(cat "$STDOUT_FILE")" "\[OK\] cd hook setup" "It acknowledges when the cd hook is setup correctly"

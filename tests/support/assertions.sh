@@ -2,36 +2,36 @@
 #
 # == Usage:
 
-# is():
+# assert_equal():
 #   - Compares two values
 #   - Parameters:
 #       - actual: The actual value to compare.
 #       - expected: The expected value to compare against.
 #       - message: An optional message to display along with the result.
-#   - Example usage: is "$actual" "$expected" "Values should be equal"
+#   - Example usage: assert_equal "$actual" "$expected" "Values should be equal"
 
-# is_compact():
-#   - The same as is() but it removes all tabs, spaces and new lines before
+# assert_equal_compact():
+#   - The same as assert_equal() but it removes all tabs, spaces and new lines before
 #     comparing the values
 
-# like():
+# assert_contain():
 #   - Checks if the actual value contains the expected pattern
 #   - Parameters:
 #       - actual: The actual value to check.
 #       - expected_pattern: The pattern to match against.
 #       - message: An optional message to display along with the result.
-#   - Example usage: like "$actual" "$expected_pattern" "Value should match the pattern"
+#   - Example usage: assert_contain "$actual" "$expected_pattern" "Value should match the pattern"
 
-# is_undefined():
+# assert_undefined():
 #   - Checks if a variable, a function or an alias is undefined
 #   - Parameters:
 #       - item: The name of the variable, function or alias to check.
 #       - message: An optional message to display along with the result.
-#   - Example usage: is_undefined "some_variable" "Variable should be undefined"
+#   - Example usage: assert_undefined "some_variable" "Variable should be undefined"
 
 
 # Exact match
-is(){
+assert_equal(){
   local -r actual="$1"
   local -r expected="$2"
   local -r message="$3"
@@ -49,7 +49,7 @@ is(){
 }
 
 # Exact match buth without tabs, spaces and new lines
-is_compact(){
+assert_equal_compact(){
   local -r actual="$1"
   local -r expected="$2"
   local -r message="$3"
@@ -57,11 +57,11 @@ is_compact(){
   local -r actual_trimmed=$(echo "$actual" | tr -d '[:space:]')
   local -r expected_trimmed=$(echo "$expected" | tr -d '[:space:]')
 
-  is "$actual_trimmed" "$expected_trimmed" "$message"
+  assert_equal "$actual_trimmed" "$expected_trimmed" "$message"
 }
 
 # Partial match
-like(){
+assert_contain(){
   local -r actual="$1"
   local -r expected_pattern="$2"
   local -r message="$3"
@@ -79,7 +79,7 @@ like(){
 }
 
 # Check if a variable, a function or an alias is undefined
-is_undefined(){
+assert_undefined(){
   local -r item="$1"
   local -r message="$2"
 

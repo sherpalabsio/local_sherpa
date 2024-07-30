@@ -2,9 +2,9 @@ source tests/support/app_helper.sh
 
 # ==============================================================================
 # ++++ Senety checks: Project 1 env is not loaded
-is_undefined "var_1"
-is_undefined "alias_1"
-is_undefined "function_1"
+assert_undefined "var_1"
+assert_undefined "alias_1"
+assert_undefined "function_1"
 
 # ==============================================================================
 # PWD: /
@@ -12,6 +12,6 @@ is_undefined "function_1"
 sherpa symlink project_1
 
 # shellcheck disable=SC2154
-is "$var_1" "LOCAL VAR PROJECT 1" "Symlinked env is loaded (var)"
-is "$(alias_1)" "LOCAL ALIAS PROJECT 1" "Symlinked env is loaded (alias)"
-is "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Symlinked env is loaded (function)"
+assert_equal "$var_1" "LOCAL VAR PROJECT 1" "Symlinked env is loaded (var)"
+assert_equal "$(alias_1)" "LOCAL ALIAS PROJECT 1" "Symlinked env is loaded (alias)"
+assert_equal "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Symlinked env is loaded (function)"
