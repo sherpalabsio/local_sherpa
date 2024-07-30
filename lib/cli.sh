@@ -2,44 +2,45 @@ sherpa() {
   local -r command="$1"
 
   local usage_text="Example usage:
-  sherpa trust          - Trust the current directory   | aliases: t/allow/grant/permit
-  sherpa untrust        - Untrust the current directory | aliases: u/disallow/revoke/block/deny
-  sherpa edit           - Edit the local env file       | aliases: e/init
-  sherpa off            - Turn Sherpa off               | aliases: sleep/disable
-  sherpa on             - Turn Sherpa on                | aliases: work/enable
-  sherpa symlink [PATH] - Symlink a local env file      | aliases: link/slink
-  sherpa reload         - Reload the local env          | aliases: r
+  sherpa trust          - Trust the current directory   | Aliases: t, allow, grant, permit
+  sherpa untrust        - Untrust the current directory | Aliases: u, disallow, revoke, block, deny
+  sherpa edit           - Edit the local env file       | Aliases: e, init
+  sherpa off            - Turn Sherpa off               | Aliases: disable, sleep
+  sherpa on             - Turn Sherpa on                | Aliases: enable, work
+  sherpa symlink [PATH] - Symlink a local env file      | Aliases: link, slink
+  sherpa reload         - Reload the local env          | Alias: r
 
 Troubleshooting:
-  sherpa status   - Show debug status info | aliases: s/stat
+  sherpa status   - Show debug status info | Aliases: s, stat
   sherpa diagnose - Troubleshoot Sherpa
 
 Log levels:
-  sherpa talk more   - Decrease the log level
-  sherpa talk less   - Increase the log level
-  sherpa talk        - Debug level | Aliases: debug
+  sherpa talk more   - Decrease the log level | Alias: -
+  sherpa talk less   - Increase the log level | Alias: +
+  sherpa debug       - Debug level            | Alias: dd
   sherpa shh         - Silence
-  sherpa log [LEVEL] - Set a specific log level | Levels: debug, info, warn, error, silent | Aliases: talk"
+  sherpa log         - Open the log options menus | Alias: talk
+  sherpa log [LEVEL] - Set a specific log level   | Levels: debug, info, warn, error, silent | Alias: talk"
 
   if [ "$USE_SHERPA_DEV_VERSION" = true ]; then
     usage_text="Dev version\n\n$usage_text"
   fi
 
   case $command in
-  -h|--help|help|'') echo "$usage_text";;
-  t|trust|allow|grant|permit) _sherpa_cli_trust;;
+                     -h|--help|help|'') echo "$usage_text";;
+            t|trust|allow|grant|permit) _sherpa_cli_trust;;
   u|untrust|disallow|revoke|block|deny) _sherpa_cli_untrust;;
-        e|edit|init) _sherpa_cli_edit;;
-  off|sleep|disable) _sherpa_cli_disable;;
-     on|work|enable) _sherpa_cli_enable;;
-           log|talk) shift; _sherpa_cli_set_log_level "$1";;
-              debug) _sherpa_cli_set_log_level "$SHERPA_LOG_LEVEL_DEBUG";;
-                shh) _sherpa_cli_set_log_level "$SHERPA_LOG_LEVEL_SILENT";;
-      s|stat|status) _sherpa_print_status;;
-           diagnose) _sherpa_cli_diagnose;;
- symlink|link|slink) _sherpa_cli_symlink "$2";;
-           r|reload) _sherpa_cli_reload;;
-                  *) echo "Sherpa doesn't understand what you mean";;
+                           e|edit|init) _sherpa_cli_edit;;
+                     off|sleep|disable) _sherpa_cli_disable;;
+                        on|work|enable) _sherpa_cli_enable;;
+                              log|talk) shift; _sherpa_cli_set_log_level "$1";;
+                              debug|dd) _sherpa_cli_set_log_level "$SHERPA_LOG_LEVEL_DEBUG";;
+                                   shh) _sherpa_cli_set_log_level "$SHERPA_LOG_LEVEL_SILENT";;
+                         s|stat|status) _sherpa_print_status;;
+                              diagnose) _sherpa_cli_diagnose;;
+                    symlink|link|slink) _sherpa_cli_symlink "$2";;
+                              r|reload) _sherpa_cli_reload;;
+                                     *) echo "Sherpa doesn't understand what you mean";;
   esac
 }
 
@@ -82,13 +83,70 @@ _sherpa_cli_enable() {
 
 _sherpa_cli_set_log_level() {
   case $1 in
-     less) _sherpa_increase_log_level;;
-     more) _sherpa_decrease_log_level;;
-       '') _sherpa_set_log_level "$SHERPA_LOG_LEVEL_DEBUG";;
+   less|-) _sherpa_increase_log_level;;
+   more|+) _sherpa_decrease_log_level;;
+       '') _sherpa_cli_log_level_menu;;
         *) _sherpa_set_log_level "$1";;
   esac
 
+  # Don't change the log level if the user ctrl-c'd the menu
+  # shellcheck disable=SC2181
+  [ $? -ne 0 ] && return 1
+
   _sherpa_log "Sherpa: Log level set to: $(_sherpa_get_log_level_in_text)"
+}
+
+_sherpa_cli_log_level_menu() {
+  trap '__sherpa_cli_clear_last_lines 6; trap - SIGINT; return 1' SIGINT
+
+  local -r current="\033[32m ❮ current\033[0m"
+
+  echo "Select the log level:"
+  echo -e "1) Debug$( [[ "$SHERPA_LOG_LEVEL" == "0" ]] && echo -e "$current " )"
+  echo -e "2) Info$( [[ "$SHERPA_LOG_LEVEL" == "1" ]] && echo -e "$current " )"
+  echo -e "3) Warn$( [[ "$SHERPA_LOG_LEVEL" == "2" ]] && echo -e "$current " )"
+  echo -e "4) Error$( [[ "$SHERPA_LOG_LEVEL" == "3" ]] && echo -e "$current " )"
+  echo -e "5) Silent 🤫$( [[ "$SHERPA_LOG_LEVEL" == "4" ]] && echo -e "$current " )"
+  echo -n "Enter your choice [1-5]: "
+
+  local choice
+
+  if [[ -n $ZSH_VERSION ]]; then
+    read -rk1 choice
+  else
+    read -rn1 choice
+  fi
+
+  trap - SIGINT
+
+  __sherpa_cli_clear_last_lines 6
+
+  local -r esc=$(printf "\033")
+  if [[ "$choice" == "$esc" ]]; then
+    return 1
+  fi
+
+  local -r enter=$'\n'
+  if [[ "$choice" == "$enter" ]]; then
+    __sherpa_cli_clear_last_lines 1
+    return 1
+  fi
+
+  [[ "$choice" =~ ^[0-9]$ ]] && choice=$((choice - 1))
+
+  _sherpa_set_log_level "$choice"
+}
+
+__sherpa_cli_clear_last_lines() {
+  local -r number_of_lines_to_clear=$1
+
+  echo -en "\033[2K"
+  echo -en "\r"
+
+  for _ in $(seq "$number_of_lines_to_clear"); do
+    echo -en "\033[1A"
+    echo -en "\033[2K"
+  done
 }
 
 _sherpa_cli_diagnose() {
