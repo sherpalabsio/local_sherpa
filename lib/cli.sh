@@ -154,9 +154,6 @@ __sherpa_cli_clear_last_lines() {
 }
 
 _sherpa_cli_diagnose() {
-  echo "Sherpa is performing a self-assessment..."
-  echo ""
-
   if [ -n "$ZSH_VERSION" ]; then
     zsh -i "$SHERPA_DIR/bin/diagnose_zsh"
   else

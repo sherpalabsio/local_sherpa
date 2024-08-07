@@ -19,6 +19,54 @@ print_error() {
   printf "\e[31m%s\e[0m\n" "$message" >&2
 }
 
+check_local_env_file() {
+  _check_local_env_file_exists &&
+    _check_local_env_file_readable &&
+    _check_local_env_file_has_no_shell_errors &&
+    _check_local_env_file_trusted &&
+    print_success "[OK] Local $SHERPA_ENV_FILENAME file"
+}
+
+_check_local_env_file_exists() {
+  if [ ! -f "$SHERPA_ENV_FILENAME" ]; then
+    print "There is no local $SHERPA_ENV_FILENAME file. Skipping local tests."
+    return 1
+  fi
+}
+
+_check_local_env_file_readable() {
+  if ! cat "$SHERPA_ENV_FILENAME" >/dev/null 2>&1; then
+    print_error "[NOT OK] Local $SHERPA_ENV_FILENAME file"
+    echo "Cannot read the file." >&2
+    return 1
+  fi
+}
+
+_check_local_env_file_has_no_shell_errors() {
+  # shellcheck disable=SC1090
+  local -r error_output=$(source "$SHERPA_ENV_FILENAME" 2>&1 >/dev/null)
+
+  if [[ -n "$error_output" ]]; then
+    print_error "[NOT OK] Local $SHERPA_ENV_FILENAME file"
+    echo "$error_output" >&2
+    return 1
+  fi
+}
+
+_check_local_env_file_trusted() {
+  local -r current_log_level=$SHERPA_LOG_LEVEL
+  SHERPA_LOG_LEVEL=$SHERPA_LOG_LEVEL_WARN
+  local -r output=$(_sherpa_verify_trust 2>&1)
+  SHERPA_LOG_LEVEL=$current_log_level
+
+  if [[ -n "$output" ]]; then
+    print_error "[NOT OK] Local $SHERPA_ENV_FILENAME file"
+    echo "$output" >&2
+    return 1
+  fi
+}
+
+
 check_enabled() {
   if [ "$SHERPA_ENABLED" = true ]; then
     print_success "[OK] Enabled"
