@@ -113,3 +113,12 @@ _sherpa_stash_local_env() {
   _sherpa_log_debug "AutoStashing functions: ${function_names[*]}"
   sherpa::env_stash.stash_functions "$varstash_dir" "${function_names[@]}"
 }
+
+_sherpa_test_local_env_file_for_shell_errors() {
+  local -r error_output=$(source "$SHERPA_ENV_FILENAME" 2>&1 >/dev/null)
+
+  if [[ -n "$error_output" ]]; then
+    _sherpa_log_error "Error in $SHERPA_ENV_FILENAME" "$error_output"
+    return 1
+  fi
+}

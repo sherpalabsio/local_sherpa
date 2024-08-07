@@ -61,8 +61,12 @@ _sherpa_cli_edit() {
   else
     eval "$EDITOR $SHERPA_ENV_FILENAME"
   fi
-  _sherpa_trust_current_dir && _sherpa_unload_env_of_current_dir &&
-    _sherpa_load_env_from_current_dir
+
+  _sherpa_trust_current_dir &&
+    _sherpa_unload_env_of_current_dir &&
+    _sherpa_load_env_from_current_dir 2> /dev/null
+
+  _sherpa_test_local_env_file_for_shell_errors
 }
 
 _sherpa_cli_disable() {
