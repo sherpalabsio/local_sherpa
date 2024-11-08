@@ -10,6 +10,10 @@ _sherpa_print_status() {
   fi
 
   echo
+  echo "==================== Trusted dirs ===================="
+  __sherpa_status_print_trusted_dirs
+
+  echo
   echo "==================== Local status ===================="
   __sherpa_status_print_local_env_file_info
   __sherpa_status_print_loaded_envs
@@ -18,6 +22,16 @@ _sherpa_print_status() {
   echo "===================== Debug info ====================="
   echo "Config dir:   $SHERPA_CONFIG_DIR"
   echo "Checksum dir: $SHERPA_CHECKSUM_DIR"
+}
+
+__sherpa_status_print_trusted_dirs() {
+  for checksum_file in "$SHERPA_CHECKSUM_DIR"/*; do
+    trusted_dir=$(cut -d '|' -f 2 "$checksum_file")
+
+    if _sherpa_verify_trust "$trusted_dir" > /dev/null 2>&1; then
+      echo "$trusted_dir"
+    fi
+  done
 }
 
 __sherpa_status_print_local_env_file_info() {

@@ -21,12 +21,20 @@ _calculate_checksum() {
 }
 
 _sherpa_verify_trust() {
+  if [ -n "$1" ]; then
+    local -r target_dir="$1"
+  else
+    local -r target_dir=$(realpath "$(pwd)")
+  fi
+
   local checksum_file
-  checksum_file="$SHERPA_CHECKSUM_DIR/$(realpath "$(pwd)" | md5sum | cut -d ' ' -f 1)"
+  checksum_file="$SHERPA_CHECKSUM_DIR/$(echo "$target_dir" | md5sum | cut -d ' ' -f 1)"
 
   local current_checksum
 
-  if ! current_checksum=$(_calculate_checksum); then
+  local -r env_file="$target_dir/$SHERPA_ENV_FILENAME"
+
+  if ! current_checksum=$(_calculate_checksum "$env_file"); then
     # Skip if the checksum calculation failed
     return 1
   fi
@@ -38,7 +46,7 @@ _sherpa_verify_trust() {
   fi
 
   local stored_checksum
-  stored_checksum=$(cat "$checksum_file")
+  stored_checksum=$(cut -d '|' -f 1 "$checksum_file")
 
   # Did the local env file change?
   if [[ "$current_checksum" != "$stored_checksum" ]]; then
@@ -70,7 +78,7 @@ _sherpa_trust_dir() {
     return 1
   fi
 
-  echo "$current_checksum" > "$checksum_file"
+  echo "$current_checksum|$env_dir" > "$checksum_file"
   _sherpa_log_info "Trusted!"
 
   return 0
