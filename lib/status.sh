@@ -1,13 +1,23 @@
 _sherpa_print_status() {
-  echo "==================== Global status ===================="
+  echo "======================= Config ======================="
   echo "Enabled: $SHERPA_ENABLED"
   echo "Log level: $(_sherpa_get_log_level_in_text) ($SHERPA_LOG_LEVEL)"
   echo "Local env file name: $SHERPA_ENV_FILENAME"
+  if [ -n "$SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING" ]; then
+    echo "Dynamic env file parsing: enabled"
+  else
+    echo "Dynamic env file parsing: disabled"
+  fi
 
   echo
   echo "==================== Local status ===================="
   __sherpa_status_print_local_env_file_info
   __sherpa_status_print_loaded_envs
+
+  echo
+  echo "===================== Debug info ====================="
+  echo "Config dir:   $SHERPA_CONFIG_DIR"
+  echo "Checksum dir: $SHERPA_CHECKSUM_DIR"
 }
 
 __sherpa_status_print_local_env_file_info() {
