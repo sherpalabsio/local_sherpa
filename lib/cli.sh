@@ -62,7 +62,7 @@ _sherpa_cli_untrust() {
 }
 
 _sherpa_cli_edit() {
-  echo "hint: Waiting for your editor to close the file..."
+  _sherpa_log "Sherpa: Waiting for your editor to close the file..."
   if [ -z "$EDITOR" ]; then
     _sherpa_log_warn "EDITOR is not set. Falling back to vi."
     vi "$SHERPA_ENV_FILENAME"
