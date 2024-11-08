@@ -5,7 +5,7 @@ sherpa() {
     local -r version_info="Version: $SHERPA_VERSION"
   fi
 
-  local -r usage_text="sherpa loads and unloads environment on a per-directory basis.
+  local -r usage_text="Sherpa loads and unloads environment on a per-directory basis.
 
 $version_info
 
