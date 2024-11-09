@@ -1,20 +1,17 @@
-# Sherpa - Project based development environment
+# Local Sherpa - Folder based development environment in your terminal
 
 <p align="center">
   <!-- <img src="_github_assets/logo.svg" /> -->
   <img src="_github_assets/logo_light.png" alt="Logo" />
 </p>
 
+You define shell variables, aliases and functions and Sherpa will load and unload them as you `cd` through folders, space and time.
 
-Sherpa carries your local environment settings for you as you `cd` through projects, space and time.
+It's similar to Direnv but with added support for aliases and functions, though it only supports Zsh and Bash.
 
-## Status
+## Video Demo
 
-🚧 Unstable, under active development.
-
-[![example workflow](https://github.com/tothpeter/local_sherpa/actions/workflows/ci.yml/badge.svg)](https://github.com/tothpeter/local_sherpa/actions/workflows/ci.yml)
-
-## Demo - Core functionality
+## ASCII Demo
 
 ```shell
 $ cd ~/projects
@@ -69,12 +66,19 @@ function_1() {
 }
 ```
 
+## Status
+
+Version: beta 1.
+
+[![example workflow](https://github.com/tothpeter/local_sherpa/actions/workflows/ci.yml/badge.svg)](https://github.com/tothpeter/local_sherpa/actions/workflows/ci.yml)
+
 ## Basic usage
 
 1. $ cd ~/projects/project_awesome
 2. $ sherpa edit
-    1. It opens the local env file in your editor
-    2. It trusts and loads it automatically when you close it
+    1. Sherpa opens the local env file in your editor
+    2. You update, save then close it
+    3. Sherpa unloads the previous version, trusts and loads the current one automatically
 3. You can nest envs by repeating this in subdirectories
 4. [Disco](https://www.youtube.com/watch?v=UkSPUDpe0U8)
 
@@ -124,6 +128,8 @@ $ echo "source ~/.dotfiles/lib/local_sherpa/init.sh" >> ~/.bashrc
 # Exclude the local env files (.envrc) globally in Git
 $ echo ".envrc" >> $(git config --global core.excludesfile)
 
+# Reload or restart your shell
+
 # Optional but recommended
 alias se='sherpa edit'
 alias st='sherpa trust'
@@ -136,7 +142,7 @@ See the full list of commands by running `$ sherpa` in your shell.
 
 ### Security
 
-Sherpa won't load any local env file unless you trust the directory first.
+Sherpa won't load any local env file unless you trust it first.\
 This is to prevent running malicious code when you `cd` into a directory.
 
 ``` bash
@@ -222,12 +228,12 @@ export SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING=true
 It affects only the current and new terminal sessions.
 
 ```shell
-sherpa talk more   - Decrease the log level | Alias: -
-sherpa talk less   - Increase the log level | Alias: +
-sherpa debug       - Debug level            | Alias: dd
-sherpa shh         - Silence
-sherpa log         - Open the log options menu | Alias: talk
-sherpa log [LEVEL] - Set a specific log level  | Levels: debug, info, warn, error, silent | Alias: talk
+$ sherpa talk more   # - Decrease the log level | Alias: -
+$ sherpa talk less   # - Increase the log level | Alias: +
+$ sherpa debug       # - Debug level            | Alias: dd
+$ sherpa shh         # - Silence
+$ sherpa log         # - Open the log options menu | Alias: talk
+$ sherpa log [LEVEL] # - Set a specific log level  | Levels: debug, info, warn, error, silent | Alias: talk
 ```
 
 ### Disable/enable Sherpa

@@ -47,4 +47,4 @@ if [ -n "$ZSH_VERSION" ]; then
   _sherpa_load_env_from_current_dir
 fi
 
-export SHERPA_VERSION="0.1.0"
+export SHERPA_VERSION="1.0.0-beta.1"
