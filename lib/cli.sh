@@ -1,13 +1,13 @@
 sherpa() {
   if [ "$USE_SHERPA_DEV_VERSION" = true ]; then
-    local -r version_info="Version: dev"
+    local -r version_info="dev"
   else
-    local -r version_info="Version: $SHERPA_VERSION"
+    local -r version_info="$SHERPA_VERSION"
   fi
 
   local -r usage_text="Sherpa loads and unloads environment on a per-directory basis.
 
-$version_info
+Version: $version_info
 
 Usage:
   sherpa <command> [options]
@@ -35,7 +35,6 @@ Log levels:
 
   local -r command="$1"
   case $command in
-                     -h|--help|help|'') echo "$usage_text";;
             t|trust|allow|grant|permit) _sherpa_cli_trust;;
   u|untrust|disallow|revoke|block|deny) _sherpa_cli_untrust;;
                            e|edit|init) _sherpa_cli_edit;;
@@ -48,6 +47,8 @@ Log levels:
                               diagnose) _sherpa_cli_diagnose;;
                     symlink|link|slink) _sherpa_cli_symlink "$2";;
                               r|reload) _sherpa_cli_reload;;
+                  -v|--version|version) echo "$version_info";;
+                     -h|--help|help|'') echo "$usage_text";;
                                      *) echo "Sherpa doesn't understand what you mean";;
   esac
 }
