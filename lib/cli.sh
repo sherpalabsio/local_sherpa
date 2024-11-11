@@ -40,7 +40,7 @@ Log levels:
                            e|edit|init) _sherpa_cli_edit;;
                      off|sleep|disable) _sherpa_cli_disable;;
                         on|work|enable) _sherpa_cli_enable;;
-                              log|talk) shift; _sherpa_cli_set_log_level "$1";;
+                              log|talk) _sherpa_cli_set_log_level "$2";;
                               debug|dd) _sherpa_cli_set_log_level "$SHERPA_LOG_LEVEL_DEBUG";;
                                    shh) _sherpa_cli_set_log_level "$SHERPA_LOG_LEVEL_SILENT";;
                          s|stat|status) _sherpa_print_status;;
