@@ -5,9 +5,9 @@
   <img src="_github_assets/logo_light.png" alt="Logo" />
 </p>
 
-You define shell variables, aliases and functions and Sherpa will load and unload them as you `cd` through folders, space and time.
+Sherpa is a shell extension that allows you to define new or override existing variables, aliases and functions in your shell on a per-folder basis, with support for nesting.
 
-It's similar to Direnv but with added support for aliases and functions, though it only supports Zsh and Bash.
+Functional wise it is similar to [Direnv](https://github.com/direnv/direnv) but with added support for aliases and functions, though it only supports Zsh and Bash.
 
 ## Video Demo
 
