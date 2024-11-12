@@ -9,7 +9,7 @@ actual_warning_message=$(SHERPA_LOG_LEVEL="$SHERPA_LOG_LEVEL_INFO" ; cd project_
 expected_warning_message="The local env file is not trusted."
 
 # Sherpa warns the user
-assert_contain "$actual_warning_message" "$expected_warning_message" 'It warns when the local env file is not trusted'
+assert_contain "$actual_warning_message" "$expected_warning_message" "It warns when the local env file is not trusted"
 
 # And it doesn't load the local env
 cd project_1
