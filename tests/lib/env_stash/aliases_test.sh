@@ -25,6 +25,7 @@ assert_equal "$actual_existing_alias_definition1" "$expected_existing_alias_defi
 actual_existing_alias_definition2=${__sherpa__env_stash__aliases_to_restore__parent_child[*]:1:1}
 assert_equal "$actual_existing_alias_definition2" "$expected_existing_alias_definition2"
 
+
 # ==============================================================================
 # ++++ It stores the names of new aliases in the right list
 
@@ -35,6 +36,7 @@ expected_new_alias_names="non_existing_alias1 non_existing_alias2"
 actual_new_alias_names=${__sherpa__env_stash__aliases_to_remove__parent_child[*]}
 
 assert_equal "$actual_new_alias_names" "$expected_new_alias_names"
+
 
 # ==============================================================================
 # ++++ It sanitizes the definition of existing aliases

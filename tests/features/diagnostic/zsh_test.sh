@@ -5,6 +5,10 @@
 
 source tests/support/app_helper.sh
 
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+#                              Self diagnostic (Zsh)
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+
 stub() {
   local stub_definition=$1=$2
 
@@ -39,6 +43,7 @@ subject() {
 
 # ==============================================================================
 # ++++ It warns when the cd hook is not setup correctly
+
 stub "chpwd_functions=\"\""
 
 subject
@@ -50,6 +55,7 @@ reset_stubs
 
 # ==============================================================================
 # ++++ It acknowledges when the cd hook is setup correctly
+
 subject
 
 assert_contain "$(cat "$STDOUT_FILE")" "\[OK\] cd hook setup" "It acknowledges when the cd hook is setup correctly"

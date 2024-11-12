@@ -5,6 +5,10 @@
 
 source tests/support/app_helper.sh
 
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+#                             Self diagnostic (Bash)
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+
 stub() {
   local stub_definition=$1=$2
 
@@ -45,8 +49,10 @@ subject() {
   sherpa diagnose 1> "$STDOUT_FILE" 2> "$STDERR_FILE"
 }
 
+
 # ==============================================================================
 # ++++ It warns when Sherpa is disabled
+
 sherpa disable
 
 subject
@@ -56,6 +62,7 @@ assert_contain "$(cat "$STDERR_FILE")" "Sherpa is disabled!" "It warns when Sher
 
 # ==============================================================================
 # ++++ It acknowledges when Sherpa is enabled
+
 sherpa enable
 
 subject
@@ -66,6 +73,7 @@ assert_contain "$(cat "$STDOUT_FILE")" "\[OK\] Enabled" "It acknowledges when Sh
 # ==============================================================================
 # ++++ It warns when the sha256sum function is not available
 # Stub the type function to simulate a missing sha256sum function
+
 fake_type() {
   if [[ "$1" = "sha256sum" ]]; then
     echo "sha256sum: command not found" >&2
@@ -85,6 +93,7 @@ reset_stubs
 
 # ==============================================================================
 # ++++ It acknowledges when the sha256sum function is available
+
 subject
 
 assert_contain "$(cat "$STDOUT_FILE")" "\[OK\] sha256sum utility" "It acknowledges when the sha256sum function is available"
@@ -92,6 +101,7 @@ assert_contain "$(cat "$STDOUT_FILE")" "\[OK\] sha256sum utility" "It acknowledg
 
 # ==============================================================================
 # ++++ It warns when the cd hook is not setup correctly (the PROMPT_COMMAND got tempered with)
+
 stub "export PROMPT_COMMAND=\"\""
 
 subject
@@ -103,6 +113,7 @@ reset_stubs
 
 # ==============================================================================
 # ++++ It acknowledges when the cd hook is setup correctly
+
 subject
 
 assert_contain "$(cat "$STDOUT_FILE")" "\[OK\] cd hook setup" "It acknowledges when the cd hook is setup correctly"
@@ -111,6 +122,7 @@ assert_contain "$(cat "$STDOUT_FILE")" "\[OK\] cd hook setup" "It acknowledges w
 # ==============================================================================
 # ++++ It warns when trusting a directory fails
 # Stub the sha256sum function to simulate a directory trust failure
+
 fake_sha256sum() {
   echo "sha256sum: command not found" >&2
   exit 1
@@ -125,6 +137,7 @@ reset_stubs
 
 # ==============================================================================
 # ++++ It acknowledges when trusting a directory succeeds
+
 subject
 
 assert_contain "$(cat "$STDOUT_FILE")" "\[OK\] Trusting env files" "It acknowledges when trusting a directory succeeds"
@@ -133,6 +146,7 @@ assert_contain "$(cat "$STDOUT_FILE")" "\[OK\] Trusting env files" "It acknowled
 # ==============================================================================
 # ++++ It warns when loading the local env fails
 # Stub the source command to simulate a local env loading failure
+
 fake_source() {
   local file_path="$1"
 
@@ -149,8 +163,10 @@ subject
 assert_contain "$(cat "$STDERR_FILE")" "\[NOT OK\] Loading the local environment" "It warns when loading the local env fails"
 reset_stubs
 
+
 # ==============================================================================
 # ++++ It acknowledges when loading the local env succeeds
+
 subject
 
 assert_contain "$(cat "$STDOUT_FILE")" "\[OK\] Loading the local environment" "It acknowledges when loading the local env succeeds"

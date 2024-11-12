@@ -36,6 +36,7 @@ actual_new_function_names=${__sherpa__env_stash__functions_to_remove__parent_chi
 
 assert_equal "$actual_new_function_names" "$expected_new_function_names"
 
+
 # ==============================================================================
 # ++++ It sanitizes the definition of existing functions
 

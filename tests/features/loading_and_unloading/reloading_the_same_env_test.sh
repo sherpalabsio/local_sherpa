@@ -1,19 +1,21 @@
 source tests/support/app_helper.sh
 
-# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-#                                      Setup
-# ______________________________________________________________________________
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+#                             Reloading the same env
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+
+# ==============================================================================
+# ++++ Setup
 source .bash_profile # Imitate global env
 _sherpa_trust_dir "project_1"
 
-# ++++ Senety checks: the Global env is loaded
+# == Senety checks: the Global env is loaded
 assert_equal "$var_1" "GLOBAL VAR" "Global env is ready (var)"
 assert_equal "$(alias_1)" "GLOBAL ALIAS" "Global env is ready (alias)"
 assert_equal "$(function_1)" "GLOBAL FUNCTION" "Global env is ready (function)"
 
-# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
-#                             Reloading the same env
-# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+
+# ==============================================================================
 # PWD: /project_1
 
 cd project_1

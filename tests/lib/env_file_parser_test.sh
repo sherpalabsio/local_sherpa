@@ -15,6 +15,7 @@ actual_list=$(_sherpa_parse_local_env_file)
 
 assert_equal "$actual_list" "var_1"
 
+
 # ==============================================================================
 # ++++ It is not case sensitive
 
@@ -23,6 +24,7 @@ override_env_file "export VAR_2="local var 1""
 actual_list=$(_sherpa_parse_local_env_file)
 
 assert_equal "$actual_list" "VAR_2"
+
 
 # ==============================================================================
 # ++++ It works for multiline variables
@@ -36,6 +38,7 @@ actual_list=$(_sherpa_parse_local_env_file)
 
 assert_equal "$actual_list" "var_multi_line"
 
+
 # ==============================================================================
 # ++++ It ignores commented lines
 
@@ -44,6 +47,7 @@ override_env_file "# export var_commented="local var 0""
 actual_list=$(_sherpa_parse_local_env_file)
 
 assert_equal "$actual_list" ""
+
 
 # ==============================================================================
 # ++++ It works for dynamically created variables
@@ -83,6 +87,7 @@ actual_list=$(_sherpa_parse_local_env_file)
 
 assert_equal "$actual_list" "alias_1"
 
+
 # ==============================================================================
 # ++++ It is not case sensitive
 
@@ -91,6 +96,7 @@ override_env_file "alias ALIAS_2='echo "local alias 2"'"
 actual_list=$(_sherpa_parse_local_env_file)
 
 assert_equal "$actual_list" "ALIAS_2"
+
 
 # ==============================================================================
 # ++++ It works for multiline aliases
@@ -104,6 +110,7 @@ actual_list=$(_sherpa_parse_local_env_file)
 
 assert_equal "$actual_list" "alias_multi_line"
 
+
 # ==============================================================================
 # ++++ It ignores commented lines
 
@@ -112,6 +119,7 @@ override_env_file "# alias alias_commented='echo "local alias 0";'"
 actual_list=$(_sherpa_parse_local_env_file)
 
 assert_equal "$actual_list" ""
+
 
 # ==============================================================================
 # ++++ It works for dynamically created aliases
@@ -149,6 +157,7 @@ actual_list=$(_sherpa_parse_local_env_file)
 
 assert_equal "$actual_list" "function_1"
 
+
 # ==============================================================================
 # ++++ It is not case sensitive
 
@@ -162,6 +171,7 @@ actual_list=$(_sherpa_parse_local_env_file)
 
 assert_equal "$actual_list" "FUNCTION_2"
 
+
 # ==============================================================================
 # ++++ It works for functions defined with the function keyword
 
@@ -174,6 +184,7 @@ EOF
 actual_list=$(_sherpa_parse_local_env_file)
 
 assert_equal "$actual_list" "function_3"
+
 
 # ==============================================================================
 # ++++ It ignores commented lines
@@ -189,6 +200,7 @@ EOF
 actual_list=$(_sherpa_parse_local_env_file)
 
 assert_equal "$actual_list" ""
+
 
 # ==============================================================================
 # ++++ It works for dynamically created functions

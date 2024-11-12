@@ -1,13 +1,15 @@
 source tests/support/app_helper.sh
 _skip_for_zsh
 
-SHERPA_CONFIG_DIR="$TEST_DIR/playground/local_sherpa_config"
-
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 #                                 Log level menu
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 
-# ++++ Senety check
+# ==============================================================================
+# ++++ Setup
+SHERPA_CONFIG_DIR="$TEST_DIR/playground/local_sherpa_config"
+
+# == Senety check
 assert_equal "$SHERPA_LOG_LEVEL" "$SHERPA_LOG_LEVEL_SILENT"
 
 # ==============================================================================
