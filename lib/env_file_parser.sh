@@ -5,6 +5,7 @@ _sherpa_fetch_variable_names_from_env_file() {
       [__vars_after]=''
       [__vars_before]=''
 
+      [aliases]=''
       [functions_source]=''
       [RANDOM]=''
       [LINENO]=''
