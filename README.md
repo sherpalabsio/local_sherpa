@@ -5,9 +5,9 @@
   <img src="_github_assets/logo_light.png" alt="Logo" />
 </p>
 
-Sherpa is a shell extension that allows you to define new or override existing variables, aliases and functions in your shell on a per-folder basis, with support for nesting.
+Sherpa is a shell extension that allows you to define new or override existing variables, aliases and functions on a per-folder basis, with support for nesting.
 
-Functional wise it is similar to [Direnv](https://github.com/direnv/direnv) but with added support for aliases and functions, though it only supports Zsh and Bash.
+It only supports Zsh and Bash but functional wise it is similar to [Direnv](https://github.com/direnv/direnv) with added support for aliases and functions.
 
 ## Video Demo
 
