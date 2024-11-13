@@ -8,8 +8,8 @@ sherpa::env_stash.unstash_all() {
   local -r dir_path="$1"
 
   sherpa::env_stash.unstash_variables "$dir_path"
-  sherpa::env_stash.unstash_aliases "$dir_path"
   sherpa::env_stash.unstash_functions "$dir_path"
+  sherpa::env_stash.unstash_aliases "$dir_path"
 }
 
 sherpa::env_stash._item_to_variable_name() {

@@ -205,6 +205,13 @@ $ cd ..
 # This rolls back the overrides made by the local env for projects
 ```
 
+### Aliases and functions in the env file take precedence
+
+Declaring an alias in the env file with the same name as an existing function
+will override the function. You don't need to call `unalias`.\
+The same applies to declaring functions in the env
+file with the same name as existing aliases.
+
 ### Running a script when leaving a directory
 
 It is not supported currently. Feel free to open a feature request.\

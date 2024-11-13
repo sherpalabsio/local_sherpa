@@ -19,6 +19,8 @@ sherpa::env_stash.stash_functions() {
     else
       sherpa::env_stash._stash_non_existing_function "$function_name" "$variable_name_for_functions_to_remove"
     fi
+
+    sherpa::env_stash._remove_alias_if_shadowing_function "$function_name"
   done
 }
 
@@ -40,6 +42,18 @@ sherpa::env_stash._stash_non_existing_function() {
 
   eval "$variable_name_for_functions_to_remove+=(\"$function_name\")"
 }
+
+sherpa::env_stash._remove_alias_if_shadowing_function() {
+  local -r function_name="$1"
+
+  # Skip if the alias does not exist
+  alias "$function_name" &> /dev/null || return
+
+  local -r variable_name_for_aliases_to_restore=$(sherpa::env_stash._item_to_variable_name "aliases_to_restore" "$dir_path")
+  sherpa::env_stash._stash_existing_alias "$function_name" "$variable_name_for_aliases_to_restore"
+  unalias "$function_name"
+}
+
 
 sherpa::env_stash.unstash_functions() {
   local -r dir_path="$1"
