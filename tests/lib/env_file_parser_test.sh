@@ -122,9 +122,27 @@ assert_equal "$actual_list" ""
 
 
 # ==============================================================================
-# ++++ It works for dynamically created aliases
+# ++++ It works for aliases removed by the env file
+
+override_env_file "unalias removed_alias1 removed_alias2
+unalias removed_alias3"
+
+actual_list=$(_sherpa_parse_local_env_file)
+expect_list="removed_alias1
+removed_alias2
+removed_alias3"
+
+assert_equal "$actual_list" "$expect_list"
+
+
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+#                                Dynamic parsing
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 
 SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING=true
+
+# ==============================================================================
+# ++++ It works for dynamically created aliases
 
 alias untouched_existing_alias="echo 1"
 alias overriden_existing_alias="echo 1"
@@ -140,6 +158,21 @@ expected_list="new_alias
 overriden_existing_alias"
 
 assert_equal "$actual_list" "$expected_list"
+
+
+# ==============================================================================
+# ++++ It works for aliases removed by the env file
+
+override_env_file "unalias removed_alias1 removed_alias2
+unalias removed_alias3"
+
+actual_list=$(_sherpa_parse_local_env_file)
+expect_list="removed_alias1
+removed_alias2
+removed_alias3"
+
+assert_equal "$actual_list" "$expect_list"
+
 
 unset SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING
 

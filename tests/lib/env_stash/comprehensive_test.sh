@@ -198,16 +198,19 @@ assert_undefined "new_associative_array2" "The new associative array2 is removed
 
 alias existing_alias1="echo existing_alias1 original content"
 alias existing_alias2="echo existing_alias2 original content"
+alias alias_removed_the_by_env_file="echo alias_removed_the_by_env_file content"
 
 sherpa::env_stash.stash_aliases "$PWD" "existing_alias1" \
                                        "existing_alias2" \
                                        "new_alias1" \
-                                       "new_alias2"
+                                       "new_alias2" \
+                                       "alias_removed_the_by_env_file"
 
 alias existing_alias1="echo CHANGED 1"
 alias existing_alias2="echo CHANGED 2"
 alias new_alias1="echo new_alias1 content"
 alias new_alias2="echo new_alias2 content"
+unalias alias_removed_the_by_env_file
 
 # ==============================================================================
 # == Senety check
@@ -215,6 +218,7 @@ assert_equal "$(existing_alias1)" "CHANGED 1" "The existed alias1 changed"
 assert_equal "$(existing_alias2)" "CHANGED 2" "The existed alias2 changed"
 assert_equal "$(new_alias1)" "new_alias1 content" "The new alias1 is set"
 assert_equal "$(new_alias2)" "new_alias2 content" "The new alias2 is set"
+assert_undefined "alias_removed_the_by_env_file" "The alias removed by the env file is removed"
 
 sherpa::env_stash.unstash_all "$PWD"
 
@@ -229,6 +233,11 @@ assert_equal "$(existing_alias2)" "existing_alias2 original content" "The existe
 # ++++ It removes the aliases which did not exist at the time of stashing
 assert_undefined "new_alias1" "The new alias1 is removed"
 assert_undefined "new_alias2" "The new alias2 is removed"
+
+
+# ==============================================================================
+# ++++ It restores the removed alias
+assert_equal "$(alias_removed_the_by_env_file)" "alias_removed_the_by_env_file content" "The alias removed by the env file is restored"
 
 
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰

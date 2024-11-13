@@ -35,7 +35,7 @@ _sherpa_fetch_variable_names_from_env_file() {
     fi
 
     # shellcheck disable=SC1090
-    source "$SHERPA_ENV_FILENAME" > /dev/null
+    source "$SHERPA_ENV_FILENAME" &> /dev/null
 
     # == Get a snapshot of the variables after sourcing the local env file
     if [ -n "$ZSH_VERSION" ]; then
@@ -88,12 +88,22 @@ _sherpa_fetch_variable_names_from_env_file() {
 
 _sherpa_fetch_aliase_names_from_env_file() {
   __load_dynamic() {
+    unalias -a
+
+    unalias() {
+      # shellcheck disable=SC2317
+      removed_aliases+=("$@")
+    }
+
     # shellcheck disable=SC1090
-    echo "$(unalias -a; source "$SHERPA_ENV_FILENAME" > /dev/null; compgen -a)"
+    source "$SHERPA_ENV_FILENAME" &> /dev/null
+
+    [ ${#removed_aliases[@]} -gt 0 ] && printf "%s\n" "${removed_aliases[@]}"
+    compgen -a
   }
 
   __load_static() {
-    local -r filter_pattern='^[[:space:]]*alias[[:space:]]'
+    local -r filter_pattern='^[[:space:]]*(alias|unalias)[[:space:]]'
 
     # Cleanup:
     # alias alias_1=... -> alias_1
@@ -116,9 +126,9 @@ _sherpa_fetch_function_names_from_env_file() {
     if [ -n "$ZSH_VERSION" ]; then
       # Unsetting functions with compgen is not working in Zsh because the unset
       # removes compgen itself
-      zsh --no-globalrcs --no-rcs -c 'source "$SHERPA_ENV_FILENAME" > /dev/null; print -l ${(k)functions}'
+      zsh --no-globalrcs --no-rcs -c 'source "$SHERPA_ENV_FILENAME" &> /dev/null; print -l ${(k)functions}'
     else
-      bash --noprofile --norc -c "source $SHERPA_ENV_FILENAME > /dev/null; compgen -A function"
+      bash --noprofile --norc -c "source $SHERPA_ENV_FILENAME &> /dev/null; compgen -A function"
     fi
   }
 

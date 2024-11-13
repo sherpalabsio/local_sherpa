@@ -44,7 +44,10 @@ _check_local_env_file_readable() {
 
 _check_local_env_file_has_no_shell_errors() {
   # shellcheck disable=SC1090
-  local -r error_output=$(source "$SHERPA_ENV_FILENAME" 2>&1 > /dev/null)
+  local -r error_output=$(
+    _sherpa_unload_env_of_current_dir
+    source "$SHERPA_ENV_FILENAME" 2>&1 > /dev/null
+  )
 
   if [[ -n "$error_output" ]]; then
     print_error "[NOT OK] Local $SHERPA_ENV_FILENAME file"
