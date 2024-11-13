@@ -132,6 +132,7 @@ alias overriden_existing_alias="echo 1"
 cat <<EOF | override_env_file
 eval "alias overriden_existing_alias='echo 2'";
 alias new_alias='echo 1';
+echo "Trick" # It ignores print commands in the env file
 EOF
 
 actual_list=$(_sherpa_parse_local_env_file)
