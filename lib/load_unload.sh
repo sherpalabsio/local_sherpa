@@ -107,7 +107,7 @@ _sherpa_stash_local_env() {
 
 _sherpa_test_local_env_file_for_shell_errors() {
   # shellcheck disable=SC1090
-  local -r error_output=$(source "$SHERPA_ENV_FILENAME" 2>&1 >/dev/null)
+  local -r error_output=$(source "$SHERPA_ENV_FILENAME" 2>&1 > /dev/null)
 
   if [[ -n "$error_output" ]]; then
     _sherpa_log_error "Error in $SHERPA_ENV_FILENAME" "$error_output"

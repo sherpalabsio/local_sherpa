@@ -35,7 +35,7 @@ _check_local_env_file_exists() {
 }
 
 _check_local_env_file_readable() {
-  if ! cat "$SHERPA_ENV_FILENAME" >/dev/null 2>&1; then
+  if ! cat "$SHERPA_ENV_FILENAME" > /dev/null 2>&1; then
     print_error "[NOT OK] Local $SHERPA_ENV_FILENAME file"
     echo "Cannot read the file." >&2
     return 1
@@ -44,7 +44,7 @@ _check_local_env_file_readable() {
 
 _check_local_env_file_has_no_shell_errors() {
   # shellcheck disable=SC1090
-  local -r error_output=$(source "$SHERPA_ENV_FILENAME" 2>&1 >/dev/null)
+  local -r error_output=$(source "$SHERPA_ENV_FILENAME" 2>&1 > /dev/null)
 
   if [[ -n "$error_output" ]]; then
     print_error "[NOT OK] Local $SHERPA_ENV_FILENAME file"

@@ -1,5 +1,5 @@
 if [ -n "$ZSH_VERSION" ]; then
-  SHERPA_LIB_DIR=$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )
+  SHERPA_LIB_DIR=$( cd -- "$(dirname "$0")" > /dev/null 2>&1 ; pwd -P )
 else
   SHERPA_LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 fi
