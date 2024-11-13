@@ -34,7 +34,7 @@ stub_env_file() {
   readonly TMP_TEST_FILE
 }
 
-override_env_file() {
+overwrite_env_file() {
   if [ -n "$1" ]; then
     echo "$1" > "$SHERPA_ENV_FILENAME"
   else

@@ -9,7 +9,7 @@ stub_env_file
 # ==============================================================================
 # ++++ It works for simple variables
 
-override_env_file "export var_1="local var 1""
+overwrite_env_file "export var_1="local var 1""
 
 actual_list=$(_sherpa_parse_local_env_file)
 
@@ -19,7 +19,7 @@ assert_equal "$actual_list" "var_1"
 # ==============================================================================
 # ++++ It is not case sensitive
 
-override_env_file "export VAR_2="local var 1""
+overwrite_env_file "export VAR_2="local var 1""
 
 actual_list=$(_sherpa_parse_local_env_file)
 
@@ -29,7 +29,7 @@ assert_equal "$actual_list" "VAR_2"
 # ==============================================================================
 # ++++ It works for multiline variables
 
-cat <<EOF | override_env_file
+cat <<EOF | overwrite_env_file
 export var_multi_line="local var
 multi line"
 EOF
@@ -42,7 +42,7 @@ assert_equal "$actual_list" "var_multi_line"
 # ==============================================================================
 # ++++ It ignores commented lines
 
-override_env_file "# export var_commented="local var 0""
+overwrite_env_file "# export var_commented="local var 0""
 
 actual_list=$(_sherpa_parse_local_env_file)
 
@@ -59,7 +59,7 @@ existing_non_changed_var="1"
 # shellcheck disable=SC2034
 existing_changed_var="1"
 
-cat <<EOF | override_env_file
+cat <<EOF | overwrite_env_file
 eval "existing_changed_var=CHANGED"
 eval "new_var=new"
 EOF
@@ -81,7 +81,7 @@ unset SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING
 # ==============================================================================
 # ++++ It works for simple aliases
 
-override_env_file "alias alias_1='echo "local alias 1"'"
+overwrite_env_file "alias alias_1='echo "local alias 1"'"
 
 actual_list=$(_sherpa_parse_local_env_file)
 
@@ -91,7 +91,7 @@ assert_equal "$actual_list" "alias_1"
 # ==============================================================================
 # ++++ It is not case sensitive
 
-override_env_file "alias ALIAS_2='echo "local alias 2"'"
+overwrite_env_file "alias ALIAS_2='echo "local alias 2"'"
 
 actual_list=$(_sherpa_parse_local_env_file)
 
@@ -101,7 +101,7 @@ assert_equal "$actual_list" "ALIAS_2"
 # ==============================================================================
 # ++++ It works for multiline aliases
 
-cat <<EOF | override_env_file
+cat <<EOF | overwrite_env_file
 alias alias_multi_line='echo "local alias 1";
 echo "local alias 2";'
 EOF
@@ -114,7 +114,7 @@ assert_equal "$actual_list" "alias_multi_line"
 # ==============================================================================
 # ++++ It ignores commented lines
 
-override_env_file "# alias alias_commented='echo "local alias 0";'"
+overwrite_env_file "# alias alias_commented='echo "local alias 0";'"
 
 actual_list=$(_sherpa_parse_local_env_file)
 
@@ -129,7 +129,7 @@ SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING=true
 alias untouched_existing_alias="echo 1"
 alias overriden_existing_alias="echo 1"
 
-cat <<EOF | override_env_file
+cat <<EOF | overwrite_env_file
 eval "alias overriden_existing_alias='echo 2'";
 alias new_alias='echo 1';
 echo "Trick" # It ignores print commands in the env file
@@ -151,7 +151,7 @@ unset SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING
 # ==============================================================================
 # ++++ It works for simple aliases
 
-cat <<EOF | override_env_file
+cat <<EOF | overwrite_env_file
 function_1() {
   echo "local function 1"
 }
@@ -165,7 +165,7 @@ assert_equal "$actual_list" "function_1"
 # ==============================================================================
 # ++++ It is not case sensitive
 
-cat <<EOF | override_env_file
+cat <<EOF | overwrite_env_file
 FUNCTION_2() {
   echo "local function 2"
 }
@@ -179,7 +179,7 @@ assert_equal "$actual_list" "FUNCTION_2"
 # ==============================================================================
 # ++++ It works for functions defined with the function keyword
 
-cat <<EOF | override_env_file
+cat <<EOF | overwrite_env_file
 function function_3() {
   echo "local function 3"
 }
@@ -193,7 +193,7 @@ assert_equal "$actual_list" "function_3"
 # ==============================================================================
 # ++++ It ignores commented lines
 
-cat <<EOF | override_env_file
+cat <<EOF | overwrite_env_file
 # Commented function
 # function_commented() {
 #   # comment
@@ -214,7 +214,7 @@ SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING=true
 existing_function() { echo 1; }
 function_1() { echo 1; }
 
-cat <<EOF | override_env_file
+cat <<EOF | overwrite_env_file
 eval "function function_1() { echo 1; }"
 EOF
 
