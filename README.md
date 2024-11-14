@@ -206,12 +206,12 @@ $ cd ..
 # This rolls back the overrides made by the env of projects
 ```
 
-### Aliases and functions in the env file take precedence
+### Aliases and functions in the env file taking precedence
 
-Declaring an alias in the env file with the same name as an existing function
-will override the function. You don't need to call `unalias`.\
-The same applies to declaring functions in the env
-file with the same name as existing aliases.
+Declaring a function in the env file with the same name as an existing alias
+will override the alias automatically. No need to call `unalias`.\
+The same applies to declaring aliases in the env
+file with the same name as existing functions.
 
 ### Running a script when leaving a directory
 
