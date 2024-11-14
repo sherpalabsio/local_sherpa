@@ -67,8 +67,18 @@ _sherpa_load_env_from_current_dir() {
 
   _sherpa_stash_local_env
   _sherpa_log_debug "Load local env"
+
+  local -r tmp_error_file=$(mktemp)
   # shellcheck disable=SC1090
-  source "$SHERPA_ENV_FILENAME"
+  source "$SHERPA_ENV_FILENAME" 2> "$tmp_error_file"
+  local -r error_message=$(<"$tmp_error_file")
+  rm -f "$tmp_error_file"
+
+  if [ -n "$error_message" ]; then
+    _sherpa_log_error "Error in $SHERPA_ENV_FILENAME"
+    echo "$error_message" >&2
+  fi
+
   # Append the current directory to the list. This is needed to unload the envs
   # in the right order when we change directories. The root directory should be
   # the last one to unload.
@@ -103,14 +113,4 @@ _sherpa_stash_local_env() {
   local function_names=($(_sherpa_fetch_function_names_from_env_file))
   _sherpa_log_debug "AutoStashing functions: ${function_names[*]}"
   sherpa::env_stash.stash_functions "$PWD" "${function_names[@]}"
-}
-
-_sherpa_test_local_env_file_for_shell_errors() {
-  # shellcheck disable=SC1090
-  local -r error_output=$(source "$SHERPA_ENV_FILENAME" 2>&1 > /dev/null)
-
-  if [[ -n "$error_output" ]]; then
-    _sherpa_log_error "Error in $SHERPA_ENV_FILENAME" "$error_output"
-    return 1
-  fi
 }
