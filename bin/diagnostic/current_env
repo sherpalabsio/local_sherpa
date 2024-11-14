@@ -4,50 +4,50 @@ source "$(dirname "$0")/common.sh"
 
 echo "==================== Loading current env ===================="
 
-check_local_env_file() {
-  _check_local_env_file_exists &&
-    _check_local_env_file_readable &&
-    _check_local_env_file_has_no_shell_errors &&
-    _check_local_env_file_trusted &&
-    print_success "[OK] Local $SHERPA_ENV_FILENAME file"
+check_env_file() {
+  _check_env_file_exists &&
+    _check_env_file_readable &&
+    _check_env_file_has_no_shell_errors &&
+    _check_env_file_trusted &&
+    print_success "[OK] $SHERPA_ENV_FILENAME file"
 }
 
-_check_local_env_file_exists() {
+_check_env_file_exists() {
   if [ ! -f "$SHERPA_ENV_FILENAME" ]; then
-    echo "There is no local $SHERPA_ENV_FILENAME file. Skipping local tests."
+    echo "There is no $SHERPA_ENV_FILENAME file. Skipping tests."
     return 1
   fi
 }
 
-_check_local_env_file_readable() {
+_check_env_file_readable() {
   if ! cat "$SHERPA_ENV_FILENAME" > /dev/null 2>&1; then
-    print_error "[NOT OK] Local $SHERPA_ENV_FILENAME file"
+    print_error "[NOT OK] $SHERPA_ENV_FILENAME file"
     echo "Cannot read the file." >&2
     return 1
   fi
 }
 
-_check_local_env_file_has_no_shell_errors() {
-  local -r error_output=$(_sherpa_load_env_from_current_dir 2>&1 > /dev/null)
+_check_env_file_has_no_shell_errors() {
+  local -r error_output=$(_sherpa_load_env_for_current_dir 2>&1 > /dev/null)
 
   if [[ -n "$error_output" ]]; then
-    print_error "[NOT OK] Local $SHERPA_ENV_FILENAME file"
+    print_error "[NOT OK] $SHERPA_ENV_FILENAME file"
     echo "$error_output" >&2
     return 1
   fi
 }
 
-_check_local_env_file_trusted() {
+_check_env_file_trusted() {
   local -r current_log_level=$SHERPA_LOG_LEVEL
   SHERPA_LOG_LEVEL=$SHERPA_LOG_LEVEL_WARN
   local -r output=$(_sherpa_verify_trust 2>&1)
   SHERPA_LOG_LEVEL=$current_log_level
 
   if [[ -n "$output" ]]; then
-    print_error "[NOT OK] Local $SHERPA_ENV_FILENAME file"
+    print_error "[NOT OK] $SHERPA_ENV_FILENAME file"
     echo "$output" >&2
     return 1
   fi
 }
 
-check_local_env_file
+check_env_file

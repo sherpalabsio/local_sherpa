@@ -42,9 +42,9 @@ fi
 # Hook into cd
 _sherpa_setup_cd_hook
 
-# Skip loading the local env 2 times for Bash when loading the shell the first time
+# Skip loading the env 2 times for Bash when loading the shell the first time
 if [ -n "$ZSH_VERSION" ]; then
-  _sherpa_load_env_from_current_dir
+  _sherpa_load_env_for_current_dir
 fi
 
 export SHERPA_VERSION="1.0.0-beta.1"

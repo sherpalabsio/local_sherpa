@@ -11,7 +11,7 @@ stub_env_file
 
 overwrite_env_file "export var_1="local var 1""
 
-actual_list=$(_sherpa_parse_local_env_file)
+actual_list=$(_sherpa_parse_env_file)
 
 assert_equal "$actual_list" "var_1"
 
@@ -21,7 +21,7 @@ assert_equal "$actual_list" "var_1"
 
 overwrite_env_file "export VAR_2="local var 1""
 
-actual_list=$(_sherpa_parse_local_env_file)
+actual_list=$(_sherpa_parse_env_file)
 
 assert_equal "$actual_list" "VAR_2"
 
@@ -34,7 +34,7 @@ export var_multi_line="local var
 multi line"
 EOF
 
-actual_list=$(_sherpa_parse_local_env_file)
+actual_list=$(_sherpa_parse_env_file)
 
 assert_equal "$actual_list" "var_multi_line"
 
@@ -44,7 +44,7 @@ assert_equal "$actual_list" "var_multi_line"
 
 overwrite_env_file "# export var_commented="local var 0""
 
-actual_list=$(_sherpa_parse_local_env_file)
+actual_list=$(_sherpa_parse_env_file)
 
 assert_equal "$actual_list" ""
 
@@ -67,7 +67,7 @@ EOF
 expected_list="existing_changed_var
 new_var"
 
-actual_list=$(_sherpa_parse_local_env_file | sort)
+actual_list=$(_sherpa_parse_env_file | sort)
 
 assert_equal "$actual_list" "$expected_list"
 
@@ -83,7 +83,7 @@ unset SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING
 
 overwrite_env_file "alias alias_1='echo'"
 
-actual_list=$(_sherpa_parse_local_env_file)
+actual_list=$(_sherpa_parse_env_file)
 
 assert_equal "$actual_list" "alias_1"
 
@@ -93,7 +93,7 @@ assert_equal "$actual_list" "alias_1"
 
 overwrite_env_file "alias ALIAS_2='echo'"
 
-actual_list=$(_sherpa_parse_local_env_file)
+actual_list=$(_sherpa_parse_env_file)
 
 assert_equal "$actual_list" "ALIAS_2"
 
@@ -106,7 +106,7 @@ alias alias_multi_line="echo;
 echo;"
 EOF
 
-actual_list=$(_sherpa_parse_local_env_file)
+actual_list=$(_sherpa_parse_env_file)
 
 assert_equal "$actual_list" "alias_multi_line"
 
@@ -116,7 +116,7 @@ assert_equal "$actual_list" "alias_multi_line"
 
 overwrite_env_file "# alias alias_commented='echo'"
 
-actual_list=$(_sherpa_parse_local_env_file)
+actual_list=$(_sherpa_parse_env_file)
 
 assert_equal "$actual_list" ""
 
@@ -135,7 +135,7 @@ alias new_alias="echo";
 echo Trick # It ignores print commands in the env file
 EOF
 
-actual_list=$(_sherpa_parse_local_env_file)
+actual_list=$(_sherpa_parse_env_file)
 expected_list="new_alias
 overriden_existing_alias"
 
@@ -157,7 +157,7 @@ function_1() {
 }
 EOF
 
-actual_list=$(_sherpa_parse_local_env_file)
+actual_list=$(_sherpa_parse_env_file)
 
 assert_equal "$actual_list" "function_1"
 
@@ -171,7 +171,7 @@ FUNCTION_2() {
 }
 EOF
 
-actual_list=$(_sherpa_parse_local_env_file)
+actual_list=$(_sherpa_parse_env_file)
 
 assert_equal "$actual_list" "FUNCTION_2"
 
@@ -185,7 +185,7 @@ function function_3() {
 }
 EOF
 
-actual_list=$(_sherpa_parse_local_env_file)
+actual_list=$(_sherpa_parse_env_file)
 
 assert_equal "$actual_list" "function_3"
 
@@ -201,7 +201,7 @@ cat <<EOF | overwrite_env_file
 # }
 EOF
 
-actual_list=$(_sherpa_parse_local_env_file)
+actual_list=$(_sherpa_parse_env_file)
 
 assert_equal "$actual_list" ""
 
@@ -218,7 +218,7 @@ cat <<EOF | overwrite_env_file
 eval "function function_1() { echo 1; }"
 EOF
 
-actual_list=$(_sherpa_parse_local_env_file)
+actual_list=$(_sherpa_parse_env_file)
 
 assert_equal "$actual_list" "function_1"
 

@@ -9,7 +9,7 @@ source tests/support/app_helper.sh
 
 source .bash_profile # Imitate global env
 _sherpa_trust_dir "project_1"
-_sherpa_trust_dir "project_1/subfolder_with_no_local_env/subproject"
+_sherpa_trust_dir "project_1/subfolder_with_no_env/subproject"
 _sherpa_trust_dir "project_2"
 
 # == Senety checks: the Global env is loaded
@@ -24,9 +24,9 @@ assert_equal "$(function_1)" "GLOBAL FUNCTION" "Global env is ready (function)"
 cd project_1
 
 # ++++ It loads the Project 1 env
-assert_equal "$var_1" "LOCAL VAR PROJECT 1" "Local env is loaded (var)"
-assert_equal "$(alias_1)" "LOCAL ALIAS PROJECT 1" "Local env is loaded (alias)"
-assert_equal "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Local env is loaded (function)"
+assert_equal "$var_1" "LOCAL VAR PROJECT 1" "Env is loaded (var)"
+assert_equal "$(alias_1)" "LOCAL ALIAS PROJECT 1" "Env is loaded (alias)"
+assert_equal "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Env is loaded (function)"
 
 # shellcheck disable=SC2154
 assert_equal "$custom_var_1" "CUSTOM LOCAL VAR PROJECT 1" "Project 1 env is loaded (custom_var_1)"
@@ -35,9 +35,9 @@ assert_equal "$(custom_function_1)" "CUSTOM LOCAL FUNCTION PROJECT 1" "Project 1
 
 
 # ==============================================================================
-# PWD: /project_1/subfolder_with_no_local_env
+# PWD: /project_1/subfolder_with_no_env
 
-cd subfolder_with_no_local_env
+cd subfolder_with_no_env
 
 # ++++ It does not unload the Project 1 env
 assert_equal "$var_1" "LOCAL VAR PROJECT 1" "Project 1 env is not unloaded (var_1)"
@@ -46,7 +46,7 @@ assert_equal "$(function_1)" "LOCAL FUNCTION PROJECT 1" "Project 1 env is not un
 
 
 # ==============================================================================
-# PWD: /project_1/subfolder_with_no_local_env/subproject
+# PWD: /project_1/subfolder_with_no_env/subproject
 
 cd subproject
 
@@ -65,7 +65,7 @@ assert_equal "$(subfunction_1)" "CUSTOM LOCAL FUNCTION SUBPROJECT" "Subproject e
 
 
 # ==============================================================================
-# PWD: /project_1/subfolder_with_no_local_env
+# PWD: /project_1/subfolder_with_no_env
 
 cd ..
 
@@ -135,6 +135,6 @@ assert_undefined "custom_alias_1" "Subproject env is unloaded (custom_alias_1)"
 assert_undefined "custom_function_1" "Subproject env is unloaded (custom_function_1)"
 
 # ++++ It loads the Project 2 env
-assert_equal "$var_1" "LOCAL VAR PROJECT 2" "Previous env is unloaded, local env is loaded (var)"
-assert_equal "$(alias_1)" "LOCAL ALIAS PROJECT 2" "Previous env is unloaded, local env is loaded (alias)"
-assert_equal "$(function_1)" "LOCAL FUNCTION PROJECT 2" "Previous env is unloaded, local env is loaded (function)"
+assert_equal "$var_1" "LOCAL VAR PROJECT 2" "Previous env is unloaded, Env is loaded (var)"
+assert_equal "$(alias_1)" "LOCAL ALIAS PROJECT 2" "Previous env is unloaded, Env is loaded (alias)"
+assert_equal "$(function_1)" "LOCAL FUNCTION PROJECT 2" "Previous env is unloaded, Env is loaded (function)"

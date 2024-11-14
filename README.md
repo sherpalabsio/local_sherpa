@@ -76,7 +76,7 @@ Version: beta 1.
 
 1. $ cd ~/projects/project_awesome
 2. $ sherpa edit
-    1. Sherpa opens the local env file in your editor
+    1. Sherpa opens the env file in your editor
     2. You update, save then close it
     3. Sherpa unloads the previous version, trusts and loads the current one automatically
 3. You can nest envs by repeating this in subdirectories
@@ -105,13 +105,13 @@ For more details see the [Features](#features) section.
 
 Experimental feature: Non-exported variables and dynamically created entities
 are supported by setting the `SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING`
-environment variable to `true`. This executes the local env file in a
-subshell three times when cd'ing into a directory.
+environment variable to `true`. This executes the env file in a subshell
+three times when cd'ing into a directory.
 
-## Side effect
+## Good to know
 
-When sherpa loads the local env, it sources the local env file meaning its
-whole content is executed in the current shell.
+When sherpa loads the env, it sources the env file meaning its whole content
+is executed in the current shell.
 
 ## Installation
 
@@ -125,7 +125,7 @@ $ echo "source ~/.dotfiles/lib/local_sherpa/init.sh" >> ~/.zshrc
 ## Bash
 $ echo "source ~/.dotfiles/lib/local_sherpa/init.sh" >> ~/.bashrc
 
-# Exclude the local env files (.envrc) globally in Git
+# Exclude the env files (.envrc) globally in Git
 $ echo ".envrc" >> $(git config --global core.excludesfile)
 
 # Reload or restart your shell
@@ -142,13 +142,13 @@ See the full list of commands by running `$ sherpa` in your shell.
 
 ### Security
 
-Sherpa won't load any local env file unless you trust it first.\
+Sherpa won't load any env file unless you trust them first.\
 This is to prevent running malicious code when you `cd` into a directory.
 
 ``` bash
 $ echo "alias rs=rspec" > ~/projects/project_awesome/.envrc
 $ cd ~/projects/project_awesome
-Sherpa: The local env file is not trusted. Run `sherpa trust` to mark it as trusted.
+Sherpa: The env file is not trusted. Run `sherpa trust` to mark it as trusted.
 $ rs
 command not found: rs
 $ sherpa trust
@@ -157,10 +157,10 @@ $ rs
 # rspec starts
 ```
 
-When a local env file changes you have to trust the directory again.
+When an env file changes you have to trust the directory again.
 
-Use `sherpa edit`. It opens the local env file in your editor then trusts it
-automatically when you close the file.
+Use `sherpa edit`. It opens the env file in your default editor then trusts it
+automatically when you close it.
 
 You can untrust a directory with `sherpa untrust`.
 
@@ -182,28 +182,28 @@ It is not supported currently. Feel free to open a feature request.
 #### Demo
 
 ```shell
-# Given the following directory structure with the corresponding local env files
+# Given the following directory structure with the corresponding env files
 # ~/projects/.envrc
 # ~/projects/project_awesome/.envrc
 # ~/projects/project_awesome/subdir
 
 $ cd ~/projects/
-# Sherpa loads the local env for projects
+# Sherpa loads the env for projects
 # Items defined in this folder override the items defined in the global env
 $ cd project_awesome
-# Sherpa does not unload the previous local env
-# Sherpa loads the local env for project_awesome
+# Sherpa does not unload the previous env
+# Sherpa loads the env for project_awesome
 # Items defined in this folder override the items defined in previous envs
 $ cd subdir
-# Sherpa does not unload the previous local envs
+# Sherpa does not unload the previous envs
 $ cd ..
-# Sherpa does not reload the local env for project_awesome
+# Sherpa does not reload the env for project_awesome
 $ cd ..
-# Sherpa unloads the local env for project_awesome and restores the local env for projects
-# This rolls back the overrides made by the local env for project_awesome
+# Sherpa unloads the env for project_awesome and restores the env for projects
+# This rolls back the overrides made by the env of project_awesome
 $ cd ..
-# Sherpa unloads the local env for projects and restores the global env
-# This rolls back the overrides made by the local env for projects
+# Sherpa unloads the env for projects and restores the global env
+# This rolls back the overrides made by the env of projects
 ```
 
 ### Aliases and functions in the env file take precedence
@@ -252,7 +252,7 @@ It affects only the current and new terminal sessions.
 $ sherpa off # aliases: sleep, disable
 Sherpa: All envs are unloaded. Sherpa goes to sleep.
 $ sherpa on # aliases: work, enable
-Sherpa: Local env is loaded. Sherpa is ready for action.
+Sherpa: Env is loaded. Sherpa is ready for action.
 ```
 
 ## Cookbook

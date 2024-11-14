@@ -12,11 +12,11 @@ overwrite_env_file 'alias alias_1="echo alias_1"'
 cd /
 sherpa trust
 
-# == Senety checks: the local environment file is loaded
+# == Senety checks: the env file is loaded
 assert_equal "$(alias_1)" "alias_1"
 
 # ==============================================================================
-# The local env file gets changed and trusted somewhere else
+# The env file gets changed and trusted somewhere else
 
 overwrite_env_file 'alias alias_2="echo changed"'
 _sherpa_trust_current_dir

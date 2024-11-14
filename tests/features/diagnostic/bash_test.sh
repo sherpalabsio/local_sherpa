@@ -145,8 +145,8 @@ assert_contain "$(cat "$STDOUT_FILE")" "\[OK\] Trusting env files" "It acknowled
 
 
 # ==============================================================================
-# ++++ It warns when loading the local env fails
-# Stub the source command to simulate a local env loading failure
+# ++++ It warns when loading the env fails
+# Stub the source command to simulate a failure during loading
 
 fake_source() {
   local file_path="$1"
@@ -161,13 +161,13 @@ stub_function "source" "fake_source"
 
 subject
 
-assert_contain "$(cat "$STDERR_FILE")" "\[NOT OK\] Loading the local environment" "It warns when loading the local env fails"
+assert_contain "$(cat "$STDERR_FILE")" "\[NOT OK\] Environment loading" "It warns when loading the env fails"
 reset_stubs
 
 
 # ==============================================================================
-# ++++ It acknowledges when loading the local env succeeds
+# ++++ It acknowledges when loading the env succeeds
 
 subject
 
-assert_contain "$(cat "$STDOUT_FILE")" "\[OK\] Loading the local environment" "It acknowledges when loading the local env succeeds"
+assert_contain "$(cat "$STDOUT_FILE")" "\[OK\] Environment loading" "It acknowledges when loading the env succeeds"

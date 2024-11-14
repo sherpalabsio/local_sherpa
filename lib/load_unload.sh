@@ -1,13 +1,13 @@
 _sherpa_alert_sherpa_we_changed_dir() {
   # Skip if Sherpa is disabled
   [ "$SHERPA_ENABLED" = false ] && return
-  _sherpa_log_debug "Directory changed."
-  _sherpa_unload_envs_of_exited_dirs
-  _sherpa_load_env_from_current_dir
+  _sherpa_log_debug "Directory changed"
+  _sherpa_unload_envs_for_exited_dirs
+  _sherpa_load_env_for_current_dir
 }
 
 # It unloads the loaded envs of previous directories that we exited
-_sherpa_unload_envs_of_exited_dirs() {
+_sherpa_unload_envs_for_exited_dirs() {
   local loaded_paths=()
 
   for loaded_path in "${SHERPA_LOADED_ENV_DIRS[@]}"; do
@@ -51,22 +51,22 @@ _sherpa_unload_env_of_current_dir() {
   _sherpa_utils::array::remove_first_element SHERPA_LOADED_ENV_DIRS
 }
 
-_sherpa_load_env_from_current_dir() {
+_sherpa_load_env_for_current_dir() {
   # Skip if Sherpa is disabled
   [ "$SHERPA_ENABLED" = false ] && return
-  _sherpa_log_debug "Load local env?"
+  _sherpa_log_debug "Load env?"
 
-  # Skip if there is no local env file
-  [ -f "$SHERPA_ENV_FILENAME" ] || { _sherpa_log_debug "No local env file"; return; }
+  # Skip if there is no env file
+  [ -f "$SHERPA_ENV_FILENAME" ] || { _sherpa_log_debug "No env file"; return; }
 
   # Skip if the env was already loaded
-  _sherpa_was_env_loaded && { _sherpa_log_debug "Local env is already loaded"; return; }
+  _sherpa_was_env_loaded && { _sherpa_log_debug "Env is already loaded"; return; }
 
-  # Skip if the local env file is not trusted
+  # Skip if the env file is not trusted
   _sherpa_verify_trust || return;
 
-  _sherpa_stash_local_env
-  _sherpa_log_debug "Load local env"
+  _sherpa_stash_current_env
+  _sherpa_log_debug "Load env"
 
   local -r tmp_error_file=$(mktemp)
   # shellcheck disable=SC1090
@@ -96,8 +96,8 @@ _sherpa_was_env_loaded() {
   return 1
 }
 
-_sherpa_stash_local_env() {
-  _sherpa_log_debug "Stash local env"
+_sherpa_stash_current_env() {
+  _sherpa_log_debug "Stash the current env"
 
   # shellcheck disable=SC2207
   local variable_names=($(_sherpa_fetch_variable_names_from_env_file))

@@ -15,11 +15,11 @@ Usage:
 Basic Commands:
   trust          - Trust the current directory   | Aliases: t, allow, grant, permit
   untrust        - Untrust the current directory | Aliases: u, disallow, revoke, block, deny
-  edit           - Edit the local env file       | Aliases: e, init
+  edit           - Edit the current env file     | Aliases: e, init
   off            - Turn Sherpa off               | Aliases: disable, sleep
   on             - Turn Sherpa on                | Aliases: enable, work
-  symlink [PATH] - Symlink a local env file      | Aliases: link, slink
-  reload         - Reload the local env          | Alias: r
+  symlink [PATH] - Symlink the current env file  | Aliases: link, slink
+  reload         - Reload the current env        | Alias: r
 
 Troubleshooting:
   status   - Show debug status info | Aliases: s, stat
@@ -54,7 +54,7 @@ Log levels:
 }
 
 _sherpa_cli_trust() {
-  _sherpa_trust_current_dir && _sherpa_load_env_from_current_dir
+  _sherpa_trust_current_dir && _sherpa_load_env_for_current_dir
 }
 
 _sherpa_cli_untrust() {
@@ -76,7 +76,7 @@ _sherpa_cli_edit() {
 
   _sherpa_trust_current_dir &&
     _sherpa_unload_env_of_current_dir &&
-    _sherpa_load_env_from_current_dir
+    _sherpa_load_env_for_current_dir
 }
 
 _sherpa_cli_disable() {
@@ -88,8 +88,8 @@ _sherpa_cli_disable() {
 _sherpa_cli_enable() {
   _sherpa_save_global_config "SHERPA_ENABLED" true
 
-  if _sherpa_load_env_from_current_dir; then
-    local -r current_env_copy="Local env is loaded. "
+  if _sherpa_load_env_for_current_dir; then
+    local -r current_env_copy="Env is loaded. "
   fi
 
   _sherpa_log_info "${current_env_copy}Sherpa is ready for action."
@@ -175,8 +175,8 @@ _sherpa_cli_symlink() {
   local -r symlink_target="$1"
 
   if [ -f "$SHERPA_ENV_FILENAME" ]; then
-    _sherpa_log_error "There is already a local env file in this directory." \
-                            "Remove it before symlinking a new one."
+    _sherpa_log_error "There is already an env file in this directory." \
+                      "Remove it before symlinking a new one."
     return 1
   fi
 
@@ -192,9 +192,9 @@ _sherpa_cli_symlink() {
   fi
 
   _sherpa_cli_trust > /dev/null &&
-    _sherpa_log_info "Symlink is created. Local env is loaded."
+    _sherpa_log_info "Symlink is created. Env is loaded."
 }
 
 _sherpa_cli_reload() {
-  _sherpa_unload_env_of_current_dir && _sherpa_load_env_from_current_dir
+  _sherpa_unload_env_of_current_dir && _sherpa_load_env_for_current_dir
 }

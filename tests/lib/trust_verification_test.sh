@@ -5,7 +5,7 @@ source tests/support/app_helper.sh
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 
 # ==============================================================================
-# ++++ It trusts the local env file in the given directory
+# ++++ It trusts the env file in the given directory
 
 _sherpa_trust_dir "project_2"
 cd project_2

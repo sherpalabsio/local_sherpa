@@ -72,7 +72,7 @@ setup_test_dir() {
   echo "alias test_alias_1=\"echo works\"" > "$SHERPA_ENV_FILENAME"
 }
 
-test_trusting_the_current_directory() {
+test_trusting_test_directory() {
   if sherpa trust > /dev/null 2> "$STDERR_FILE"; then
     print_success "[OK] Trusting env files"
   else
@@ -83,11 +83,11 @@ test_trusting_the_current_directory() {
   fi
 }
 
-test_loading_the_local_env() {
+test_loading_test_env() {
   if [ "$(test_alias_1 2> /dev/null)" = "works" ]; then
-    print_success "[OK] Loading the local environment"
+    print_success "[OK] Environment loading "
   else
-    print_error "[NOT OK] Loading the local environment"
+    print_error "[NOT OK] Environment loading"
     exit 1
   fi
 }
@@ -107,7 +107,7 @@ check_cd_hook_setup
 # =========== Check if it works in a test environment ===========
 setup_test_dir
 
-test_trusting_the_current_directory
-test_loading_the_local_env
+test_trusting_test_directory
+test_loading_test_env
 
 print_all_ok

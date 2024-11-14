@@ -25,7 +25,7 @@ _sherpa_fetch_variable_names_from_env_file() {
     local -A __vars_after
     local __sherpa_tmp_var_name
 
-    # == Get a snapshot of the variables before sourcing the local env file
+    # == Get a snapshot of the variables BEFORE sourcing the env file
     if [ -n "$ZSH_VERSION" ]; then
       for __sherpa_tmp_var_name in $(compgen -v); do
         # shellcheck disable=SC2296
@@ -40,7 +40,7 @@ _sherpa_fetch_variable_names_from_env_file() {
     # shellcheck disable=SC1090
     source "$SHERPA_ENV_FILENAME" &> /dev/null
 
-    # == Get a snapshot of the variables after sourcing the local env file
+    # == Get a snapshot of the variables AFTER sourcing the env file
     if [ -n "$ZSH_VERSION" ]; then
       for __sherpa_tmp_var_name in $(compgen -v); do
         # shellcheck disable=SC2296
@@ -147,7 +147,7 @@ _sherpa_fetch_function_names_from_env_file() {
   [ -n "$function_names" ] && echo "$function_names"
 }
 
-_sherpa_parse_local_env_file() {
+_sherpa_parse_env_file() {
   _sherpa_fetch_variable_names_from_env_file
   _sherpa_fetch_aliase_names_from_env_file
   _sherpa_fetch_function_names_from_env_file

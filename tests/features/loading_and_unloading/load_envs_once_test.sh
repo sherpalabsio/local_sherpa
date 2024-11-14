@@ -11,9 +11,9 @@ _sherpa_trust_dir "project_1"
 assert_equal "$var_1" "GLOBAL VAR" "Global env is ready (var)"
 
 cd project_1
-cd subfolder_with_no_local_env
+cd subfolder_with_no_env
 
 actual_warning_message=$(SHERPA_LOG_LEVEL="debug" ; cd ..)
-expected_warning_message="Local env is already loaded"
+expected_warning_message="Env is already loaded"
 
 assert_contain "$actual_warning_message" "$expected_warning_message" "It does not reload the Project 1 env"
