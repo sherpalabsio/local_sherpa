@@ -17,6 +17,9 @@ _sherpa_fetch_variable_names_from_env_file() {
       [zle_bracketed_paste]=''
       [parameters]=''
       [WATCHFMT]=''
+      [functions]=''
+      [TTYIDLE]=''
+      [epochtime]=''
     )
     local -A __vars_before
     local -A __vars_after
