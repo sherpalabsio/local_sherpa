@@ -55,6 +55,10 @@ sherpa::env_stash._remove_alias_if_shadowing_function() {
 }
 
 
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+#                               Unstash functions
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+
 sherpa::env_stash.unstash_functions() {
   local -r dir_path="$1"
 

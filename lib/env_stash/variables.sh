@@ -41,6 +41,11 @@ sherpa::env_stash._stash_non_existing_variable() {
   eval "$variable_name_for_variables_to_remove+=(\"$variable_name\")"
 }
 
+
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+#                               Unstash variables
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+
 sherpa::env_stash.unstash_variables() {
   local -r dir_path="$1"
 

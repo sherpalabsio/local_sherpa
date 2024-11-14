@@ -45,6 +45,11 @@ sherpa::env_stash._stash_non_existing_alias() {
   eval "$variable_name_for_aliases_to_remove+=(\"$alias_name\")"
 }
 
+
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+#                                Unstash aliases
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+
 sherpa::env_stash.unstash_aliases() {
   local -r dir_path="$1"
 
