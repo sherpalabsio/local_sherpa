@@ -1,3 +1,9 @@
+# Disable the history to avoid polluting the user's history file in Bash
+[ -z "$ZSH_VERSION" ] && export HISTFILE=
+SHERPA_ENABLED=true
+
+source "$(dirname "$0")/common.sh"
+
 # shellcheck disable=SC2155
 readonly TMP_TEST_DIR=$(mktemp -d)
 # shellcheck disable=SC2155
@@ -8,63 +14,6 @@ teardown() {
   rm -r "$TMP_TEST_DIR"
   rm "$STDERR_FILE"
 }
-
-print_success() {
-  local message=$1
-  printf "\e[32m%s\e[0m\n" "$message"
-}
-
-print_error() {
-  local message=$1
-  printf "\e[31m%s\e[0m\n" "$message" >&2
-}
-
-check_local_env_file() {
-  _check_local_env_file_exists &&
-    _check_local_env_file_readable &&
-    _check_local_env_file_has_no_shell_errors &&
-    _check_local_env_file_trusted &&
-    print_success "[OK] Local $SHERPA_ENV_FILENAME file"
-}
-
-_check_local_env_file_exists() {
-  if [ ! -f "$SHERPA_ENV_FILENAME" ]; then
-    print "There is no local $SHERPA_ENV_FILENAME file. Skipping local tests."
-    return 1
-  fi
-}
-
-_check_local_env_file_readable() {
-  if ! cat "$SHERPA_ENV_FILENAME" > /dev/null 2>&1; then
-    print_error "[NOT OK] Local $SHERPA_ENV_FILENAME file"
-    echo "Cannot read the file." >&2
-    return 1
-  fi
-}
-
-_check_local_env_file_has_no_shell_errors() {
-  local -r error_output=$(_sherpa_load_env_from_current_dir 2>&1 > /dev/null)
-
-  if [[ -n "$error_output" ]]; then
-    print_error "[NOT OK] Local $SHERPA_ENV_FILENAME file"
-    echo "$error_output" >&2
-    return 1
-  fi
-}
-
-_check_local_env_file_trusted() {
-  local -r current_log_level=$SHERPA_LOG_LEVEL
-  SHERPA_LOG_LEVEL=$SHERPA_LOG_LEVEL_WARN
-  local -r output=$(_sherpa_verify_trust 2>&1)
-  SHERPA_LOG_LEVEL=$current_log_level
-
-  if [[ -n "$output" ]]; then
-    print_error "[NOT OK] Local $SHERPA_ENV_FILENAME file"
-    echo "$output" >&2
-    return 1
-  fi
-}
-
 
 check_enabled() {
   if [ "$SHERPA_WAS_ENABLED" = true ]; then
@@ -82,6 +31,36 @@ check_checksum_function_exists() {
   else
     print_error "[NOT OK] sha256sum utility"
     echo "Make sure the sha256sum utility is available in your system." >&2
+    exit 1
+  fi
+}
+
+check_cd_hook_setup() {
+  if [ -n "$ZSH_VERSION" ]; then
+    check_cd_hook_setup_zsh
+  else
+    check_cd_hook_setup_bash
+  fi
+}
+
+check_cd_hook_setup_zsh() {
+  if [[ "$chpwd_functions" == *"_sherpa_chpwd_handler"* ]]; then
+    print_success "[OK] cd hook setup"
+  else
+    print_error "[NOT OK] cd hook setup"
+    echo "Make sure that nothing tampers the chpwd_functions array after Sherpa is loaded." >&2
+    echo "The _sherpa_chpwd_handler function should be in the chpwd_functions array." >&2
+    exit 1
+  fi
+}
+
+check_cd_hook_setup_bash() {
+  if [[ "$PROMPT_COMMAND" == *"_sherpa_chpwd_handler"* ]]; then
+    print_success "[OK] cd hook setup"
+  else
+    print_error "[NOT OK] cd hook setup"
+    echo "Make sure that nothing tampers the PROMPT_COMMAND after Sherpa is loaded." >&2
+    echo "That environment variable should contain the _sherpa_chpwd_handler function." >&2
     exit 1
   fi
 }
@@ -117,3 +96,18 @@ print_all_ok() {
   echo ""
   print_success "All systems are up and operational."
 }
+
+echo
+echo "=========================== System =========================="
+
+check_enabled
+check_checksum_function_exists
+check_cd_hook_setup
+
+# =========== Check if it works in a test environment ===========
+setup_test_dir
+
+test_trusting_the_current_directory
+test_loading_the_local_env
+
+print_all_ok

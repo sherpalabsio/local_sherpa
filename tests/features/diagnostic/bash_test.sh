@@ -38,6 +38,7 @@ reset_stubs() {
 BASHRC=$(mktemp)
 cleanup_file_or_dir_at_teardown "$BASHRC"
 echo "source $SHERPA_LIB_DIR/init.sh" > "$BASHRC"
+# shellcheck disable=SC2034
 BASHRC_FILE="$BASHRC"
 
 STDOUT_FILE=$(mktemp)

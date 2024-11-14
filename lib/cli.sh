@@ -165,15 +165,9 @@ __sherpa_cli_clear_last_lines() {
 
 _sherpa_cli_diagnose() {
   if [ -n "$ZSH_VERSION" ]; then
-    SHERPA_ENABLED=false zsh -i "$SHERPA_DIR/bin/diagnose_local"
-    # shellcheck disable=SC2098,SC2097
-    SHERPA_WAS_ENABLED="$SHERPA_ENABLED" SHERPA_ENABLED=false zsh -i "$SHERPA_DIR/bin/diagnose_zsh"
+    zsh -i "$SHERPA_DIR/bin/diagnose"
   else
-    SHERPA_ENABLED=false bash -i "$SHERPA_DIR/bin/diagnose_local"
-    # To be able to stub the ~/.bashrc in the tests
-    [ -z "$BASHRC_FILE" ] && BASHRC_FILE="$HOME/.bashrc"
-    # shellcheck disable=SC2098,SC2097
-    SHERPA_WAS_ENABLED="$SHERPA_ENABLED" SHERPA_ENABLED=false bash --rcfile "$BASHRC_FILE" -i "$SHERPA_DIR/bin/diagnose_bash"
+    BASHRC_FILE="$BASHRC_FILE" bash -i "$SHERPA_DIR/bin/diagnose"
   fi
 }
 
