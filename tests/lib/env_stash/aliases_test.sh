@@ -3,7 +3,7 @@ source "$SHERPA_DIR/lib/env_stash/utils.sh"
 source "$SHERPA_DIR/lib/env_stash/aliases.sh"
 
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
-#                                  stash_aliases
+#                                 stash_aliases
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 
 dir_path="/parent/child"

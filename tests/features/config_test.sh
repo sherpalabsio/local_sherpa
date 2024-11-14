@@ -3,7 +3,7 @@ source tests/support/test_helper.sh
 SHERPA_CONFIG_DIR="$TEST_DIR/playground/local_sherpa_config"
 
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
-#                              Setting the log Level
+#                             Setting the log Level
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 
 # ==============================================================================

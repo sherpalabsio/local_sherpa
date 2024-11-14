@@ -1,7 +1,7 @@
 source tests/support/app_helper.sh
 
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
-#                                   Shadowing
+#       Items defined by the env file take precedence over the global env
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 
 # ==============================================================================
@@ -15,7 +15,7 @@ assert_equal "$(existing_alias_shadowing_new_function)" "ORIGINAL ALIAS" "The gl
 assert_equal "$(existing_function_shadowing_new_alias)" "ORIGINAL FUNCTION" "The global env is loaded (function)"
 
 # ==============================================================================
-# ++++ It makes sure that newly created functions take precedence over existing aliases
+# ++++ Functions created by the env file take precedence over existing aliases
 
 cd project_1
 
@@ -23,7 +23,7 @@ assert_equal "$(existing_alias_shadowing_new_function)" "OVERWRITTEN ALIAS" "The
 
 
 # ==============================================================================
-# ++++ It restores the original alias
+# ++++ It restores the global alias
 
 cd ..
 
@@ -31,7 +31,7 @@ assert_equal "$(existing_alias_shadowing_new_function)" "ORIGINAL ALIAS" "The or
 
 
 # ==============================================================================
-# ++++ It makes sure that newly created aliases take precedence over existing functions
+# ++++ Aliases created by the env file take precedence over existing functions
 
 cd project_1
 
@@ -39,7 +39,7 @@ assert_equal "$(existing_function_shadowing_new_alias)" "OVERWRITTEN FUNCTION" "
 
 
 # ==============================================================================
-# ++++ It restores the original function
+# ++++ It restores the global function
 
 cd ..
 
