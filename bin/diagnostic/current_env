@@ -14,7 +14,7 @@ check_local_env_file() {
 
 _check_local_env_file_exists() {
   if [ ! -f "$SHERPA_ENV_FILENAME" ]; then
-    print "There is no local $SHERPA_ENV_FILENAME file. Skipping local tests."
+    echo "There is no local $SHERPA_ENV_FILENAME file. Skipping local tests."
     return 1
   fi
 }
