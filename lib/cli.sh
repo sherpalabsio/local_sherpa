@@ -1,6 +1,6 @@
 sherpa() {
   if [ "$USE_SHERPA_DEV_VERSION" = true ]; then
-    local -r version_info="dev"
+    local -r version_info="dev ($SHERPA_VERSION)"
   else
     local -r version_info="$SHERPA_VERSION"
   fi
