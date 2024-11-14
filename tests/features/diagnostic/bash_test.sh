@@ -1,7 +1,7 @@
 # shellcheck disable=SC2317
 
 # Skip if not Bash
-[ -z "$BASH_VERSION" ] && echo "Skip: Not Bash"; exit 0
+[ -z "$BASH_VERSION" ] && echo "Skip: Not Bash" && exit 0
 
 source tests/support/app_helper.sh
 

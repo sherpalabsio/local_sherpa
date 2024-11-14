@@ -1,7 +1,7 @@
 # shellcheck disable=SC2317
 
 # Skip if not Zsh
-[ -z "$ZSH_VERSION" ] && echo "Skip: Not Zsh"; exit 0
+[ -z "$ZSH_VERSION" ] && echo "Skip: Not Zsh" && exit 0
 
 source tests/support/app_helper.sh
 
