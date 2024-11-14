@@ -29,4 +29,4 @@ test_all_in_ubuntu:
 
 .PHONY: test_performance
 test_performance:
-	./tests/performance_harness $(filter-out $@,$(MAKECMDGOALS))
+	./tests/performance/harness $(filter-out $@,$(MAKECMDGOALS))

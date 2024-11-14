@@ -2,7 +2,7 @@
 
 source "tests/support/utils.sh"
 
-# This tests the performance of cd'ing into a trusted directory with a larger
+# To measure the performance of cd'ing into a trusted directory with a larger
 # .envrc file.
 # The result categorisation is based on what I measured on my machine. It's
 # slower in a Docker container.
@@ -14,25 +14,33 @@ if [ -z "$RUNNING_IN_CONTAINER" ]; then
 fi
 
 
-echo "=============================== Bash (470-570) ==============================="
+echo "== Bash ($THRESHOLD_FAST-$THRESHOLD_OK)"
+
+THRESHOLD_FAST=40
+THRESHOLD_OK=60
 
 # shellcheck disable=SC2086
-ellapsed_time="$(${_run_with_empty_env}bash --noprofile --norc -i tests/performance.sh)"
-if [ "$ellapsed_time" -lt 470 ]; then
+ellapsed_time="$(${_run_with_empty_env}bash --noprofile --norc -i tests/performance/example.sh)"
+
+if [ "$ellapsed_time" -lt "$THRESHOLD_FAST" ]; then
   _echo_in_magenta "${ellapsed_time}ms - Unexpectedly fast"
-elif [ "$ellapsed_time" -lt 570 ]; then
+elif [ "$ellapsed_time" -lt "$THRESHOLD_OK" ]; then
   _echo_in_green "${ellapsed_time}ms - ok"
 else
   _echo_in_yellow "${ellapsed_time}ms - BAD"
 fi
 
-echo "=============================== Zsh (370-470) ================================"
+
+echo "== Zsh ($THRESHOLD_FAST-$THRESHOLD_OK)"
+
+THRESHOLD_FAST=30
+THRESHOLD_OK=50
 
 # shellcheck disable=SC2086
-ellapsed_time="$(${_run_with_empty_env}zsh --no-globalrcs --no-rcs -i tests/performance.sh)"
-if [ "$ellapsed_time" -lt 370 ]; then
+ellapsed_time="$(${_run_with_empty_env}zsh --no-globalrcs --no-rcs -i tests/performance/example.sh)"
+if [ "$ellapsed_time" -lt $THRESHOLD_FAST ]; then
   _echo_in_magenta "${ellapsed_time}ms - Unexpectedly fast"
-elif [ "$ellapsed_time" -lt 470 ]; then
+elif [ "$ellapsed_time" -lt $THRESHOLD_OK ]; then
   _echo_in_green "${ellapsed_time}ms - ok"
 else
   _echo_in_yellow "${ellapsed_time}ms - BAD"
