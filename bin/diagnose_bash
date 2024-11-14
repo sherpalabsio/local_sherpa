@@ -2,14 +2,13 @@
 
 # Disable the history to avoid polluting the user's history file
 export HISTFILE=
+# shellcheck disable=SC2034
+SHERPA_ENABLED=true
 
 source "$(dirname "$0")/diagnose_common.sh"
 
-echo "==================== Local Tests ===================="
-check_local_env_file
-
 echo
-echo "==================== System Tests ==================="
+echo "=========================== System =========================="
 
 check_enabled
 check_checksum_function_exists

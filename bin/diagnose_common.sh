@@ -43,8 +43,7 @@ _check_local_env_file_readable() {
 }
 
 _check_local_env_file_has_no_shell_errors() {
-  # shellcheck disable=SC1090
-  local -r error_output=$(source "$SHERPA_ENV_FILENAME" 2>&1 > /dev/null)
+  local -r error_output=$(_sherpa_load_env_from_current_dir 2>&1 > /dev/null)
 
   if [[ -n "$error_output" ]]; then
     print_error "[NOT OK] Local $SHERPA_ENV_FILENAME file"
@@ -68,7 +67,7 @@ _check_local_env_file_trusted() {
 
 
 check_enabled() {
-  if [ "$SHERPA_ENABLED" = true ]; then
+  if [ "$SHERPA_WAS_ENABLED" = true ]; then
     print_success "[OK] Enabled"
   else
     print_error "[NOT OK] Enabled"

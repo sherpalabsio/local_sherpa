@@ -1,0 +1,6 @@
+SHERPA_ENABLED=true
+
+source "$(dirname "$0")/diagnose_common.sh"
+
+echo "==================== Loading current env ===================="
+check_local_env_file
