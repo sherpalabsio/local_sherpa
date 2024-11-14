@@ -1,25 +1,25 @@
 _sherpa_fetch_variable_names_from_env_file() {
   __load_dynamic() {
     local -Ar VAR_NAMES_TO_IGNORE=(
-      [__sherpa_tmp_var_name]=''
-      [__vars_after]=''
-      [__vars_before]=''
+      [__sherpa_tmp_var_name]=""
+      [__vars_after]=""
+      [__vars_before]=""
 
-      [aliases]=''
-      [functions_source]=''
-      [RANDOM]=''
-      [LINENO]=''
-      [BASH_COMMAND]=''
-      [EPOCHREALTIME]=''
-      [SRANDOM]=''
-      [modules]=''
-      [LOGCHECK]=''
-      [zle_bracketed_paste]=''
-      [parameters]=''
-      [WATCHFMT]=''
-      [functions]=''
-      [TTYIDLE]=''
-      [epochtime]=''
+      [aliases]=""
+      [functions_source]=""
+      [RANDOM]=""
+      [LINENO]=""
+      [BASH_COMMAND]=""
+      [EPOCHREALTIME]=""
+      [SRANDOM]=""
+      [modules]=""
+      [LOGCHECK]=""
+      [zle_bracketed_paste]=""
+      [parameters]=""
+      [WATCHFMT]=""
+      [functions]=""
+      [TTYIDLE]=""
+      [epochtime]=""
     )
     local -A __vars_before
     local -A __vars_after
@@ -71,7 +71,7 @@ _sherpa_fetch_variable_names_from_env_file() {
   }
 
   __load_static() {
-    local -r filter_pattern='^[[:space:]]*export[[:space:]]+[[:alnum:]_]+'
+    local -r filter_pattern="^[[:space:]]*export[[:space:]]+[[:alnum:]_]+"
 
     # Cleanup:
     # export var_1 -> var_1
@@ -96,11 +96,11 @@ _sherpa_fetch_aliase_names_from_env_file() {
   }
 
   __load_static() {
-    local -r filter_pattern='^[[:space:]]*alias[[:space:]]'
+    local -r filter_pattern="^[[:space:]]*alias[[:space:]]"
 
     # Cleanup:
     # alias alias_1=... -> alias_1
-    grep -E "$filter_pattern" "$SHERPA_ENV_FILENAME" | awk -F'[ =]' '{print $2}'
+    grep -E "$filter_pattern" "$SHERPA_ENV_FILENAME" | awk -F"[ =]" '{print $2}'
   }
 
   local alias_names
@@ -119,21 +119,21 @@ _sherpa_fetch_function_names_from_env_file() {
     if [ -n "$ZSH_VERSION" ]; then
       # Unsetting functions with compgen is not working in Zsh because the unset
       # removes compgen itself
-      zsh --no-globalrcs --no-rcs -c 'source "$SHERPA_ENV_FILENAME" &> /dev/null; print -l ${(k)functions}'
+      zsh --no-globalrcs --no-rcs -c "source $SHERPA_ENV_FILENAME &> /dev/null; print -l \${(k)functions}"
     else
       bash --noprofile --norc -c "source $SHERPA_ENV_FILENAME &> /dev/null; compgen -A function"
     fi
   }
 
   __load_static() {
-    local -r filter_pattern='^[[:space:]]*([[:alnum:]_]+[[:space:]]*\(\)|function[[:space:]]+[[:alnum:]_]+)'
+    local -r filter_pattern="^[[:space:]]*([[:alnum:]_]+[[:space:]]*\(\)|function[[:space:]]+[[:alnum:]_]+)"
 
     # Cleanup:
     # "function_1()" -> "function_1"
     # "function function_2()" -> "function_2()" -> "function_2"
     grep -oE "$filter_pattern" "$SHERPA_ENV_FILENAME" | \
-      sed 's/function //' | \
-      sed 's/()//'
+      sed "s/function //" | \
+      sed "s/()//"
   }
 
   local function_names

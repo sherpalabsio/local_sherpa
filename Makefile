@@ -1,11 +1,11 @@
 .PHONY: help
 help:
-	@echo 'lint               - run linters and code format checkers'
-	@echo 'test               - run all the tests for all the supported shells'
-	@echo 'test_zsh           - run all the tests for Zsh'
-	@echo 'test_bash          - run all the tests for Bash'
-	@echo 'test_all_in_ubuntu - run all the tests for all the supported shells in Ubuntu'
-	@echo 'test_performance   - run a benchmark test for all the supported shells'
+	@echo "lint               - run linters and code format checkers"
+	@echo "test               - run all the tests for all the supported shells"
+	@echo "test_zsh           - run all the tests for Zsh"
+	@echo "test_bash          - run all the tests for Bash"
+	@echo "test_all_in_ubuntu - run all the tests for all the supported shells in Ubuntu"
+	@echo "test_performance   - run a benchmark test for all the supported shells"
 
 .PHONY: lint
 lint:

@@ -48,7 +48,7 @@ Log levels:
                     symlink|link|slink) _sherpa_cli_symlink "$2";;
                               r|reload) _sherpa_cli_reload;;
                   -v|--version|version) echo "$version_info";;
-                     -h|--help|help|'') echo "$usage_text";;
+                     -h|--help|help|"") echo "$usage_text";;
                                      *) echo "Sherpa doesn't understand what you mean";;
   esac
 }
@@ -99,7 +99,7 @@ _sherpa_cli_set_log_level() {
   case $1 in
    less|-) _sherpa_increase_log_level;;
    more|+) _sherpa_decrease_log_level;;
-       '') _sherpa_cli_log_level_menu;;
+       "") _sherpa_cli_log_level_menu;;
         *) _sherpa_set_log_level "$1";;
   esac
 
@@ -111,7 +111,7 @@ _sherpa_cli_set_log_level() {
 }
 
 _sherpa_cli_log_level_menu() {
-  trap '__sherpa_cli_clear_last_lines 6; trap - SIGINT; return 1' SIGINT
+  trap "__sherpa_cli_clear_last_lines 6; trap - SIGINT; return 1" SIGINT
 
   local -r current="\033[32m ❮ current\033[0m"
 

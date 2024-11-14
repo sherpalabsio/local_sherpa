@@ -59,7 +59,7 @@ assert_equal "$(function_1)" "GLOBAL FUNCTION" "Untrusted local env is not loade
 
 # In ubuntu I couldn't make the .envrc file unreadable
 if [ "$RUNNING_IN_CONTAINER" = "true" ]; then
-  echo 'Running in container. Skipping the trust check test!'
+  echo "Running in container. Skipping the trust check test!"
   exit 0
 fi
 

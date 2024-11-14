@@ -3,29 +3,29 @@ name: CI
 on:
   push:
     paths-ignore:
-      - 'dockerfiles/**'
-      - '.gitignore'
-      - 'dev_tools.sh'
-      - 'docker-compose.yml'
-      - 'Makefile'
-      - 'README.md'
-      - 'test_all_in_ubuntu'
+      - "dockerfiles/**"
+      - ".gitignore"
+      - "dev_tools.sh"
+      - "docker-compose.yml"
+      - "Makefile"
+      - "README.md"
+      - "test_all_in_ubuntu"
   pull_request:
     paths-ignore:
-      - 'dockerfiles/**'
-      - '.gitignore'
-      - 'dev_tools.sh'
-      - 'docker-compose.yml'
-      - 'Makefile'
-      - 'README.md'
-      - 'test_all_in_ubuntu'
+      - "dockerfiles/**"
+      - ".gitignore"
+      - "dev_tools.sh"
+      - "docker-compose.yml"
+      - "Makefile"
+      - "README.md"
+      - "test_all_in_ubuntu"
 
-permissions: 'read-all'
+permissions: read-all
 
 defaults:
   run:
-    shell: 'bash'
-    working-directory: './'
+    shell: bash
+    working-directory: "./"
 
 jobs:
   shellcheck:
@@ -46,7 +46,7 @@ jobs:
     name: MacOS Test
     strategy:
       matrix:
-        os: ['macos-12', 'macos-13', 'macos-14']
+        os: [macos-12, macos-13, macos-14]
 
     runs-on: ${{ matrix.os }}
 
@@ -66,7 +66,7 @@ jobs:
     name: Linux Test
     strategy:
       matrix:
-        os: ['ubuntu-20.04', 'ubuntu-22.04']
+        os: [ubuntu-20.04, ubuntu-22.04]
 
     runs-on: ${{ matrix.os }}
 

@@ -9,7 +9,7 @@ _calculate_checksum() {
     local -r env_file="$SHERPA_ENV_FILENAME"
   fi
 
-  if ! sha256sum "$env_file" | cut -d ' ' -f 1; then
+  if ! sha256sum "$env_file" | cut -d " " -f 1; then
     if [ -r "$FILE" ]; then
       _sherpa_log_error "Checksum calculation failed"
     else
@@ -28,7 +28,7 @@ _sherpa_verify_trust() {
   fi
 
   local checksum_file
-  checksum_file="$SHERPA_CHECKSUM_DIR/$(echo "$target_dir" | md5sum | cut -d ' ' -f 1)"
+  checksum_file="$SHERPA_CHECKSUM_DIR/$(echo "$target_dir" | md5sum | cut -d " " -f 1)"
 
   local current_checksum
 
@@ -46,7 +46,7 @@ _sherpa_verify_trust() {
   fi
 
   local stored_checksum
-  stored_checksum=$(cut -d '|' -f 1 "$checksum_file")
+  stored_checksum=$(cut -d "|" -f 1 "$checksum_file")
 
   # Did the local env file change?
   if [[ "$current_checksum" != "$stored_checksum" ]]; then
@@ -70,7 +70,7 @@ _sherpa_trust_dir() {
   mkdir -p "$SHERPA_CHECKSUM_DIR"
 
   local checksum_file
-  checksum_file="$SHERPA_CHECKSUM_DIR/$(echo "$env_dir" | md5sum | cut -d ' ' -f 1)"
+  checksum_file="$SHERPA_CHECKSUM_DIR/$(echo "$env_dir" | md5sum | cut -d " " -f 1)"
   local current_checksum
 
   if ! current_checksum=$(_calculate_checksum "$env_file"); then
@@ -90,7 +90,7 @@ _sherpa_trust_current_dir() {
 
 _sherpa_untrust_current_dir() {
   local checksum_file
-  checksum_file="$SHERPA_CHECKSUM_DIR/$(realpath "$(pwd)" | md5sum | cut -d ' ' -f 1)"
+  checksum_file="$SHERPA_CHECKSUM_DIR/$(realpath "$(pwd)" | md5sum | cut -d " " -f 1)"
 
   if [[ -f "$checksum_file" ]]; then
     rm "$checksum_file"

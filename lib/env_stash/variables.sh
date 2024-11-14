@@ -85,8 +85,8 @@ sherpa::env_stash._remove_variables() {
   fi
 
   for variable_name in "${variable_names[@]}"; do
-    # '2> /dev/null' is used to avoid error messages when an variable does not exist.
-    # It happens when an variable is double stashed. There is no protection
+    # "2> /dev/null" is used to avoid error messages when a variable does not exist.
+    # It happens when a variable is double stashed. There is no protection
     # implemented for this case.
     unset "$variable_name" 2> /dev/null
   done

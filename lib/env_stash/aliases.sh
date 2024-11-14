@@ -87,7 +87,7 @@ sherpa::env_stash._remove_aliases() {
   fi
 
   for alias_name in "${alias_names[@]}"; do
-    # '2> /dev/null' is used to avoid error messages when an alias does not exist.
+    # "2> /dev/null" is used to avoid error messages when an alias does not exist.
     # It happens when an alias is double stashed. There is no protection
     # implemented for this case.
     unalias "$alias_name" 2> /dev/null

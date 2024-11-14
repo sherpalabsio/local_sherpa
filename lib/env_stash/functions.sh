@@ -97,8 +97,8 @@ sherpa::env_stash._remove_functions() {
   fi
 
   for function_name in "${function_names[@]}"; do
-    # '2> /dev/null' is used to avoid error messages when an function does not exist.
-    # It happens when an function is double stashed. There is no protection
+    # "2> /dev/null" is used to avoid error messages when a function does not exist.
+    # It happens when a function is double stashed. There is no protection
     # implemented for this case.
     unset -f "$function_name" 2> /dev/null
   done

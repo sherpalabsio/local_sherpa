@@ -54,8 +54,8 @@ assert_equal_compact(){
   local -r expected="$2"
   local -r message="$3"
 
-  local -r actual_trimmed=$(echo "$actual" | tr -d '[:space:]')
-  local -r expected_trimmed=$(echo "$expected" | tr -d '[:space:]')
+  local -r actual_trimmed=$(echo "$actual" | tr -d "[:space:]")
+  local -r expected_trimmed=$(echo "$expected" | tr -d "[:space:]")
 
   assert_equal "$actual_trimmed" "$expected_trimmed" "$message"
 }

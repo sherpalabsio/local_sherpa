@@ -26,7 +26,7 @@ _sherpa_print_status() {
 
 __sherpa_status_print_trusted_dirs() {
   for checksum_file in "$SHERPA_CHECKSUM_DIR"/*; do
-    trusted_dir=$(cut -d '|' -f 2 "$checksum_file")
+    trusted_dir=$(cut -d "|" -f 2 "$checksum_file")
 
     if _sherpa_verify_trust "$trusted_dir" > /dev/null 2>&1; then
       echo "$trusted_dir"

@@ -81,7 +81,7 @@ unset SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING
 # ==============================================================================
 # ++++ It works for simple aliases
 
-overwrite_env_file "alias alias_1='echo "local alias 1"'"
+overwrite_env_file "alias alias_1='echo'"
 
 actual_list=$(_sherpa_parse_local_env_file)
 
@@ -91,7 +91,7 @@ assert_equal "$actual_list" "alias_1"
 # ==============================================================================
 # ++++ It is not case sensitive
 
-overwrite_env_file "alias ALIAS_2='echo "local alias 2"'"
+overwrite_env_file "alias ALIAS_2='echo'"
 
 actual_list=$(_sherpa_parse_local_env_file)
 
@@ -102,8 +102,8 @@ assert_equal "$actual_list" "ALIAS_2"
 # ++++ It works for multiline aliases
 
 cat <<EOF | overwrite_env_file
-alias alias_multi_line='echo "local alias 1";
-echo "local alias 2";'
+alias alias_multi_line="echo;
+echo;"
 EOF
 
 actual_list=$(_sherpa_parse_local_env_file)
@@ -114,7 +114,7 @@ assert_equal "$actual_list" "alias_multi_line"
 # ==============================================================================
 # ++++ It ignores commented lines
 
-overwrite_env_file "# alias alias_commented='echo "local alias 0";'"
+overwrite_env_file "# alias alias_commented='echo'"
 
 actual_list=$(_sherpa_parse_local_env_file)
 
@@ -126,13 +126,13 @@ assert_equal "$actual_list" ""
 
 SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING=true
 
-alias untouched_existing_alias="echo 1"
-alias overriden_existing_alias="echo 1"
+alias untouched_existing_alias="echo"
+alias overriden_existing_alias="echo"
 
 cat <<EOF | overwrite_env_file
-eval "alias overriden_existing_alias='echo 2'";
-alias new_alias='echo 1';
-echo "Trick" # It ignores print commands in the env file
+eval "alias overriden_existing_alias='echo'";
+alias new_alias="echo";
+echo Trick # It ignores print commands in the env file
 EOF
 
 actual_list=$(_sherpa_parse_local_env_file)
@@ -153,7 +153,7 @@ unset SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING
 
 cat <<EOF | overwrite_env_file
 function_1() {
-  echo "local function 1"
+  echo
 }
 EOF
 
@@ -167,7 +167,7 @@ assert_equal "$actual_list" "function_1"
 
 cat <<EOF | overwrite_env_file
 FUNCTION_2() {
-  echo "local function 2"
+  echo
 }
 EOF
 
@@ -181,7 +181,7 @@ assert_equal "$actual_list" "FUNCTION_2"
 
 cat <<EOF | overwrite_env_file
 function function_3() {
-  echo "local function 3"
+  echo
 }
 EOF
 
@@ -197,7 +197,7 @@ cat <<EOF | overwrite_env_file
 # Commented function
 # function_commented() {
 #   # comment
-#   echo "local function 0"
+#   echo
 # }
 EOF
 
