@@ -3,7 +3,7 @@ _sherpa_print_status() {
   echo "Enabled: $SHERPA_ENABLED"
   echo "Log level: $(_sherpa_get_log_level_in_text) ($SHERPA_LOG_LEVEL)"
   echo "Local env file name: $SHERPA_ENV_FILENAME"
-  if [ -n "$SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING" ]; then
+  if [ "$SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING" = true ]; then
     echo "Dynamic env file parsing: enabled"
   else
     echo "Dynamic env file parsing: disabled"

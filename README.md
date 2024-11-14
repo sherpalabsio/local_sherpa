@@ -103,10 +103,10 @@ For more details see the [Features](#features) section.
 - Aliases
 - Functions
 
-Non-exported variables and dynamically created entities are supported by
-setting the `SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING` environment variable to
-any value. This executes the local env file in a subshell three times when
-cd'ing into a directory.
+Experimental feature: Non-exported variables and dynamically created entities
+are supported by setting the `SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING`
+environment variable to `true`. This executes the local env file in a
+subshell three times when cd'ing into a directory.
 
 ## Side effect
 
@@ -175,8 +175,9 @@ It is not supported currently. Feel free to open a feature request.
     the overridden items.
   - Subfolders can override the items defined in the parent folders.
 - Sherpa does not unload the loaded envs when you `cd` into a subdirectory.
-- Non exported variables and dynamically created entities are unloaded only
-  if the `SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING` environment variable is set.
+- Experimental feature: Non exported variables and dynamically created entities
+  are unloaded only if the `SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING` environment
+  variable is set to `true`.
 
 #### Demo
 

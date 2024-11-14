@@ -80,7 +80,7 @@ _sherpa_fetch_variable_names_from_env_file() {
 
   local variable_names
 
-  if [ -n "$SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING" ]; then
+  if [ "$SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING" = true ]; then
     variable_names=$(__load_dynamic)
   else
     variable_names=$(__load_static)
@@ -105,7 +105,7 @@ _sherpa_fetch_aliase_names_from_env_file() {
 
   local alias_names
 
-  if [ -n "$SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING" ]; then
+  if [ "$SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING" = true ]; then
     alias_names=$(__load_dynamic)
   else
     alias_names=$(__load_static)
@@ -138,7 +138,7 @@ _sherpa_fetch_function_names_from_env_file() {
 
   local function_names
 
-  if [ -n "$SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING" ]; then
+  if [ "$SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING" = true ]; then
     function_names=$(__load_dynamic)
   else
     function_names=$(__load_static)
