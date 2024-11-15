@@ -54,7 +54,7 @@ Log levels:
 }
 
 _sherpa_cli_trust() {
-  _sherpa_trust_current_dir && _sherpa_load_env_for_current_dir
+  _sherpa_trust_current_dir && _sherpa_cli_reload
 }
 
 _sherpa_cli_untrust() {
