@@ -15,6 +15,24 @@ teardown() {
   rm "$STDERR_FILE"
 }
 
+check_minimum_supported_shell_version() {
+  if [ -n "$ZSH_VERSION" ]; then
+    :
+  else
+    check_minimum_supported_bash_version
+  fi
+}
+
+check_minimum_supported_bash_version() {
+  if ((BASH_VERSINFO[0] >= 5)); then
+    print_success "[OK] Bash version"
+  else
+    print_error "[NOT OK] Bash version"
+    echo "Sherpa requires Bash 4.3 or newer." >&2
+    exit 1
+  fi
+}
+
 check_enabled() {
   if [ "$SHERPA_WAS_ENABLED" = true ]; then
     print_success "[OK] Enabled"
@@ -100,6 +118,7 @@ print_all_ok() {
 echo
 echo "=========================== System =========================="
 
+check_minimum_supported_shell_version
 check_enabled
 check_checksum_function_exists
 check_cd_hook_setup

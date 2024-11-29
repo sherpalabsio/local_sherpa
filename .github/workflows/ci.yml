@@ -43,7 +43,7 @@ jobs:
           bin/shellcheck
 
   test-macos:
-    name: MacOS Test
+    name: Tests for MacOS
     strategy:
       matrix:
         os: [macos-12, macos-13, macos-14]
@@ -63,7 +63,7 @@ jobs:
           script time make test
 
   test-linux:
-    name: Linux Test
+    name: Tests for Linux
     strategy:
       matrix:
         os: [ubuntu-20.04, ubuntu-22.04]
@@ -87,3 +87,26 @@ jobs:
         run: |
           zsh --version
           make test_zsh
+
+  test-minimum-supported-versions:
+    name: Tests for the minimum supported Bash and Zsh versions
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Bash 5.0
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential wget  # Install necessary build tools
+          wget http://ftp.gnu.org/gnu/bash/bash-5.0.tar.gz
+          tar -xvzf bash-5.0.tar.gz
+          cd bash-5.0
+          ./configure
+          make
+          sudo make install
+          echo "============================================"
+          bash --version  # Verify the installed Bash version
+
+      - name: Run the tests for Bash
+        run: script -q -e -c 'make test_bash'
