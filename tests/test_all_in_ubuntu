@@ -5,12 +5,12 @@ set -e
 EXIT_CODE=0
 
 # Start the container if it's not running
-if ! docker ps | grep -q local-sherpa-test-ubuntu-container; then
+if ! docker ps | grep -q local-sherpa-ubuntu; then
   docker-compose up -d
   CONTAINER_STARTED_BY_THIS_SCRIPT=true
 fi
 
-DOCKER_EXEC="docker exec -it local-sherpa-test-ubuntu-container"
+DOCKER_EXEC="docker exec -it local-sherpa-ubuntu"
 TESTS_PASSED=true
 
 echo "**************** Running in Ubuntu ****************"
