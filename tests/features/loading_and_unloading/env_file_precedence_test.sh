@@ -10,7 +10,7 @@ source tests/support/app_helper.sh
 source .bash_profile # Imitate global env
 _sherpa_trust_dir "project_1"
 
-# == Senety checks: the Global env is loaded
+# == Sanity checks: the Global env is loaded
 assert_equal "$(existing_alias_shadowing_new_function)" "ORIGINAL ALIAS" "The global env is loaded (alias)"
 assert_equal "$(existing_function_shadowing_new_alias)" "ORIGINAL FUNCTION" "The global env is loaded (function)"
 
@@ -35,7 +35,7 @@ assert_equal "$(existing_alias_shadowing_new_function)" "ORIGINAL ALIAS" "The or
 
 cd project_1
 
-assert_equal "$(existing_function_shadowing_new_alias)" "OVERWRITTEN FUNCTION" "The new alais takes precedence over the existing function"
+assert_equal "$(existing_function_shadowing_new_alias)" "OVERWRITTEN FUNCTION" "The new alias takes precedence over the existing function"
 
 
 # ==============================================================================

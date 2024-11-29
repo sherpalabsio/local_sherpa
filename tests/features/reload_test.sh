@@ -12,7 +12,7 @@ overwrite_env_file 'alias alias_1="echo alias_1"'
 cd /
 sherpa trust
 
-# == Senety checks: the env file is loaded
+# == Sanity checks: the env file is loaded
 assert_equal "$(alias_1)" "alias_1"
 
 # ==============================================================================

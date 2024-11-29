@@ -127,17 +127,17 @@ assert_equal "$actual_list" ""
 SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING=true
 
 alias untouched_existing_alias="echo"
-alias overriden_existing_alias="echo"
+alias overridden_existing_alias="echo"
 
 cat <<EOF | overwrite_env_file
-eval "alias overriden_existing_alias='echo'";
+eval "alias overridden_existing_alias='echo'";
 alias new_alias="echo";
 echo Trick # It ignores print commands in the env file
 EOF
 
 actual_list=$(_sherpa_parse_env_file)
 expected_list="new_alias
-overriden_existing_alias"
+overridden_existing_alias"
 
 assert_equal "$actual_list" "$expected_list"
 

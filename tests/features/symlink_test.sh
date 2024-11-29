@@ -5,7 +5,7 @@ source tests/support/app_helper.sh
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 
 # ==============================================================================
-# == Senety checks: Project 1 env is not loaded
+# == Sanity checks: Project 1 env is not loaded
 assert_undefined "var_1"
 assert_undefined "alias_1"
 assert_undefined "function_1"

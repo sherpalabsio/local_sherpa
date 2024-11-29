@@ -9,7 +9,7 @@ _skip_for_zsh
 # ++++ Setup
 SHERPA_CONFIG_DIR="$TEST_DIR/playground/local_sherpa_config"
 
-# == Senety check
+# == Sanity check
 assert_equal "$SHERPA_LOG_LEVEL" "$SHERPA_LOG_LEVEL_SILENT"
 
 # ==============================================================================

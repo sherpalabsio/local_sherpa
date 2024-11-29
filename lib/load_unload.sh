@@ -105,7 +105,7 @@ _sherpa_stash_current_env() {
   sherpa::env_stash.stash_variables "$PWD" "${variable_names[@]}"
 
   # shellcheck disable=SC2207
-  local alias_names=($(_sherpa_fetch_aliase_names_from_env_file))
+  local alias_names=($(_sherpa_fetch_alias_names_from_env_file))
   _sherpa_log_debug "AutoStashing aliases: ${alias_names[*]}"
   sherpa::env_stash.stash_aliases "$PWD" "${alias_names[@]}"
 

@@ -42,13 +42,13 @@ assert_equal(){
   fi
 
   __print_not_ok "$message"
-  __print_comparsion "$actual" "$expected"
+  __print_comparison "$actual" "$expected"
   __report_failure
 
   exit 1
 }
 
-# Exact match buth without tabs, spaces and new lines
+# Exact match but without tabs, spaces and new lines
 assert_equal_compact(){
   local -r actual="$1"
   local -r expected="$2"
@@ -72,7 +72,7 @@ assert_contain(){
   fi
 
   __print_not_ok "$message"
-  __print_comparsion "$actual" "$expected_pattern" "Not a partial match!" "~"
+  __print_comparison "$actual" "$expected_pattern" "Not a partial match!" "~"
   __report_failure
 
   exit 1
@@ -135,7 +135,7 @@ __print_not_ok(){
   printf "\n\n"
 }
 
-__print_comparsion() {
+__print_comparison() {
   local -r actual="$1"
   local -r expected="$2"
   local -r message="$3"
@@ -148,13 +148,13 @@ __print_comparsion() {
   fi
 
   [ -n "$message" ] && echo -e "$message\n"
-  printf "$expected_copy: %s\n" "$(__add_ledt_padding_after_first_line "$expected")"
-  printf "       got: %s\n" "$(__add_ledt_padding_after_first_line "$actual")"
+  printf "$expected_copy: %s\n" "$(__add_left_padding_after_first_line "$expected")"
+  printf "       got: %s\n" "$(__add_left_padding_after_first_line "$actual")"
   echo
 }
 
 # Add extra space to the left of each line after the first one
-__add_ledt_padding_after_first_line(){
+__add_left_padding_after_first_line(){
   local -r content="$1"
   local -r left_padding="            "
   local first_line=true

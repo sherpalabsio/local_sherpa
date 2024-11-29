@@ -89,7 +89,7 @@ _sherpa_fetch_variable_names_from_env_file() {
   [ -n "$variable_names" ] && echo "$variable_names"
 }
 
-_sherpa_fetch_aliase_names_from_env_file() {
+_sherpa_fetch_alias_names_from_env_file() {
   __load_dynamic() {
     # shellcheck disable=SC1090
     echo "$(unalias -a; source "$SHERPA_ENV_FILENAME" &> /dev/null; compgen -a)"
@@ -149,6 +149,6 @@ _sherpa_fetch_function_names_from_env_file() {
 
 _sherpa_parse_env_file() {
   _sherpa_fetch_variable_names_from_env_file
-  _sherpa_fetch_aliase_names_from_env_file
+  _sherpa_fetch_alias_names_from_env_file
   _sherpa_fetch_function_names_from_env_file
 }

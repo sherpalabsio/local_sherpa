@@ -10,7 +10,7 @@ source .bash_profile # Imitate global env
 _sherpa_trust_dir "project_1"
 _sherpa_trust_dir "project_1/subfolder_with_no_env/subproject"
 
-# == Senety checks: the Global env is loaded
+# == Sanity checks: the Global env is loaded
 assert_equal "$var_1" "GLOBAL VAR" "Global env is ready (var)"
 assert_equal "$(alias_1)" "GLOBAL ALIAS" "Global env is ready (alias)"
 assert_equal "$(function_1)" "GLOBAL FUNCTION" "Global env is ready (function)"
@@ -18,7 +18,7 @@ assert_equal "$(function_1)" "GLOBAL FUNCTION" "Global env is ready (function)"
 # ==============================================================================
 # PWD: /project_1 (with env)
 cd project_1
-# == Senety check: Project 1 env is loaded
+# == Sanity check: Project 1 env is loaded
 assert_equal "$var_1" "LOCAL VAR PROJECT 1" "Project 1 env is loaded (var_1)"
 
 # ==============================================================================
@@ -28,7 +28,7 @@ cd subfolder_with_no_env
 # ==============================================================================
 # PWD: /project_1/subfolder_with_no_env/subproject (with env)
 cd subproject
-# == Senety check: Subproject env is loaded
+# == Sanity check: Subproject env is loaded
 assert_equal "$(alias_1)" "LOCAL ALIAS SUBPROJECT" "Project 1 env is overridden by Subproject env (alias_1)"
 
 # ==============================================================================

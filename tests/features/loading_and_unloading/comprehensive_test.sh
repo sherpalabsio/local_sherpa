@@ -12,7 +12,7 @@ _sherpa_trust_dir "project_1"
 _sherpa_trust_dir "project_1/subfolder_with_no_env/subproject"
 _sherpa_trust_dir "project_2"
 
-# == Senety checks: the Global env is loaded
+# == Sanity checks: the Global env is loaded
 assert_equal "$var_1" "GLOBAL VAR" "Global env is ready (var)"
 assert_equal "$(alias_1)" "GLOBAL ALIAS" "Global env is ready (alias)"
 assert_equal "$(function_1)" "GLOBAL FUNCTION" "Global env is ready (function)"

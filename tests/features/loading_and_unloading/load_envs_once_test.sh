@@ -7,7 +7,7 @@ source tests/support/app_helper.sh
 source .bash_profile # Imitate global env
 _sherpa_trust_dir "project_1"
 
-# == Senety checks: the Global env is loaded
+# == Sanity checks: the Global env is loaded
 assert_equal "$var_1" "GLOBAL VAR" "Global env is ready (var)"
 
 cd project_1
