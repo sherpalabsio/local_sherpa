@@ -78,8 +78,12 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y --no-install-recommends zsh
 
-      - name: Run the tests
+      - name: Run the tests for Bash
+        run: |
+          bash --version
+          script -q -e -c 'make test_bash'
+
+      - name: Run the tests for Zsh
         run: |
           zsh --version
-          bash --version
-          script time make test
+          make test_zsh
