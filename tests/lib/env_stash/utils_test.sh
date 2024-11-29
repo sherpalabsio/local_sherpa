@@ -9,16 +9,12 @@ source "$SHERPA_DIR/lib/env_stash/utils.sh"
 # ++++ It replaces all non alphanumeric characters with underscores and removes
 #      the first slash
 
-LANG=en_US.UTF-8 # Required for the test to pass in all systems
-
 dir_path="/parent/child/ space /áé/-dash-"
-expected="parent_child__space______dash_"
+expected="parent_child__space________dash_"
 
 actual=$(sherpa::env_stash._path_to_variable_prefix "$dir_path")
 
 assert_equal "$actual" "$expected" "It replaces all non alphanumeric characters with underscores"
-
-unset LANG
 
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 #                             _item_to_variable_name

@@ -24,6 +24,10 @@ sherpa::env_stash._item_to_variable_name() {
 sherpa::env_stash._path_to_variable_prefix() {
   local dir_path=${1:-$PWD}
   dir_path="${dir_path:1}" # Remove the first slash
+
+  # Set the locale to ensure compatibility with non-ASCII characters
+  local LC_CTYPE=C # This might be necessary only for Bash 4.x
+
   echo "${dir_path//[^a-zA-Z0-9]/_}"
 }
 

@@ -95,13 +95,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Bash 5.0
+      - name: Install Bash 4.3
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential wget  # Install necessary build tools
-          wget http://ftp.gnu.org/gnu/bash/bash-5.0.tar.gz
-          tar -xvzf bash-5.0.tar.gz
-          cd bash-5.0
+          wget http://ftp.gnu.org/gnu/bash/bash-4.3.tar.gz
+          tar -xvzf bash-4.3.tar.gz
+          cd bash-4.3
           ./configure
           make
           sudo make install
