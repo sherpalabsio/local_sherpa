@@ -88,7 +88,7 @@ jobs:
           zsh --version
           make test_zsh
 
-  test-minimum-supported-versions:
+  test-minimum-supported-shell-versions:
     name: Tests for the minimum supported Bash and Zsh versions
     runs-on: ubuntu-20.04
 
@@ -97,8 +97,6 @@ jobs:
 
       - name: Install Bash 4.3
         run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential wget  # Install necessary build tools
           wget http://ftp.gnu.org/gnu/bash/bash-4.3.tar.gz
           tar -xvzf bash-4.3.tar.gz
           cd bash-4.3
@@ -110,3 +108,20 @@ jobs:
 
       - name: Run the tests for Bash
         run: script -q -e -c 'make test_bash'
+
+      - name: Install Zsh 5.3.1
+        run: |
+          wget https://sourceforge.net/projects/zsh/files/zsh/5.3.1/zsh-5.3.1.tar.gz
+          tar xf zsh-5.3.1.tar.gz
+          cd zsh-5.3.1
+          wget -O config.guess 'https://git.savannah.gnu.org/cgit/config.git/plain/config.guess'
+          wget -O config.sub 'https://git.savannah.gnu.org/cgit/config.git/plain/config.sub'
+          chmod +x config.guess config.sub
+          ./configure --without-tcsetpgrp
+          make
+          sudo make install
+          echo "============================================"
+          zsh --version  # Verify the installed Zsh version
+
+      - name: Run the tests for Zsh
+        run: make test_zsh

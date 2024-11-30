@@ -17,9 +17,19 @@ teardown() {
 
 check_minimum_supported_shell_version() {
   if [ -n "$ZSH_VERSION" ]; then
-    :
+    check_minimum_supported_zsh_version
   else
     check_minimum_supported_bash_version
+  fi
+}
+
+check_minimum_supported_zsh_version() {
+  if ((ZSH_VERSION[1] >= 5)); then
+    print_success "[OK] Zsh version"
+  else
+    print_error "[NOT OK] Zsh version"
+    echo "Sherpa requires Zsh 5.0 or newer." >&2
+    exit 1
   fi
 }
 

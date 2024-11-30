@@ -86,7 +86,7 @@ For more details see the [Features](#features) section.
 
 ## Supported shells
 
-- Zsh
+- Zsh (5.3.1 or higher)
 - Bash (4.3 or higher)
 
 ## Tested on

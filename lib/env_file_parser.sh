@@ -1,26 +1,27 @@
 _sherpa_fetch_variable_names_from_env_file() {
   __load_dynamic() {
-    local -Ar VAR_NAMES_TO_IGNORE=(
-      [__sherpa_tmp_var_name]=""
-      [__vars_after]=""
-      [__vars_before]=""
+    local -A VAR_NAMES_TO_IGNORE
 
-      [aliases]=""
-      [functions_source]=""
-      [RANDOM]=""
-      [LINENO]=""
-      [BASH_COMMAND]=""
-      [EPOCHREALTIME]=""
-      [SRANDOM]=""
-      [modules]=""
-      [LOGCHECK]=""
-      [zle_bracketed_paste]=""
-      [parameters]=""
-      [WATCHFMT]=""
-      [functions]=""
-      [TTYIDLE]=""
-      [epochtime]=""
-    )
+    VAR_NAMES_TO_IGNORE[__sherpa_tmp_var_name]=""
+    VAR_NAMES_TO_IGNORE[__vars_after]=""
+    VAR_NAMES_TO_IGNORE[__vars_before]=""
+    VAR_NAMES_TO_IGNORE[aliases]=""
+    VAR_NAMES_TO_IGNORE[functions_source]=""
+    VAR_NAMES_TO_IGNORE[RANDOM]=""
+    VAR_NAMES_TO_IGNORE[LINENO]=""
+    VAR_NAMES_TO_IGNORE[BASH_COMMAND]=""
+    VAR_NAMES_TO_IGNORE[EPOCHREALTIME]=""
+    VAR_NAMES_TO_IGNORE[SRANDOM]=""
+    VAR_NAMES_TO_IGNORE[modules]=""
+    VAR_NAMES_TO_IGNORE[LOGCHECK]=""
+    VAR_NAMES_TO_IGNORE[zle_bracketed_paste]=""
+    VAR_NAMES_TO_IGNORE[parameters]=""
+    VAR_NAMES_TO_IGNORE[WATCHFMT]=""
+    VAR_NAMES_TO_IGNORE[functions]=""
+    VAR_NAMES_TO_IGNORE[TTYIDLE]=""
+    VAR_NAMES_TO_IGNORE[epochtime]=""
+    VAR_NAMES_TO_IGNORE[SECONDS]=""
+
     local -A __vars_before
     local -A __vars_after
     local __sherpa_tmp_var_name

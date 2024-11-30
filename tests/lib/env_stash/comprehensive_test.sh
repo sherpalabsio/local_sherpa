@@ -152,8 +152,11 @@ assert_equal "${existing_indexed_array1[@]}" "existing_indexed_array1 original c
 #                   Stashing and unstashing associative arrays
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 
-declare -A existing_associative_array1=([key1]="existing_associative_array1 original content")
-declare -A existing_associative_array2=([key2]="existing_associative_array2 original content")
+declare -A existing_associative_array1
+existing_associative_array1[key1]="existing_associative_array1 original content"
+
+declare -A existing_associative_array2
+existing_associative_array2[key2]="existing_associative_array2 original content"
 
 export existing_associative_array1 existing_associative_array2
 
@@ -162,11 +165,14 @@ sherpa::env_stash.stash_variables "$PWD" "existing_associative_array1" \
                                          "new_associative_array1" \
                                          "new_associative_array2"
 
-existing_associative_array1=([key1]="CHANGED 1")
-existing_associative_array2=([key2]="CHANGED 2")
+existing_associative_array1[key1]="CHANGED 1"
+existing_associative_array2[key2]="CHANGED 2"
 
-declare -A new_associative_array1=([key1]="new_associative_array1 content")
-declare -A new_associative_array2=([key2]="new_associative_array2 content")
+declare -A new_associative_array1
+new_associative_array1[key1]="new_associative_array1 content"
+
+declare -A new_associative_array2
+new_associative_array2[key2]="new_associative_array2 content"
 
 export new_associative_array1 new_associative_array2
 
