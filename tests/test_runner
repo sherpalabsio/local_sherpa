@@ -34,13 +34,13 @@ fi
 
 case $TARGET_SHELL_NAME in
   bash)
-    TARGET_SHELL_LABEL="Bash"
+    TARGET_SHELL_LABEL="Bash ${BASH_VERSION%%[^0-9.]*}"
 
     # We run the tests in interactive mode to be able to test aliases
     SHELL_COMMAND="${_run_with_empty_env}bash --noprofile --norc -i "
     ;;
   zsh)
-    TARGET_SHELL_LABEL="Zsh"
+    TARGET_SHELL_LABEL="Zsh $(zsh --version | awk '{print $2}')"
 
     SHELL_COMMAND="${_run_with_empty_env}zsh --no-globalrcs --no-rcs -i"
     ;;
@@ -50,7 +50,7 @@ case $TARGET_SHELL_NAME in
     ;;
 esac
 
-echo "=============================== Shell: $TARGET_SHELL_LABEL =============================="
+echo "=============================== $TARGET_SHELL_LABEL =============================="
 STDERR_FILE=$(mktemp)
 TMP_STDERR_FILE=$(mktemp)
 trap 'rm $STDERR_FILE ; rm $TMP_STDERR_FILE' EXIT
