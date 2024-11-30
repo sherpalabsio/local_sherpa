@@ -1,11 +1,21 @@
 version: "3.9"
 
 services:
-  testing-in-ubuntu:
+  ubuntu:
     build:
       context: .
       dockerfile: dockerfiles/ubuntu.dockerfile
     container_name: local-sherpa-ubuntu
+    volumes:
+      - .:/app
+    stdin_open: true
+    tty: true
+
+  min-shell-versions-ubuntu:
+    build:
+      context: .
+      dockerfile: dockerfiles/min_shell_versions_ubuntu.dockerfile
+    container_name: local-sherpa-min-shell-versions-ubuntu
     volumes:
       - .:/app
     stdin_open: true

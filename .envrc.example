@@ -7,9 +7,15 @@ alias ta="make test" # Test all
 alias taa="make test && make test_all_in_ubuntu" # Test absolutely all
 
 alias tu="make test_all_in_ubuntu" # Test all in Ubuntu
+alias tum="make test_min_shell_versions_in_ubuntu" # Test min shell versions in Ubuntu
+alias tua="tu && tum" # Test Ubuntu all
+
 alias tp="make test_performance" # Test performance
 
-alias de="docker exec -it local-sherpa-ubuntu" # Docker exec
 alias up="docker-compose -p local_sherpa up -d" # Start the test container
+
+alias de="docker exec -it local-sherpa-ubuntu" # Docker exec
+alias de_min="docker exec -it local-sherpa-min-shell-versions-ubuntu" # Docker exec for min shell versions
+alias con_min="de_min /bin/bash"
 
 alias lint="make lint" # Shellcheck
