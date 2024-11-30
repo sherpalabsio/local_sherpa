@@ -95,10 +95,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Cache Bash and Zsh source
+        uses: actions/cache@v4
+        id: shell-cache
+        with:
+          path:  |
+            bash-4.3
+            zsh-5.3.1
+          key: bash-4.3-and-zsh-5.3.1-source-${{ runner.os }}
+
       - name: Install Bash 4.3
         run: |
-          wget http://ftp.gnu.org/gnu/bash/bash-4.3.tar.gz
-          tar -xvzf bash-4.3.tar.gz
+          if [ ! -d "bash-4.3" ]; then
+            wget http://ftp.gnu.org/gnu/bash/bash-4.3.tar.gz
+            tar -xvzf bash-4.3.tar.gz
+          fi
           cd bash-4.3
           ./configure
           make
@@ -111,12 +122,14 @@ jobs:
 
       - name: Install Zsh 5.3.1
         run: |
-          wget https://sourceforge.net/projects/zsh/files/zsh/5.3.1/zsh-5.3.1.tar.gz
-          tar xf zsh-5.3.1.tar.gz
+          if [ ! -d "zsh-5.3.1" ]; then
+            wget -O zsh-5.3.1.tar.gz https://sourceforge.net/projects/zsh/files/zsh/5.3.1/zsh-5.3.1.tar.gz/download
+            tar xf zsh-5.3.1.tar.gz
+            wget -O zsh-5.3.1/config.guess 'https://git.savannah.gnu.org/cgit/config.git/plain/config.guess'
+            wget -O zsh-5.3.1/config.sub 'https://git.savannah.gnu.org/cgit/config.git/plain/config.sub'
+            chmod +x zsh-5.3.1/config.guess zsh-5.3.1/config.sub
+          fi
           cd zsh-5.3.1
-          wget -O config.guess 'https://git.savannah.gnu.org/cgit/config.git/plain/config.guess'
-          wget -O config.sub 'https://git.savannah.gnu.org/cgit/config.git/plain/config.sub'
-          chmod +x config.guess config.sub
           ./configure --without-tcsetpgrp
           make
           sudo make install
