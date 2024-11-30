@@ -1,4 +1,4 @@
-# Local Sherpa - Folder based development environment in your terminal
+# Define folder specific aliases, functions and variables in your shell
 
 <p align="center">
   <!-- <img src="_github_assets/logo.svg" /> -->
