@@ -94,6 +94,7 @@ For more details see the [Features](#features) section.
 - macOS 12 - Monterey
 - macOS 13 - Ventura
 - macOS 14 - Sonoma
+- macOS 15 - Sequoia
 - Ubuntu 20.04
 - Ubuntu 22.04
 

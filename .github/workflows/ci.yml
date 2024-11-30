@@ -46,7 +46,7 @@ jobs:
     name: Tests for MacOS
     strategy:
       matrix:
-        os: [macos-12, macos-13, macos-14]
+        os: [macos-12, macos-13, macos-14, macos-15]
 
     runs-on: ${{ matrix.os }}
 
