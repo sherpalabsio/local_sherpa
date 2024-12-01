@@ -43,7 +43,7 @@ Log levels:
                               log|talk) _sherpa_cli_set_log_level "$2";;
                               debug|dd) _sherpa_cli_set_log_level "$SHERPA_LOG_LEVEL_DEBUG";;
                                    shh) _sherpa_cli_set_log_level "$SHERPA_LOG_LEVEL_SILENT";;
-                         s|stat|status) _sherpa_print_status;;
+                         s|stat|status) _sherpa_cli_status;;
                               diagnose) _sherpa_cli_diagnose;;
                     symlink|link|slink) _sherpa_cli_symlink "$2";;
                               r|reload) _sherpa_cli_reload;;
@@ -161,6 +161,14 @@ __sherpa_cli_clear_last_lines() {
     echo -en "\033[1A"
     echo -en "\033[2K"
   done
+}
+
+_sherpa_cli_status() {
+  if [ -n "$ZSH_VERSION" ]; then
+    zsh -i "$SHERPA_DIR/bin/status"
+  else
+    BASHRC_FILE="$BASHRC_FILE" bash -i "$SHERPA_DIR/bin/status"
+  fi
 }
 
 _sherpa_cli_diagnose() {

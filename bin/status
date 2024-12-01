@@ -1,30 +1,4 @@
-_sherpa_print_status() {
-  echo "================ Current folder status ==============="
-  __sherpa_status_print_env_file_info
-  __sherpa_status_print_loaded_envs
-
-  echo
-  echo "======================= Config ======================="
-  echo "Enabled: $SHERPA_ENABLED"
-  echo "Log level: $(_sherpa_get_log_level_in_text) ($SHERPA_LOG_LEVEL)"
-  echo "Env file name: $SHERPA_ENV_FILENAME"
-  if [ "$SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING" = true ]; then
-    echo "Dynamic env file parsing: enabled"
-  else
-    echo "Dynamic env file parsing: disabled"
-  fi
-
-  echo
-  echo "==================== Trusted dirs ===================="
-  __sherpa_status_print_trusted_dirs
-
-  echo
-  echo "===================== Debug info ====================="
-  echo "Config dir:   $SHERPA_CONFIG_DIR"
-  echo "Checksum dir: $SHERPA_CHECKSUM_DIR"
-}
-
-__sherpa_status_print_env_file_info() {
+print_env_file_info() {
   if [ ! -f "$SHERPA_ENV_FILENAME" ]; then
     echo "Env file: [none]"
     return
@@ -39,7 +13,7 @@ __sherpa_status_print_env_file_info() {
   esac
 }
 
-__sherpa_status_print_loaded_envs() {
+print_loaded_envs() {
   if [ ${#SHERPA_LOADED_ENV_DIRS[@]} -eq 0 ]; then
     echo "Loaded envs: [none]"
   else
@@ -63,7 +37,7 @@ __sherpa_status_print_loaded_envs() {
   fi
 }
 
-__sherpa_status_print_trusted_dirs() {
+print_trusted_dirs() {
   for checksum_file in "$SHERPA_CHECKSUM_DIR"/*; do
     trusted_dir=$(cut -d "|" -f 2 "$checksum_file")
 
@@ -72,3 +46,27 @@ __sherpa_status_print_trusted_dirs() {
     fi
   done
 }
+
+echo "================ Current folder status ==============="
+print_env_file_info
+print_loaded_envs
+
+echo
+echo "=================== Global Config ===================="
+echo "Enabled: $SHERPA_ENABLED"
+echo "Log level: $(_sherpa_get_log_level_in_text) ($SHERPA_LOG_LEVEL)"
+echo "Env file name: $SHERPA_ENV_FILENAME"
+if [ "$SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING" = true ]; then
+  echo "Dynamic env file parsing: enabled"
+else
+  echo "Dynamic env file parsing: disabled"
+fi
+
+echo
+echo "==================== Trusted dirs ===================="
+print_trusted_dirs
+
+echo
+echo "===================== Debug info ====================="
+echo "Config dir:   $SHERPA_CONFIG_DIR"
+echo "Checksum dir: $SHERPA_CHECKSUM_DIR"
