@@ -1,13 +1,19 @@
-# Define folder specific aliases, functions and variables in your shell
-
 <p align="center">
   <!-- <img src="_github_assets/logo.svg" /> -->
   <img src="_github_assets/logo_light.png" alt="Logo" />
 </p>
 
+----------
+
+[![CI](https://github.com/tothpeter/local_sherpa/actions/workflows/ci.yml/badge.svg)](https://github.com/tothpeter/local_sherpa/actions/workflows/ci.yml)
+![Version](https://img.shields.io/badge/Version-1.0.0_beta.1-brightgreen.svg)
+[![Version](https://img.shields.io/badge/Supported_shells-Zsh,_Bash-brightgreen.svg)](#supported-shells)
+
+## Define folder specific aliases, functions and variables in your shell
+
 Sherpa is a shell extension that allows you to define new or override existing variables, aliases and functions on a per-folder basis, with support for nesting.
 
-It only supports Zsh and Bash but functional wise it is similar to [Direnv](https://github.com/direnv/direnv) with added support for aliases and functions.
+It's similar to [Direnv](https://github.com/direnv/direnv), but with fewer features and added support for aliases and functions.
 
 ## Video Demo
 
@@ -65,12 +71,6 @@ function_1() {
   echo "LOCAL FUNCTION PROJECT AWESOME"
 }
 ```
-
-## Status
-
-Version: beta 1.
-
-[![example workflow](https://github.com/tothpeter/local_sherpa/actions/workflows/ci.yml/badge.svg)](https://github.com/tothpeter/local_sherpa/actions/workflows/ci.yml)
 
 ## Basic usage
 
@@ -158,7 +158,7 @@ $ rs
 # rspec starts
 ```
 
-When an env file changes you have to trust the directory again.
+When an env file changes you have to trust it again.
 
 Use `sherpa edit`. It opens the env file in your default editor then trusts it
 automatically when you close it.
@@ -277,7 +277,7 @@ alias rs='bin/rspec'
 
 With this config `RSpec` will run depending on in which directory you `cd` into.
 
-### Run the tests the same way in different projects
+### Run the tests using the same shortcut in different projects
 
 ```shell
 # ~/projects/project_ruby_with_docker/.envrc
