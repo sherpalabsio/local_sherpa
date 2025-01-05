@@ -1,3 +1,6 @@
+export COMPOSE_PROJECT_NAME="local-sherpa"
+export DOCKER_CONTAINER_NAME="local-sherpa-ubuntu"
+
 alias t="make test_zsh" # Test Zsh
 
 alias tz="make test_zsh" # Test Zsh
@@ -12,9 +15,6 @@ alias tua="tu && tum" # Test Ubuntu all
 
 alias tp="make test_performance" # Test performance
 
-alias up="docker-compose -p local_sherpa up -d" # Start the test container
-
-alias de="docker exec -it local-sherpa-ubuntu" # Docker exec
 alias de_min="docker exec -it local-sherpa-min-shell-versions-ubuntu" # Docker exec for min shell versions
 alias con_min="de_min /bin/bash"
 
