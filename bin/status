@@ -31,7 +31,7 @@ print_loaded_envs() {
       first_index=0
     fi
 
-    for ((i=last_index; i>=first_index; i--)); do
+    for ((i = last_index; i >= first_index; i--)); do
       echo "- ${SHERPA_LOADED_ENV_DIRS[i]}"
     done
   fi

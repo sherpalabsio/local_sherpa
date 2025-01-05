@@ -3,19 +3,19 @@ export DOCKER_CONTAINER_NAME="local-sherpa-ubuntu"
 
 alias t="make test_zsh" # Test Zsh
 
-alias tz="make test_zsh" # Test Zsh
+alias tz="make test_zsh"  # Test Zsh
 alias tb="make test_bash" # Test Bash
 
-alias ta="make test" # Test all
+alias ta="make test"                             # Test all
 alias taa="make test && make test_all_in_ubuntu" # Test absolutely all
 
-alias tu="make test_all_in_ubuntu" # Test all in Ubuntu
+alias tu="make test_all_in_ubuntu"                 # Test all in Ubuntu
 alias tum="make test_min_shell_versions_in_ubuntu" # Test min shell versions in Ubuntu
-alias tua="tu && tum" # Test Ubuntu all
+alias tua="tu && tum"                              # Test Ubuntu all
 
 alias tp="make test_performance" # Test performance
 
 alias de_min="docker exec -it local-sherpa-min-shell-versions-ubuntu" # Docker exec for min shell versions
 alias con_min="de_min /bin/bash"
 
-alias lint="make lint" # Shellcheck
+alias lint="make lint" # ShellCheck

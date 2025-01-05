@@ -81,7 +81,7 @@ run_all_tests() {
   local -r test_files=("$target_dir"/**/*_test.sh)
   local file
 
-  for file in "${test_files[@]}" ; do
+  for file in "${test_files[@]}"; do
     run_single_test "$file"
   done
 }

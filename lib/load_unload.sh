@@ -63,7 +63,7 @@ _sherpa_load_env_for_current_dir() {
   _sherpa_was_env_loaded && { _sherpa_log_debug "Env is already loaded"; return; }
 
   # Skip if the env file is not trusted
-  _sherpa_verify_trust || return;
+  _sherpa_verify_trust || return
 
   _sherpa_stash_current_env
   _sherpa_log_debug "Load env"

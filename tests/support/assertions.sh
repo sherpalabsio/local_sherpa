@@ -29,9 +29,8 @@
 #       - message: An optional message to display along with the result.
 #   - Example usage: assert_undefined "some_variable" "Variable should be undefined"
 
-
 # Exact match
-assert_equal(){
+assert_equal() {
   local -r actual="$1"
   local -r expected="$2"
   local -r message="$3"
@@ -49,7 +48,7 @@ assert_equal(){
 }
 
 # Exact match but without tabs, spaces and new lines
-assert_equal_compact(){
+assert_equal_compact() {
   local -r actual="$1"
   local -r expected="$2"
   local -r message="$3"
@@ -61,7 +60,7 @@ assert_equal_compact(){
 }
 
 # Partial match
-assert_contain(){
+assert_contain() {
   local -r actual="$1"
   local -r expected_pattern="$2"
   local -r message="$3"
@@ -79,7 +78,7 @@ assert_contain(){
 }
 
 # Check if a variable, a function or an alias is undefined
-assert_undefined(){
+assert_undefined() {
   local -r item="$1"
   local -r message="$2"
 
@@ -109,7 +108,7 @@ __is_defined() {
   return $?
 }
 
-__report_failure(){
+__report_failure() {
   if [ -n "$ZSH_VERSION" ]; then
     # shellcheck disable=SC2154
     echo "${funcfiletrace[-1]}" >&2
@@ -119,7 +118,7 @@ __report_failure(){
 }
 
 # == Print Utils ==
-__print_ok(){
+__print_ok() {
   local -r message="$1"
 
   printf "ok"
@@ -127,7 +126,7 @@ __print_ok(){
   printf "\n"
 }
 
-__print_not_ok(){
+__print_not_ok() {
   local -r message="$1"
 
   _print_in_red "not ok"
@@ -154,7 +153,7 @@ __print_comparison() {
 }
 
 # Add extra space to the left of each line after the first one
-__add_left_padding_after_first_line(){
+__add_left_padding_after_first_line() {
   local -r content="$1"
   local -r left_padding="            "
   local first_line=true
