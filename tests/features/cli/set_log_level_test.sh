@@ -15,6 +15,15 @@ assert_equal "$SHERPA_LOG_LEVEL" "$SHERPA_LOG_LEVEL_SILENT"
 # ==============================================================================
 # ++++ It sets the correct log level
 
+# Skip fzf
+command() {
+  if [[ "$2" == "fzf" ]]; then
+    return 1
+  fi
+
+  command "$@"
+}
+
 actual_output=$(printf "%s" "1" | sherpa log)
 expected_output="Sherpa: Log level set to: debug"
 

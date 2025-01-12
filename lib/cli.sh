@@ -118,44 +118,7 @@ _sherpa_cli_set_log_level() {
 }
 
 _sherpa_cli_log_level_menu() {
-  trap "__sherpa_cli_clear_last_lines 6; trap - SIGINT; return 1" SIGINT
-
-  local -r current="\033[32m ❮ current\033[0m"
-
-  echo "Select the log level:"
-  echo -e "1) Debug$( [[ "$SHERPA_LOG_LEVEL" == "0" ]] && echo -e "$current ")"
-  echo -e "2) Info$( [[ "$SHERPA_LOG_LEVEL" == "1" ]] && echo -e "$current ")"
-  echo -e "3) Warn$( [[ "$SHERPA_LOG_LEVEL" == "2" ]] && echo -e "$current ")"
-  echo -e "4) Error$( [[ "$SHERPA_LOG_LEVEL" == "3" ]] && echo -e "$current ")"
-  echo -e "5) Silent 🤫$( [[ "$SHERPA_LOG_LEVEL" == "4" ]] && echo -e "$current ")"
-  echo -n "Enter your choice [1-5]: "
-
-  local choice
-
-  if [[ -n $ZSH_VERSION ]]; then
-    read -rk1 choice
-  else
-    read -rn1 choice
-  fi
-
-  trap - SIGINT
-
-  __sherpa_cli_clear_last_lines 6
-
-  local -r esc=$(printf "\033")
-  if [[ "$choice" == "$esc" ]]; then
-    return 1
-  fi
-
-  local -r enter=$'\n'
-  if [[ "$choice" == "$enter" ]]; then
-    __sherpa_cli_clear_last_lines 1
-    return 1
-  fi
-
-  [[ "$choice" =~ ^[0-9]$ ]] && choice=$((choice - 1))
-
-  _sherpa_set_log_level "$choice"
+  __sherpa_log_level_menu
 }
 
 __sherpa_cli_clear_last_lines() {
