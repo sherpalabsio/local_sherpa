@@ -6,10 +6,10 @@ print_env_file_info() {
 
   _sherpa_verify_trust > /dev/null
   case "$?" in
-     0) echo "Env file trusted: yes";;
-    10) echo "Env file trusted: no";;
-    20) echo "Env file trusted: no (file has changed)";;
-     *) echo "Env file trusted: unknown";;
+     0) echo "Env file trusted: yes" ;;
+    10) echo "Env file trusted: no" ;;
+    20) echo "Env file trusted: no (file has changed)" ;;
+     *) echo "Env file trusted: unknown" ;;
   esac
 }
 
@@ -24,10 +24,10 @@ print_loaded_envs() {
 
     # Zsh array indexing starts at 1 :facepalm:
     if [ -n "$ZSH_VERSION" ]; then
-      last_index=$(( ${#SHERPA_LOADED_ENV_DIRS[@]} ))
+      last_index=$((${#SHERPA_LOADED_ENV_DIRS[@]}))
       first_index=1
     else
-      last_index=$(( ${#SHERPA_LOADED_ENV_DIRS[@]} - 1 ))
+      last_index=$((${#SHERPA_LOADED_ENV_DIRS[@]} - 1))
       first_index=0
     fi
 

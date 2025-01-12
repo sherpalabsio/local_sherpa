@@ -35,21 +35,21 @@ Log levels:
 
   local -r command="$1"
   case $command in
-            t|trust|allow|grant|permit) _sherpa_cli_trust;;
-  u|untrust|disallow|revoke|block|deny) _sherpa_cli_untrust;;
-                           e|edit|init) _sherpa_cli_edit;;
-                     off|sleep|disable) _sherpa_cli_disable;;
-                        on|work|enable) _sherpa_cli_enable;;
-                              log|talk) _sherpa_cli_set_log_level "$2";;
-                              debug|dd) _sherpa_cli_set_log_level "$SHERPA_LOG_LEVEL_DEBUG";;
-                                   shh) _sherpa_cli_set_log_level "$SHERPA_LOG_LEVEL_SILENT";;
-                         s|stat|status) _sherpa_cli_status;;
-                              diagnose) _sherpa_cli_diagnose;;
-                    symlink|link|slink) _sherpa_cli_symlink "$2";;
-                              r|reload) _sherpa_cli_reload;;
-                  -v|--version|version) echo "$version_info";;
-                     -h|--help|help|"") echo "$usage_text";;
-                                     *) echo "Sherpa doesn't understand what you mean";;
+              t | trust | allow | grant | permit) _sherpa_cli_trust ;;
+  u | untrust | disallow | revoke | block | deny) _sherpa_cli_untrust ;;
+                                 e | edit | init) _sherpa_cli_edit ;;
+                           off | sleep | disable) _sherpa_cli_disable ;;
+                              on | work | enable) _sherpa_cli_enable ;;
+                                      log | talk) _sherpa_cli_set_log_level "$2" ;;
+                                      debug | dd) _sherpa_cli_set_log_level "$SHERPA_LOG_LEVEL_DEBUG" ;;
+                                             shh) _sherpa_cli_set_log_level "$SHERPA_LOG_LEVEL_SILENT" ;;
+                               s | stat | status) _sherpa_cli_status ;;
+                                        diagnose) _sherpa_cli_diagnose ;;
+                          symlink | link | slink) _sherpa_cli_symlink "$2" ;;
+                                      r | reload) _sherpa_cli_reload ;;
+                        -v | --version | version) echo "$version_info" ;;
+                         -h | --help | help | "") echo "$usage_text" ;;
+                                               *) echo "Sherpa doesn't understand what you mean" ;;
   esac
 }
 
@@ -101,10 +101,10 @@ _sherpa_cli_enable() {
 
 _sherpa_cli_set_log_level() {
   case $1 in
-   less|-) _sherpa_increase_log_level;;
-   more|+) _sherpa_decrease_log_level;;
-       "") _sherpa_cli_log_level_menu;;
-        *) _sherpa_set_log_level "$1";;
+   less | -) _sherpa_increase_log_level ;;
+   more | +) _sherpa_decrease_log_level ;;
+         "") _sherpa_cli_log_level_menu ;;
+          *) _sherpa_set_log_level "$1" ;;
   esac
 
   # Don't change the log level if the user ctrl-c'd the menu
@@ -120,11 +120,11 @@ _sherpa_cli_log_level_menu() {
   local -r current="\033[32m ❮ current\033[0m"
 
   echo "Select the log level:"
-  echo -e "1) Debug$( [[ "$SHERPA_LOG_LEVEL" == "0" ]] && echo -e "$current " )"
-  echo -e "2) Info$( [[ "$SHERPA_LOG_LEVEL" == "1" ]] && echo -e "$current " )"
-  echo -e "3) Warn$( [[ "$SHERPA_LOG_LEVEL" == "2" ]] && echo -e "$current " )"
-  echo -e "4) Error$( [[ "$SHERPA_LOG_LEVEL" == "3" ]] && echo -e "$current " )"
-  echo -e "5) Silent 🤫$( [[ "$SHERPA_LOG_LEVEL" == "4" ]] && echo -e "$current " )"
+  echo -e "1) Debug$( [[ "$SHERPA_LOG_LEVEL" == "0" ]] && echo -e "$current ")"
+  echo -e "2) Info$( [[ "$SHERPA_LOG_LEVEL" == "1" ]] && echo -e "$current ")"
+  echo -e "3) Warn$( [[ "$SHERPA_LOG_LEVEL" == "2" ]] && echo -e "$current ")"
+  echo -e "4) Error$( [[ "$SHERPA_LOG_LEVEL" == "3" ]] && echo -e "$current ")"
+  echo -e "5) Silent 🤫$( [[ "$SHERPA_LOG_LEVEL" == "4" ]] && echo -e "$current ")"
   echo -n "Enter your choice [1-5]: "
 
   local choice

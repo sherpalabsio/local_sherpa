@@ -6,12 +6,12 @@ export SHERPA_LOG_LEVEL_SILENT=4
 
 _sherpa_get_log_level_in_text() {
   case $SHERPA_LOG_LEVEL in
-    "$SHERPA_LOG_LEVEL_DEBUG")  echo "debug";;
-    "$SHERPA_LOG_LEVEL_INFO")   echo "info";;
-    "$SHERPA_LOG_LEVEL_WARN")   echo "warn";;
-    "$SHERPA_LOG_LEVEL_ERROR")  echo "error";;
-    "$SHERPA_LOG_LEVEL_SILENT") echo "silent 🤫";;
-    *)                          echo "unknown";;
+    "$SHERPA_LOG_LEVEL_DEBUG")  echo "debug" ;;
+    "$SHERPA_LOG_LEVEL_INFO")   echo "info" ;;
+    "$SHERPA_LOG_LEVEL_WARN")   echo "warn" ;;
+    "$SHERPA_LOG_LEVEL_ERROR")  echo "error" ;;
+    "$SHERPA_LOG_LEVEL_SILENT") echo "silent 🤫" ;;
+    *)                          echo "unknown" ;;
   esac
 }
 
@@ -20,11 +20,11 @@ _sherpa_set_log_level() {
   local log_level_in_number
 
   case $input_log_level in
-    "$SHERPA_LOG_LEVEL_DEBUG"|debug) log_level_in_number="$SHERPA_LOG_LEVEL_DEBUG";;
-    "$SHERPA_LOG_LEVEL_INFO"|info)   log_level_in_number="$SHERPA_LOG_LEVEL_INFO";;
-    "$SHERPA_LOG_LEVEL_WARN"|warn)   log_level_in_number="$SHERPA_LOG_LEVEL_WARN";;
-    "$SHERPA_LOG_LEVEL_ERROR"|error) log_level_in_number="$SHERPA_LOG_LEVEL_ERROR";;
-    "$SHERPA_LOG_LEVEL_SILENT"|*)    log_level_in_number="$SHERPA_LOG_LEVEL_SILENT";;
+    "$SHERPA_LOG_LEVEL_DEBUG" | debug) log_level_in_number="$SHERPA_LOG_LEVEL_DEBUG" ;;
+    "$SHERPA_LOG_LEVEL_INFO" | info)   log_level_in_number="$SHERPA_LOG_LEVEL_INFO" ;;
+    "$SHERPA_LOG_LEVEL_WARN" | warn)   log_level_in_number="$SHERPA_LOG_LEVEL_WARN" ;;
+    "$SHERPA_LOG_LEVEL_ERROR" | error) log_level_in_number="$SHERPA_LOG_LEVEL_ERROR" ;;
+    "$SHERPA_LOG_LEVEL_SILENT" | *)    log_level_in_number="$SHERPA_LOG_LEVEL_SILENT" ;;
   esac
 
   _sherpa_save_global_config "SHERPA_LOG_LEVEL" "$log_level_in_number"
