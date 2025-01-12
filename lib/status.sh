@@ -59,7 +59,8 @@ print_loaded_envs() {
     fi
 
     for ((i = last_index; i >= first_index; i--)); do
-      echo "- ${SHERPA_LOADED_ENV_DIRS[i]}"
+      local dir=${SHERPA_LOADED_ENV_DIRS[i]/$HOME/\~} # Replace /Users/peter with ~
+      echo "- $dir"
     done
   fi
 }
@@ -77,6 +78,7 @@ print_trusted_envs() {
   done
 
   # Sort the array
+  # shellcheck disable=SC2207
   IFS=$'\n' sorted_trusted_envs=($(sort <<< "${trusted_envs[*]}"))
 
   for trusted_env in "${sorted_trusted_envs[@]}"; do
