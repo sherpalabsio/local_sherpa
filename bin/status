@@ -37,13 +37,23 @@ print_loaded_envs() {
   fi
 }
 
-print_trusted_dirs() {
-  for checksum_file in "$SHERPA_CHECKSUM_DIR"/*; do
-    trusted_dir=$(cut -d "|" -f 2 "$checksum_file")
+print_trusted_envs() {
+  local trusted_envs=() trusted_env
 
-    if _sherpa_verify_trust "$trusted_dir" > /dev/null 2>&1; then
-      echo "$trusted_dir"
+  for checksum_file in "$SHERPA_CHECKSUM_DIR"/*; do
+    trusted_env=$(cut -d "|" -f 2 "$checksum_file")
+
+    if _sherpa_verify_trust "$trusted_env" > /dev/null 2>&1; then
+      trusted_env=${trusted_env/$HOME/\~} # Replace /Users/peter with ~
+      trusted_envs+=("$trusted_env")
     fi
+  done
+
+  # Sort the array
+  IFS=$'\n' sorted_trusted_envs=($(sort <<< "${trusted_envs[*]}"))
+
+  for trusted_env in "${sorted_trusted_envs[@]}"; do
+    echo "- $trusted_env"
   done
 }
 
@@ -63,8 +73,8 @@ else
 fi
 
 echo
-echo "==================== Trusted dirs ===================="
-print_trusted_dirs
+echo "==================== Trusted envs ===================="
+print_trusted_envs
 
 echo
 echo "===================== Debug info ====================="
