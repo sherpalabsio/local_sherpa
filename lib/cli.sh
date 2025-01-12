@@ -19,6 +19,7 @@ Basic Commands:
   off            - Turn Sherpa off               | Aliases: disable, sleep
   on             - Turn Sherpa on                | Aliases: enable, work
   symlink [PATH] - Symlink the current env file  | Aliases: link, slink
+  dump           - Dump the current env file to a .envrc.example file
   reload         - Reload the current env        | Alias: r
 
 Troubleshooting:
@@ -46,6 +47,7 @@ Log levels:
                                s | stat | status) _sherpa_cli_status ;;
                                         diagnose) _sherpa_cli_diagnose ;;
                           symlink | link | slink) _sherpa_cli_symlink "$2" ;;
+                                            dump) _sherpa_cli_dump_current_env ;;
                                       r | reload) _sherpa_cli_reload ;;
                         -v | --version | version) echo "$version_info" ;;
                          -h | --help | help | "") echo "$usage_text" ;;
@@ -202,6 +204,11 @@ _sherpa_cli_symlink() {
 
   _sherpa_cli_trust > /dev/null &&
     _sherpa_log_info "Symlink is created. Env is loaded."
+}
+
+_sherpa_cli_dump_current_env() {
+  cat "$SHERPA_ENV_FILENAME" > "$SHERPA_ENV_FILENAME.example"
+  _sherpa_log_info "Env file is dumped to $SHERPA_ENV_FILENAME.example"
 }
 
 _sherpa_cli_reload() {
