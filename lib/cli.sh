@@ -64,14 +64,18 @@ _sherpa_cli_untrust() {
 
 _sherpa_cli_edit() {
   _sherpa_log "Sherpa: Waiting for your editor to close the file..."
+
   if [ -z "$EDITOR" ]; then
-    _sherpa_log_warn "EDITOR is not set. Falling back to vi."
+    _sherpa_log_warn "\$EDITOR env var is not set. Falling back to vi."
     vi "$SHERPA_ENV_FILENAME"
   else
     eval "$EDITOR $SHERPA_ENV_FILENAME"
   fi
 
-  # The user cancelled the init
+  # Delete the previous log message
+  __sherpa_cli_clear_last_lines 1
+
+  # The user cancelled the init (didn't save the file)
   [ -f "$SHERPA_ENV_FILENAME" ] || return 1
 
   _sherpa_trust_current_dir &&
