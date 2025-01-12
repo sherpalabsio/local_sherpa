@@ -1,3 +1,30 @@
+_sherpa_print_status()  {
+  echo "================ Current folder status ==============="
+  print_env_file_info
+  print_loaded_envs
+
+  echo
+  echo "=================== Global Config ===================="
+  echo "Enabled: $SHERPA_ENABLED"
+  echo "Log level: $(_sherpa_get_log_level_in_text) ($SHERPA_LOG_LEVEL)"
+  echo "Env file name: $SHERPA_ENV_FILENAME"
+  if [ "$SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING" = true ]; then
+    echo "Dynamic env file parsing: enabled"
+  else
+    echo "Dynamic env file parsing: disabled"
+  fi
+
+  echo
+  echo "==================== Trusted envs ===================="
+  print_trusted_envs
+
+  echo
+  echo "===================== Debug info ====================="
+  echo "Config dir:   $SHERPA_CONFIG_DIR"
+  echo "Checksum dir: $SHERPA_CHECKSUM_DIR"
+
+}
+
 print_env_file_info() {
   if [ ! -f "$SHERPA_ENV_FILENAME" ]; then
     echo "Env file: [none]"
@@ -56,27 +83,3 @@ print_trusted_envs() {
     echo "- $trusted_env"
   done
 }
-
-echo "================ Current folder status ==============="
-print_env_file_info
-print_loaded_envs
-
-echo
-echo "=================== Global Config ===================="
-echo "Enabled: $SHERPA_ENABLED"
-echo "Log level: $(_sherpa_get_log_level_in_text) ($SHERPA_LOG_LEVEL)"
-echo "Env file name: $SHERPA_ENV_FILENAME"
-if [ "$SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING" = true ]; then
-  echo "Dynamic env file parsing: enabled"
-else
-  echo "Dynamic env file parsing: disabled"
-fi
-
-echo
-echo "==================== Trusted envs ===================="
-print_trusted_envs
-
-echo
-echo "===================== Debug info ====================="
-echo "Config dir:   $SHERPA_CONFIG_DIR"
-echo "Checksum dir: $SHERPA_CHECKSUM_DIR"

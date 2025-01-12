@@ -168,11 +168,8 @@ __sherpa_cli_clear_last_lines() {
 }
 
 _sherpa_cli_status() {
-  if [ -n "$ZSH_VERSION" ]; then
-    zsh -i "$SHERPA_DIR/bin/status"
-  else
-    BASHRC_FILE="$BASHRC_FILE" bash -i "$SHERPA_DIR/bin/status"
-  fi
+  source "$SHERPA_DIR/lib/status.sh"
+  _sherpa_print_status
 }
 
 _sherpa_cli_diagnose() {
