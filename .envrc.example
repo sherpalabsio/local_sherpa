@@ -1,5 +1,5 @@
 export COMPOSE_PROJECT_NAME="local-sherpa"
-export DOCKER_CONTAINER_NAME="local-sherpa-ubuntu"
+# export DOCKER_CONTAINER_NAME="local-sherpa-ubuntu"
 
 alias t="make test_zsh" # Test Zsh
 

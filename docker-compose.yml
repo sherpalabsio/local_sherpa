@@ -2,6 +2,7 @@ version: '3.9'
 
 services:
   ubuntu:
+    hostname: ubuntu
     build:
       context: .
       dockerfile: dockerfiles/ubuntu.dockerfile
@@ -12,6 +13,7 @@ services:
     tty: true
 
   min-shell-versions-ubuntu:
+    hostname: min-shell-versions-ubuntu
     build:
       context: .
       dockerfile: dockerfiles/min_shell_versions_ubuntu.dockerfile
