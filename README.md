@@ -228,6 +228,8 @@ to operate.
 export SHERPA_ENV_FILENAME='.env' # Default: .envrc
 # To support unloading non-exported variables and dynamically created Shell entities
 export SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING=true
+# To auto dump the env into a .envrc.example file when running `sherpa edit`
+export SHERPA_DUMP_ENV_ON_EDIT=true
 ```
 
 ## Settings

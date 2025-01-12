@@ -82,7 +82,8 @@ _sherpa_cli_edit() {
 
   _sherpa_trust_current_dir &&
     _sherpa_unload_env_of_current_dir &&
-    _sherpa_load_env_for_current_dir
+    _sherpa_load_env_for_current_dir &&
+    _sherpa_dump_current_env
 }
 
 _sherpa_cli_disable() {
@@ -213,4 +214,11 @@ _sherpa_cli_dump_current_env() {
 
 _sherpa_cli_reload() {
   _sherpa_unload_env_of_current_dir && _sherpa_load_env_for_current_dir
+}
+
+_sherpa_dump_current_env() {
+  # Check if the feature is enabled
+  [ "$SHERPA_DUMP_ENV_ON_EDIT" != true ] && return
+
+  cat "$SHERPA_ENV_FILENAME" > "$SHERPA_ENV_FILENAME.example"
 }
