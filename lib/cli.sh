@@ -106,7 +106,7 @@ _sherpa_cli_set_log_level() {
   case $1 in
    less | -) _sherpa_increase_log_level ;;
    more | +) _sherpa_decrease_log_level ;;
-         "") _sherpa_cli_log_level_menu ;;
+         "") __sherpa_log_level_menu ;;
           *) _sherpa_set_log_level "$1" ;;
   esac
 
@@ -115,10 +115,6 @@ _sherpa_cli_set_log_level() {
   [ $? -ne 0 ] && return 1
 
   _sherpa_log "Sherpa: Log level set to: $(_sherpa_get_log_level_in_text)"
-}
-
-_sherpa_cli_log_level_menu() {
-  __sherpa_log_level_menu
 }
 
 __sherpa_cli_clear_last_lines() {
