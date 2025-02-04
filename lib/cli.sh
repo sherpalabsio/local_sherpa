@@ -21,6 +21,7 @@ Basic Commands:
   symlink [PATH] - Symlink the current env file  | Aliases: link, slink
   dump           - Dump the current env file to a .envrc.example file
   reload         - Reload the current env        | Alias: r
+  command_plate  - Offer a list of commands from the current env file and run the selected one
 
 Troubleshooting:
   status   - Show debug status info | Aliases: s, stat
@@ -49,6 +50,7 @@ Log levels:
                           symlink | link | slink) _sherpa_cli_symlink "$2" ;;
                                             dump) _sherpa_cli_dump_current_env ;;
                                       r | reload) _sherpa_cli_reload ;;
+                                   command_plate) _sherpa_cli_command_plate ;;
                         -v | --version | version) echo "$version_info" ;;
                          -h | --help | help | "") echo "$usage_text" ;;
                                                *) echo "Sherpa doesn't understand what you mean" ;;
@@ -173,6 +175,18 @@ _sherpa_cli_dump_current_env() {
 
 _sherpa_cli_reload() {
   _sherpa_unload_env_of_current_dir && _sherpa_load_env_for_current_dir
+}
+
+_sherpa_cli_command_plate() {
+  [ -f "$SHERPA_ENV_FILENAME" ] || return 1
+
+  # Warn the user if fzf is not installed
+  if ! command -v fzf > /dev/null; then
+    _sherpa_log_error "fzf is not installed. Please install it to use this feature."
+    return 1
+  fi
+
+  _sherpa_command_plate
 }
 
 _sherpa_dump_current_env() {
