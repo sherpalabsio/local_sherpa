@@ -74,10 +74,8 @@ _sherpa_cli_edit() {
     vi "$SHERPA_ENV_FILENAME"
   else
     eval "$EDITOR $SHERPA_ENV_FILENAME"
+    __sherpa_cli_clear_last_lines 1
   fi
-
-  # Delete the previous log message
-  __sherpa_cli_clear_last_lines 1
 
   # The user cancelled the init (didn't save the file)
   [ -f "$SHERPA_ENV_FILENAME" ] || return 1
