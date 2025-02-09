@@ -27,9 +27,13 @@ _sherpa_command_palette() {
           --cycle
   )
 
-  if [ -n "$selected_command" ]; then
-    echo "Running: $selected_command"
-    eval "$selected_command"
+  [ -z "$selected_command" ] && return 1
+
+  if [ -n "$ZSH_VERSION" ]; then
+    print -z "$selected_command"
+  else
+    read -e -p "${PS1@P}" -i "$selected_command" cmd
+    eval "$cmd"
   fi
 }
 

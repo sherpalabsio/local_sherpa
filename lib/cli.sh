@@ -15,7 +15,7 @@ Basic Commands:
   symlink [PATH] - Symlink the current env file  | Aliases: link, slink
   dump           - Dump the current env file to a .envrc.example file
   reload         - Reload the current env        | Alias: r
-  palette        - Command Palette - Offer a list of commands from the current env file and run the selected one
+  palette        - Command Palette - Offer a list of commands from the current env file
 
 Troubleshooting:
   status   - Show debug status info | Aliases: s, stat
