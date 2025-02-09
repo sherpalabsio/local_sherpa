@@ -33,7 +33,7 @@ source "$SHERPA_LIB_DIR/env_stash/functions.sh"
 source "$SHERPA_LIB_DIR/env_file_parser.sh"
 source "$SHERPA_LIB_DIR/setup_cd_hook.sh"
 source "$SHERPA_LIB_DIR/load_unload.sh"
-source "$SHERPA_LIB_DIR/command_plate.sh"
+source "$SHERPA_LIB_DIR/command_palette.sh"
 
 source "$SHERPA_LIB_DIR/cli.sh"
 

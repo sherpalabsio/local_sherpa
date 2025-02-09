@@ -1,10 +1,10 @@
-_sherpa_command_plate() {
+_sherpa_command_palette() {
   local commands selected_command
 
   # shellcheck disable=SC2207
   commands=(
-    $(__sherpa_command_plate__load_local_aliases)
-    $(__sherpa_command_plate__load_local_functions)
+    $(__sherpa_command_palette__load_local_aliases)
+    $(__sherpa_command_palette__load_local_functions)
   )
 
   # Filter and sort the commands
@@ -33,7 +33,7 @@ _sherpa_command_plate() {
   fi
 }
 
-__sherpa_command_plate__load_local_aliases() {
+__sherpa_command_palette__load_local_aliases() {
   unalias -a
 
   # shellcheck disable=SC1090
@@ -42,7 +42,7 @@ __sherpa_command_plate__load_local_aliases() {
   compgen -a
 }
 
-__sherpa_command_plate__load_local_functions() {
+__sherpa_command_palette__load_local_functions() {
   local -r filter_pattern="^[[:space:]]*([[:alnum:]_]+[[:space:]]*\(\)|function[[:space:]]+[[:alnum:]_]+)"
 
   # Cleanup:
