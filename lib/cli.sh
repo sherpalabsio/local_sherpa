@@ -178,6 +178,14 @@ _sherpa_cli_command_palette() {
     return 1
   fi
 
+  local -r fzf_minor_version=$(fzf --version | awk -F. '{print $2}')
+
+  # Warn the user if fzf version is not supported
+  if [[ "$fzf_minor_version" -lt 42 ]]; then
+    _sherpa_log_error "fzf version is less than 0.42.0. Please upgrade it to use this feature."
+    return 1
+  fi
+
   _sherpa_command_palette
 }
 
