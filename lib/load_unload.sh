@@ -73,7 +73,7 @@ _sherpa_load_env_for_current_dir() {
   local -r tmp_error_file=$(mktemp)
   # shellcheck disable=SC1090
   source "$SHERPA_ENV_FILENAME" 2> "$tmp_error_file"
-  local -r error_message=$(<"$tmp_error_file")
+  local -r error_message=$(< "$tmp_error_file")
   rm -f "$tmp_error_file"
 
   if [ -n "$error_message" ]; then
