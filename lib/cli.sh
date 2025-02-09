@@ -1,13 +1,7 @@
 sherpa() {
-  if [ "$USE_SHERPA_DEV_VERSION" = true ]; then
-    local -r version_info="dev ($SHERPA_VERSION)"
-  else
-    local -r version_info="$SHERPA_VERSION"
-  fi
-
   local -r usage_text="Sherpa loads and unloads environment on a per-directory basis.
 
-Version: $version_info
+Version: $SHERPA_VERSION
 
 Usage:
   sherpa <command> [options]
