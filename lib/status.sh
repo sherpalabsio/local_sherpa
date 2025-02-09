@@ -66,7 +66,7 @@ print_loaded_envs() {
 }
 
 print_trusted_envs() {
-  local trusted_envs=() trusted_env
+  local checksum_file trusted_env trusted_envs=()
 
   for checksum_file in "$SHERPA_CHECKSUM_DIR"/*; do
     trusted_env=$(cut -d "|" -f 2 "$checksum_file")

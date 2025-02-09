@@ -8,7 +8,7 @@ _sherpa_alert_sherpa_we_changed_dir() {
 
 # It unloads the loaded envs of previous directories that we exited
 _sherpa_unload_envs_for_exited_dirs() {
-  local loaded_paths=()
+  local loaded_path loaded_paths=()
 
   for loaded_path in "${SHERPA_LOADED_ENV_DIRS[@]}"; do
     # Keep current and parent directories
@@ -37,6 +37,8 @@ _sherpa__is_current_or_parent_dir() {
 }
 
 _sherpa_unload_all_envs() {
+  local loaded_path
+
   for loaded_path in "${SHERPA_LOADED_ENV_DIRS[@]}"; do
     _sherpa_log_debug "Unload env: $loaded_path"
 
@@ -87,6 +89,8 @@ _sherpa_load_env_for_current_dir() {
 }
 
 _sherpa_was_env_loaded() {
+  local loaded_path
+
   for loaded_path in "${SHERPA_LOADED_ENV_DIRS[@]}"; do
     if [[ "$loaded_path" == $(pwd) ]]; then
       return 0

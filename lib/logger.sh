@@ -86,7 +86,6 @@ __sherpa_log_level_menu() {
 }
 
 __sherpa_log_level_menu_fzf() {
-  # TODO: _sherpa_get_log_level_in_text
   local menu_items=(
     "0 1) $(_sherpa_get_log_level_in_text 0)"
     "1 2) $(_sherpa_get_log_level_in_text 1)"

@@ -1,4 +1,6 @@
 var_dump() {
+  local var_name
+
   for var_name in "$@"; do
     set | grep "^$var_name="
   done
