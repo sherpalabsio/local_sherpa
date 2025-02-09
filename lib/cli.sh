@@ -15,7 +15,7 @@ Basic Commands:
   symlink [PATH] - Symlink the current env file  | Aliases: link, slink
   dump           - Dump the current env file to a .envrc.example file
   reload         - Reload the current env        | Alias: r
-  palette        - Command Palette - Offer a list of commands from the current env file
+  palette        - Command Palette - Offer a list of commands from the current env file | Alias: :
 
 Troubleshooting:
   status   - Show debug status info | Aliases: s, stat
@@ -44,7 +44,7 @@ Log levels:
                           symlink | link | slink) _sherpa_cli_symlink "$2" ;;
                                             dump) _sherpa_cli_dump_current_env ;;
                                       r | reload) _sherpa_cli_reload ;;
-                                         palette) _sherpa_cli_command_palette ;;
+                                    : |  palette) _sherpa_cli_command_palette ;;
                         -v | --version | version) echo "$version_info" ;;
                          -h | --help | help | "") echo "$usage_text" ;;
                                                *) echo "Sherpa doesn't understand what you mean" ;;
