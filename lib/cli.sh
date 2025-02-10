@@ -45,7 +45,7 @@ Log levels:
                                             dump) _sherpa_cli_dump_current_env ;;
                                       r | reload) _sherpa_cli_reload ;;
                                     : |  palette) _sherpa_cli_command_palette ;;
-                        -v | --version | version) echo "$version_info" ;;
+                        -v | --version | version) echo "$SHERPA_VERSION" ;;
                          -h | --help | help | "") echo "$usage_text" ;;
                                                *) echo "Sherpa doesn't understand what you mean" ;;
   esac
