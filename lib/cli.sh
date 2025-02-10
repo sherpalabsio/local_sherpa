@@ -16,6 +16,7 @@ Basic Commands:
   dump           - Dump the current env file to a .envrc.example file
   reload         - Reload the current env        | Alias: r
   palette        - Command Palette - Offer a list of commands from the current env file | Alias: :
+  prune          - Remove permission files that are no longer relevant
 
 Troubleshooting:
   status   - Show debug status info | Aliases: s, stat
@@ -45,6 +46,7 @@ Log levels:
                                             dump) _sherpa_cli_dump_current_env ;;
                                       r | reload) _sherpa_cli_reload ;;
                                     : |  palette) _sherpa_cli_command_palette ;;
+                                           prune) _sherpa_prune_permission_files ;;
                         -v | --version | version) echo "$SHERPA_VERSION" ;;
                          -h | --help | help | "") echo "$usage_text" ;;
                                                *) echo "Sherpa doesn't understand what you mean" ;;
