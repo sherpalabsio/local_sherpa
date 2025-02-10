@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+current_script_path="$(readlink -f "$0")"
+current_script_dir="$(dirname "$current_script_path")"
+
+echo "source $current_script_dir/lib/init.sh"

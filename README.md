@@ -8,8 +8,8 @@
 ----------
 
 [![CI](https://github.com/sherpalabsio/local_sherpa/actions/workflows/ci.yml/badge.svg)](https://github.com/sherpalabsio/local_sherpa/actions/workflows/ci.yml)
-![Version](https://img.shields.io/badge/Version-1.0.0_beta.1-brightgreen.svg)
-[![Version](https://img.shields.io/badge/Supported_shells-Zsh,_Bash-brightgreen.svg)](#supported-shells)
+![Version](https://img.shields.io/badge/Version-0.1.0-brightgreen.svg)
+[![SupportedShells](https://img.shields.io/badge/Supported_shells-Zsh,_Bash-brightgreen.svg)](#supported-shells)
 
 ## Define folder specific aliases, functions and variables in your shell
 
@@ -116,6 +116,14 @@ When sherpa loads the env, it sources the env file meaning its whole content
 is executed in the current shell.
 
 ## Installation
+
+### Homebrew
+
+```shell
+brew install sherpalabsio/sherpalabsio/local_sherpa
+```
+
+### Git
 
 ```shell
 # Clone the repo

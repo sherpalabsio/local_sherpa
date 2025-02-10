@@ -7,6 +7,7 @@ help:
 	@echo "test_all_in_ubuntu                - run all the tests for all the supported shells in Ubuntu"
 	@echo "test_min_shell_versions_in_ubuntu - run all test for the all minimum supported shell versions in Ubuntu"
 	@echo "test_performance                  - run a benchmark test for all the supported shells"
+	@echo "release                           - create a new release"
 
 .PHONY: lint
 lint:
@@ -35,3 +36,13 @@ test_min_shell_versions_in_ubuntu:
 .PHONY: test_performance
 test_performance:
 	./tests/performance/harness $(filter-out $@,$(MAKECMDGOALS))
+
+.PHONY: release
+release:
+	@rm -rf dist
+	@mkdir -p dist/local_sherpa_$$SHERPA_VERSION
+	@cp -r lib bin init LICENSE README.md dist/local_sherpa_$$SHERPA_VERSION
+	@rm -f dist/local_sherpa_$$SHERPA_VERSION/bin/shellcheck
+	@cd dist && tar -czf local_sherpa_$$SHERPA_VERSION.tar.gz local_sherpa_$$SHERPA_VERSION
+	@printf "sha256: "
+	@sha256sum dist/local_sherpa_$$SHERPA_VERSION.tar.gz | awk '{print $$1}'

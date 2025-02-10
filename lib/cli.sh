@@ -1,7 +1,5 @@
 sherpa() {
-  local -r usage_text="Sherpa loads and unloads environment on a per-directory basis.
-
-Version: $SHERPA_VERSION
+  local -r usage_text="Sherpa loads and unloads functions, aliases, and variables on a per-directory basis.
 
 Usage:
   sherpa <command> [options]
@@ -15,9 +13,9 @@ Basic Commands:
   symlink [PATH] - Symlink the current env file  | Aliases: link, slink
   dump           - Dump the current env file to a .envrc.example file
   reload         - Reload the current env        | Alias: r
-  palette        - Command Palette - Offer a list of commands from the current env file | Alias: :
+  palette        - [Experimental] Command palette - Show a menu of functions and aliases defined by the current env file | Alias: :
   prune          - Remove permission files that are no longer relevant
-  support        - ;-)
+  support        - Help me to buy a Caribbean island
 
 Troubleshooting:
   status   - Show debug status info | Aliases: s, stat
@@ -30,6 +28,8 @@ Log levels:
   shh         - Silence
   log         - Open the log options menu | Alias: talk
   log [LEVEL] - Set a specific log level  | Levels: debug, info, warn, error, silent | Alias: talk
+
+Version: $SHERPA_VERSION
 
 Created by \e]8;;https://github.com/SherpaLabsIO\e\\Peter Toth @ SherpaLabsIO\e]8;;\e\\"
 

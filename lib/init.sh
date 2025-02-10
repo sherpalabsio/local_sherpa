@@ -7,7 +7,7 @@ else
   SHERPA_LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 fi
 
-SHERPA_DIR="$(dirname "$SHERPA_LIB_DIR")"
+export SHERPA_DIR="$(dirname "$SHERPA_LIB_DIR")"
 
 # shellcheck disable=SC2034
 SHERPA_CHECKSUM_DIR="$HOME/.local/share/local_sherpa/trusted_dirs"
@@ -52,4 +52,4 @@ if [ -n "$ZSH_VERSION" ]; then
   _sherpa_load_env_for_current_dir
 fi
 
-export SHERPA_VERSION="1.0.0-beta.1"
+export SHERPA_VERSION="0.1.0"
