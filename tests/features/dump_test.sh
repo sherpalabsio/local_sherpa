@@ -57,3 +57,25 @@ sherpa dump
 actual_env_file=$(cat "$SHERPA_ENV_FILENAME.example")
 
 assert_equal "$actual_env_file" "VAR_1="
+
+# ==============================================================================
+# ++++ It doesn't sanitize the exported variables if marked to keep
+
+overwrite_env_file "export VAR_1=\"local var 1\" # keep"
+
+sherpa dump
+
+actual_env_file=$(cat "$SHERPA_ENV_FILENAME.example")
+
+assert_equal "$actual_env_file" "export VAR_1=\"local var 1\" # keep"
+
+# ==============================================================================
+# ++++ It doesn't sanitize the non-exported variables if marked to keep
+
+overwrite_env_file "VAR_1=\"local var 1\" # keep"
+
+sherpa dump
+
+actual_env_file=$(cat "$SHERPA_ENV_FILENAME.example")
+
+assert_equal "$actual_env_file" "VAR_1=\"local var 1\" # keep"
