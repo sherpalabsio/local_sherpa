@@ -32,7 +32,7 @@ _sherpa_command_palette() {
   if [ -n "$ZSH_VERSION" ]; then
     print -z "$selected_command"
   else
-    read -e -p "${PS1@P}" -i "$selected_command" cmd
+    read -re -p "${PS1@P}" -i "$selected_command" cmd
     eval "$cmd"
   fi
 }

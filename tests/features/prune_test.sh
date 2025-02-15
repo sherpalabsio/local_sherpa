@@ -10,7 +10,7 @@ source tests/support/app_helper.sh
 _sherpa_trust_dir "project_1"
 
 # == Sanity checks: the permissions files was created
-file_count=$(ls local_sherpa_checksums | wc -l | awk '{print $1}')
+file_count=$(find local_sherpa_checksums -type f | wc -l | awk '{print $1}')
 assert_equal "$file_count" "1"
 
 # ==============================================================================
@@ -20,6 +20,6 @@ rm -rf project_1
 
 sherpa prune
 
-file_count=$(ls local_sherpa_checksums | wc -l | awk '{print $1}')
+file_count=$(find local_sherpa_checksums -type f | wc -l | awk '{print $1}')
 
 assert_equal "$file_count" "0" "The permission file is removed"
