@@ -17,6 +17,7 @@ Basic Commands:
   reload         - Reload the current env        | Alias: r
   palette        - Command Palette - Offer a list of commands from the current env file | Alias: :
   prune          - Remove permission files that are no longer relevant
+  support        - ;-)
 
 Troubleshooting:
   status   - Show debug status info | Aliases: s, stat
@@ -47,6 +48,7 @@ Log levels:
                                       r | reload) _sherpa_cli_reload ;;
                                     : |  palette) _sherpa_cli_command_palette ;;
                                            prune) _sherpa_prune_permission_files ;;
+                                         support) _sherpa_cli_support ;;
                         -v | --version | version) echo "$SHERPA_VERSION" ;;
                          -h | --help | help | "") echo "$usage_text" ;;
                                                *) echo "Sherpa doesn't understand what you mean" ;;
@@ -189,6 +191,11 @@ _sherpa_cli_command_palette() {
   fi
 
   _sherpa_command_palette
+}
+
+_sherpa_cli_support() {
+  echo "Thank you for using Sherpa! 🙏"
+  echo "To support the project just star it on GitHub: https://github.com/SherpaLabsIO/local_sherpa"
 }
 
 _sherpa_auto_dump_current_env() {
