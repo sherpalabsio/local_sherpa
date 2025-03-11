@@ -1,6 +1,8 @@
 <p align="center">
-  <!-- <img src="_github_assets/logo.svg" /> -->
-  <img src="_github_assets/logo_light.png" alt="Logo" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="media/logo_dark_mode.svg">
+    <img alt="Logo" src="media/logo_light_mode.svg" width="355">
+  </picture>
 </p>
 
 ----------
