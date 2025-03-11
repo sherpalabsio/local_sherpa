@@ -29,7 +29,9 @@ Log levels:
   debug       - Debug level            | Alias: dd
   shh         - Silence
   log         - Open the log options menu | Alias: talk
-  log [LEVEL] - Set a specific log level  | Levels: debug, info, warn, error, silent | Alias: talk"
+  log [LEVEL] - Set a specific log level  | Levels: debug, info, warn, error, silent | Alias: talk
+
+Created by \e]8;;https://github.com/SherpaLabsIO\e\\Peter Toth @ SherpaLabsIO\e]8;;\e\\"
 
   local -r command="$1"
   case $command in
@@ -50,7 +52,7 @@ Log levels:
                                            prune) _sherpa_prune_permission_files ;;
                                          support) _sherpa_cli_support ;;
                         -v | --version | version) echo "$SHERPA_VERSION" ;;
-                         -h | --help | help | "") echo "$usage_text" ;;
+                         -h | --help | help | "") echo -e "$usage_text" ;;
                                                *) echo "Sherpa doesn't understand what you mean" ;;
   esac
 }
