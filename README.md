@@ -121,6 +121,9 @@ is executed in the current shell.
 
 ```shell
 brew install sherpalabsio/sherpalabsio/local_sherpa
+
+# Add the following line to your Shell profile (e.g. ~/.zshrc, ~/.bashrc)
+eval "$(local_sherpa_init)"
 ```
 
 ### Git
