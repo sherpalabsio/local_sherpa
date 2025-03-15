@@ -24,53 +24,35 @@ It's similar to [Direnv](https://github.com/direnv/direnv), but with fewer featu
 ```sh
 $ cd ~/projects
 
-$ echo "$VAR_1"
-GLOBAL VAR
-$ alias_1
-GLOBAL ALIAS
-$ function_1
-GLOBAL FUNCTION
+$ c # short for console
+# IRB (Interactive Ruby Shell) starts
+# ctrl + d to exit
 
-$ cd project_awesome
+$ cd ~/projects/project_elixir
+$ c
+# IEx (Interactive Elixir) starts
+# ctrl + c to exit
 
-$ echo "$VAR_1"
-LOCAL VAR PROJECT AWESOME
-$ alias_1
-LOCAL ALIAS PROJECT AWESOME
-$ function_1
-LOCAL FUNCTION PROJECT AWESOME
-
-$ cd ..
-
-$ echo "$VAR_1"
-GLOBAL VAR
-$ alias_1
-GLOBAL ALIAS
-$ function_1
-GLOBAL FUNCTION
+$ cd ~/projects/project_postgres
+$ c
+# Docker container with Postgres starts
+# PSQL (PostgreSQL interactive terminal) in the container starts
 ```
 
 The above is accomplished with the help of Sherpa and the files below.
 
 ```sh
-# ~/.bashrc or ~/.zshrc etc...
-export VAR_1="GLOBAL VAR"
+# ~/.zshrc or ~/.bashrc
+alias c='irb'
 
-alias alias_1='echo "GLOBAL ALIAS"'
+# ~/projects/project_elixir/.envrc
+alias c='iex'
 
-function_1() {
-  echo "GLOBAL FUNCTION"
-}
-```
-
-```sh
-# ~/projects/project_awesome/.envrc
-export VAR_1="LOCAL VAR PROJECT AWESOME"
-
-alias alias_1='echo "LOCAL ALIAS PROJECT AWESOME"'
-
-function_1() {
-  echo "LOCAL FUNCTION PROJECT AWESOME"
+# ~/projects/project_postgres/.envrc
+c() {
+  # Start the Postgres container if it's not running
+  [ -z "$(docker compose ps -q)" ] && docker compose up -d
+  docker compose exec db psql -U postgres
 }
 ```
 
