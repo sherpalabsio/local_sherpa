@@ -168,7 +168,10 @@ _sherpa_cli_reload() {
 }
 
 _sherpa_cli_command_palette() {
-  [ -f "$SHERPA_ENV_FILENAME" ] || return 1
+  if [ ! -f "$SHERPA_ENV_FILENAME" ]; then
+    echo "There is no local env file"
+    return 1
+  fi
 
   # Warn the user if fzf is not installed
   if ! command -v fzf > /dev/null; then
