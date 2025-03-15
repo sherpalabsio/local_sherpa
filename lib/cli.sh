@@ -17,12 +17,10 @@ Troubleshooting:
   diagnose - Run local and global tests
 
 Log level - set how much Sherpa talks:
-  talk more   - Decrease the log level | Alias: -
-  talk less   - Increase the log level | Alias: +
-  debug       - Debug level            | Alias: dd
-  shh         - Silence
-  log         - Open the log options menu | Alias: talk
-  log [LEVEL] - Set a specific log level  | Levels: debug, info, warn, error, silent | Alias: talk
+  talk      - Open the options menu  | Alias: log
+  talk more - Decrease the log level | Alias: -
+  talk less - Increase the log level | Alias: +
+  shh       - Silence
 
 Version: $SHERPA_VERSION
 
@@ -36,7 +34,6 @@ Created by \e]8;;https://github.com/SherpaLabsIO\e\\Peter Toth @ SherpaLabsIO\e]
                            off | sleep | disable) _sherpa_cli_disable ;;
                               on | work | enable) _sherpa_cli_enable ;;
                                       log | talk) _sherpa_cli_set_log_level "$2" ;;
-                                      debug | dd) _sherpa_cli_set_log_level "$SHERPA_LOG_LEVEL_DEBUG" ;;
                                              shh) _sherpa_cli_set_log_level "$SHERPA_LOG_LEVEL_SILENT" ;;
                                s | stat | status) _sherpa_cli_status ;;
                                         diagnose) _sherpa_cli_diagnose ;;
