@@ -9,7 +9,7 @@
 
 [![CI](https://github.com/sherpalabsio/local_sherpa/actions/workflows/ci.yml/badge.svg)](https://github.com/sherpalabsio/local_sherpa/actions/workflows/ci.yml)
 ![Version](https://img.shields.io/badge/Version-0.1.0-brightgreen.svg)
-[![SupportedShells](https://img.shields.io/badge/Supported_shells-Zsh,_Bash-brightgreen.svg)](#supported-shells)
+[![Supportedshells](https://img.shields.io/badge/Supported_shells-Zsh,_Bash-brightgreen.svg)](#supported-shells)
 
 ## Define folder specific aliases, functions and variables in your shell
 
@@ -99,7 +99,7 @@ For more details see the [Features](#features) section.
 - Ubuntu 20.04
 - Ubuntu 22.04
 
-## Supported Shell entities for unloading
+## Supported shell entities for unloading
 
 - Exported variables
 - Aliases
@@ -123,14 +123,14 @@ is executed in the current shell.
 brew install sherpalabsio/sherpalabsio/local_sherpa
 ```
 
-Don't forget to add `eval "$(local_sherpa_init)"` to your Shell profile (e.g. `~/.zshrc`, `~/.bashrc`).
+Don't forget to add `eval "$(local_sherpa_init)"` to your shell profile (e.g. `~/.zshrc`, `~/.bashrc`).
 
 ### Automated
 
 - Installs it into `~/.local/lib/`
 - Symlinks the `init` file to `~/.local/bin/local_sherpa_init`
 - Adds `~/.local/bin` to your `PATH`
-- Adds `eval "$(local_sherpa_init)"` to your Shell profile (e.g. `~/.zshrc`, `~/.bashrc`)
+- Adds `eval "$(local_sherpa_init)"` to your shell profile (e.g. `~/.zshrc`, `~/.bashrc`)
 
 ```sh
 curl -s https://raw.githubusercontent.com/sherpalabsio/local_sherpa/main/scripts/install.sh | bash
@@ -140,7 +140,7 @@ curl -s https://raw.githubusercontent.com/sherpalabsio/local_sherpa/main/scripts
 
 - Download a release (local_sherpa_X.X.X.tar.gz) from the [releases page](https://github.com/sherpalabsio/local_sherpa/releases).
 - Symlink the `init` file as `local_sherpa_init` somewhere in your `PATH`.
-- Add `eval "$(local_sherpa_init)"` to your Shell profile (e.g. `~/.zshrc`, `~/.bashrc`).
+- Add `eval "$(local_sherpa_init)"` to your shell profile (e.g. `~/.zshrc`, `~/.bashrc`).
 
 ### Git configuration
 
@@ -239,7 +239,7 @@ to operate.
 
 ```sh
 export SHERPA_ENV_FILENAME='.env' # Default: .envrc
-# To support unloading non-exported variables and dynamically created Shell entities
+# To support unloading non-exported variables and dynamically created shell entities
 export SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING=true
 # To auto dump the env into a .envrc.example file when running `sherpa edit`
 export SHERPA_DUMP_ENV_ON_EDIT=true
