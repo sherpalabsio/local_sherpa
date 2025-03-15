@@ -37,6 +37,7 @@ source "$SHERPA_LIB_DIR/load_unload.sh"
 source "$SHERPA_LIB_DIR/command_palette.sh"
 source "$SHERPA_LIB_DIR/prune.sh"
 source "$SHERPA_LIB_DIR/dump.sh"
+source "$SHERPA_LIB_DIR/update_system.sh"
 
 source "$SHERPA_LIB_DIR/cli.sh"
 
@@ -53,4 +54,4 @@ if [ -n "$ZSH_VERSION" ]; then
   _sherpa_load_env_for_current_dir
 fi
 
-export SHERPA_VERSION="0.1.1"
+export SHERPA_VERSION="0.1.0"

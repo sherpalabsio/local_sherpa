@@ -66,3 +66,12 @@ release_override: dist
 	@git push origin v$(SHERPA_VERSION) -f
 	-@gh release delete v$(SHERPA_VERSION) -y
 	@gh release create v$(SHERPA_VERSION) dist/local_sherpa_$(SHERPA_VERSION).tar.gz --title "v$(SHERPA_VERSION)" --latest --notes ""
+
+.PHONY: uninstall_locally
+uninstall_locally:
+	@rm -rf ~/.local/lib/local_sherpa_* ~/.local/bin/local_sherpa_init
+
+.PHONY: install_locally
+install_locally: dist uninstall_locally
+	@cp -r dist/local_sherpa_$(SHERPA_VERSION) ~/.local/lib/local_sherpa_$(SHERPA_VERSION)
+	@ln -sf ~/.local/lib/local_sherpa_$(SHERPA_VERSION)/init ~/.local/bin/local_sherpa_init

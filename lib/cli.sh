@@ -10,6 +10,7 @@ sherpa() {
   reload         - Reload the current env        | Alias: r
   palette        - [Experimental] Command palette - Show a menu of functions and aliases defined by the current env file | Alias: :
   prune          - Remove permissions for non-existing directories
+  update         - Update to the latest version
   support        - Help me to buy a Caribbean island
 
 Troubleshooting:
@@ -42,6 +43,7 @@ Created by \e]8;;https://github.com/SherpaLabsIO\e\\Peter Toth @ SherpaLabsIO\e]
                                       r | reload) _sherpa_cli_reload ;;
                                     : |  palette) _sherpa_cli_command_palette ;;
                                            prune) _sherpa_prune_permission_files ;;
+                                          update) _sherpa_update_system ;;
                                          support) _sherpa_cli_support ;;
                         -v | --version | version) echo "$SHERPA_VERSION" ;;
                          -h | --help | help | "") echo -e "$usage_text" ;;
