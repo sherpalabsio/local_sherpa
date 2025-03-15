@@ -112,7 +112,7 @@ three times when cd'ing into a directory.
 
 ## Good to know
 
-When sherpa loads the env, it sources the env file meaning its whole content
+When Sherpa loads the env, it sources the env file meaning its whole content
 is executed in the current shell.
 
 ## Installation
@@ -127,10 +127,10 @@ Don't forget to add `eval "$(local_sherpa_init)"` to your shell profile (e.g. `~
 
 ### Automated
 
-- Installs it into `~/.local/lib/`
+- Installs the latest version into `~/.local/lib`
 - Symlinks the `init` file to `~/.local/bin/local_sherpa_init`
-- Adds `~/.local/bin` to your `PATH`
-- Adds `eval "$(local_sherpa_init)"` to your shell profile (e.g. `~/.zshrc`, `~/.bashrc`)
+- Adds `~/.local/bin` to your `PATH` if it's not there already
+- Adds `eval "$(local_sherpa_init)"` to your shell profile (`~/.zshrc` or `~/.bashrc`)
 
 ```sh
 curl -s https://raw.githubusercontent.com/sherpalabsio/local_sherpa/main/scripts/install.sh | bash
@@ -138,9 +138,9 @@ curl -s https://raw.githubusercontent.com/sherpalabsio/local_sherpa/main/scripts
 
 ### Manual
 
-- Download a release (local_sherpa_X.X.X.tar.gz) from the [releases page](https://github.com/sherpalabsio/local_sherpa/releases).
-- Symlink the `init` file as `local_sherpa_init` somewhere in your `PATH`.
-- Add `eval "$(local_sherpa_init)"` to your shell profile (e.g. `~/.zshrc`, `~/.bashrc`).
+- Download a release (local_sherpa_X.X.X.tar.gz) from the [releases page](https://github.com/sherpalabsio/local_sherpa/releases)
+- Symlink the `init` file as `local_sherpa_init` somewhere in your `PATH`
+- Add `eval "$(local_sherpa_init)"` to your shell profile (e.g. `~/.zshrc`, `~/.bashrc`)
 
 ### Git configuration
 
