@@ -12,7 +12,7 @@ Basic Commands:
   dump           - Dump the current env file to a .envrc.example file
   reload         - Reload the current env        | Alias: r
   palette        - [Experimental] Command palette - Show a menu of functions and aliases defined by the current env file | Alias: :
-  prune          - Remove permission files that are no longer relevant
+  prune          - Remove permissions for non-existing directories
   support        - Help me to buy a Caribbean island
 
 Troubleshooting:
