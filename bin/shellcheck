@@ -17,7 +17,7 @@ else
     # Find files
     # - That are not in vendor or .git directories
     # - That are shell scripts or have no extension and are bash executables
-    find . -type f -not -path './vendor/*' -not -path './.git/*' \( -name '*.sh' -o \
+    find . -type f -not -path './.git/*' \( -name '*.sh' -o \
       \( -not -name '*.*' -exec sh -c 'head -n 1 "$1" | grep -q "^#!/usr/bin/env bash"' _ {} \; \) \) -print0
   )
 fi

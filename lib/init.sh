@@ -7,7 +7,8 @@ else
   SHERPA_LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 fi
 
-export SHERPA_DIR="$(dirname "$SHERPA_LIB_DIR")"
+SHERPA_DIR="$(dirname "$SHERPA_LIB_DIR")"
+export SHERPA_DIR
 
 # shellcheck disable=SC2034
 SHERPA_CHECKSUM_DIR="$HOME/.local/share/local_sherpa/trusted_dirs"
