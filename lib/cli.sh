@@ -1,8 +1,5 @@
 sherpa() {
-  local -r usage_text="Usage:
-  sherpa <command> [options]
-
-Basic Commands:
+  local -r usage_text="Basic usage:
   trust          - Trust the current directory   | Aliases: t, allow, grant, permit
   untrust        - Untrust the current directory | Aliases: u, disallow, revoke, block, deny
   edit           - Edit the current env file     | Aliases: e, init
@@ -19,7 +16,7 @@ Troubleshooting:
   status   - Show debug status info | Aliases: s, stat
   diagnose - Run local and global tests
 
-Log levels:
+Log level - set how much Sherpa talks:
   talk more   - Decrease the log level | Alias: -
   talk less   - Increase the log level | Alias: +
   debug       - Debug level            | Alias: dd
