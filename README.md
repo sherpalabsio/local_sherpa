@@ -21,7 +21,7 @@ It's similar to [Direnv](https://github.com/direnv/direnv), but with fewer featu
 
 ## ASCII Demo
 
-```shell
+```sh
 $ cd ~/projects
 
 $ echo "$VAR_1"
@@ -52,7 +52,7 @@ GLOBAL FUNCTION
 
 The above is accomplished with the help of Sherpa and the files below.
 
-```shell
+```sh
 # ~/.bashrc or ~/.zshrc etc...
 export VAR_1="GLOBAL VAR"
 
@@ -63,7 +63,7 @@ function_1() {
 }
 ```
 
-```shell
+```sh
 # ~/projects/project_awesome/.envrc
 export VAR_1="LOCAL VAR PROJECT AWESOME"
 
@@ -119,34 +119,35 @@ is executed in the current shell.
 
 ### Homebrew
 
-```shell
+```sh
 brew install sherpalabsio/sherpalabsio/local_sherpa
-
-# Add the following line to your Shell profile (e.g. ~/.zshrc, ~/.bashrc)
-eval "$(local_sherpa_init)"
 ```
 
-### Git
+Don't forget to add `eval "$(local_sherpa_init)"` to your Shell profile (e.g. `~/.zshrc`, `~/.bashrc`).
 
-```shell
-# Clone the repo
-$ git clone git@github.com:sherpalabsio/local_sherpa.git ~/.dotfiles/lib/local_sherpa
+### Automated
 
-# Hook it into your shell
-## Zsh
-$ echo "source ~/.dotfiles/lib/local_sherpa/init.sh" >> ~/.zshrc
-## Bash
-$ echo "source ~/.dotfiles/lib/local_sherpa/init.sh" >> ~/.bashrc
+- Installs it into `~/.local/lib/`
+- Symlinks the `init` file to `~/.local/bin/local_sherpa_init`
+- Adds `~/.local/bin` to your `PATH`
+- Adds `eval "$(local_sherpa_init)"` to your Shell profile (e.g. `~/.zshrc`, `~/.bashrc`)
 
-# Exclude the env files (.envrc) globally in Git
+```sh
+curl -s https://raw.githubusercontent.com/sherpalabsio/local_sherpa/main/scripts/install.sh | bash
+```
+
+### Manual
+
+- Download a release (local_sherpa_X.X.X.tar.gz) from the [releases page](https://github.com/sherpalabsio/local_sherpa/releases).
+- Symlink the `init` file as `local_sherpa_init` somewhere in your `PATH`.
+- Add `eval "$(local_sherpa_init)"` to your Shell profile (e.g. `~/.zshrc`, `~/.bashrc`).
+
+### Git configuration
+
+Exclude the env files (.envrc) globally so you won't commit them by mistake.
+
+```sh
 $ echo ".envrc" >> $(git config --global core.excludesfile)
-
-# Reload or restart your shell
-
-# Optional but recommended
-alias se='sherpa edit'
-alias st='sherpa trust'
-alias upgrade_sherpa='git -C ~/.dotfiles/lib/local_sherpa pull'
 ```
 
 ## Features
@@ -158,7 +159,7 @@ See the full list of commands by running `$ sherpa` in your shell.
 Sherpa won't load any env file unless you trust them first.\
 This is to prevent running malicious code when you `cd` into a directory.
 
-``` bash
+```sh
 $ echo "alias rs=rspec" > ~/projects/project_awesome/.envrc
 $ cd ~/projects/project_awesome
 Sherpa: The env file is not trusted. Run `sherpa trust` to mark it as trusted.
@@ -194,7 +195,7 @@ It is not supported currently. Feel free to open a feature request.
 
 #### Demo
 
-```shell
+```sh
 # Given the following directory structure with the corresponding env files
 # ~/projects/.envrc
 # ~/projects/project_awesome/.envrc
@@ -236,7 +237,7 @@ Alternatively, you can use: https://github.com/hyperupcall/autoenv
 Set the following environment variable anywhere to instruct Sherpa on how
 to operate.
 
-```shell
+```sh
 export SHERPA_ENV_FILENAME='.env' # Default: .envrc
 # To support unloading non-exported variables and dynamically created Shell entities
 export SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING=true
@@ -250,7 +251,7 @@ export SHERPA_DUMP_ENV_ON_EDIT=true
 
 It affects only the current and new terminal sessions.
 
-```shell
+```sh
 $ sherpa talk more   # - Decrease the log level | Alias: -
 $ sherpa talk less   # - Increase the log level | Alias: +
 $ sherpa debug       # - Debug level            | Alias: dd
@@ -263,7 +264,7 @@ $ sherpa log [LEVEL] # - Set a specific log level  | Levels: debug, info, warn, 
 
 It affects only the current and new terminal sessions.
 
-```shell
+```sh
 $ sherpa off # aliases: sleep, disable
 Sherpa: All envs are unloaded. Sherpa goes to sleep.
 $ sherpa on # aliases: work, enable
@@ -274,7 +275,7 @@ Sherpa: Env is loaded. Sherpa is ready for action.
 
 ### Run RSpec in a container or else
 
-```shell
+```sh
 # Run RSpec in the `project-awesome-api` Docker container
 
 # ~/projects/project_awesome_api/.envrc
@@ -282,7 +283,7 @@ alias de='docker exec -it project-awesome-api'
 alias rs='de rspec'
 ```
 
-```shell
+```sh
 # Run RSpec on the host machine
 
 # ~/projects/project_for_mortals/.envrc
@@ -293,7 +294,7 @@ With this config `RSpec` will run depending on in which directory you `cd` into.
 
 ### Run the tests using the same shortcut in different projects
 
-```shell
+```sh
 # ~/projects/project_ruby_with_docker/.envrc
 alias t='docker exec -it project-awesome-api rspec'
 
@@ -306,7 +307,7 @@ alias t='yarn test'
 
 ### Rails console in production 🤫
 
-```shell
+```sh
 # ~/projects/project_with_heroku/.envrc
 alias rc_prod='heroku run rails c -a APP_NAME'
 
@@ -316,7 +317,7 @@ alias rc_prod='ssh -i /path/key-pair-name.pem user@hostname "/var/app/current/bi
 
 ### Start your dev environment
 
-```shell
+```sh
 # ~/projects/project_with_docker/.envrc
 alias up='docker-compose up -d'
 alias upb='docker-compose up --build -d'
@@ -328,7 +329,7 @@ alias up='bin/rails s'
 
 ## Troubleshooting
 
-```shell
+```sh
 $ sherpa diagnose
 $ sherpa status
 ```
@@ -339,7 +340,7 @@ $ sherpa status
 
 All *_test.sh files are run recursively from the tests directory.
 
-```shell
+```sh
 # Run all the tests for all the supported shells
 $ make test
 
@@ -380,7 +381,7 @@ $ make test_performance
 
 ### Linting
 
-```shell
+```sh
 $ make lint
 ```
 
