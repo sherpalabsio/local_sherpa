@@ -8,7 +8,7 @@
 ----------
 
 [![CI](https://github.com/sherpalabsio/local_sherpa/actions/workflows/ci.yml/badge.svg)](https://github.com/sherpalabsio/local_sherpa/actions/workflows/ci.yml)
-![Version](https://img.shields.io/badge/Version-0.1.0-brightgreen.svg)
+![Version](https://img.shields.io/badge/Version-0.1.1-brightgreen.svg)
 [![Supportedshells](https://img.shields.io/badge/Supported_shells-Zsh,_Bash-brightgreen.svg)](#supported-shells)
 
 ## Define folder specific aliases, functions and variables in your shell
