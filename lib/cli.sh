@@ -1,7 +1,5 @@
 sherpa() {
-  local -r usage_text="Sherpa loads and unloads functions, aliases, and variables on a per-directory basis.
-
-Usage:
+  local -r usage_text="Usage:
   sherpa <command> [options]
 
 Basic Commands:

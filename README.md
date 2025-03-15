@@ -13,7 +13,7 @@
 
 ## Define folder specific aliases, functions and variables in your shell
 
-Sherpa is a shell extension that allows you to define new or override existing variables, aliases and functions on a per-folder basis, with support for nesting.
+Sherpa is a shell extension that allows you to define new or override existing aliases, functions or variables on a per-folder basis, with support for nesting.
 
 It's similar to [Direnv](https://github.com/direnv/direnv), but with fewer features and added support for aliases and functions.
 
