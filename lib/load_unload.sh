@@ -117,4 +117,9 @@ _sherpa_stash_current_env() {
   local function_names=($(_sherpa_fetch_function_names_from_env_file))
   _sherpa_log_debug "AutoStashing functions: ${function_names[*]}"
   sherpa::env_stash.stash_functions "$PWD" "${function_names[@]}"
+
+  declare -gxA SHERPA_STATUS_INFO__VARS SHERPA_STATUS_INFO__ALIASES SHERPA_STATUS_INFO__FUNCTIONS
+  SHERPA_STATUS_INFO__VARS["$PWD"]="${variable_names[*]}"
+  SHERPA_STATUS_INFO__ALIASES["$PWD"]="${alias_names[*]}"
+  SHERPA_STATUS_INFO__FUNCTIONS["$PWD"]="${function_names[*]}"
 }

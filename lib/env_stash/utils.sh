@@ -7,6 +7,16 @@ __SHERPA_ENV_STASH_VAR_PREFIX="__sherpa__env_stash"
 sherpa::env_stash.unstash_all() {
   local -r dir_path="$1"
 
+  if [ -n "$ZSH_VERSION" ]; then
+    unset "SHERPA_STATUS_INFO__VARS[\"$dir_path\"]"
+    unset "SHERPA_STATUS_INFO__ALIASES[\"$dir_path\"]"
+    unset "SHERPA_STATUS_INFO__FUNCTIONS[\"$dir_path\"]"
+  else
+    unset "SHERPA_STATUS_INFO__VARS[$dir_path]"
+    unset "SHERPA_STATUS_INFO__ALIASES[$dir_path]"
+    unset "SHERPA_STATUS_INFO__FUNCTIONS[$dir_path]"
+  fi
+
   sherpa::env_stash.unstash_variables "$dir_path"
   sherpa::env_stash.unstash_functions "$dir_path"
   sherpa::env_stash.unstash_aliases "$dir_path"

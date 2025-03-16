@@ -2,6 +2,9 @@ _sherpa_fetch_variable_names_from_env_file() {
   __load_dynamic() {
     local -A VAR_NAMES_TO_IGNORE
 
+    VAR_NAMES_TO_IGNORE[SHERPA_STATUS_INFO__VARS]=""
+    VAR_NAMES_TO_IGNORE[SHERPA_STATUS_INFO__ALIASES]=""
+    VAR_NAMES_TO_IGNORE[SHERPA_STATUS_INFO__FUNCTIONS]=""
     VAR_NAMES_TO_IGNORE[__sherpa_tmp_var_name]=""
     VAR_NAMES_TO_IGNORE[__vars_after]=""
     VAR_NAMES_TO_IGNORE[__vars_before]=""
@@ -21,6 +24,7 @@ _sherpa_fetch_variable_names_from_env_file() {
     VAR_NAMES_TO_IGNORE[TTYIDLE]=""
     VAR_NAMES_TO_IGNORE[epochtime]=""
     VAR_NAMES_TO_IGNORE[SECONDS]=""
+    VAR_NAMES_TO_IGNORE[EPOCHSECONDS]=""
 
     local -A __vars_before
     local -A __vars_after

@@ -38,6 +38,7 @@ source "$SHERPA_LIB_DIR/command_palette.sh"
 source "$SHERPA_LIB_DIR/prune.sh"
 source "$SHERPA_LIB_DIR/dump.sh"
 source "$SHERPA_LIB_DIR/update_system.sh"
+source "$SHERPA_LIB_DIR/print_debug_info.sh"
 
 source "$SHERPA_LIB_DIR/cli.sh"
 

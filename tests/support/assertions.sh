@@ -77,6 +77,24 @@ assert_contain() {
   exit 1
 }
 
+# Negative partial match
+assert_not_contain() {
+  local -r actual="$1"
+  local -r expected_pattern="$2"
+  local -r message="$3"
+
+  if [[ ! "$actual" =~ $expected_pattern ]]; then
+    __print_ok "$message"
+    return
+  fi
+
+  __print_not_ok "$message"
+  __print_comparison "$actual" "$expected_pattern" "It's a partial match!" "~"
+  __report_failure
+
+  exit 1
+}
+
 # Check if a variable, a function or an alias is undefined
 assert_undefined() {
   local -r item="$1"
@@ -94,7 +112,7 @@ assert_undefined() {
   exit 1
 }
 
-# == General Utils ==
+# =================================== Utils ====================================
 __is_defined() {
   local -r name_of_thing="$1"
 

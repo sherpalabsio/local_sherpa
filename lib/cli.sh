@@ -11,6 +11,7 @@ sherpa() {
   palette        - [Experimental] Command palette - Show a menu of functions and aliases defined by the current env file | Alias: :
   prune          - Remove permissions for non-existing directories
   update         - Update to the latest version
+  debug          - Show debug status info
   support        - Help me to buy a Caribbean island
 
 Troubleshooting:
@@ -44,6 +45,7 @@ Created by \e]8;;https://github.com/SherpaLabsIO\e\\Peter Toth @ SherpaLabsIO\e]
                                     : |  palette) _sherpa_cli_command_palette ;;
                                            prune) _sherpa_prune_permission_files ;;
                                           update) _sherpa_update_system ;;
+                                           debug) _sherpa_print_debug_info ;;
                                          support) _sherpa_cli_support ;;
                         -v | --version | version) echo "$SHERPA_VERSION" ;;
                          -h | --help | help | "") echo -e "$usage_text" ;;
