@@ -7,6 +7,8 @@ _sherpa_update_system() {
 }
 
 _sherpa_update_system::homebrew() {
+  echo "==> Homebrew installation detected"
+
   brew update
 
   echo "==> Checking for updates"

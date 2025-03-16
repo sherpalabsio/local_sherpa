@@ -17,8 +17,6 @@ Sherpa is a shell extension that allows you to define new or override existing a
 
 It's similar to [Direnv](https://github.com/direnv/direnv), but with fewer features and added support for aliases and functions.
 
-## Video Demo
-
 ## ASCII Demo
 
 ```sh
@@ -90,7 +88,7 @@ For more details see the [Features](#features) section.
 Experimental feature: Non-exported variables and dynamically created entities
 are supported by setting the `SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING`
 environment variable to `true`. This executes the env file in a subshell
-three times when cd'ing into a directory.
+three times when you `cd` into a directory.
 
 ## Good to know
 
@@ -129,7 +127,7 @@ curl -s https://raw.githubusercontent.com/sherpalabsio/local_sherpa/main/scripts
 Exclude the env files (.envrc) globally so you won't commit them by mistake.
 
 ```sh
-$ echo ".envrc" >> $(git config --global core.excludesfile)
+echo ".envrc" >> $(git config --global core.excludesfile)
 ```
 
 ## Features
@@ -158,7 +156,7 @@ When an env file changes you have to trust it again.
 Use `sherpa edit`. It opens the env file in your default editor then trusts it
 automatically when you close it.
 
-You can untrust a directory with `sherpa untrust`.
+You can untrust an env file with `sherpa untrust`.
 
 ### Loading envs from parent directories automatically
 
