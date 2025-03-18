@@ -232,12 +232,9 @@ export SHERPA_DUMP_ENV_ON_EDIT=true
 It affects only the current and new terminal sessions.
 
 ```sh
-$ sherpa talk more   # - Decrease the log level | Alias: -
-$ sherpa talk less   # - Increase the log level | Alias: +
-$ sherpa debug       # - Debug level            | Alias: dd
-$ sherpa shh         # - Silence
-$ sherpa log         # - Open the log options menu | Alias: talk
-$ sherpa log [LEVEL] # - Set a specific log level  | Levels: debug, info, warn, error, silent | Alias: talk
+$ sherpa talk more # - Decrease the log level | Alias: -
+$ sherpa talk less # - Increase the log level | Alias: +
+$ sherpa shh       # - Silence
 ```
 
 ### Disable/enable Sherpa
