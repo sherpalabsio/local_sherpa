@@ -45,7 +45,7 @@ dist:
 	@mkdir -p dist/local_sherpa_$$SHERPA_VERSION
 	@cp -r lib bin init LICENSE README.md dist/local_sherpa_$$SHERPA_VERSION
 	@rm -f dist/local_sherpa_$$SHERPA_VERSION/bin/shellcheck
-	@cd dist && tar -czf local_sherpa_$$SHERPA_VERSION.tar.gz local_sherpa_$$SHERPA_VERSION
+	@cd dist && tar --no-xattrs -czf local_sherpa_$$SHERPA_VERSION.tar.gz local_sherpa_$$SHERPA_VERSION
 	@printf "sha256: "
 	@sha256sum dist/local_sherpa_$$SHERPA_VERSION.tar.gz | awk '{print $$1}'
 
