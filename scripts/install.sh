@@ -20,7 +20,7 @@ fi
 echo "==> Installing to $HOME_LOCAL_DIR/lib/local_sherpa_$GITHUB_LATEST_VERSION"
 mkdir -p "$HOME_LOCAL_DIR/bin" "$HOME_LOCAL_DIR/lib"
 
-tar -xzf local_sherpa.tar.gz -C "$HOME_LOCAL_DIR/lib"
+tar --warning=no-unknown-keyword -xzf local_sherpa.tar.gz -C "$HOME_LOCAL_DIR/lib"
 ln -sf "$HOME_LOCAL_DIR/lib/local_sherpa_$GITHUB_LATEST_VERSION/init" "$HOME_LOCAL_DIR/bin/local_sherpa_init"
 rm -f local_sherpa.tar.gz
 
