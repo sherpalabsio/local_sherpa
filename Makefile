@@ -10,6 +10,7 @@ help:
 	@echo "dist                              - package the project into a tarball"
 	@echo "release                           - create a new release, tag it, and push to GitHub"
 	@echo "release_override                  - override the existing release, tag it, and push to GitHub"
+	@echo "test_installing_last_release 		 - test the installation and uninstallation of the last release"
 
 .PHONY: lint
 lint:
@@ -38,6 +39,10 @@ test_min_shell_versions_in_ubuntu:
 .PHONY: test_performance
 test_performance:
 	./tests/performance/harness $(filter-out $@,$(MAKECMDGOALS))
+
+.PHONY: test_installing_last_release
+test_installing_last_release:
+	./tests/install_uninstall/test_runner
 
 .PHONY: dist
 dist:

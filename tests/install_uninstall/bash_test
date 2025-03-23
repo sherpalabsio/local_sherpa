@@ -1,0 +1,13 @@
+echo "============ Installing the first time ============ "
+
+curl -s https://raw.githubusercontent.com/sherpalabsio/local_sherpa/main/scripts/install.sh | bash
+
+source $HOME/.bashrc
+
+if ! command -v sherpa &> /dev/null; then
+  echo "Warning: sherpa command not found. Installation may have failed."
+fi
+
+echo "============ Reinstalling ============"
+
+curl -s https://raw.githubusercontent.com/sherpalabsio/local_sherpa/main/scripts/install.sh | bash
