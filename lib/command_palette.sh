@@ -1,63 +1,9 @@
+__SHERPA_COMMAND_PALETTE_TMP_DIR="/tmp/local_sherpa_command_palette"
+
 _sherpa_command_palette() {
-  local -r temp_dir="/tmp/local_sherpa_command_palette"
-
-  rm -rf "$temp_dir"
-  mkdir -p "$temp_dir"
-
-  # Process variables
-  local var_names var_name value
-  # shellcheck disable=SC2207
-  var_names=($(__sherpa_command_palette__load_local_variables))
-  for var_name in "${var_names[@]}"; do
-    eval "value=\$$var_name"
-    echo "$value" > "$temp_dir/\$$var_name"
-  done
-
-  # Process functions
-  local function_names function_name
-  # shellcheck disable=SC2207
-  function_names=($(__sherpa_command_palette__load_local_functions))
-  for function_name in "${function_names[@]}"; do
-    declare -f "$function_name" > "$temp_dir/$function_name"
-  done
-
-  # Process aliases
-  local alias_names alias_name alias_definition
-  # shellcheck disable=SC2207
-  alias_names=($(__sherpa_command_palette__load_local_aliases))
-
-  for alias_name in "${alias_names[@]}"; do
-    alias "$alias_name" > "$temp_dir/$alias_name"
-
-    alias_definition=$(cat "$temp_dir/$alias_name")
-    alias_definition=${alias_definition#*=\'} # Remove everything up to and including ='
-    alias_definition=${alias_definition%?} # Remove the last character
-
-    echo "$alias_definition" | sed "s/\\\\''//g" | sed "s/\\\\$//g" > "$temp_dir/$alias_name"
-  done
-
-  local env_items
-
-  # shellcheck disable=SC2207
-  env_items=(
-    $(__sherpa_command_palette__load_local_variables | sed 's/\([^ ]*\)/\$\1/g')
-    $(__sherpa_command_palette__load_local_aliases)
-    $(__sherpa_command_palette__load_local_functions)
-  )
-
-  # Filter and sort
-  # shellcheck disable=SC2207
-  env_items=(
-    $(
-      printf "%s\n" "${env_items[@]}" |
-        sort |
-        uniq
-    )
-  )
-
   local selected
   selected=$(
-    printf "%s\n" "${env_items[@]}" |
+    __sherpa_command_palette__load_env_items |
       fzf --layout=reverse \
           --border \
           --info=inline \
@@ -68,7 +14,7 @@ _sherpa_command_palette() {
           --preview-window wrap
   )
 
-  rm -rf "$temp_dir"
+  rm -rf "$__SHERPA_COMMAND_PALETTE_TMP_DIR"
 
   [ -z "$selected" ] && return
 
@@ -92,26 +38,68 @@ _sherpa_command_palette() {
   fi
 }
 
-__sherpa_command_palette__load_local_variables() {
-  if [ -n "$ZSH_VERSION" ]; then
-    echo "$SHERPA_STATUS_INFO__VARS"
-  else
-    echo "${SHERPA_STATUS_INFO__VARS[@]}"
-  fi
+__sherpa_command_palette__load_env_items() {
+  rm -rf "$__SHERPA_COMMAND_PALETTE_TMP_DIR"
+  mkdir -p "$__SHERPA_COMMAND_PALETTE_TMP_DIR"
+
+  local env_items
+  # shellcheck disable=SC2207
+  env_items=(
+    $(__sherpa_command_palette__get_variable_names)
+    $(__sherpa_command_palette__get_alias_names)
+    $(__sherpa_command_palette__get_function_names)
+  )
+
+  # Filter and sort
+  printf "%s\n" "${env_items[@]}" | sort | uniq
 }
 
-__sherpa_command_palette__load_local_aliases() {
+__sherpa_command_palette__get_variable_names() {
+  local var_names var_name value
+
   if [ -n "$ZSH_VERSION" ]; then
-    echo "$SHERPA_STATUS_INFO__ALIASES"
+    IFS=" " read -r -A var_names <<< "${SHERPA_STATUS_INFO__VARS[@]}"
   else
-    echo "${SHERPA_STATUS_INFO__ALIASES[@]}"
+    IFS=" " read -r -a var_names <<< "${SHERPA_STATUS_INFO__VARS[@]}"
   fi
+
+  for var_name in "${var_names[@]}"; do
+    eval "value=\$$var_name"
+    echo "$value" > "$__SHERPA_COMMAND_PALETTE_TMP_DIR/\$$var_name"
+    echo "\$$var_name"
+  done
 }
 
-__sherpa_command_palette__load_local_functions() {
+__sherpa_command_palette__get_alias_names() {
+  local alias_names alias_name alias_definition
+
   if [ -n "$ZSH_VERSION" ]; then
-    echo "$SHERPA_STATUS_INFO__FUNCTIONS"
+    IFS=" " read -r -A alias_names <<< "${SHERPA_STATUS_INFO__ALIASES[@]}"
   else
-    echo "${SHERPA_STATUS_INFO__FUNCTIONS[@]}"
+    IFS=" " read -r -a alias_names <<< "${SHERPA_STATUS_INFO__ALIASES[@]}"
   fi
+
+  for alias_name in "${alias_names[@]}"; do
+    alias "$alias_name" > "$__SHERPA_COMMAND_PALETTE_TMP_DIR/$alias_name"
+    alias_definition=$(cat "$__SHERPA_COMMAND_PALETTE_TMP_DIR/$alias_name")
+    alias_definition=${alias_definition#*=\'} # Remove everything up to and including ='
+    alias_definition=${alias_definition%?} # Remove the last character
+    echo "$alias_definition" | sed "s/\\\\''//g" | sed "s/\\\\$//g" > "$__SHERPA_COMMAND_PALETTE_TMP_DIR/$alias_name"
+    echo "$alias_name"
+  done
+}
+
+__sherpa_command_palette__get_function_names() {
+  local function_names function_name
+
+  if [ -n "$ZSH_VERSION" ]; then
+    IFS=" " read -r -A function_names <<< "${SHERPA_STATUS_INFO__FUNCTIONS[@]}"
+  else
+    IFS=" " read -r -a function_names <<< "${SHERPA_STATUS_INFO__FUNCTIONS[@]}"
+  fi
+
+  for function_name in "${function_names[@]}"; do
+    declare -f "$function_name" > "$__SHERPA_COMMAND_PALETTE_TMP_DIR/$function_name"
+    echo "$function_name"
+  done
 }
