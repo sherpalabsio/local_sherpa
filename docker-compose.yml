@@ -10,6 +10,17 @@ services:
     stdin_open: true
     tty: true
 
+  ubuntu_install_uninstall:
+    hostname: ubuntu_install_uninstall
+    build:
+      context: .
+      dockerfile: dockerfiles/ubuntu_install_uninstall.dockerfile
+    container_name: local-sherpa-ubuntu-install-uninstall
+    volumes:
+      - .:/app
+    stdin_open: true
+    tty: true
+
   min-shell-versions-ubuntu:
     hostname: min-shell-versions-ubuntu
     build:

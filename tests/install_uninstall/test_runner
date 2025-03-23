@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -e
+
+DOCKER_CONTAINER_NAME="local-sherpa-ubuntu-install-uninstall"
+EXIT_CODE=0
+
+# Start the container if it's not running
+if ! docker ps | grep -q $DOCKER_CONTAINER_NAME; then
+  docker-compose up -d
+  CONTAINER_STARTED_BY_THIS_SCRIPT=true
+fi
+
+DOCKER_EXEC="docker exec -it $DOCKER_CONTAINER_NAME"
+TESTS_PASSED=true
+
+$DOCKER_EXEC bash -i ./tests/install_uninstall/bash_test || TESTS_PASSED=false
+
+if $TESTS_PASSED; then
+  echo -e "\033[32mWorks!\033[0m"
+else
+  echo -e "\033[31mTest suite failed.\033[0m"
+  EXIT_CODE=1
+fi
+
+# Stop the container if we started it
+if [ "$CONTAINER_STARTED_BY_THIS_SCRIPT" = true ]; then
+  docker-compose down
+fi
+
+exit $EXIT_CODE
