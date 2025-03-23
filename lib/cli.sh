@@ -3,12 +3,12 @@ sherpa() {
   trust          - Trust the current directory   | Aliases: t, allow, grant, permit
   untrust        - Untrust the current directory | Aliases: u, disallow, revoke, block, deny
   edit           - Edit the current env file     | Aliases: e, init
+  palette        - Command palate using fzf for variables, functions, and aliases loaded by Sherpa
   off            - Turn Sherpa off               | Aliases: disable, sleep
   on             - Turn Sherpa on                | Aliases: enable, work
   symlink [PATH] - Symlink the current env file  | Aliases: link, slink
   dump           - Dump the current env file to a .envrc.example file
   reload         - Reload the current env        | Alias: r
-  palette        - [Experimental] Command palette - Show a menu of functions and aliases defined by the current env file | Alias: :
   prune          - Remove permissions for non-existing directories
   update         - Update to the latest version
   debug          - Show debug status info
@@ -18,7 +18,7 @@ Troubleshooting:
   status   - Show debug status info | Aliases: s, stat
   diagnose - Run local and global tests
 
-Log level - set how much Sherpa talks:
+Log level - Set how much Sherpa talks:
   talk      - Open the options menu  | Alias: log
   talk more - Decrease the log level | Alias: -
   talk less - Increase the log level | Alias: +
@@ -183,10 +183,11 @@ _sherpa_cli_command_palette() {
     return 1
   fi
 
+  local -r fzf_major_version=$(fzf --version | awk -F. '{print $1}')
   local -r fzf_minor_version=$(fzf --version | awk -F. '{print $2}')
 
   # Warn the user if fzf version is not supported
-  if [[ "$fzf_minor_version" -lt 42 ]]; then
+  if [[ "$fzf_major_version" -eq 0 && "$fzf_minor_version" -lt 42 ]]; then
     _sherpa_log_error "fzf version is less than 0.42.0. Please upgrade it to use this feature."
     return 1
   fi

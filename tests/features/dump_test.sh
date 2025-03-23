@@ -12,7 +12,7 @@ stub_env_file
 # ==============================================================================
 # ++++ It dumps the current env file into an example file
 
-cat << EOF | overwrite_env_file
+cat << EOF | overwrite_env_file "$@"
 alias alias_name="command"
 
 function_name() {
