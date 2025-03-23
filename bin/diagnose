@@ -1,4 +1,4 @@
-# Disable the history to avoid polluting the user's history file in Bash
+# Disable the history to avoid polluting the user's Bash history
 [ -z "$ZSH_VERSION" ] && export HISTFILE=
 
 export SHERPA_WAS_ENABLED="$SHERPA_ENABLED"

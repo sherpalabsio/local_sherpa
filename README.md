@@ -158,6 +158,36 @@ automatically when you close it.
 
 You can untrust an env file with `sherpa untrust`.
 
+### Command palette for your shell
+
+List and run any commands (aliases, functions) loaded by Sherpa.
+
+`sherpa palette` opens fzf (fuzzy finder) with the aliases, functions and variables loaded by Sherpa.\
+You can preview the content of variables and the definition of aliases and functions.\
+You can paste the selected item into your prompt by pressing Enter.
+
+The list can be less accurate if the dynamic env file parsing is not enabled.
+Enable it by setting the `SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING` environment variable to `true`.
+
+Bind it to Ctrl + e:
+
+```sh
+# Zsh (~/.zshrc)
+__sherpa_palette() {
+  sherpa palette
+}
+
+zle -N __sherpa_palette
+bindkey "^e" __sherpa_palette # Ctrl + e
+
+# Bash (~/.bashrc)
+__sherpa_palette() {
+  sherpa palette
+}
+
+bind -x '"\C-e":__sherpa_palette' # Ctrl + e
+```
+
 ### Loading envs from parent directories automatically
 
 It is not supported currently. Feel free to open a feature request.
