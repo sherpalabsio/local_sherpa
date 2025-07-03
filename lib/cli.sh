@@ -3,7 +3,7 @@ sherpa() {
   trust          - Trust the current directory   | Aliases: t, allow, grant, permit
   untrust        - Untrust the current directory | Aliases: u, disallow, revoke, block, deny
   edit           - Edit the current env file     | Aliases: e, init
-  palette        - Command palate using fzf for variables, functions, and aliases loaded by Sherpa
+  palette        - Command palette using fzf for variables, functions, and aliases loaded by Sherpa
   off            - Turn Sherpa off               | Aliases: disable, sleep
   on             - Turn Sherpa on                | Aliases: enable, work
   symlink [PATH] - Symlink the current env file  | Aliases: link, slink
