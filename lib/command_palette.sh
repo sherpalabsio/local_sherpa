@@ -50,6 +50,8 @@ __sherpa_command_palette__load_env_items() {
     $(__sherpa_command_palette__get_function_names)
   )
 
+  [ ${#env_items[@]} -eq 0 ] && return
+
   # Filter and sort
   printf "%s\n" "${env_items[@]}" | sort | uniq
 }
