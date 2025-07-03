@@ -1,0 +1,7 @@
+echo "============ Homebrew installation (first time) ============ "
+
+brew install sherpalabsio/sherpalabsio/local_sherpa
+
+source ~/.bashrc
+
+sherpa diagnose > /dev/null

@@ -2,30 +2,32 @@
 
 set -e
 
-DOCKER_CONTAINER_NAME="local-sherpa-ubuntu-install-uninstall"
+UBUNTU_CONTAINER_NAME="local-sherpa-ubuntu-install-uninstall"
+HOMEBREW_CONTAINER_NAME="local-sherpa-homebrew-install-uninstall"
 EXIT_CODE=0
 
-# Start the container if it's not running
-if ! docker ps | grep -q $DOCKER_CONTAINER_NAME; then
-  docker-compose up -d
-  CONTAINER_STARTED_BY_THIS_SCRIPT=true
-fi
+cleanup() {
+  docker-compose down ubuntu_install_uninstall homebrew_install_uninstall
+}
 
-DOCKER_EXEC="docker exec -it $DOCKER_CONTAINER_NAME"
-TESTS_PASSED=true
+trap cleanup EXIT
 
-$DOCKER_EXEC bash -i ./tests/install_uninstall/bash_test || TESTS_PASSED=false
+TESTS_FAILED=0
 
-if $TESTS_PASSED; then
+docker-compose up -d ubuntu_install_uninstall
+docker exec -it $UBUNTU_CONTAINER_NAME bash -i ./tests/install_uninstall/automated_production || TESTS_FAILED=1
+
+docker-compose up -d homebrew_install_uninstall
+docker exec -it $HOMEBREW_CONTAINER_NAME bash -i /app/tests/install_uninstall/homebrew_local || TESTS_FAILED=1
+
+docker-compose down homebrew_install_uninstall
+docker-compose up -d homebrew_install_uninstall
+docker exec -it $HOMEBREW_CONTAINER_NAME bash -i /app/tests/install_uninstall/homebrew_production || TESTS_FAILED=1
+
+if [ "$TESTS_FAILED" -eq 0 ]; then
   echo -e "\033[32mWorks!\033[0m"
 else
   echo -e "\033[31mTest suite failed.\033[0m"
-  EXIT_CODE=1
 fi
 
-# Stop the container if we started it
-if [ "$CONTAINER_STARTED_BY_THIS_SCRIPT" = true ]; then
-  docker-compose down
-fi
-
-exit $EXIT_CODE
+exit $TESTS_FAILED

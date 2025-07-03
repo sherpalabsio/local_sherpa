@@ -10,7 +10,7 @@ help:
 	@echo "dist                              - package the project into a tarball"
 	@echo "release                           - create a new release, tag it, and push to GitHub"
 	@echo "release_override                  - override the existing release, tag it, and push to GitHub"
-	@echo "test_installing_last_release 		 - test the installation and uninstallation of the last release"
+	@echo "test_installing_last_release      - test the installation and uninstallation of the last release"
 
 .PHONY: lint
 lint:

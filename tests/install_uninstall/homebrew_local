@@ -1,0 +1,17 @@
+echo "============ Homebrew installation (first time) ============ "
+
+(cd /app && make dist)
+
+cp /homebrew/local_sherpa.rb /homebrew/local_sherpa_backup.rb
+# Replace the URL with the local file path
+sed -i "s|^ *url .*$|  url \"file:///app/dist/local_sherpa_${SHERPA_VERSION}.tar.gz\"|" /homebrew/local_sherpa.rb
+# Remove the sha256 line
+sed -i '/^ *sha256 .*/d' /homebrew/local_sherpa.rb
+
+brew install --build-from-source /homebrew/local_sherpa.rb
+
+source ~/.bashrc
+
+sherpa diagnose > /dev/null
+
+mv /homebrew/local_sherpa_backup.rb /homebrew/local_sherpa.rb
