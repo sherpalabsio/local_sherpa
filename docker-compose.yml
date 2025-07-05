@@ -10,20 +10,21 @@ services:
     stdin_open: true
     tty: true
 
-  ubuntu_install_uninstall:
-    hostname: ubuntu_install_uninstall
+  ubuntu_install:
+    hostname: ubuntu_install
     build:
       context: .
-      dockerfile: dockerfiles/ubuntu_install_uninstall.dockerfile
-    container_name: local-sherpa-ubuntu-install-uninstall
+      dockerfile: dockerfiles/ubuntu_install.dockerfile
+    container_name: local_sherpa_ubuntu_install
     volumes:
       - .:/app
     stdin_open: true
     tty: true
 
-  homebrew_install_uninstall:
+  homebrew_install:
     image: homebrew/brew
-    container_name: local-sherpa-homebrew-install-uninstall
+    hostname: homebrew_install
+    container_name: local_sherpa_homebrew_install
     volumes:
       - .:/app
       - ./tmp/homebrew:/homebrew

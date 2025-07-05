@@ -10,7 +10,8 @@ help:
 	@echo "dist                              - package the project into a tarball"
 	@echo "release                           - create a new release, tag it, and push to GitHub"
 	@echo "release_override                  - override the existing release, tag it, and push to GitHub"
-	@echo "test_installing_last_release      - test the installation and uninstallation of the last release"
+	@echo "test_install_local_build          - create a fresh build and install it locally via Homebrew"
+	@echo "test_install_online               - test installing the last release via Homebrew and GitHub"
 
 .PHONY: lint
 lint:
@@ -40,9 +41,13 @@ test_min_shell_versions_in_ubuntu:
 test_performance:
 	./tests/performance/harness $(filter-out $@,$(MAKECMDGOALS))
 
-.PHONY: test_installing_last_release
-test_installing_last_release:
-	./tests/install_uninstall/test_runner
+.PHONY: test_install_local_build
+test_install_local_build:
+	./tests/install/local_build/test_runner
+
+.PHONY: test_install_online
+test_install_online:
+	./tests/install/online/test_runner
 
 .PHONY: dist
 dist:
