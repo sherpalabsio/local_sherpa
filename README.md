@@ -158,7 +158,7 @@ automatically when you close it.
 
 You can untrust an env file with `sherpa untrust`.
 
-### Command palette for your shell
+### Command palette for the local env (experimental)
 
 List and run any commands (aliases, functions) loaded by Sherpa.
 

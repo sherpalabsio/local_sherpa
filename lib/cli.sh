@@ -3,7 +3,7 @@ sherpa() {
   trust          - Trust the current directory   | Aliases: t, allow, grant, permit
   untrust        - Untrust the current directory | Aliases: u, disallow, revoke, block, deny
   edit           - Edit the current env file     | Aliases: e, init
-  palette        - Command palette using fzf for variables, functions, and aliases loaded by Sherpa
+  palette        - Command palette for the local env (experimental) | Alias: :
   off            - Turn Sherpa off               | Aliases: disable, sleep
   on             - Turn Sherpa on                | Aliases: enable, work
   symlink [PATH] - Symlink the current env file  | Aliases: link, slink
@@ -11,11 +11,11 @@ sherpa() {
   reload         - Reload the current env        | Alias: r
   prune          - Remove permissions for non-existing directories
   update         - Update to the latest version
-  debug          - Show debug status info
-  support        - Help me to buy a Caribbean island
+  support        - Help me buy a Caribbean island
 
 Troubleshooting:
   status   - Show debug status info | Aliases: s, stat
+  debug    - Show debug status info
   diagnose - Run local and global tests
 
 Log level - Set how much Sherpa talks:
