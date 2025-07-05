@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/ubuntu.dockerfile
-    container_name: local-sherpa-ubuntu
+    container_name: local_sherpa_ubuntu
     volumes:
       - .:/app
     stdin_open: true
@@ -35,12 +35,12 @@ services:
     stdin_open: true
     tty: true
 
-  min-shell-versions-ubuntu:
-    hostname: min-shell-versions-ubuntu
+  min_shell_versions_ubuntu:
+    hostname: min_shell_versions_ubuntu
     build:
       context: .
       dockerfile: dockerfiles/min_shell_versions_ubuntu.dockerfile
-    container_name: local-sherpa-min-shell-versions-ubuntu
+    container_name: local_sherpa_min_shell_versions_ubuntu
     volumes:
       - .:/app
     stdin_open: true
