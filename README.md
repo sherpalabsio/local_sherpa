@@ -79,17 +79,6 @@ For more details see the [Features](#features) section.
 - Ubuntu 22.04
 - Ubuntu 24.04
 
-## Supported shell entities for unloading
-
-- Exported variables
-- Aliases
-- Functions
-
-Experimental feature: Non-exported variables and dynamically created entities
-are supported by setting the `SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING`
-environment variable to `true`. This executes the env file in a subshell
-three times when you `cd` into a directory.
-
 ## Good to know
 
 When Sherpa loads the env, it sources the env file meaning its whole content
@@ -103,18 +92,17 @@ is executed in the current shell.
 brew install sherpalabsio/sherpalabsio/local_sherpa
 ```
 
-Don't forget to add `eval "$(local_sherpa_init)"` to your shell profile (e.g. `~/.zshrc`, `~/.bashrc`).
-
 ### Automated
-
-- Installs the latest version into `~/.local/lib`
-- Symlinks the `init` file to `~/.local/bin/local_sherpa_init`
-- Adds `~/.local/bin` to your `PATH` if it's not there already
-- Adds `eval "$(local_sherpa_init)"` to your shell profile (`~/.zshrc` or `~/.bashrc`)
 
 ```sh
 curl -s https://raw.githubusercontent.com/sherpalabsio/local_sherpa/main/scripts/install.sh | bash
 ```
+
+This script will automatically:
+- Install the latest version to `~/.local/lib`
+- Symlink the `init` file to `~/.local/bin/local_sherpa_init`
+- Add `~/.local/bin` to your `PATH` (if not already present)
+- Configure your shell profile (`~/.zshrc` or `~/.bashrc`) to initialize Sherpa
 
 ### Manual
 
@@ -136,40 +124,33 @@ See the full list of commands by running `$ sherpa` in your shell.
 
 ### Security
 
-Sherpa won't load any env file unless you trust them first.\
-This is to prevent running malicious code when you `cd` into a directory.
+Sherpa won't load any env file unless you trust it first (`$ sherpa trust`).\
+This is to prevent running unknown code when you `cd` into a directory.
 
-```sh
-$ echo "alias rs=rspec" > ~/projects/project_awesome/.envrc
-$ cd ~/projects/project_awesome
-Sherpa: The env file is not trusted. Run `sherpa trust` to mark it as trusted.
-$ rs
-command not found: rs
-$ sherpa trust
-Sherpa: Trusted!
-$ rs
-# rspec starts
-```
-
-When an env file changes you have to trust it again.
-
-Use `sherpa edit`. It opens the env file in your default editor then trusts it
-automatically when you close it.
+When an env file changes you have to trust it again unless you edited it
+with `$ sherpa edit` which trusts and reloads the env file after you close it
+in your editor.
 
 You can untrust an env file with `sherpa untrust`.
 
-### Command palette for the local env (experimental)
+### Command palette with fuzzy finder for the local env (experimental)
 
-List and run any commands (aliases, functions) loaded by Sherpa.
+`$ sherpa palette`
 
-`sherpa palette` opens fzf (fuzzy finder) with the aliases, functions and variables loaded by Sherpa.\
-You can preview the content of variables and the definition of aliases and functions.\
-You can paste the selected item into your prompt by pressing Enter.
+![demo](https://github.com/user-attachments/assets/3e398ec5-cf77-460e-83ee-3af5036f4c72)
+
+It requires [fzf](https://github.com/junegunn/fzf?tab=readme-ov-file#installation).
+
+Offers a list of available commands and variables in the current env.\
+Select a command hit enter then hit enter again to run it.
 
 The list can be less accurate if the dynamic env file parsing is not enabled.
 Enable it by setting the `SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING` environment variable to `true`.
 
-Bind it to Ctrl + e:
+#### Bind it to Shift + Command + P:
+
+Make sure your terminal sends the same escape sequence (`^[[114;9u`)
+as you use to bind the palette command.
 
 ```sh
 # Zsh (~/.zshrc)
@@ -178,57 +159,34 @@ __sherpa_palette() {
 }
 
 zle -N __sherpa_palette
-bindkey "^e" __sherpa_palette # Ctrl + e
+bindkey "^[[114;9u" __sherpa_palette
+# For tmux: bindkey "^[r" __sherpa_palette
 
 # Bash (~/.bashrc)
 __sherpa_palette() {
   sherpa palette
 }
 
-bind -x '"\C-e":__sherpa_palette' # Ctrl + e
+bind -x '"\e[114;9u":__sherpa_palette'
 ```
-
-### Loading envs from parent directories automatically
-
-It is not supported currently. Feel free to open a feature request.
 
 ### Env loading and unloading
 
+- Sherpa loads the env from a `.envrc` file when you `cd` into a directory
+  - It overrides the existing aliases, functions and variables
+- Sherpa unloads the env when you leave a directory
+  - It removes the newly added aliases, functions and variables
+  - It restores the overridden items to their previous state
+  - Going into a subdirectory does not unload the env of the parent directory
 - Sherpa supports nested envs
-  - It unloads the envs in the correct order when leaving a directory to restore
-    the overridden items.
-  - Subfolders can override the items defined in the parent folders.
-- Sherpa does not unload the loaded envs when you `cd` into a subdirectory.
-- Experimental feature: Non exported variables and dynamically created entities
-  are unloaded only if the `SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING` environment
-  variable is set to `true`.
 
-#### Demo
+### Dynamic env loading and unloading (experimental)
 
-```sh
-# Given the following directory structure with the corresponding env files
-# ~/projects/.envrc
-# ~/projects/project_awesome/.envrc
-# ~/projects/project_awesome/subdir
+Non exported variables and dynamically created entities are unloaded only if the
+`SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING` environment variable is set to `true`.
 
-$ cd ~/projects/
-# Sherpa loads the env for projects
-# Items defined in this folder override the items defined in the global env
-$ cd project_awesome
-# Sherpa does not unload the previous env
-# Sherpa loads the env for project_awesome
-# Items defined in this folder override the items defined in previous envs
-$ cd subdir
-# Sherpa does not unload the previous envs
-$ cd ..
-# Sherpa does not reload the env for project_awesome
-$ cd ..
-# Sherpa unloads the env for project_awesome and restores the env for projects
-# This rolls back the overrides made by the env of project_awesome
-$ cd ..
-# Sherpa unloads the env for projects and restores the global env
-# This rolls back the overrides made by the env of projects
-```
+This can slow down `cd` because Sherpa executes the env file in a subshell
+three times when you `cd` into a directory.
 
 ### Aliases and functions in the env file taking precedence
 
@@ -237,15 +195,18 @@ will override the alias automatically. No need to call `unalias`.\
 The same applies to declaring aliases in the env
 file with the same name as existing functions.
 
+### Loading envs from parent directories automatically
+
+This is not supported currently. Feel free to open a feature request.
+
 ### Running a script when leaving a directory
 
-It is not supported currently. Feel free to open a feature request.\
+This is not supported currently. Feel free to open a feature request.\
 Alternatively, you can use: https://github.com/hyperupcall/autoenv
 
 ## Configuration
 
-Set the following environment variable anywhere to instruct Sherpa on how
-to operate.
+Set these environment variables to configure Sherpa's behavior:
 
 ```sh
 export SHERPA_ENV_FILENAME='.env' # Default: .envrc
@@ -299,7 +260,7 @@ alias rs='bin/rspec'
 
 With this config `RSpec` will run depending on in which directory you `cd` into.
 
-### Run the tests using the same shortcut in different projects
+### Run tests using the same shortcut across different projects
 
 ```sh
 # ~/projects/project_ruby_with_docker/.envrc
@@ -308,7 +269,7 @@ alias t='docker exec -it project-awesome-api rspec'
 # ~/projects/project_elixir/.envrc
 alias t='mix test'
 
-# ~/projects/project_js_with_jest/.envrc
+# ~/projects/project_js/.envrc
 alias t='yarn test'
 ```
 
@@ -337,8 +298,9 @@ alias up='bin/rails s'
 ## Troubleshooting
 
 ```sh
-$ sherpa diagnose
 $ sherpa status
+$ sherpa debug
+$ sherpa diagnose
 ```
 
 ## Local development
@@ -346,6 +308,8 @@ $ sherpa status
 ### Testing
 
 All *_test.sh files are run recursively from the tests directory.
+
+Replace `$ make test` with `$ make test_zsh` or `$ make test_bash` to run the tests for a specific shell.
 
 ```sh
 # Run all the tests for all the supported shells
@@ -356,24 +320,6 @@ $ make test tests/features/edit_test.sh
 
 # Run all the tests from a folder for all the supported shells
 $ make test tests/features
-
-# Run all the tests for Zsh
-$ make test_zs
-
-# Run a single test for Zsh
-$ make test_zs tests/features/edit_test.sh
-
-# Run all the tests from a folder for Zsh
-$ make test_zs tests/features
-
-# Run all the tests for Bash
-$ make test_bash
-
-# Run a single test for Bash
-$ make test_bash tests/features/edit_test.sh
-
-# Run all the tests from a folder for Bash
-$ make test_bash tests/features
 
 # Run all the tests for all the supported shells in Ubuntu
 $ make test_all_in_ubuntu

@@ -39,4 +39,4 @@ fi
 echo "eval \"\$(local_sherpa_init)\"" >> "$SHELL_CONFIG"
 echo "==> Added \`eval \"\$(local_sherpa_init)\"\` to $SHELL_CONFIG"
 
-echo -e "==> \e[32mDone\e[0m (Don't forget to restart your shell session)"
+echo -e "==> \e[32mDone\e[0m (Don't forget to restart your shell)"
