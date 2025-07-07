@@ -1,3 +1,6 @@
+set -e          # Exit immediately if any command fails
+set -o pipefail # Exit if any command in a pipeline fails
+
 HOME_LOCAL_DIR="$HOME/.local"
 
 # Check if version argument is provided, otherwise get latest from GitHub
