@@ -1,4 +1,4 @@
-echo "============ Homebrew installation (first time) ============ "
+echo "============ Homebrew installation ============"
 
 (cd /app && make dist)
 

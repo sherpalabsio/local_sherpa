@@ -1,4 +1,4 @@
-echo "============ Homebrew installation (first time) ============ "
+echo "============ Homebrew installation ============"
 
 brew install sherpalabsio/sherpalabsio/local_sherpa
 

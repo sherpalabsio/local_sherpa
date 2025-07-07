@@ -1,0 +1,29 @@
+echo "============ Update via Homebrew ============"
+
+# Install a previous version
+brew tap sherpalabsio/sherpalabsio
+cd $(brew --repository)/Library/Taps/sherpalabsio/homebrew-sherpalabsio
+git checkout 7e3138af71aa577772d9df9945d4d4e42da95b83
+
+brew install sherpalabsio/sherpalabsio/local_sherpa
+
+git checkout main
+
+echo 'eval "$(local_sherpa_init)"' >> ~/.bashrc
+source ~/.bashrc
+
+sherpa diagnose > /dev/null || {
+  echo "Installation failed. sherpa diagnose returned an error."
+  exit 1
+}
+
+current_version=$(sherpa --version)
+
+# sherpa update
+
+# updated_version=$(sherpa --version)
+
+# if [ "$current_version" == "$updated_version" ]; then
+#   echo "failed: current version ($current_version) is the same as updated version ($updated_version)."
+#   exit 1
+# fi

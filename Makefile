@@ -12,6 +12,7 @@ help:
 	@echo "release_override                  - override the existing release, tag it, and push to GitHub"
 	@echo "test_install_local_build          - create a fresh build and install it locally via Homebrew"
 	@echo "test_install_online               - test installing the last release via Homebrew and GitHub"
+	@echo "test_update_version               - test upgrading to the latest version"
 
 .PHONY: lint
 lint:
@@ -48,6 +49,10 @@ test_install_local_build:
 .PHONY: test_install_online
 test_install_online:
 	./tests/install/online/test_runner
+
+.PHONY: test_update_version
+test_update_version:
+	./tests/install/update/test_runner
 
 .PHONY: dist
 dist:
