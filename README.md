@@ -79,11 +79,6 @@ For more details see the [Features](#features) section.
 - Ubuntu 22.04
 - Ubuntu 24.04
 
-## Good to know
-
-When Sherpa loads the env, it sources the env file meaning its whole content
-is executed in the current shell.
-
 ## Installation
 
 ### Homebrew
@@ -173,12 +168,14 @@ bind -x '"\e[114;9u":__sherpa_palette'
 ### Env loading and unloading
 
 - Sherpa loads the env from a `.envrc` file when you `cd` into a directory
+  - It sources the env file meaning its whole content is executed in the current shell
   - It overrides the existing aliases, functions and variables
 - Sherpa unloads the env when you leave a directory
   - It removes the newly added aliases, functions and variables
   - It restores the overridden items to their previous state
   - Going into a subdirectory does not unload the env of the parent directory
-- Sherpa supports nested envs
+- Sherpa partially supports nested envs
+  - Loading parent envs is not supported you have to `cd` into the parent directory first
 
 ### Dynamic env loading and unloading (experimental)
 
@@ -240,25 +237,6 @@ Sherpa: Env is loaded. Sherpa is ready for action.
 ```
 
 ## Cookbook
-
-### Run RSpec in a container or else
-
-```sh
-# Run RSpec in the `project-awesome-api` Docker container
-
-# ~/projects/project_awesome_api/.envrc
-alias de='docker exec -it project-awesome-api'
-alias rs='de rspec'
-```
-
-```sh
-# Run RSpec on the host machine
-
-# ~/projects/project_for_mortals/.envrc
-alias rs='bin/rspec'
-```
-
-With this config `RSpec` will run depending on in which directory you `cd` into.
 
 ### Run tests using the same shortcut across different projects
 
