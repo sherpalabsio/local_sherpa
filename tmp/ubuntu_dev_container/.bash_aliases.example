@@ -1,0 +1,8 @@
+alias s=sherpa
+alias rel="source ~/.bashrc"
+
+__sherpa_palette() {
+  sherpa palette
+}
+
+bind -x '"\e[114;9u":__sherpa_palette'

@@ -1,10 +1,23 @@
 services:
-  ubuntu:
-    hostname: ubuntu
+  ubuntu_dev:
+    hostname: ubuntu_dev
     build:
       context: .
-      dockerfile: dockerfiles/ubuntu.dockerfile
-    container_name: local_sherpa_ubuntu
+      dockerfile: dockerfiles/ubuntu_dev.dockerfile
+    container_name: local_sherpa_ubuntu_dev
+    volumes:
+      - .:/app
+      - ./tmp/ubuntu_dev_container/.zsh_aliases:/root/.zsh_aliases
+      - ./tmp/ubuntu_dev_container/.bash_aliases:/root/.bash_aliases
+    stdin_open: true
+    tty: true
+
+  ubuntu_test:
+    hostname: ubuntu_test
+    build:
+      context: .
+      dockerfile: dockerfiles/ubuntu_test.dockerfile
+    container_name: local_sherpa_ubuntu_test
     volumes:
       - .:/app
     stdin_open: true

@@ -1,0 +1,9 @@
+alias s=sherpa
+alias rel="source ~/.zshrc"
+
+__sherpa_palette() {
+  sherpa palette
+}
+
+zle -N __sherpa_palette
+bindkey "^[[114;9u" __sherpa_palette # cmd + r
