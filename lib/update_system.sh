@@ -1,5 +1,5 @@
 _sherpa_update_system() {
-  if [[ "$SHERPA_DIR" == *"/homebrew/"* ]]; then
+  if [[ "$SHERPA_DIR" == *"/Cellar/"* ]]; then
     _sherpa_update_system::homebrew
   else
     _sherpa_update_system::manual
