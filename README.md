@@ -113,6 +113,10 @@ Exclude the env files (.envrc) globally so you won't commit them by mistake.
 echo ".envrc" >> $(git config --global core.excludesfile)
 ```
 
+## Upgrading to the latest version
+
+`$ sherpa update`
+
 ## Features
 
 See the full list of commands by running `$ sherpa` in your shell.

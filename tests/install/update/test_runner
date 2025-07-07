@@ -2,25 +2,23 @@
 
 set -e
 
-# UBUNTU_CONTAINER_NAME="local_sherpa_ubuntu_install"
+UBUNTU_CONTAINER_NAME="local_sherpa_ubuntu_install"
 HOMEBREW_CONTAINER_NAME="local_sherpa_homebrew_install"
 
 # shellcheck disable=SC2317
 cleanup() {
-  # docker-compose down ubuntu_install
-  docker-compose down homebrew_install
-  # docker-compose down ubuntu_install homebrew_install
+  docker-compose down ubuntu_install homebrew_install
 }
 
 trap cleanup EXIT
 
 TESTS_FAILED=0
 
-# docker-compose up -d ubuntu_install
-# docker exec -it $UBUNTU_CONTAINER_NAME bash -i ./tests/install/online/automated || TESTS_FAILED=1
+docker-compose up -d ubuntu_install
+docker exec -it $UBUNTU_CONTAINER_NAME bash -i ./tests/install/update/automated || TESTS_FAILED=1
 
 docker-compose up -d homebrew_install
-docker exec -it $HOMEBREW_CONTAINER_NAME bash -i /app/tests/install/online/homebrew || TESTS_FAILED=1
+docker exec -it $HOMEBREW_CONTAINER_NAME bash -i /app/tests/install/update/homebrew || TESTS_FAILED=1
 
 if [ "$TESTS_FAILED" -eq 0 ]; then
   echo -e "\033[32mWorks!\033[0m"
