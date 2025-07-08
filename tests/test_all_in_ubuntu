@@ -3,12 +3,10 @@
 set -e
 
 DOCKER_CONTAINER_NAME="local_sherpa_test"
-EXIT_CODE=0
 
 # Start the container if it's not running
 if ! docker ps | grep -q $DOCKER_CONTAINER_NAME; then
-  docker-compose up -d
-  CONTAINER_STARTED_BY_THIS_SCRIPT=true
+  docker-compose up -d test
 fi
 
 DOCKER_EXEC="docker exec -it $DOCKER_CONTAINER_NAME"
@@ -26,14 +24,8 @@ echo ""
 
 if $TESTS_PASSED; then
   echo -e "\033[32mTest suite passed successfully!\033[0m"
+  exit 0
 else
   echo -e "\033[31mTest suite failed.\033[0m"
-  EXIT_CODE=1
+  exit 1
 fi
-
-# Stop the container if we started it
-if [ "$CONTAINER_STARTED_BY_THIS_SCRIPT" = true ]; then
-  docker-compose down
-fi
-
-exit $EXIT_CODE
