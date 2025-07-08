@@ -6,14 +6,14 @@ CONTAINER_NAME_HOMEBREW="local_sherpa_install_homebrew"
 
 # shellcheck disable=SC2317
 cleanup() {
-  docker-compose down install_homebrew
+  docker compose down install_homebrew
 }
 
 trap cleanup EXIT
 
 TESTS_FAILED=0
 
-docker-compose up -d install_homebrew
+docker compose up -d install_homebrew
 docker exec -it $CONTAINER_NAME_HOMEBREW bash -i /app/tests/install/local_build/homebrew || TESTS_FAILED=1
 
 if [ "$TESTS_FAILED" -eq 0 ]; then

@@ -7,7 +7,7 @@ EXIT_CODE=0
 
 # Start the container if it's not running
 if ! docker ps | grep -q $DOCKER_CONTAINER_NAME; then
-  docker-compose up -d
+  docker compose up -d
   CONTAINER_STARTED_BY_THIS_SCRIPT=true
 fi
 
@@ -33,7 +33,7 @@ fi
 
 # Stop the container if we started it
 if [ "$CONTAINER_STARTED_BY_THIS_SCRIPT" = true ]; then
-  docker-compose down
+  docker compose down
 fi
 
 exit $EXIT_CODE

@@ -269,9 +269,9 @@ alias rc_prod='ssh -i /path/key-pair-name.pem user@hostname "/var/app/current/bi
 
 ```sh
 # ~/projects/project_with_docker/.envrc
-alias up='docker-compose up -d'
-alias upb='docker-compose up --build -d'
-alias down='docker-compose down'
+alias up='docker compose up -d'
+alias upb='docker compose up --build -d'
+alias down='docker compose down'
 
 # ~/projects/project_basic/.envrc
 alias up='bin/rails s'

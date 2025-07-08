@@ -6,7 +6,7 @@ DOCKER_CONTAINER_NAME="local_sherpa_test"
 
 # Start the container if it's not running
 if ! docker ps | grep -q $DOCKER_CONTAINER_NAME; then
-  docker-compose up -d test
+  docker compose up -d test
 fi
 
 DOCKER_EXEC="docker exec -it $DOCKER_CONTAINER_NAME"
