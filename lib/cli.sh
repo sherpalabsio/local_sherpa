@@ -42,7 +42,7 @@ Created by \e]8;;https://github.com/SherpaLabsIO\e\\Peter Toth @ SherpaLabsIO\e]
                           symlink | link | slink) _sherpa_cli_symlink "$2" ;;
                                             dump) _sherpa_cli_dump_current_env ;;
                                       r | reload) _sherpa_cli_reload ;;
-                                    : |  palette) _sherpa_cli_command_palette ;;
+                                     : | palette) _sherpa_command_palette ;;
                                            prune) _sherpa_prune_permission_files ;;
                                           update) _sherpa_update_system ;;
                                            debug) _sherpa_print_debug_info ;;
@@ -169,30 +169,6 @@ _sherpa_cli_dump_current_env() {
 
 _sherpa_cli_reload() {
   _sherpa_unload_env_of_current_dir && _sherpa_load_env_for_current_dir
-}
-
-_sherpa_cli_command_palette() {
-  if [ ${#SHERPA_LOADED_ENV_DIRS[@]} -eq 0 ]; then
-     echo "There is no local env file"
-    return 1
-  fi
-
-  # Warn the user if fzf is not installed
-  if ! command -v fzf > /dev/null; then
-    _sherpa_log_error "fzf is not installed. Please install it to use this feature."
-    return 1
-  fi
-
-  local -r fzf_major_version=$(fzf --version | awk -F. '{print $1}')
-  local -r fzf_minor_version=$(fzf --version | awk -F. '{print $2}')
-
-  # Warn the user if fzf version is not supported
-  if [[ "$fzf_major_version" -eq 0 && "$fzf_minor_version" -lt 42 ]]; then
-    _sherpa_log_error "fzf version is less than 0.42.0. Please upgrade it to use this feature."
-    return 1
-  fi
-
-  _sherpa_command_palette
 }
 
 _sherpa_cli_support() {

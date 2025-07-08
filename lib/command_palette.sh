@@ -1,6 +1,8 @@
 __SHERPA_COMMAND_PALETTE_TMP_DIR="/tmp/local_sherpa_command_palette"
 
 _sherpa_command_palette() {
+  __sherpa_command_palette__check_preconditions || return 0
+
   local selected
   selected=$(
     __sherpa_command_palette__load_env_items |
@@ -35,6 +37,38 @@ _sherpa_command_palette() {
       read -re -p "${PS1@P}" -i "$selected" cmd
       eval "$cmd"
     fi
+  fi
+}
+
+__sherpa_command_palette__check_preconditions() {
+  __safe_echo() {
+    # Called from a Zsh keybinding?
+    if [ -n "$ZSH_VERSION" ] && zle; then
+      zle reset-prompt
+      echo
+    fi
+
+    echo "Sherpa: $1"
+  }
+
+  if [ ${#SHERPA_LOADED_ENV_DIRS[@]} -eq 0 ]; then
+    __safe_echo "There is no loaded env"
+    return 1
+  fi
+
+  # Warn the user if fzf is not installed
+  if ! command -v fzf > /dev/null; then
+    __safe_echo "Please install fzf to use this feature"
+    return 1
+  fi
+
+  local -r fzf_major_version=$(fzf --version | awk -F. '{print $1}')
+  local -r fzf_minor_version=$(fzf --version | awk -F. '{print $2}')
+
+  # Warn the user if fzf version is not supported
+  if [[ "$fzf_major_version" -eq 0 && "$fzf_minor_version" -lt 42 ]]; then
+    __safe_echo "The minimum fzf version is 0.42.0. Please upgrade it to use this feature."
+    return 1
   fi
 }
 
