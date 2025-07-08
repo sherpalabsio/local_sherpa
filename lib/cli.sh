@@ -172,8 +172,8 @@ _sherpa_cli_reload() {
 }
 
 _sherpa_cli_command_palette() {
-  if [ ! -f "$SHERPA_ENV_FILENAME" ]; then
-    echo "There is no local env file"
+  if [ ${#SHERPA_LOADED_ENV_DIRS[@]} -eq 0 ]; then
+     echo "There is no local env file"
     return 1
   fi
 
