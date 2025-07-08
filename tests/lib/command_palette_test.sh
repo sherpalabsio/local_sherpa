@@ -1,6 +1,34 @@
 source tests/support/app_helper.sh
 
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+#                 __sherpa_command_palette__check_preconditions
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
+
+# ==============================================================================
+# xxxx When we need a more modern version of fzf
+# ++++ It warns the user
+
+touch .envrc
+# _sherpa_trust_dir
+sherpa trust
+
+# Stub fzf
+fzf() {
+  local -r first_param="$1"
+
+  if [[ "$first_param" == "--version" ]]; then
+    echo "0.41 (devel)"
+  fi
+}
+
+actual_warning=$(__sherpa_command_palette__check_preconditions)
+expected_warning="The minimum fzf version is 0.42.0."
+
+assert_contain "$actual_warning" "$expected_warning"
+
+rm -f .envrc
+
+# 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 #                    __sherpa_command_palette__load_env_items
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 

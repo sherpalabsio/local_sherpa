@@ -62,8 +62,9 @@ __sherpa_command_palette__check_preconditions() {
     return 1
   fi
 
-  local -r fzf_major_version=$(fzf --version | awk -F. '{print $1}')
-  local -r fzf_minor_version=$(fzf --version | awk -F. '{print $2}')
+  local -r fzf_version=$(fzf --version | cut -d' ' -f1)
+  local -r fzf_major_version=$(echo "$fzf_version" | cut -d. -f1)
+  local -r fzf_minor_version=$(echo "$fzf_version" | cut -d. -f2)
 
   # Warn the user if fzf version is not supported
   if [[ "$fzf_major_version" -eq 0 && "$fzf_minor_version" -lt 42 ]]; then
