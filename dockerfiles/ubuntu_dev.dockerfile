@@ -2,7 +2,12 @@ FROM ubuntu:22.04
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    zsh
+    zsh \
+    curl \
+    ca-certificates \
+    tar
+
+RUN curl -L https://github.com/junegunn/fzf/releases/download/0.42.0/fzf-0.42.0-linux_arm64.tar.gz | tar -xz -C /usr/local/bin/
 
 WORKDIR /app
 COPY . .
