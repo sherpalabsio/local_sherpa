@@ -23,21 +23,21 @@ services:
     stdin_open: true
     tty: true
 
-  ubuntu_install:
-    hostname: ubuntu_install
+  install_script:
+    hostname: install_script
     build:
       context: .
-      dockerfile: dockerfiles/ubuntu_install.dockerfile
-    container_name: local_sherpa_ubuntu_install
+      dockerfile: dockerfiles/install.dockerfile
+    container_name: local_sherpa_install_script
     volumes:
       - .:/app
     stdin_open: true
     tty: true
 
-  homebrew_install:
+  install_homebrew:
     image: homebrew/brew
-    hostname: homebrew_install
-    container_name: local_sherpa_homebrew_install
+    hostname: install_homebrew
+    container_name: local_sherpa_install_homebrew
     volumes:
       - .:/app
       - ./tmp/homebrew:/homebrew
@@ -48,12 +48,12 @@ services:
     stdin_open: true
     tty: true
 
-  min_shell_versions_ubuntu:
-    hostname: min_shell_versions_ubuntu
+  ubuntu_min_shell_versions:
+    hostname: ubuntu_min_shell_versions
     build:
       context: .
-      dockerfile: dockerfiles/min_shell_versions_ubuntu.dockerfile
-    container_name: local_sherpa_min_shell_versions_ubuntu
+      dockerfile: dockerfiles/ubuntu_min_shell_versions.dockerfile
+    container_name: local_sherpa_ubuntu_min_shell_versions
     volumes:
       - .:/app
     stdin_open: true

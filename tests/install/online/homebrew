@@ -1,4 +1,4 @@
-echo "============ Homebrew installation ============"
+echo "============ Installation / Online / Homebrew ============"
 
 brew install sherpalabsio/sherpalabsio/local_sherpa
 

@@ -1,4 +1,4 @@
-echo "============ Update via Homebrew ============"
+echo "============ Update / Homebrew ============"
 
 # Install a previous version (v0.1.1)
 brew tap sherpalabsio/sherpalabsio

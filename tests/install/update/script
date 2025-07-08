@@ -1,4 +1,4 @@
-echo "============ Update via Script ============"
+echo "============ Update / Script ============"
 
 # Install a previous version (v0.1.1)
 bash scripts/install.sh 0.1.1

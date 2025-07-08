@@ -1,4 +1,4 @@
-echo "============ Homebrew installation ============"
+echo "============ Installation / Local build / Homebrew ============"
 
 (cd /app && make dist)
 
