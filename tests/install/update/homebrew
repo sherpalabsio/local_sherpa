@@ -1,9 +1,9 @@
 echo "============ Update / Homebrew ============"
 
-# Install a previous version (v0.1.1)
+# Install a previous version (v0.2.0)
 brew tap sherpalabsio/sherpalabsio
 cd $(brew --repository)/Library/Taps/sherpalabsio/homebrew-sherpalabsio
-git checkout db01e2ed2a358f98ac1df4014fd79b09dc1dc4ff
+git checkout 2725c09960d377c401f86ef6e7ec880c64958277
 
 brew install sherpalabsio/sherpalabsio/local_sherpa
 
@@ -16,6 +16,7 @@ sherpa diagnose > /dev/null || {
   exit 1
 }
 
+export HOMEBREW_NO_INSTALL_CLEANUP=1
 current_version=$(sherpa --version)
 
 sherpa update
