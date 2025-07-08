@@ -14,7 +14,7 @@ alias tua="tu && tum"                              # Test Ubuntu all
 
 alias tp="make test_performance" # Test performance
 
-alias de_min="docker exec -it local_sherpa_ubuntu_min_shell_versions" # Docker exec for min shell versions
+alias de_min="docker exec -it local_sherpa_min_shell_versions" # Docker exec for min shell versions
 alias con_min="de_min /bin/bash"
 
 alias lint="make lint" # ShellCheck

@@ -1,23 +1,23 @@
 services:
-  ubuntu_dev:
-    hostname: ubuntu_dev
+  dev:
+    hostname: dev
     build:
       context: .
-      dockerfile: dockerfiles/ubuntu_dev.dockerfile
-    container_name: local_sherpa_ubuntu_dev
+      dockerfile: dockerfiles/dev.dockerfile
+    container_name: local_sherpa_dev
     volumes:
       - .:/app
-      - ./tmp/ubuntu_dev_container/.zsh_aliases:/root/.zsh_aliases
-      - ./tmp/ubuntu_dev_container/.bash_aliases:/root/.bash_aliases
+      - ./tmp/dev_container/.zsh_aliases:/root/.zsh_aliases
+      - ./tmp/dev_container/.bash_aliases:/root/.bash_aliases
     stdin_open: true
     tty: true
 
-  ubuntu_test:
-    hostname: ubuntu_test
+  test:
+    hostname: test
     build:
       context: .
-      dockerfile: dockerfiles/ubuntu_test.dockerfile
-    container_name: local_sherpa_ubuntu_test
+      dockerfile: dockerfiles/test.dockerfile
+    container_name: local_sherpa_test
     volumes:
       - .:/app
     stdin_open: true
@@ -48,12 +48,12 @@ services:
     stdin_open: true
     tty: true
 
-  ubuntu_min_shell_versions:
-    hostname: ubuntu_min_shell_versions
+  min_shell_versions:
+    hostname: min_shell_versions
     build:
       context: .
-      dockerfile: dockerfiles/ubuntu_min_shell_versions.dockerfile
-    container_name: local_sherpa_ubuntu_min_shell_versions
+      dockerfile: dockerfiles/min_shell_versions.dockerfile
+    container_name: local_sherpa_min_shell_versions
     volumes:
       - .:/app
     stdin_open: true
