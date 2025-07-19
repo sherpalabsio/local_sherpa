@@ -275,7 +275,29 @@ Sherpa: Env is loaded. Sherpa is ready for action.
 
 ## Cookbook
 
-### Run tests using the same shortcut across different projects
+Same shortcut different behavior based on the current directory.
+
+### Start your dev environment
+
+```sh
+# ~/projects/rails_project_with_docker/.envrc
+dev() {
+  docker_compose_up # Start the Docker daemon and the containers if needed
+
+  __run_bundle_install # Install Ruby dependencies if needed
+  __run_rails_db_migrate # Apply database schema changes if needed
+  __run_yarn_install # Install JavaScript dependencies if needed
+
+  __stop_stuck_rails_server # Stop any running Rails server if they didn't stop earlier
+
+  bin/rails s
+}
+
+# ~/projects/elixir_phoenix_project/.envrc
+alias dev='mix phx.server'
+```
+
+### Run tests
 
 ```sh
 # ~/projects/project_ruby_with_docker/.envrc
@@ -288,7 +310,7 @@ alias t='mix test'
 alias t='yarn test'
 ```
 
-### Rails console in production 🤫
+### Spin up a Rails console in production
 
 ```sh
 # ~/projects/project_with_heroku/.envrc
@@ -296,18 +318,6 @@ alias rc_prod='heroku run rails c -a APP_NAME'
 
 # ~/projects/project_with_aws/.envrc
 alias rc_prod='ssh -i /path/key-pair-name.pem user@hostname "/var/app/current/bin/rails console"'
-```
-
-### Start your dev environment
-
-```sh
-# ~/projects/project_with_docker/.envrc
-alias up='docker compose up -d'
-alias upb='docker compose up --build -d'
-alias down='docker compose down'
-
-# ~/projects/project_basic/.envrc
-alias up='bin/rails s'
 ```
 
 ## Troubleshooting
