@@ -95,6 +95,23 @@ assert_not_contain() {
   exit 1
 }
 
+# Check if a variable, a function or an alias is defined
+assert_defined() {
+  local -r item="$1"
+  local -r message="$2"
+
+  if __is_defined "$item"; then
+    __print_ok "$message"
+    return
+  fi
+
+  __print_not_ok "$message"
+  echo "  Failure: $item is undefined when it should be defined"
+  __report_failure
+
+  exit 1
+}
+
 # Check if a variable, a function or an alias is undefined
 assert_undefined() {
   local -r item="$1"

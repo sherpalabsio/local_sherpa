@@ -196,6 +196,39 @@ will override the alias automatically. No need to call `unalias`.\
 The same applies to declaring aliases in the env
 file with the same name as existing functions.
 
+### Inheriting functions (experimental)
+
+This is an unreleased feature available only in the `main` branch.
+
+You can call the parent functions from overridden functions using `super`.
+
+#### Example:
+
+```sh
+# ~/.zshrc or ~/.bashrc
+function_name() {
+  local param1="$1"
+  echo "Original function with param: $param1"
+}
+
+# ~/projects/project_elixir/.envrc
+function_name() {
+  super "$@"
+  echo "Overridden function"
+}
+
+cd ~
+function_name 1
+# Prints:
+# Original function with param: 1
+
+cd ~/projects/project_elixir
+function_name 1
+# Prints:
+# Original function with param: 1
+# Overridden function
+```
+
 ### Loading envs from parent directories automatically
 
 This is not supported currently. Feel free to open a feature request.

@@ -2,6 +2,20 @@
 #                           Stash and unstash functions
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 
+# Call the parent function when overriding a function
+super() {
+  if [ -n "$ZSH_VERSION" ]; then
+    # shellcheck disable=SC2154
+    local -r current_function_name=${funcstack[2]}
+  else
+    local -r current_function_name=${FUNCNAME[1]}
+  fi
+
+  local -r super_function_name="__super_${current_function_name}"
+
+  "$super_function_name" "$@"
+}
+
 sherpa::env_stash.stash_functions() {
   local -r dir_path="$1"
   shift
@@ -15,6 +29,7 @@ sherpa::env_stash.stash_functions() {
 
   for function_name in "${function_names[@]}"; do
     if type "$function_name" &> /dev/null; then
+      sherpa::env_stash._create_super_function_for "$function_name" "$variable_name_for_functions_to_remove"
       sherpa::env_stash._stash_existing_function "$function_name" "$variable_name_for_functions_to_restore"
     else
       sherpa::env_stash._stash_non_existing_function "$function_name" "$variable_name_for_functions_to_remove"
@@ -22,6 +37,21 @@ sherpa::env_stash.stash_functions() {
 
     sherpa::env_stash._remove_alias_if_shadowing_function "$function_name"
   done
+}
+
+sherpa::env_stash._create_super_function_for() {
+  local -r function_name="$1"
+  local -r super_function_name="__super_${function_name}"
+
+  if [ -n "$ZSH_VERSION" ]; then
+    # shellcheck disable=SC2034,SC2004
+    functions[$super_function_name]=${functions[$function_name]}
+  else
+    # eval "$(declare -f "$function_name" | sed "s/^${function_name}()/${super_function_name}()/")"
+    eval "$(declare -f "$function_name" | sed "1s/$function_name/$super_function_name/")"
+  fi
+
+  sherpa::env_stash._stash_non_existing_function "$super_function_name" "$variable_name_for_functions_to_remove"
 }
 
 sherpa::env_stash._stash_existing_function() {
