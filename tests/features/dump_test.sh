@@ -20,8 +20,7 @@ function_name() {
 }
 EOF
 
-expected_env_file=$(
-                    cat << EOF
+expected_env_file=$(cat << EOF
 alias alias_name="command"
 
 function_name() {
