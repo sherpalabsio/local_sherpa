@@ -1,18 +1,18 @@
 .PHONY: help
 help:
-	@echo "lint                              - run linters and code format checkers"
-	@echo "test                              - run all the tests for all the supported shells"
-	@echo "test_zsh                          - run all the tests for Zsh"
-	@echo "test_bash                         - run all the tests for Bash"
-	@echo "test_all_in_ubuntu                - run all the tests for all the supported shells in Ubuntu"
-	@echo "test_min_shell_versions_in_ubuntu - run all test for the all minimum supported shell versions in Ubuntu"
-	@echo "test_performance                  - run a benchmark test for all the supported shells"
-	@echo "dist                              - package the project into a tarball"
-	@echo "release                           - create a new release, tag it, and push to GitHub"
-	@echo "release_override                  - override the existing release, tag it, and push to GitHub"
-	@echo "test_install_local_build          - create a fresh build and install it locally via Homebrew"
-	@echo "test_install_online               - test installing the last release via Homebrew and GitHub"
-	@echo "test_update_version               - test upgrading to the latest version"
+	@echo "lint                    - run linters and code format checkers"
+	@echo "test                    - run all the tests for all the supported shells"
+	@echo "test_zsh                - run all the tests for Zsh"
+	@echo "test_bash               - run all the tests for Bash"
+	@echo "test_all_in_ubuntu      - run all the tests for all the supported shells in Ubuntu"
+	@echo "test_min_shell_versions - run all test for the all minimum supported shell versions in Ubuntu"
+	@echo "test_performance        - run a benchmark test for all the supported shells"
+	@echo "test_install_local      - create a fresh build and install it locally via Homebrew"
+	@echo "test_install_online     - test installing the last release via Homebrew and GitHub"
+	@echo "test_update_version     - test upgrading to the latest version"
+	@echo "dist                    - package the project into a tarball"
+	@echo "release                 - create a new release, tag it, and push to GitHub"
+	@echo "release_override        - override the existing release, tag it, and push to GitHub"
 
 .PHONY: lint
 lint:
@@ -34,16 +34,16 @@ test_bash:
 test_all_in_ubuntu:
 	./tests/test_all_in_ubuntu $(filter-out $@,$(MAKECMDGOALS))
 
-.PHONY: test_min_shell_versions_in_ubuntu
-test_min_shell_versions_in_ubuntu:
-	./tests/test_min_shell_versions_in_ubuntu $(filter-out $@,$(MAKECMDGOALS))
+.PHONY: test_min_shell_versions
+test_min_shell_versions:
+	./tests/test_min_shell_versions $(filter-out $@,$(MAKECMDGOALS))
 
 .PHONY: test_performance
 test_performance:
 	./tests/performance/harness $(filter-out $@,$(MAKECMDGOALS))
 
-.PHONY: test_install_local_build
-test_install_local_build:
+.PHONY: test_install_local
+test_install_local:
 	./tests/install/local_build/test_runner
 
 .PHONY: test_install_online
