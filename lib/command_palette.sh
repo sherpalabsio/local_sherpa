@@ -13,7 +13,8 @@ _sherpa_command_palette() {
           --padding=1 \
           --cycle \
           --preview 'cat /tmp/local_sherpa_command_palette/{}' \
-          --preview-window wrap
+          --preview-window wrap \
+          --border-label=" Sherpa Command Palette "
   )
 
   rm -rf "$__SHERPA_COMMAND_PALETTE_TMP_DIR"
