@@ -330,6 +330,9 @@ $ sherpa diagnose
 
 ## Local development
 
+Run `$ make` to see the available commands.\
+There are a few docker containers to support the local development.
+
 ### Testing
 
 All *_test.sh files are run recursively from the tests directory.
@@ -349,12 +352,8 @@ $ make test tests/features
 # Run all the tests for all the supported shells in Ubuntu
 $ make test_all_in_ubuntu
 
-# Run a single test for all the supported shells in Ubuntu
-$ make test_all_in_ubuntu tests/features/edit_test.sh
-
-# Test the performance for all the supported shells
-# It is not a real test, it is more like a benchmark
-$ make test_performance
+# Run all the tests for all the supported shells in Ubuntu
+$ make test_all_in_ubuntu
 ```
 
 ### Linting
