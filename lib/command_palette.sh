@@ -12,7 +12,7 @@ _sherpa_command_palette() {
           --margin=19%,11% \
           --padding=1 \
           --cycle \
-          --preview 'cat /tmp/local_sherpa_command_palette/{}' \
+          --preview "cat $__SHERPA_COMMAND_PALETTE_TMP_DIR/{}" \
           --preview-window wrap \
           --border-label=" Sherpa Command Palette "
   )
