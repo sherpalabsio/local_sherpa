@@ -148,8 +148,8 @@ Enable it by setting the `SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING` environment va
 
 #### Bind it to Shift + Command + P:
 
-Make sure your terminal sends the same escape sequence (`^[[114;9u`)
-as you use to bind the palette command.
+Make sure your terminal sends `^[[80;9u` or a similar escape sequence when
+you press Shift + Command + P.
 
 ```sh
 # Zsh (~/.zshrc)
@@ -158,15 +158,15 @@ __sherpa_palette() {
 }
 
 zle -N __sherpa_palette
-bindkey "^[[114;9u" __sherpa_palette
-# For tmux: bindkey "^[r" __sherpa_palette
+bindkey "^[[80;9u" __sherpa_palette
+# For tmux: bindkey "^[P" __sherpa_palette
 
 # Bash (~/.bashrc)
 __sherpa_palette() {
   sherpa palette
 }
 
-bind -x '"\e[114;9u":__sherpa_palette'
+bind -x '"\e[80;9u":__sherpa_palette'
 ```
 
 ### Env loading and unloading
