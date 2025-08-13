@@ -13,6 +13,11 @@ super() {
 
   local -r super_function_name="__super_${current_function_name}"
 
+  if ! declare -f "$super_function_name" > /dev/null; then
+    _sherpa_log_error "Error: The parent '$current_function_name' does not exist."
+    return 1
+  fi
+
   "$super_function_name" "$@"
 }
 
