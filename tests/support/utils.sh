@@ -21,3 +21,8 @@ _print_in_red() {
 _skip_for_zsh() {
   [ -n "$ZSH_VERSION" ] && echo "Skip: Zsh" && exit 0
 }
+
+log() {
+  [ ! -f /tmp/local_sherpa_test_log ] && touch /tmp/local_sherpa_test_log
+  echo "$@" >> /tmp/local_sherpa_test_log
+}
