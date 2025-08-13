@@ -196,11 +196,11 @@ will override the alias automatically. No need to call `unalias`.\
 The same applies to declaring aliases in the env
 file with the same name as existing functions.
 
-### Inheriting functions (experimental)
+### Command inheritance (experimental)
 
 This is an unreleased feature available only in the `main` branch.
 
-You can call the parent functions from overridden functions using `super`.
+By calling `super` in a function, you can invoke the overridden function or alias.
 
 #### Example:
 
