@@ -34,9 +34,10 @@ sherpa::env_stash.stash_functions() {
 
   for function_name in "${function_names[@]}"; do
     if declare -f "$function_name" &> /dev/null; then
-      sherpa::env_stash._create_super_function_for "$function_name" "$variable_name_for_functions_to_remove"
+      sherpa::env_stash._create_super_function_for_function "$function_name" "$variable_name_for_functions_to_remove"
       sherpa::env_stash._stash_existing_function "$function_name" "$variable_name_for_functions_to_restore"
     elif alias "$function_name" &> /dev/null; then
+      sherpa::env_stash._create_super_function_for_alias "$function_name" "$variable_name_for_functions_to_remove"
       sherpa::env_stash._stash_non_existing_function "$function_name" "$variable_name_for_functions_to_remove"
       sherpa::env_stash._remove_alias_if_shadowing_function "$function_name"
     else
@@ -45,7 +46,7 @@ sherpa::env_stash.stash_functions() {
   done
 }
 
-sherpa::env_stash._create_super_function_for() {
+sherpa::env_stash._create_super_function_for_function() {
   local -r function_name="$1"
   local -r super_function_name="__super_${function_name}"
 
@@ -57,6 +58,24 @@ sherpa::env_stash._create_super_function_for() {
     eval "$(declare -f "$function_name" | sed "1s/$function_name/$super_function_name/")"
   fi
 
+  sherpa::env_stash._stash_non_existing_function "$super_function_name" "$variable_name_for_functions_to_remove"
+}
+
+sherpa::env_stash._create_super_function_for_alias() {
+  local -r alias_name="$1"
+  local -r super_function_name="__super_${alias_name}"
+
+  if [ -n "$ZSH_VERSION" ]; then
+    local -r alias_definition=$(whence "$alias_name")
+  else
+    # shellcheck disable=SC2155
+    local alias_definition=$(alias "$alias_name")
+    alias_definition="${alias_definition%?}" # Remove the last char
+    alias_definition="${alias_definition#*\'}" # Remove everything before the first '
+    alias_definition=$(sherpa::env_stash._escape_for_eval "$alias_definition")
+  fi
+
+  eval "function $super_function_name { $alias_definition; }"
   sherpa::env_stash._stash_non_existing_function "$super_function_name" "$variable_name_for_functions_to_remove"
 }
 

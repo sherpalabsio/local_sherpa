@@ -49,7 +49,7 @@ alias non_existing_function1="echo 1"
 
 sherpa::env_stash.stash_functions "$dir_path" "non_existing_function1"
 
-expected_new_function_names="non_existing_function1"
+expected_new_function_names="__super_non_existing_function1 non_existing_function1"
 # shellcheck disable=SC2154
 actual_new_function_names=${__sherpa__env_stash__functions_to_remove__parent_child[*]}
 
