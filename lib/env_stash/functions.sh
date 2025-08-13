@@ -28,14 +28,15 @@ sherpa::env_stash.stash_functions() {
   local function_name
 
   for function_name in "${function_names[@]}"; do
-    if type "$function_name" &> /dev/null; then
+    if declare -f "$function_name" &> /dev/null; then
       sherpa::env_stash._create_super_function_for "$function_name" "$variable_name_for_functions_to_remove"
       sherpa::env_stash._stash_existing_function "$function_name" "$variable_name_for_functions_to_restore"
+    elif alias "$function_name" &> /dev/null; then
+      sherpa::env_stash._stash_non_existing_function "$function_name" "$variable_name_for_functions_to_remove"
+      sherpa::env_stash._remove_alias_if_shadowing_function "$function_name"
     else
       sherpa::env_stash._stash_non_existing_function "$function_name" "$variable_name_for_functions_to_remove"
     fi
-
-    sherpa::env_stash._remove_alias_if_shadowing_function "$function_name"
   done
 }
 

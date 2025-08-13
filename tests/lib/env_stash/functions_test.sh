@@ -1,6 +1,7 @@
 source tests/support/test_helper.sh
 source "$SHERPA_DIR/lib/env_stash/utils.sh"
 source "$SHERPA_DIR/lib/env_stash/functions.sh"
+source "$SHERPA_DIR/lib/env_stash/aliases.sh"
 
 # 〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰〰
 #                                stash_functions
@@ -9,7 +10,8 @@ source "$SHERPA_DIR/lib/env_stash/functions.sh"
 dir_path="/parent/child"
 
 # ==============================================================================
-# ++++ It stores the definition of existing functions in the right list
+# xxxx When the function already exists
+# ++++ It stores the functions definition in the correct list
 
 existing_function1() { function1 content; }
 existing_function2() { function2 content; }
@@ -26,7 +28,8 @@ actual_existing_function_definition2=${__sherpa__env_stash__functions_to_restore
 assert_equal_compact "$actual_existing_function_definition2" "$expected_existing_function_definition2"
 
 # ==============================================================================
-# ++++ It stores the names of new functions in the right list
+# xxxx When the function is new
+# ++++ It stores the functions definition in the correct list
 
 sherpa::env_stash.stash_functions "$dir_path" "non_existing_function1" "non_existing_function2"
 
@@ -36,6 +39,21 @@ actual_new_function_names=${__sherpa__env_stash__functions_to_remove__parent_chi
 
 assert_equal "$actual_new_function_names" "$expected_new_function_names"
 
+# ==============================================================================
+# xxxx When the function is new but there is an alias with the same name
+# ++++ It stores the functions definition in the correct list
+
+__sherpa__env_stash__functions_to_remove__parent_child=()
+
+alias non_existing_function1="echo 1"
+
+sherpa::env_stash.stash_functions "$dir_path" "non_existing_function1"
+
+expected_new_function_names="non_existing_function1"
+# shellcheck disable=SC2154
+actual_new_function_names=${__sherpa__env_stash__functions_to_remove__parent_child[*]}
+
+assert_equal "$actual_new_function_names" "$expected_new_function_names"
 
 # ==============================================================================
 # ++++ It sanitizes the definition of existing functions
