@@ -73,9 +73,9 @@ For more details see the [Features](#features) section.
 
 ## Tested on
 
-- macOS 13 - Ventura
 - macOS 14 - Sonoma
 - macOS 15 - Sequoia
+- macOS 26 - Tahoe
 - Ubuntu 22.04
 - Ubuntu 24.04
 
