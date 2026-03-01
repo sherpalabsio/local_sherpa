@@ -198,9 +198,7 @@ file with the same name as existing functions.
 
 ### Command inheritance (experimental)
 
-This is an unreleased feature available only in the `main` branch.
-
-By calling `super` in a function, you can invoke the overridden function or alias.
+By calling `super "$@"` in a function, you can invoke the original function or alias that you are overriding.
 
 #### Example:
 
