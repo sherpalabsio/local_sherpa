@@ -11,6 +11,7 @@ help:
 	@echo "test_install_online     - test installing the last release via Homebrew and GitHub"
 	@echo "test_update_version     - test upgrading to the latest version"
 	@echo "dist                    - package the project into a tarball"
+	@echo "release_process         - show the steps to create a new release"
 	@echo "release                 - create a new release, tag it, and push to GitHub"
 	@echo "release_override        - override the existing release, tag it, and push to GitHub"
 
@@ -63,6 +64,16 @@ dist:
 	@cd dist && tar --no-xattrs -czf local_sherpa_$$SHERPA_VERSION.tar.gz local_sherpa_$$SHERPA_VERSION
 	@printf "sha256: "
 	@sha256sum dist/local_sherpa_$$SHERPA_VERSION.tar.gz | awk '{print $$1}'
+
+.PHONY: release_process
+release_process:
+	@echo "- Update the version number in lib/init.sh, README.md"
+	@echo "- Commit the changes with: 'Release v0.2.2'"
+	@echo "- $ make release"
+	@echo "- copy sha256"
+	@echo "- Open the homebrew formula"
+	@echo "- Update the url and sha256"
+	@echo "- Commit the changes with 'Local Sherpa v0.2.2'"
 
 .PHONY: release
 release:
