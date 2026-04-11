@@ -17,6 +17,10 @@ Sherpa is a shell extension that allows you to define new or override existing a
 
 It's similar to [Direnv](https://github.com/direnv/direnv), but with fewer features and added support for aliases and functions.
 
+## Demo
+
+[![Watch the video](https://img.youtube.com/vi/GRfuaiR-nho/0.jpg)](https://www.youtube.com/watch?v=GRfuaiR-nho)
+
 ## ASCII Demo
 
 ```sh
