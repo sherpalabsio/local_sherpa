@@ -152,6 +152,9 @@ Offers a list of available commands and variables in the current env.
 
 The commands are shown by default. The variables are one `Tab` away.
 
+The 5 most recently used items of the env are listed on top, the rest comes in
+alphabetical order.
+
 The list can be less accurate if the dynamic env file parsing is not enabled.
 Enable it by setting the `SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING` environment variable to `true`.
 

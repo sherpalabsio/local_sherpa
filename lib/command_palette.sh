@@ -2,6 +2,11 @@ __SHERPA_COMMAND_PALETTE_TMP_DIR="/tmp/local_sherpa_command_palette"
 __SHERPA_COMMAND_PALETTE_COMMAND_LIST_FILE="$__SHERPA_COMMAND_PALETTE_TMP_DIR/.commands"
 __SHERPA_COMMAND_PALETTE_VARIABLE_LIST_FILE="$__SHERPA_COMMAND_PALETTE_TMP_DIR/.variables"
 
+# How many recently used items are shown on top of a list and how many of them
+# we remember
+__SHERPA_COMMAND_PALETTE_RECENT_ITEMS_SHOWN=5
+__SHERPA_COMMAND_PALETTE_RECENT_ITEMS_STORED=10
+
 _sherpa_command_palette() {
   __sherpa_command_palette__check_preconditions || return 0
 
@@ -16,6 +21,8 @@ _sherpa_command_palette() {
   rm -rf "$__SHERPA_COMMAND_PALETTE_TMP_DIR"
 
   [ -z "$selected" ] && return
+
+  __sherpa_command_palette__remember_item "$selected"
 
   if [ -n "$ZSH_VERSION" ]; then
     # Is it called through a keybinding or directly?
@@ -174,7 +181,8 @@ __sherpa_command_palette__load_env_items() {
     "$__SHERPA_COMMAND_PALETTE_VARIABLE_LIST_FILE" "${variable_items[@]}"
 }
 
-# Sort and deduplicate the given items into a list file
+# Write the given items into a list file:
+# the recently used ones first, the rest in alphabetical order
 __sherpa_command_palette__write_list_file() {
   local -r list_file="$1"
   shift
@@ -183,7 +191,66 @@ __sherpa_command_palette__write_list_file() {
 
   [ $# -eq 0 ] && return
 
-  printf "%s\n" "$@" | sort | uniq > "$list_file"
+  local -r items=$(printf "%s\n" "$@" | sort | uniq)
+  local -r recent_items=$(__sherpa_command_palette__recent_items "$items")
+
+  if [ -z "$recent_items" ]; then
+    echo "$items" > "$list_file"
+    return
+  fi
+
+  echo "$recent_items" > "$list_file"
+  # Append the rest without the items we already listed on top
+  echo "$items" | grep -vxF -f <(echo "$recent_items") >> "$list_file" || true
+}
+
+# The recently used items of the given list, the most recent one first
+__sherpa_command_palette__recent_items() {
+  local -r items="$1"
+  local -r recently_used_file=$(__sherpa_command_palette__recently_used_file)
+
+  [ -f "$recently_used_file" ] || return
+
+  local -r newline=$'\n'
+  local item shown=0
+
+  while IFS= read -r item; do
+    [ "$shown" -ge "$__SHERPA_COMMAND_PALETTE_RECENT_ITEMS_SHOWN" ] && break
+
+    # Is the remembered item still in the list?
+    case "$newline$items$newline" in
+      *"$newline$item$newline"*)
+        echo "$item"
+        shown=$((shown + 1))
+        ;;
+    esac
+  done < "$recently_used_file"
+}
+
+# Push the item to the top of the recently used list
+__sherpa_command_palette__remember_item() {
+  local -r item="$1"
+  local -r recently_used_file=$(__sherpa_command_palette__recently_used_file)
+  local previous_items
+
+  if [ -f "$recently_used_file" ]; then
+    previous_items=$(grep -vxF -- "$item" "$recently_used_file")
+  else
+    mkdir -p "$(dirname "$recently_used_file")"
+  fi
+
+  {
+    echo "$item"
+    [ -n "$previous_items" ] && echo "$previous_items"
+  } | head -n "$__SHERPA_COMMAND_PALETTE_RECENT_ITEMS_STORED" > "$recently_used_file"
+}
+
+# Every env has its own recently used list
+__sherpa_command_palette__recently_used_file() {
+  # The first loaded env dir is the innermost one
+  local -r env_dir="${SHERPA_LOADED_ENV_DIRS[*]:0:1}"
+
+  echo "$SHERPA_RECENTLY_USED_DIR/$(echo "$env_dir" | md5sum | cut -d " " -f 1)"
 }
 
 __sherpa_command_palette__get_variable_names() {

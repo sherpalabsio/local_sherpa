@@ -121,3 +121,38 @@ expected_content="\$var_1
 \$var_2"
 
 assert_equal "$actual_content" "$expected_content" "It collects a sorted unique list of variables"
+
+# ==============================================================================
+# ++++ It puts the recently used items on top of the lists
+
+__sherpa_command_palette__remember_item "function_name2"
+__sherpa_command_palette__remember_item "alias_name2"
+__sherpa_command_palette__remember_item "\$var_2"
+__sherpa_command_palette__remember_item "long_gone_command"
+
+__sherpa_command_palette__load_env_items
+
+actual_content=$(cat "$__SHERPA_COMMAND_PALETTE_COMMAND_LIST_FILE")
+expected_content="alias_name2
+function_name2
+alias_name1
+function_name1"
+
+assert_equal "$actual_content" "$expected_content" "It puts the recently used commands on top"
+
+actual_content=$(cat "$__SHERPA_COMMAND_PALETTE_VARIABLE_LIST_FILE")
+expected_content="\$var_2
+\$var_1"
+
+assert_equal "$actual_content" "$expected_content" "It puts the recently used variables on top"
+
+# ==============================================================================
+# ++++ It remembers the last 10 items only
+
+for i in 1 2 3 4 5 6 7 8 9 10 11; do
+  __sherpa_command_palette__remember_item "command_$i"
+done
+
+actual_content=$(wc -l < "$(__sherpa_command_palette__recently_used_file)" | tr -d ' ')
+
+assert_equal "$actual_content" "10" "It remembers the last 10 items only"
