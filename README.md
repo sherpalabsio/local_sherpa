@@ -144,11 +144,24 @@ You can untrust an env file with `sherpa untrust`.
 
 It requires [fzf](https://github.com/junegunn/fzf?tab=readme-ov-file#installation).
 
-Offers a list of available commands and variables in the current env.\
-Select a command hit enter then hit enter again to run it.
+Offers a list of available commands and variables in the current env.
+
+- `Enter` pastes the selected item into your prompt, then hit enter again to run it
+- `Command + Enter` pastes it and runs it immediately
+- `Tab` switches between the commands (aliases and functions) and the variables
+
+The commands are shown by default. The variables are one `Tab` away.
 
 The list can be less accurate if the dynamic env file parsing is not enabled.
 Enable it by setting the `SHERPA_ENABLE_DYNAMIC_ENV_FILE_PARSING` environment variable to `true`.
+
+#### Run the selected command immediately with Command + Enter:
+
+Make sure your terminal sends `^_` (hex `1F`) when you press Command + Enter.
+
+Prefer another key? Set the `SHERPA_COMMAND_PALETTE_RUN_KEY` environment
+variable to any [key name fzf understands](https://github.com/junegunn/fzf?tab=readme-ov-file#customizing-key-bindings).
+It is `ctrl-_` by default.
 
 #### Bind it to Shift + Command + P:
 

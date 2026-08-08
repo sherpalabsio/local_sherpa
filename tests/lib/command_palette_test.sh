@@ -58,7 +58,7 @@ EOF
 _sherpa_trust_dir "project_x"
 cd project_x
 
-__sherpa_command_palette__load_env_items > /dev/null
+__sherpa_command_palette__load_env_items
 
 # ==============================================================================
 # ++++ It stores definition of variables a temporary file
@@ -89,7 +89,7 @@ actual_content=$(cat /tmp/local_sherpa_command_palette/function_name1)
 assert_contain "$actual_content" "function_name1 ()" "It stores the definition of functions"
 
 # ==============================================================================
-# ++++ It returns a sorted unique list of variables, aliases and functions
+# ++++ It collects sorted unique lists of variables, aliases and functions
 
 mkdir sub_project
 
@@ -106,14 +106,18 @@ EOF
 _sherpa_trust_dir "sub_project"
 cd sub_project
 
-__sherpa_command_palette__load_env_items > /dev/null
+__sherpa_command_palette__load_env_items
 
-actual_content=$(__sherpa_command_palette__load_env_items)
-expected_content="\$var_1
-\$var_2
-alias_name1
+actual_content=$(cat "$__SHERPA_COMMAND_PALETTE_COMMAND_LIST_FILE")
+expected_content="alias_name1
 alias_name2
 function_name1
 function_name2"
 
-assert_equal "$actual_content" "$expected_content" "It returns a sorted unique list of variables, aliases and functions"
+assert_equal "$actual_content" "$expected_content" "It collects a sorted unique list of aliases and functions"
+
+actual_content=$(cat "$__SHERPA_COMMAND_PALETTE_VARIABLE_LIST_FILE")
+expected_content="\$var_1
+\$var_2"
+
+assert_equal "$actual_content" "$expected_content" "It collects a sorted unique list of variables"

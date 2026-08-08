@@ -8,6 +8,7 @@ source tests/support/app_helper.sh
 # ++++ Setup
 
 rm -rf /tmp/local_sherpa_command_palette
+rm -f /tmp/fzf_input_list_1.txt /tmp/fzf_input_list_2.txt
 
 stub_env_file
 
@@ -25,6 +26,9 @@ _sherpa_trust_dir "/"
 cd /
 
 # Stub fzf
+# It hits tab on the first call to switch to the other list
+echo 0 > /tmp/fzf_call_count.txt
+
 fzf() {
   local -r first_param="$1"
 
@@ -33,14 +37,22 @@ fzf() {
     return
   fi
 
-  cat > /tmp/fzf_input_list.txt
+  local -r call_count=$(($(cat /tmp/fzf_call_count.txt) + 1))
+  echo "$call_count" > /tmp/fzf_call_count.txt
+
+  cat > "/tmp/fzf_input_list_$call_count.txt"
+
+  if [[ "$call_count" == 1 ]]; then
+    echo "tab"
+    return
+  fi
 
   sleep 1
 }
 
 sherpa palette &
 sherpa_palette_pid=$!
-sleep 0.2 # Wait for the command palette to finish until the first fzf call
+sleep 0.2 # Wait for the command palette to finish until the last fzf call
 
 # ==============================================================================
 # ++++ Smoke test
@@ -51,17 +63,24 @@ expected_content="var_1 content"
 assert_equal "$actual_content" "$expected_content" "It does not smoke"
 
 # ==============================================================================
-# ++++ Calls fzf with the correct env items
+# ++++ Hides the variables by default
 
-actual_env_items=$(cat /tmp/fzf_input_list.txt)
-expected_env_items="\$var_1
-alias_name
+actual_env_items=$(cat /tmp/fzf_input_list_1.txt)
+expected_env_items="alias_name
 function_name"
 
-assert_equal "$actual_env_items" "$expected_env_items" "It calls fzf with the correct env items"
+assert_equal "$actual_env_items" "$expected_env_items" "It shows the commands only by default"
+
+# ==============================================================================
+# ++++ Tab switches to the variables
+
+actual_env_items=$(cat /tmp/fzf_input_list_2.txt)
+expected_env_items="\$var_1"
+
+assert_equal "$actual_env_items" "$expected_env_items" "It shows the variables after hitting tab"
 
 # ==============================================================================
 # ++++ Teardown
 
-rm -f /tmp/fzf_input_list.txt
+rm -f /tmp/fzf_input_list_1.txt /tmp/fzf_input_list_2.txt /tmp/fzf_call_count.txt
 wait $sherpa_palette_pid
